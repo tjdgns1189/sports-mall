@@ -14,6 +14,6 @@
 		<input type="password"name="password" required="required" placeholder="비밀번호"><br> 
 		<input type="submit" value="로그인">
 	</form>
-	<a></a>
+	<a href="register"><button>회원가이</button></a>
 </body>
 </html>
