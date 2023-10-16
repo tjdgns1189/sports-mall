@@ -32,9 +32,8 @@ public class testDB {
 	private void insert() {
 		MemberVO vo = new MemberVO("test", "1234", "홍길동", "010-1234-5678", "test@test.com", "서울특별시 성북구 성북로21길", "관리자");
 		logger.info("insert호출");
-		
-			dao.insert(vo);
-		
+
+		dao.insert(vo);
 
 		logger.info("insert호출 후");
 	}
