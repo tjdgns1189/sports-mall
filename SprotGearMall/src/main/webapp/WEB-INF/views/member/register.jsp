@@ -12,8 +12,8 @@
 </head>
 <body>
 	<form action="register">
-	<input type="text" name="memberId" required="required" placeholder="아이디"><br>
-	<input type="password" name="password" required="required" placeholder="비밀번호"><br>
+	<input type="text" name="memberId" id = "memberId" required="required" placeholder="아이디"><br>
+	<input type="password" name="password" id = "password" required="required" placeholder="비밀번호"><br>
 	<input type="text" name="name" required="required" placeholder="이름"><br>
 	<input type="text" name="phone" required="required" placeholder="연락처"><br>
 	<input type="email" name=email required="required" placeholder="이메일"><br>
@@ -28,14 +28,26 @@
 	</form>
 	
 <script>
-	function searchPost(){
-    	new daum.Postcode({
-        	oncomplete: function(data) {
-            	console.log(data);
-            	$('#postcode').val(data.zonecode);
-            	$('#Address').val(data.roadAddress);
-       	 	}
-    	}).open();
+	$(()=>{
+		
+		
+	})//end document.ready
+
+	function searchPost() {
+	    new daum.Postcode({
+	        oncomplete: (data) => {
+	            console.log(data);
+	            $('#postcode').val(data.zonecode);
+	            $('#Address').val(data.roadAddress);
+	        },//end oncomplete
+	        onclose: (state) => {
+	            console.log(state);
+	            if (state === 'COMPLETE_CLOSE') {
+	                $('#postcode').attr('readonly', true);
+	                $('#Address').attr('readonly', true);
+	            }
+	        }//end onclose
+	    }).open();//end Postcode
 	}//end searchPost
 </script>
 </body>

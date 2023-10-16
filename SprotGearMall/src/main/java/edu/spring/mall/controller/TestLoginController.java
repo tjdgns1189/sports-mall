@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.spring.mall.persistence.MemberDAO;
 
-@Controller
-@RequestMapping(value = "/login")
+@Controller	
+@RequestMapping(value = "/member")
 
 public class TestLoginController {
 	
