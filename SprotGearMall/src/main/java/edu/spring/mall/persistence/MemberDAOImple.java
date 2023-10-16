@@ -1,5 +1,7 @@
 package edu.spring.mall.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,18 @@ public class MemberDAOImple implements MemberDAO {
 	public int insert(MemberVO vo) {
 		logger.info("dao insert 호출");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
+	}
+
+	@Override
+	public List<MemberVO> select() {
+		logger.info("select호출");
+		return sqlSession.selectList(NAMESPACE + ".select_all");
+	}
+
+	@Override
+	public int update(MemberVO vo) {
+		logger.info("update 호출");
+		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 }

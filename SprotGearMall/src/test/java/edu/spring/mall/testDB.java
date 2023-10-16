@@ -1,5 +1,7 @@
 package edu.spring.mall;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -26,7 +28,29 @@ public class testDB {
 	@Test
 	public void daoTest() {
 
-		insert();
+//		insert();
+//		select();
+		update();
+	}
+
+	private void update() {
+		logger.info("update 호출");
+		MemberVO vo = new MemberVO("테스트", "4321", "둘리", "010-9876-5678", "admin@gmail.com", "경기도", "일반유저");
+		logger.info("update 전");
+			int result = dao.update(vo);
+		
+		
+		logger.info("result = " + result);
+		
+		
+	}
+
+	private void select() {
+		logger.info("select 호출");
+		List<MemberVO> vo = dao.select();
+		for(MemberVO x : vo) {
+			logger.info(x.toString());
+		}
 	}
 
 	private void insert() {

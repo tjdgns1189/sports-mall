@@ -4,15 +4,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.spring.mall.MemberMapper">
 
-	 <insert id="insert">
-	 	insert into ${memberTable}
-	 	(${memberId}, ${password}, ${name}, ${phone}, ${email},${address}, ${userGrade})
-	 	values (#{memberId}, #{password}, #{name},  #{phone}, #{email}, #{address}, #{userGrade})
-	 </insert>
-	 
-	 <select id="select_all" resultType="MemberVO">
-	 	select * from ${memberTalbe}
-	 </select>
-	 
-	
+	<insert id="insert">
+		insert into ${memberTable}
+		(${memberId}, ${password}, ${name}, ${phone}, ${email},${address}, ${userGrade})
+		values (#{memberId}, #{password}, #{name}, #{phone}, #{email},
+		#{address}, #{userGrade})
+	</insert>
+
+	<select id="select_all" resultType="MemberVO">
+		select * from ${memberTable}
+	</select>
+
+	<update id="update">
+		update ${memberTable}
+		set ${memberId} = #{memberId},
+		${password} = #{password},
+		${name} = #{name},
+		${phone} = #{phone},
+		${email} = #{email},
+		${address} = #{address},
+		${userGrade} = #{userGrade}
+		where ${memberId} = #{memberId}
+	</update>
+
+
 </mapper>
