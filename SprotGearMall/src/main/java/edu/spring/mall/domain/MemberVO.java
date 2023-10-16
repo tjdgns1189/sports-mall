@@ -6,7 +6,7 @@ public class MemberVO {
 	private String name;
 	private String phone;
 	private String email;
-	private String adress;
+	private String address;
 	private String userGrade;
 	public MemberVO(String memberId, String password, String name, String phone, String email, String adress,
 			String userGrade) {
@@ -16,7 +16,7 @@ public class MemberVO {
 		this.name = name;
 		this.phone = phone;
 		this.email = email;
-		this.adress = adress;
+		this.address = adress;
 		this.userGrade = userGrade;
 	}
 	public MemberVO() {
@@ -54,10 +54,10 @@ public class MemberVO {
 	}
 	//test
 	public String getAdress() {
-		return adress;
+		return address;
 	}
 	public void setAdress(String adress) {
-		this.adress = adress;
+		this.address = adress;
 	}
 	public String getUserGrade() {
 		return userGrade;
@@ -68,7 +68,7 @@ public class MemberVO {
 	@Override
 	public String toString() {
 		return "MemberVO [memberId=" + memberId + ", password=" + password + ", name=" + name + ", phone=" + phone
-				+ ", email=" + email + ", adress=" + adress + ", userGrade=" + userGrade + "]";
+				+ ", email=" + email + ", adress=" + address + ", userGrade=" + userGrade + "]";
 	}
 	
 	

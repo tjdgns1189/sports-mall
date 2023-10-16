@@ -8,7 +8,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 	<!-- property - name : mapper.xml에서 사용될 이름 - value : DB테이블 및 컬럼 이름 -->
 	<properties>
-
+	<property name="member" value="member" />
+		<property name="memberId" value="member_id" />
+		<property name="password" value="password" />
+		<property name="name" value="name" />
+		<property name="phone" value="phone" />
+		<property name="email" value="email"/>
+		<property name="address" value="address"/>
+		<property name="userGrade" value="user_grade"/>
 	</properties>
 	<!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->
 	<settings>
