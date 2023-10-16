@@ -10,5 +10,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	values (#{memberId}, #{password}, #{name},  #{phone}, #{email}, #{address}, #{userGrade})
 	 </insert>
 	 
+	 <select id="select_all" resultType="MemberVO">
+	 	select * from ${memberTalbe}
+	 </select>
+	 
 	
 </mapper>
