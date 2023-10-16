@@ -15,9 +15,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from ${memberTable}
 	</select>
 
-	<update id="update">
+	<update id="update" parameterType="map">
 		update ${memberTable}
-		set ${memberId} = #{memberId},
+		set 
 		${password} = #{password},
 		${name} = #{name},
 		${phone} = #{phone},
@@ -26,6 +26,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${userGrade} = #{userGrade}
 		where ${memberId} = #{memberId}
 	</update>
+	
+	<delete id="delete">
+		delete from ${memberTable}
+		where ${memberId} = #{memberId}
+	</delete>
 
 
 </mapper>

@@ -56,10 +56,10 @@ public class MemberVO {
 		this.email = email;
 	}
 	//test
-	public String getAdress() {
+	public String getAddress() {
 		return address;
 	}
-	public void setAdress(String adress) {
+	public void setAddress(String adress) {
 		this.address = adress;
 	}
 	public String getUserGrade() {

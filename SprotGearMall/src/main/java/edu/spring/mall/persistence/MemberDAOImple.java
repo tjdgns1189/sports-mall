@@ -1,6 +1,8 @@
 package edu.spring.mall.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -33,8 +35,14 @@ public class MemberDAOImple implements MemberDAO {
 
 	@Override
 	public int update(MemberVO vo) {
-		logger.info("update 호출");
-		return sqlSession.update(NAMESPACE + ".update", vo);
+		 	logger.info("update 호출");
+		    return sqlSession.update(NAMESPACE + ".update", vo);
+	}
+
+	@Override
+	public int delete(String memberId) {
+		logger.info("delete 호출");
+		return sqlSession.delete(NAMESPACE + ".delete", memberId);
 	}
 
 }
