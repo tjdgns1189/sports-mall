@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.OrdersMapper">
+<!-- namespace : dao 클래스의 sqlSession과 연결하기 위한 키로 사용 -->
+
+	<!-- 
+	* mapper 태그
+	<insert>, <select>, <update>, <delete>
+	dao - sqlSession의 함수(insert, selectOne, selectList, update, delete)
+	와 매핑되어 쿼리를 수행
+	
+	* mapper 태그의 id 속성
+	dao 클래스의 sqlSession 특정 함수와 연결하기 위해 사용
+	
+	* mapper 쿼리 특징
+	${key 이름} : mybatis-config.xml의 property - name과 매칭. DB 테이블의 컬럼
+	#{key 이름} : dao 클래스의 sqlSession에서 전송받은 데이터 변수명(입력받은 데이터)
+	 -->
+	 
+	 <insert id="insert">
+	 	insert into ${orders}
+	 	(${memberId}, ${productId}, ${productPrice}, ${productQuantity}) <!-- $는 테이블컬럼명.mybatis랑 매칭 -->
+	 	values (#{memberId}, #{productId}, #{productPrice}, #{productQuantity}) <!-- #는 물음표. vo랑 동일히 지어라 vo.get이 알아서 들어감.-->
+	 </insert>
+	 
+	 <select id="select_by_member_id" resultType="OrdersVO">
+	 	select * from ${orders} where ${memberId} = #{memberId}
+	 </select>
+	 
+	 <select id="select_by_member_id$product_id" resultType="OrdersVO">
+	 	select * from ${orders} where ${memberId} = #{memberId} and ${productId} = #{productId}
+	 </select>
+	 
+	 <delete id="delete">
+	 	delete from ${orders}
+	 	where ${memberId} = #{memberId} and ${productId} = #{productId}
+	 </delete>
+	  
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
