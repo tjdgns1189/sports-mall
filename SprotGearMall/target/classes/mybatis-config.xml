@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 	<!-- property - name : mapper.xml에서 사용될 이름 - value : DB테이블 및 컬럼 이름 -->
 	<properties>
-	<property name="member" value="member" />
+	<property name="memberTable" value="member" />
 		<property name="memberId" value="member_id" />
 		<property name="password" value="password" />
 		<property name="name" value="name" />

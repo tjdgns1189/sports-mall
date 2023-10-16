@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.MemberMapper">
+
+	 <insert id="insert">
+	 	insert into ${memberTable}
+	 	(${memberId}, ${password}, ${name}, ${phone}, ${email},${address}, ${userGrade})
+	 	values (#{memberId}, #{password}, #{name},  #{phone}, #{email}, #{address}, #{userGrade})
+	 </insert>
+	 
+	
+</mapper>
