@@ -5,23 +5,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="edu.spring.mall.MemberMapper">
 
 	<insert id="insert">
-		insert into ${memberTable}
+		insert into ${member}
 		(${memberId}, ${password}, ${name}, ${phone}, ${email},${address}, ${userGrade})
 		values (#{memberId}, #{password}, #{name}, #{phone}, #{email},
 		#{address}, #{userGrade})
 	</insert>
 
 	<select id="select_all" resultType="MemberVO">
-		select * from ${memberTable}
+		select * from ${member}
 	</select>
 	
 	<select id="select_checked_id" resultType="Integer">
-		select count(${memberId}) from ${memberTable}
+		select count(${memberId}) from ${member}
 		where ${memberId} = #{memberId}
 	</select>
 	
 	<update id="update" parameterType="map">
-		update ${memberTable}
+		update ${member}
 		set 
 		${password} = #{password},
 		${name} = #{name},
@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<delete id="delete">
-		delete from ${memberTable}
+		delete from ${member}
 		where ${memberId} = #{memberId}
 	</delete>
 

@@ -73,13 +73,13 @@
 		
 		$('#mainPassword').on('input', function(){
 			var pass1 = $(this).val();
-			var apss2 = $('#confirmPassword').val();
-			
-			if(!pass1 === pass2 && passwordCheck== true){
-				$('#pwConfirm').text('비밀번호가 일치하지 않습니다');
-				passwordCheck = false;
+			if(passwordCheck== true){
+				var pass2 = $('#confirmPassword').val();
+				if(pass1 !== pass2){
+					$('#pwConfirm').text('비밀번호가 일치하지 않습니다');
+					passwordCheck = false;
+				}
 			}
-			
 		});//end mainPassword.on
 	})//end document.ready
 
