@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     
 <!DOCTYPE html>
 <html>
@@ -12,8 +12,11 @@
 </head>
 <body>
 	<form action="register">
-	<input type="text" name="memberId" id = "memberId" required="required" placeholder="아이디"><br>
-	<input type="password" name="password" id = "password" required="required" placeholder="비밀번호"><br>
+	<input type="text" name="memberId" id ="memberId" required="required" placeholder="아이디"><br>
+	<div id="checkedId"></div>
+	<input type="password" name="password" id="mainPassword" required="required" placeholder="비밀번호"><br>
+	<input type="password"  id="confirmPassword" required="required" placeholder="비밀번호 확인"><br>
+	<div id="pwConfirm"></div>
 	<input type="text" name="name" required="required" placeholder="이름"><br>
 	<input type="text" name="phone" required="required" placeholder="연락처"><br>
 	<input type="email" name=email required="required" placeholder="이메일"><br>
@@ -24,13 +27,60 @@
 	<input type="text" id="detailAddress" class="d_form std" placeholder="상세주소">
 	<input type="hidden" name="userGrade" value="user">
 	</div>
-	<input type="submit" value="회원 가입">
+	<input type="submit" id="submitId" value="회원 가입">
 	</form>
 	
 <script>
 	$(()=>{
+		var idChecked = false;
+		var passwordCheck = false;
+		$('#memberId').on('blur', function(){
+			var memberId = $(this).val();
+			$.ajax({
+				type : 'POST',
+				url : 'checkid',
+				headers : {
+					'Content-Type' : 'application/json'
+				},
+				data : JSON.stringify({ "memberId": memberId }),
+				success : function(result){
+					console.log(result);
+					if(result == 0){
+						$('#checkedId').text('사용 가능한 아이디 입니다');
+						idChecked = true;
+					}else{
+						$('#checkedId').text('중복 아이디 입니다');
+						idChecked = false;
+					}
+				}//end success
+			});//end ajax
+		})//end memberId.on
 		
+		$('#confirmPassword').on('blur', function(){
+			var pass1 = $('#mainPassword').val();
+			var pass2 = $(this).val();
+			console.log(pass1);
+			console.log(pass2);
+			
+			if(pass1 === pass2){
+				passwordCheck = true;
+				$('#pwConfirm').text('');
+			}else{
+				passwordCheck = false;
+				$('#pwConfirm').text('비밀번호가 일치하지 않습니다');
+			}
+		});//end confirmPassword.on
 		
+		$('#mainPassword').on('input', function(){
+			var pass1 = $(this).val();
+			var apss2 = $('#confirmPassword').val();
+			
+			if(!pass1 === pass2 && passwordCheck== true){
+				$('#pwConfirm').text('비밀번호가 일치하지 않습니다');
+				passwordCheck = false;
+			}
+			
+		});//end mainPassword.on
 	})//end document.ready
 
 	function searchPost() {
@@ -49,6 +99,8 @@
 	        }//end onclose
 	    }).open();//end Postcode
 	}//end searchPost
+	
+
 </script>
 </body>
 </html>

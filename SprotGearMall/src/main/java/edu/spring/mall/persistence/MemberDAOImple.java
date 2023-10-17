@@ -12,15 +12,14 @@ import org.springframework.stereotype.Repository;
 
 import edu.spring.mall.domain.MemberVO;
 
-
 @Repository
 public class MemberDAOImple implements MemberDAO {
 	private static final Logger logger = LoggerFactory.getLogger(MemberDAOImple.class);
 	private static final String NAMESPACE = "edu.spring.mall.MemberMapper";
-	
+
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	@Override
 	public int insert(MemberVO vo) {
 		logger.info("dao insert 호출");
@@ -34,9 +33,15 @@ public class MemberDAOImple implements MemberDAO {
 	}
 
 	@Override
+	public int select(String memberId) {
+		logger.info("select 아이디 중복검사 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_checked_id", memberId);
+	}
+
+	@Override
 	public int update(MemberVO vo) {
-		 	logger.info("update 호출");
-		    return sqlSession.update(NAMESPACE + ".update", vo);
+		logger.info("update 호출");
+		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 	@Override
