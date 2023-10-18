@@ -3,18 +3,18 @@ package edu.spring.mall.domain;
 public class ProductVO {
 	private int productId;
 	private String productName;
-	private int productprice;
+	private int productPrice;
 	private int productStock;
 	private String productMaker;
 	private String productImgPath;
 	private String productCategory;
 	private int productIsDeleted;
 	// 테스트하기
-	public ProductVO(int productId, String productName, int productprice, int productStock, String productMaker,
+	public ProductVO(int productId, String productName, int productPrice, int productStock, String productMaker,
 			String productImgPath, String productCategory, int productIsDeleted) {
 		this.productId = productId;
 		this.productName = productName;
-		this.productprice = productprice;
+		this.productPrice = productPrice;
 		this.productStock = productStock;
 		this.productMaker = productMaker;
 		this.productImgPath = productImgPath;
@@ -33,11 +33,11 @@ public class ProductVO {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-	public int getProductprice() {
-		return productprice;
+	public int getProductPrice() {
+		return productPrice;
 	}
-	public void setProductprice(int productprice) {
-		this.productprice = productprice;
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
 	}
 	public int getProductStock() {
 		return productStock;
@@ -75,7 +75,7 @@ public class ProductVO {
 	}
 	@Override
 	public String toString() {
-		return "ProductVO [productId=" + productId + ", productName=" + productName + ", productprice=" + productprice
+		return "ProductVO [productId=" + productId + ", productName=" + productName + ", productPrice=" + productPrice
 				+ ", productStock=" + productStock + ", productMaker=" + productMaker + ", productImgPath="
 				+ productImgPath + ", productCategory=" + productCategory + ", productIsDeleted=" + productIsDeleted
 				+ "]";

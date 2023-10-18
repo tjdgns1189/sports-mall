@@ -30,25 +30,39 @@ public class testDB {
 
 //		insert();
 //		select();
-		update();
+//		update();
+//		delete();
+	}
+
+	private void delete() {
+		logger.info("delete 호출");
+		String str = "test";
+		int result = dao.delete(str);
+		logger.info(result + " 행 삭제");
+		
 	}
 
 	private void update() {
 		logger.info("update 호출");
-		MemberVO vo = new MemberVO("테스트", "4321", "둘리", "010-9876-5678", "admin@gmail.com", "경기도", "일반유저");
+		MemberVO vo = new MemberVO("test", "4321", "둘리", "010-9876-5678", "admin@gmail.com", "경기도", "일반유저");
 		logger.info("update 전");
+		
+		try {
 			int result = dao.update(vo);
+			logger.info("result = " + result);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		
-		logger.info("result = " + result);
-		
-		
+
+
 	}
 
 	private void select() {
 		logger.info("select 호출");
 		List<MemberVO> vo = dao.select();
-		for(MemberVO x : vo) {
+		for (MemberVO x : vo) {
 			logger.info(x.toString());
 		}
 	}

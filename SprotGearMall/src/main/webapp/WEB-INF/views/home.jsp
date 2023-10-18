@@ -2,6 +2,7 @@
 <%@ page session="false" %>
 <html>
 <head>
+<meta charset="UTF-8">
 	<title>Home</title>
 </head>
 <body>
@@ -10,5 +11,6 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+<a href="member/login">로그인화면</a>
 </body>
 </html>
