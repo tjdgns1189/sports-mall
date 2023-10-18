@@ -9,9 +9,9 @@ public class ProductVO {
 	private String productImgPath;
 	private String productCategory;
 	private int productIsDeleted;
+	// 테스트하기
 	public ProductVO(int productId, String productName, int productprice, int productStock, String productMaker,
 			String productImgPath, String productCategory, int productIsDeleted) {
-		super();
 		this.productId = productId;
 		this.productName = productName;
 		this.productprice = productprice;
