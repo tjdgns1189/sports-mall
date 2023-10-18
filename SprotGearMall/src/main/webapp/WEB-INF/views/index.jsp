@@ -9,10 +9,11 @@
 </head>
 <body>
 <h1>
-	Hello world! 
+	메인페이지
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
 <a href="member/login">로그인</a>
+<a href="register"></a>
 </body>
 </html>
