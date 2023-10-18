@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import edu.spring.mall.persistence.MemberDAO;
 
 @Controller	
-@RequestMapping(value = "member")
+@RequestMapping(value = "login")
 
 public class TestLoginController {
 	private final Logger logger = LoggerFactory.getLogger(TestLoginController.class);
@@ -41,7 +41,7 @@ public class TestLoginController {
 	
 	@GetMapping("/register")
 	public void registerGET() {
-		logger.info("register 호출");
+		logger.info("loginGet 호출");
 	}
 	
 	
