@@ -25,7 +25,7 @@ public class MemberServiceImple implements MemberService {
 	public MemberVO read(String memberId, String password) throws Exception {
 		logger.info("read »£√‚");
 		logger.info("memberId : " + memberId);
-		MemberVO vo = dao.se
+		
 		return null;
 	}
 
