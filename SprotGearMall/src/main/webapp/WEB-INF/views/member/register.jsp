@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="register">
+	<form action="register" method="POST">
 	<input type="text" name="memberId" id ="memberId" required="required" placeholder="아이디"><br>
 	<div id="checkedId"></div>
 	<input type="password" name="password" id="mainPassword" required="required" placeholder="비밀번호"><br>

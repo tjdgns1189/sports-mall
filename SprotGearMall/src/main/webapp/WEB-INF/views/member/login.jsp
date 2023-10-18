@@ -28,6 +28,8 @@
         <h2 class="form-signin-heading"><a href="/mall/index">로그인</a></h2>
         <p><input type="text" id="username" name="memberId" class="form-control" placeholder="아이디" required="required"></p>
         <p><input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" required="required"></p>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
       </form>
       <div class="container" style="text-align : center;">

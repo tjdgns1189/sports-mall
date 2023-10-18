@@ -2,6 +2,7 @@
 <%@ page session="false" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -13,7 +14,7 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
-<a href="login/login">로그인</a>
-<a href="login/register">회원가입</a>
+<a href="member/login">로그인</a>
+<a href="member/register">회원가입</a>
 </body>
 </html>
