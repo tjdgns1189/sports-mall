@@ -3,11 +3,11 @@ package edu.spring.mall.domain;
 import java.util.Date;
 
 public class QnaReplyVO {
-	private int qReplyId;
-	private int qBoardId;
+	private int qnaReplyId;
+	private int qnaBoardId;
 	private String memberId;
-	private String qReplyContent;
-	private Date qReplyCreatedDate;
+	private String qnaReplyContent;
+	private Date qnaReplyCreatedDate;
 	
 	
 	public QnaReplyVO() {}
@@ -15,31 +15,31 @@ public class QnaReplyVO {
 
 	public QnaReplyVO(int qReplyId, int qBoardId, String memberId, String qReplyContent, Date qReplyCreatedDate) {
 		super();
-		this.qReplyId = qReplyId;
-		this.qBoardId = qBoardId;
+		this.qnaReplyId = qReplyId;
+		this.qnaBoardId = qBoardId;
 		this.memberId = memberId;
-		this.qReplyContent = qReplyContent;
-		this.qReplyCreatedDate = qReplyCreatedDate;
+		this.qnaReplyContent = qReplyContent;
+		this.qnaReplyCreatedDate = qReplyCreatedDate;
 	}
 
 
 	public int getqReplyId() {
-		return qReplyId;
+		return qnaReplyId;
 	}
 
 
 	public void setqReplyId(int qReplyId) {
-		this.qReplyId = qReplyId;
+		this.qnaReplyId = qReplyId;
 	}
 
 
 	public int getqBoardId() {
-		return qBoardId;
+		return qnaBoardId;
 	}
 
 
 	public void setqBoardId(int qBoardId) {
-		this.qBoardId = qBoardId;
+		this.qnaBoardId = qBoardId;
 	}
 
 
@@ -54,29 +54,29 @@ public class QnaReplyVO {
 
 
 	public String getqReplyContent() {
-		return qReplyContent;
+		return qnaReplyContent;
 	}
 
 
 	public void setqReplyContent(String qReplyContent) {
-		this.qReplyContent = qReplyContent;
+		this.qnaReplyContent = qReplyContent;
 	}
 
 
 	public Date getqReplyCreatedDate() {
-		return qReplyCreatedDate;
+		return qnaReplyCreatedDate;
 	}
 
 
 	public void setqReplyCreatedDate(Date qReplyCreatedDate) {
-		this.qReplyCreatedDate = qReplyCreatedDate;
+		this.qnaReplyCreatedDate = qReplyCreatedDate;
 	}
 
 
 	@Override
 	public String toString() {
-		return "QnaReply [qReplyId=" + qReplyId + ", qBoardId=" + qBoardId + ", memberId=" + memberId
-				+ ", qReplyContent=" + qReplyContent + ", qReplyCreatedDate=" + qReplyCreatedDate + "]";
+		return "QnaReply [qnaReplyId=" + qnaReplyId + ", qnaBoardId=" + qnaBoardId + ", memberId=" + memberId
+				+ ", qnaReplyContent=" + qnaReplyContent + ", qnaReplyCreatedDate=" + qnaReplyCreatedDate + "]";
 	}
 	
 	

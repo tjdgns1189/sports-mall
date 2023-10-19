@@ -28,6 +28,8 @@ public class ProductDAOImple implements ProductDAO{
 		logger.info("insert() »£√‚");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
+	
+	
 
 	@Override
 	public List<ProductVO> select() {
