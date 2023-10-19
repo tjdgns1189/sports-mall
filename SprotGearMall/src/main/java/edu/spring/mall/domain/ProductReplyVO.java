@@ -3,29 +3,29 @@ package edu.spring.mall.domain;
 import java.util.Date;
 
 public class ProductReplyVO {
-	private int pReplyId;
+	private int productReplyId;
 	private int productId;
 	private String memberId;
-	private String pReplyContent;
-	private Date pReplyCreatedDate;
+	private String productReplyContent;
+	private Date productReplyCreatedDate;
 	
 	public ProductReplyVO() {}
 
 	public ProductReplyVO(int pReplyId, int productId, String memberId, String pReplyContent, Date pReplyCreatedDate) {
 		super();
-		this.pReplyId = pReplyId;
+		this.productReplyId = pReplyId;
 		this.productId = productId;
 		this.memberId = memberId;
-		this.pReplyContent = pReplyContent;
-		this.pReplyCreatedDate = pReplyCreatedDate;
+		this.productReplyContent = pReplyContent;
+		this.productReplyCreatedDate = pReplyCreatedDate;
 	}
 
 	public int getpReplyId() {
-		return pReplyId;
+		return productReplyId;
 	}
 
 	public void setpReplyId(int pReplyId) {
-		this.pReplyId = pReplyId;
+		this.productReplyId = pReplyId;
 	}
 
 	public int getProductId() {
@@ -45,25 +45,25 @@ public class ProductReplyVO {
 	}
 
 	public String getpReplyContent() {
-		return pReplyContent;
+		return productReplyContent;
 	}
 
 	public void setpReplyContent(String pReplyContent) {
-		this.pReplyContent = pReplyContent;
+		this.productReplyContent = pReplyContent;
 	}
 
 	public Date getpReplyCreatedDate() {
-		return pReplyCreatedDate;
+		return productReplyCreatedDate;
 	}
 
 	public void setpReplyCreatedDate(Date pReplyCreatedDate) {
-		this.pReplyCreatedDate = pReplyCreatedDate;
+		this.productReplyCreatedDate = pReplyCreatedDate;
 	}
 
 	@Override
 	public String toString() {
-		return "ProductReplyVO [pReplyId=" + pReplyId + ", productId=" + productId + ", memberId=" + memberId
-				+ ", pReplyContent=" + pReplyContent + ", pReplyCreatedDate=" + pReplyCreatedDate + "]";
+		return "ProductReplyVO [productReplyId=" + productReplyId + ", productId=" + productId + ", memberId=" + memberId
+				+ ", productReplyContent=" + productReplyContent + ", productReplyCreatedDate=" + productReplyCreatedDate + "]";
 	}
 	
 	

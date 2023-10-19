@@ -3,29 +3,29 @@ package edu.spring.mall.domain;
 import java.util.Date;
 
 public class QnaBoardVO {
-	private int qBoardId;
+	private int qnaBoardId;
 	private String memberId;
-	private String qBoardTitle;
-	private String qBoardContent;
-	private Date qBoardCreatedDate;
+	private String qnaBoardTitle;
+	private String qnaBoardContent;
+	private Date qnaBoardCreatedDate;
 	
 	public QnaBoardVO() {}
 
 	public QnaBoardVO(int qBoardId, String memberId, String qBoardTitle, String qBoardContent, Date qBoardCreatedDate) {
 		super();
-		this.qBoardId = qBoardId;
+		this.qnaBoardId = qBoardId;
 		this.memberId = memberId;
-		this.qBoardTitle = qBoardTitle;
-		this.qBoardContent = qBoardContent;
-		this.qBoardCreatedDate = qBoardCreatedDate;
+		this.qnaBoardTitle = qBoardTitle;
+		this.qnaBoardContent = qBoardContent;
+		this.qnaBoardCreatedDate = qBoardCreatedDate;
 	}
 
 	public int getqBoardId() {
-		return qBoardId;
+		return qnaBoardId;
 	}
 
 	public void setqBoardId(int qBoardId) {
-		this.qBoardId = qBoardId;
+		this.qnaBoardId = qBoardId;
 	}
 
 	public String getMemberId() {
@@ -37,33 +37,33 @@ public class QnaBoardVO {
 	}
 
 	public String getqBoardTitle() {
-		return qBoardTitle;
+		return qnaBoardTitle;
 	}
 
 	public void setqBoardTitle(String qBoardTitle) {
-		this.qBoardTitle = qBoardTitle;
+		this.qnaBoardTitle = qBoardTitle;
 	}
 
 	public String getqBoardContent() {
-		return qBoardContent;
+		return qnaBoardContent;
 	}
 
 	public void setqBoardContent(String qBoardContent) {
-		this.qBoardContent = qBoardContent;
+		this.qnaBoardContent = qBoardContent;
 	}
 
 	public Date getqBoardCreatedDate() {
-		return qBoardCreatedDate;
+		return qnaBoardCreatedDate;
 	}
 
 	public void setqBoardCreatedDate(Date qBoardCreatedDate) {
-		this.qBoardCreatedDate = qBoardCreatedDate;
+		this.qnaBoardCreatedDate = qBoardCreatedDate;
 	}
 
 	@Override
 	public String toString() {
-		return "QnaBoard [qBoardId=" + qBoardId + ", memberId=" + memberId + ", qBoardTitle=" + qBoardTitle
-				+ ", qBoardContent=" + qBoardContent + ", qBoardCreatedDate=" + qBoardCreatedDate + "]";
+		return "QnaBoard [qnaBoardId=" + qnaBoardId + ", memberId=" + memberId + ", qnaBoardTitle=" + qnaBoardTitle
+				+ ", qnaBoardContent=" + qnaBoardContent + ", qnaBoardCreatedDate=" + qnaBoardCreatedDate + "]";
 	}
 	
 	
