@@ -13,33 +13,34 @@ public class QnaReplyVO {
 	public QnaReplyVO() {}
 
 
-	public QnaReplyVO(int qReplyId, int qBoardId, String memberId, String qReplyContent, Date qReplyCreatedDate) {
+	public QnaReplyVO(int qnaReplyId, int qnaBoardId, String memberId, String qnaReplyContent,
+			Date qnaReplyCreatedDate) {
 		super();
-		this.qnaReplyId = qReplyId;
-		this.qnaBoardId = qBoardId;
+		this.qnaReplyId = qnaReplyId;
+		this.qnaBoardId = qnaBoardId;
 		this.memberId = memberId;
-		this.qnaReplyContent = qReplyContent;
-		this.qnaReplyCreatedDate = qReplyCreatedDate;
+		this.qnaReplyContent = qnaReplyContent;
+		this.qnaReplyCreatedDate = qnaReplyCreatedDate;
 	}
 
 
-	public int getqReplyId() {
+	public int getQnaReplyId() {
 		return qnaReplyId;
 	}
 
 
-	public void setqReplyId(int qReplyId) {
-		this.qnaReplyId = qReplyId;
+	public void setQnaReplyId(int qnaReplyId) {
+		this.qnaReplyId = qnaReplyId;
 	}
 
 
-	public int getqBoardId() {
+	public int getQnaBoardId() {
 		return qnaBoardId;
 	}
 
 
-	public void setqBoardId(int qBoardId) {
-		this.qnaBoardId = qBoardId;
+	public void setQnaBoardId(int qnaBoardId) {
+		this.qnaBoardId = qnaBoardId;
 	}
 
 
@@ -53,33 +54,32 @@ public class QnaReplyVO {
 	}
 
 
-	public String getqReplyContent() {
+	public String getQnaReplyContent() {
 		return qnaReplyContent;
 	}
 
 
-	public void setqReplyContent(String qReplyContent) {
-		this.qnaReplyContent = qReplyContent;
+	public void setQnaReplyContent(String qnaReplyContent) {
+		this.qnaReplyContent = qnaReplyContent;
 	}
 
 
-	public Date getqReplyCreatedDate() {
+	public Date getQnaReplyCreatedDate() {
 		return qnaReplyCreatedDate;
 	}
 
 
-	public void setqReplyCreatedDate(Date qReplyCreatedDate) {
-		this.qnaReplyCreatedDate = qReplyCreatedDate;
+	public void setQnaReplyCreatedDate(Date qnaReplyCreatedDate) {
+		this.qnaReplyCreatedDate = qnaReplyCreatedDate;
 	}
 
 
 	@Override
 	public String toString() {
-		return "QnaReply [qnaReplyId=" + qnaReplyId + ", qnaBoardId=" + qnaBoardId + ", memberId=" + memberId
+		return "QnaReplyVO [qnaReplyId=" + qnaReplyId + ", qnaBoardId=" + qnaBoardId + ", memberId=" + memberId
 				+ ", qnaReplyContent=" + qnaReplyContent + ", qnaReplyCreatedDate=" + qnaReplyCreatedDate + "]";
 	}
+
 	
-	
-	
-	
+
 }

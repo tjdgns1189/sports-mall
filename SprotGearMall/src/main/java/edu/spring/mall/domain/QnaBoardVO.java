@@ -9,63 +9,79 @@ public class QnaBoardVO {
 	private String qnaBoardContent;
 	private Date qnaBoardCreatedDate;
 	
+	
 	public QnaBoardVO() {}
 
-	public QnaBoardVO(int qBoardId, String memberId, String qBoardTitle, String qBoardContent, Date qBoardCreatedDate) {
+
+	public QnaBoardVO(int qnaBoardId, String memberId, String qnaBoardTitle, String qnaBoardContent,
+			Date qnaBoardCreatedDate) {
 		super();
-		this.qnaBoardId = qBoardId;
+		this.qnaBoardId = qnaBoardId;
 		this.memberId = memberId;
-		this.qnaBoardTitle = qBoardTitle;
-		this.qnaBoardContent = qBoardContent;
-		this.qnaBoardCreatedDate = qBoardCreatedDate;
+		this.qnaBoardTitle = qnaBoardTitle;
+		this.qnaBoardContent = qnaBoardContent;
+		this.qnaBoardCreatedDate = qnaBoardCreatedDate;
 	}
 
-	public int getqBoardId() {
+
+	public int getQnaBoardId() {
 		return qnaBoardId;
 	}
 
-	public void setqBoardId(int qBoardId) {
-		this.qnaBoardId = qBoardId;
+
+	public void setQnaBoardId(int qnaBoardId) {
+		this.qnaBoardId = qnaBoardId;
 	}
+
 
 	public String getMemberId() {
 		return memberId;
 	}
 
+
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 
-	public String getqBoardTitle() {
+
+	public String getQnaBoardTitle() {
 		return qnaBoardTitle;
 	}
 
-	public void setqBoardTitle(String qBoardTitle) {
-		this.qnaBoardTitle = qBoardTitle;
+
+	public void setQnaBoardTitle(String qnaBoardTitle) {
+		this.qnaBoardTitle = qnaBoardTitle;
 	}
 
-	public String getqBoardContent() {
+
+	public String getQnaBoardContent() {
 		return qnaBoardContent;
 	}
 
-	public void setqBoardContent(String qBoardContent) {
-		this.qnaBoardContent = qBoardContent;
+
+	public void setQnaBoardContent(String qnaBoardContent) {
+		this.qnaBoardContent = qnaBoardContent;
 	}
 
-	public Date getqBoardCreatedDate() {
+
+	public Date getQnaBoardCreatedDate() {
 		return qnaBoardCreatedDate;
 	}
 
-	public void setqBoardCreatedDate(Date qBoardCreatedDate) {
-		this.qnaBoardCreatedDate = qBoardCreatedDate;
+
+	public void setQnaBoardCreatedDate(Date qnaBoardCreatedDate) {
+		this.qnaBoardCreatedDate = qnaBoardCreatedDate;
 	}
+
 
 	@Override
 	public String toString() {
-		return "QnaBoard [qnaBoardId=" + qnaBoardId + ", memberId=" + memberId + ", qnaBoardTitle=" + qnaBoardTitle
+		return "QnaBoardVO [qnaBoardId=" + qnaBoardId + ", memberId=" + memberId + ", qnaBoardTitle=" + qnaBoardTitle
 				+ ", qnaBoardContent=" + qnaBoardContent + ", qnaBoardCreatedDate=" + qnaBoardCreatedDate + "]";
 	}
 	
+	
+
 	
 	
 	
