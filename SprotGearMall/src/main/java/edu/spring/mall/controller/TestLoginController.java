@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.spring.mall.domain.MemberVO;
 import edu.spring.mall.persistence.MemberDAO;
-import edu.spring.mall.service.CustomUserDetailService;
 import edu.spring.mall.service.MemberService;
 
 @Controller	
