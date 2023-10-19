@@ -17,7 +17,7 @@ public class QnaBoardDAOImple implements QnaBoardDAO{
 			LoggerFactory.getLogger(QnaBoardDAOImple.class);
 	
 	private static final String NAMESPACE =
-			"edu.spring.mall.OrdersMapper";
+			"edu.spring.mall.QnaBoardMapper";
 	
 	@Autowired
 	private SqlSession sqlSession;

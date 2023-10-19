@@ -29,10 +29,10 @@ public class QnaBoardDAOTest {
 	}
 
 	private void testInsert() {
-//		QnaBoardVO vo = new QnaBoardVO(0, "hoon", 2, 6000000, 4, null);
-//		int result = dao.insert(vo);
-//		logger.info(result + "행 삽입");
-//		
-//		
+		QnaBoardVO vo = new QnaBoardVO(0, "test", "연습글", "ㅋㅋ", null);
+		int result = dao.insert(vo);
+		logger.info(result + "행 삽입");
+		
+		
 	}
 }

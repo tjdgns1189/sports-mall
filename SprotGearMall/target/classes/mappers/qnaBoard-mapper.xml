@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	values (#{memberId}, #{qnaBoardTitle}, #{qnaBoardContent})
 	 </insert>
 	 
-	 <select id="select_all" resultType="ProductVO">
+	 <select id="select_all" resultType="QnaBoardVO">
 	 	select * from ${qnaBoard}
 	 	order by ${qnaBoardId} desc
 	 </select>
