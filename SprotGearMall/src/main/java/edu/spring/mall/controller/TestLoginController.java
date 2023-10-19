@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.spring.mall.persistence.MemberDAO;
 
-@Controller
-@RequestMapping(value = "/login")
+//@Controller
+//@RequestMapping(value = "/login")
 
 public class TestLoginController {
 	
-	@Autowired
-	private MemberDAO dao;
-
-	
-	@GetMapping("/login")
-	public void loginGet() {
-	}
-	
-	@PostMapping("/login")
-	public String loginPost(String memberId, String password, HttpServletRequest request) {
+//	@Autowired
+//	private MemberDAO dao;
+//
+//	
+//	@GetMapping("/login")
+//	public void loginGet() {
+//	}
+//	
+//	@PostMapping("/login")
+//	public String loginPost(String memberId, String password, HttpServletRequest request) {
 //		MemberVO vo = dao.select(memberId, password);
 //		if(vo != null) {
 //			HttpSession session = request.getSession();
@@ -33,13 +33,13 @@ public class TestLoginController {
 //		}else {
 //			return "redirect:/login";
 //		}
-		return "redirect:/login";
-	}
-	
-	@GetMapping("/register")
-	public void registerGET() {
-		
-	}
-	
+//		return "redirect:/login";
+//	}
+//	
+//	@GetMapping("/register")
+//	public void registerGET() {
+//		
+//	}
+//	
 	
 }
