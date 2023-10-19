@@ -1,7 +1,5 @@
 package edu.spring.mall.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.spring.mall.domain.MemberVO;
 import edu.spring.mall.persistence.MemberDAO;
+import edu.spring.mall.service.MemberService;
+import edu.spring.mall.service.MemberServiceImple;
 
 @Controller	
 @RequestMapping(value = "member")
@@ -20,15 +22,22 @@ public class TestLoginController {
 	private final Logger logger = LoggerFactory.getLogger(TestLoginController.class);
 	@Autowired
 	private MemberDAO dao;
+	
+	@Autowired
+	private MemberService service;
 
 	
-	@GetMapping("/login")
-	public void loginGet() {
+	@GetMapping("/loginForm")
+	public void loginGet(Model model, 
+			@RequestParam(name = "error", required = false) String error) {
 		logger.info("loginGet 호출");
+		if(error != null) {
+			model.addAttribute("error", "error");
+		}
 	}
 	
-	@PostMapping("/login")
-	public String loginPost(String memberId, String password, HttpServletRequest request) {
+//	@PostMapping("/login")
+//	public String loginPost(String memberId, String password, HttpServletRequest request) {
 //		MemberVO vo = dao.select(memberId, password);
 //		if(vo != null) {
 //			HttpSession session = request.getSession();
@@ -37,12 +46,37 @@ public class TestLoginController {
 //		}else {
 //			return "redirect:/login";
 //		}
-		return "redirect:/login";
-	}
+//		return "redirect:/login";
+//	}
 	
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("loginGet 호출");
+	}
+	
+	@PostMapping("/register")
+	public String registerPOST(@RequestParam("memberId") String memberId,
+            @RequestParam("password") String password,
+            @RequestParam("name") String name,
+            @RequestParam("phone") String phone,
+            @RequestParam("email") String email,
+            @RequestParam("postcode") String postcode,
+            @RequestParam("address") String address,
+            @RequestParam("detailAddress") String detailAddress,
+            @RequestParam("userGrade") String userGrade) {
+		
+		String addressStr = postcode + " " + address + " " + detailAddress;
+		MemberVO vo = new MemberVO(memberId, password, name, phone, email, addressStr, userGrade);
+		try {
+			int result = service.create(vo);
+			if(result == 1) {
+				logger.info("회원가입 성공");
+				return "redirect:/member/loginForm";
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/member/register";
 	}
 	
 	@GetMapping("/info")
@@ -50,6 +84,8 @@ public class TestLoginController {
 		
 		
 	}
+	
+
 	
 	
 }

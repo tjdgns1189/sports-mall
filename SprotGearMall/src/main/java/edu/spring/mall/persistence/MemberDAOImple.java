@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.spring.mall.domain.MemberVO;
+import edu.spring.mall.security.CustomUserDetails;
 
 @Repository
 public class MemberDAOImple implements MemberDAO {
@@ -31,7 +32,7 @@ public class MemberDAOImple implements MemberDAO {
 		logger.info("select호출");
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	}
-
+	
 	@Override
 	public int select(String memberId) {
 		logger.info("select 아이디 중복검사 호출");
@@ -48,6 +49,12 @@ public class MemberDAOImple implements MemberDAO {
 	public int delete(String memberId) {
 		logger.info("delete 호출");
 		return sqlSession.delete(NAMESPACE + ".delete", memberId);
+	}
+
+	@Override
+	public CustomUserDetails login(String memberId) {
+		logger.info("login(호출)");
+		return sqlSession.selectOne(NAMESPACE + ".findByMemberId", memberId);
 	}
 
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,19 +15,16 @@
  rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
-	<!--  <h1>로그인 화면</h1>
-	<form action="login" method="POST">
-		<input type="text" name="memberId" required="required"placeholder="아이디"><br> 
-		<input type="password"name="password" required="required" placeholder="비밀번호"><br> 
-		<input type="submit" value="로그인">
-	</form>
-	<a href="register"><button>회원가입</button></a>-->
-	
+
 	
 	
 <div class="container">
       <form class="form-signin" method="POST" action="login">
         <h2 class="form-signin-heading"><a href="/mall/index">로그인</a></h2>
+        
+       <c:if test="${not empty error}"> <div class="alert alert-danger" role="alert">로그인 실패하였습니다</div>
+       </c:if>
+       
         <p><input type="text" id="username" name="memberId" class="form-control" placeholder="아이디" required="required"></p>
         <p><input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" required="required"></p>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
