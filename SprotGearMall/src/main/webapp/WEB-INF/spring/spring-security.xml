@@ -20,8 +20,15 @@
 			authentication-failure-url="/member/loginForm?error"
 			username-parameter="memberId" 
 			password-parameter="password" />
+			
+			<remember-me key="myAppKey"/>
 	</http>
 	
+	
+
+
+
+<!-- 비밀번호 암호화 -->
 <b:bean id="PasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 <b:bean id="CustomUserDetailService" class="edu.spring.mall.service.CustomUserDetailService" />
 
@@ -33,4 +40,4 @@
 </authentication-manager>
 </b:beans>
 
-<!-- 이 부분을 <b:beans> 밖으로 이동합니다 -->
+<!--  -->
