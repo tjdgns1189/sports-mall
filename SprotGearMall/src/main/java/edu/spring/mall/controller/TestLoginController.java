@@ -48,7 +48,7 @@ public class TestLoginController {
 			model.addAttribute("error", "error");
 		}
 	}
-	
+	//스프링 내장 로그인 기능 사용으로 주석처리 
 //	@PostMapping("/login")
 //	public String loginPost(String memberId, String password) {
 //		logger.info("loginPOST 호출");
