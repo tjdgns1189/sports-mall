@@ -18,8 +18,6 @@
 	 <intercept-url pattern="/member/login" access="isAnonymous()"/>
 	 <intercept-url pattern="/member/register" access="isAnonymous()"/>
 	 <intercept-url pattern="/info" access="isAuthenticated()"/>
-	 <intercept-url pattern="/resources/**" access="permitAll" />
-	 
 	 
 		<form-login login-page="/member/loginForm"
 			login-processing-url="/login"

@@ -13,8 +13,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${path}/resources/css/register.css"> 
+   
 <title>Insert title here</title>
+
 <style type="text/css">
 
 
@@ -32,7 +33,7 @@ body {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 350px;
 }
 
 .signup-form input {
@@ -140,7 +141,7 @@ body {
 			    idChecked = false;
 			    $('#memberId').css("border", "1px solid red");
 			    return;
-			}
+			}//end if()!regex.test(memberId)
 			$.ajax({
 				type : 'POST',
 				url : 'checkid',
@@ -159,20 +160,14 @@ body {
 						idChecked = false;
 					}
 				}//end success
+				
 			});//end ajax
 		})//end memberId.on
 		
 		$('#confirmPassword').on('blur', function(){
 			var pass1 = $('#mainPassword').val();
 			var pass2 = $(this).val();
-			
-			var regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,20}$/;
-			    if(!regex.test(pass1)) {
-			        $('#pwConfirm').text('비밀번호는 5~20자의 영문자와 숫자 조합이여야 합니다.');
-					passwordCheck = false;
 
-			        return;
-			    }
 			if(pass1 === pass2){
 				passwordCheck = true;
 				$('#pwConfirm').text('');
@@ -185,10 +180,21 @@ body {
 		
 		$('#mainPassword').on('input', function(){
 			var pass1 = $(this).val();
+			var regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,20}$/;
+		    if(!regex.test(pass1)) {
+		        $('#pwConfirm').text('비밀번호는 5~20자의 영문자와 숫자 조합이여야 합니다.');
+		        $('#pwConfirm').css("color", "red");
+		        #('#mainPassword').css("border", "1px solid red");
+				passwordCheck = false;
+				
+		        return;
+		    }
 			if(passwordCheck== true){
 				var pass2 = $('#confirmPassword').val();
 				if(pass1 !== pass2){
 					$('#pwConfirm').text('비밀번호가 일치하지 않습니다');
+					 $('#pwConfirm').css("color", "black");
+				     #('#mainPassword').css("border", "1px solid black");
 					passwordCheck = false;
 				}
 			}
@@ -231,7 +237,7 @@ body {
 	    } else {
 	        $('#submitButton').prop('disabled', true); // 버튼 비활성화
 	    }
-	}
+	}//end checkAllConditions
 	
 
 </script>
