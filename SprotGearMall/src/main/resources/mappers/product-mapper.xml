@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	update ${product}
 	 	set ${productName} = #{productName}, ${productPrice} = #{productPrice}, ${productStock} = #{productStock}, 
 	 	${productMaker} = #{productMaker}, ${productImgPath} = #{productImgPath}, ${productCategory} = #{productCategory},
-	 	${productIsDeleted) = #{productIsDeleted}
+	 	${productIsDeleted} = #{productIsDeleted}
 	 	where ${productId} = #{productId}
 	 </update>
 	 
@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 </delete>
 	  
 	 <select id="paging" resultType="ProductVO">
-	 select ${productId}, ${productName}, ${productPrice}, ${productStock}, ${productMaker}, ${productImPath}, ${productCategory}, ${productIsDeleted}
+	 select ${productId}, ${productName}, ${productPrice}, ${productStock}, ${productMaker}, ${productImgPath}, ${productCategory}, ${productIsDeleted}
 	 from(
 	 	select rownum rn, a.* from(
 	 		select * from ${product} order by ${productName} desc

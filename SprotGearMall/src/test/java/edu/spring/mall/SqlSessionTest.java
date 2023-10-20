@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import edu.spring.mall.domain.ProductVO;
+import edu.spring.mall.pageutil.PageCriteria;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
 
@@ -35,12 +36,14 @@ public class SqlSessionTest {
 //		logger.info(result + "행 삽입");
 //	}
 	
+	
 //	@Test
 //	public void testSelectAll() {
 //		// List<ProductVO> select()메소드를 테스트하는 메소드입니다.
 //		List<ProductVO> list = sqlSession.selectList(NAMESPACE + ".select_all");
 //		logger.info(list.toString());
 //	}
+	
 	
 //	@Test
 //	public void testSelectByProductName() {
@@ -50,12 +53,31 @@ public class SqlSessionTest {
 //		logger.info(vo.toString());
 //	}
 	
+	
+//	@Test
+//	public void testUpdate() {
+//		ProductVO vo = new ProductVO(4,"가시방망이",80000,11,"모토로라","이미지경로","방망이",1);
+//		int result = sqlSession.update(NAMESPACE + ".update",vo);
+//		
+//		logger.info("result : "+result);
+//		logger.info(vo.toString());
+//	}
+	
+	
+//	@Test
+//	public void testDelete() {
+//		String productName = "test";
+//		int result = sqlSession.delete(NAMESPACE + ".delete",productName);
+//		logger.info("result : " + result);
+//	}
+	
 	@Test
-	public void testUpdate() {
-		ProductVO vo = new ProductVO(4,"가시방망이",80000,11,"모토로라","이미지경로","방망이",1);
-		vo = sqlSession.update(NAMESPACE)
+	public void testSelectPaging() {
+		// List<ProductVO> select(PageCriteria criteria)메소드를 테스트하는 메소드입니다.
+		PageCriteria criteria = new PageCriteria(1,1);
+		List<ProductVO>list = sqlSession.selectList(NAMESPACE + ".paging",criteria);
 		
-		logger.info(vo.toString());
 	}
+	
 	
 }

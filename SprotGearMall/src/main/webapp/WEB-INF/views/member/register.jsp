@@ -1,17 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    
     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/register.css"> 
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="register">
+ <div class="signup-form">
+	<form action="register" method="POST">
 	<input type="text" name="memberId" id ="memberId" required="required" placeholder="아이디"><br>
 	<div id="checkedId"></div>
 	<input type="password" name="password" id="mainPassword" required="required" placeholder="비밀번호"><br>
@@ -21,14 +27,16 @@
 	<input type="text" name="phone" required="required" placeholder="연락처"><br>
 	<input type="email" name=email required="required" placeholder="이메일"><br>
 	<div>
-	<input type="text" id="postcode" required="required" placeholder="우편번호">
+	<input type="text" id="postcode" name="postcode" required="required" placeholder="우편번호">
 	<input type="button" onclick="searchPost()" value="우편번호 찾기" class="post_btn"><br>
-	<input type="text" id="Address" class="d_form std" placeholder="주소">
-	<input type="text" id="detailAddress" class="d_form std" placeholder="상세주소">
+	<input type="text" id="Address" name="address" class="d_form std" placeholder="주소">
+	<input type="text" id="detailAddress" name="detailAddress" class="d_form std" placeholder="상세주소">
 	<input type="hidden" name="userGrade" value="user">
 	</div>
 	<input type="submit" id="submitId" value="회원 가입">
 	</form>
+	</div>
+	
 	
 <script>
 	$(()=>{

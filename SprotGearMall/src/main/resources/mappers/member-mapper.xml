@@ -20,6 +20,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${memberId} = #{memberId}
 	</select>
 	
+	 <select id="findByMemberId" resultType="CustomUserDetails">
+        select * from ${member}
+		where ${memberId} = #{memberId}
+    </select>
+	
 	<update id="update" parameterType="map">
 		update ${member}
 		set 
