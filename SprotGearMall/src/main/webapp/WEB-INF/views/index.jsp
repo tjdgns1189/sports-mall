@@ -11,6 +11,8 @@
 <h1>
 	메인페이지
 </h1>
+${username}
+${memberId }
 <sec:authentication property="principal.username"/>
 <P>  The time on the server is ${serverTime}. </P>
 <sec:authorize access="isAuthenticated()">
