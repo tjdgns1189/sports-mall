@@ -36,7 +36,7 @@ public class LoginController {
 	}
 	@PostMapping("/register")
 	public ResponseEntity<Integer> registerPOST(
-			   @RequestParam("memberId") String memberId,
+			   @RequestParam("username") String memberId,
 	            @RequestParam("password") String password,
 	            @RequestParam("name") String name,
 	            @RequestParam("phone") String phone,
