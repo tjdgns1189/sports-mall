@@ -15,8 +15,8 @@
 
 	<http auto-config="true" use-expressions="true">
 		<form-login login-page="/member/loginForm"
-			login-processing-url="/member/login"
-			default-target-url="/member/info"
+			login-processing-url="/login"
+			default-target-url="/index"
 			authentication-failure-url="/member/loginForm?error"
 			username-parameter="memberId" 
 			password-parameter="password" />

@@ -3,6 +3,10 @@ package edu.spring.mall.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -45,28 +49,34 @@ public class TestLoginController {
 		}
 	}
 	
-	@PostMapping("/login")
-	public String loginPost(String memberId, String password) {
-		logger.info("loginPOST 호출");
-	    
-	    try {
-		    UserDetails user = userService.loadUserByUsername(memberId);
-
-		    String encodedPassword= user.getPassword();
-		    if(passwordEncoder.matches(password, encodedPassword)) {
-		    	logger.info("로그인 성공");
-		    	return "redirect:/index";
-		    }
-		    logger.info("로그인 실패");
-		    return "redirect:/member/loginForm?error";
-		} catch (UsernameNotFoundException e) {
-			logger.info("아이디 조회 실패");
-			e.printStackTrace();
-		    return "redirect:/member/loginForm?error";
-
-		}
-	}
-	
+//	@PostMapping("/login")
+//	public String loginPost(String memberId, String password) {
+//		logger.info("loginPOST 호출");
+//	    
+//	    try {
+//		    UserDetails user = userService.loadUserByUsername(memberId);
+//
+//		    String encodedPassword= user.getPassword();
+//		    if(passwordEncoder.matches(password, encodedPassword)) {
+//		    	logger.info("로그인 성공");
+//		    	SecurityContext context = SecurityContextHolder.createEmptyContext(); 
+//		    	Authentication auth =
+//		    			new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+//		    	SecurityContextHolder.getContext().setAuthentication(auth);
+//		    	SecurityContextHolder.setContext(context); 
+//
+//		    	return "redirect:/index";
+//		    }
+//		    logger.info("로그인 실패");
+//		    return "redirect:/member/loginForm?error";
+//		} catch (UsernameNotFoundException e) {
+//			logger.info("아이디 조회 실패");
+//			e.printStackTrace();
+//		    return "redirect:/member/loginForm?error";
+//
+//		}
+//	}
+//	
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("loginGet 호출");
