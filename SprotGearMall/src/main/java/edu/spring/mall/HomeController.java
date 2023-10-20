@@ -42,4 +42,10 @@ public class HomeController {
 		logger.info("index»£√‚");
 	}
 	
+	@GetMapping("/info")
+	public void infoGET() {
+		
+		
+	}
+	
 }

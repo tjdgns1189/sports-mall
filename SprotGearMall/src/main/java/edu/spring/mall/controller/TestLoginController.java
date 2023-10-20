@@ -107,9 +107,10 @@ public class TestLoginController {
 		return "redirect:/member/register";
 	}
 	
-	@GetMapping("/info")
-	public void infoGET(Model model, String memberId) {
-		
+	
+	
+	@GetMapping("/logout")
+	public void logoutGET() {
 		
 	}
 	

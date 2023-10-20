@@ -4,35 +4,39 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
 
-	
-
-	
 
 	<http pattern="/member" security="none"></http>
 	<http pattern="/member/checkid" security="none"></http>
 	<http pattern="/member/register" security="none"></http>
-	<http pattern="/member/login" security="none"></http>
 	<http pattern="/member/loginForm/*" security="none"></http>
+	
+	
 
 	<http auto-config="true" use-expressions="true">
+	<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 	 <intercept-url pattern="/index" access="isAuthenticated()"/>
+	 <intercept-url pattern="/member/login" access="isAnonymous()"/>
+	 <intercept-url pattern="/member/register" access="isAnonymous()"/>
+	 <intercept-url pattern="/info" access="isAuthenticated()"/>
+	 <intercept-url pattern="/resources/**" access="permitAll" />
+	 
+	 
 		<form-login login-page="/member/loginForm"
 			login-processing-url="/login"
 			default-target-url="/index"
+			always-use-default-target="false"
 			authentication-failure-url="/member/loginForm?error"
 			username-parameter="memberId" 
 			password-parameter="password" />
 			
 			<remember-me key="myAppKey"/>
+				
+			<logout
+				logout-url="/logout"
+				logout-success-url="/member/loginForm"
+				delete-cookies="JSESSIONID, remember-me"/>
+			
 	</http>
-	
-	
-	
-	
-	
-	
-
-
 
 <!-- 비밀번호 암호화 -->
 <b:bean id="PasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
