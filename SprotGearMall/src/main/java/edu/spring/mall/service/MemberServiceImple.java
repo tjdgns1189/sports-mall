@@ -48,7 +48,6 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public String read(String memberId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -77,7 +76,7 @@ public class MemberServiceImple implements MemberService {
 			}
 
 		}
-		return result; // 실제로는 수정된 행의 개수나 다른 적절한 값을 반환하면 됩니다.
+		return result; 
 	}
 
 	@Override

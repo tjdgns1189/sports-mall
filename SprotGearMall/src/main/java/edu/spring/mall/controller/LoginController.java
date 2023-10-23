@@ -1,7 +1,5 @@
 package edu.spring.mall.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -180,7 +178,7 @@ public class LoginController {
 			//비밀번호 검증을 위한 변수
 		  	UserDetails user = userService.loadUserByUsername(memberId);
 		    String encodedPassword = user.getPassword();
-
+		  
 		    // 비밀번호 검증
 		    if (!passwordEncoder.matches(password, encodedPassword)) {
 		        logger.info("비밀번호 틀림");

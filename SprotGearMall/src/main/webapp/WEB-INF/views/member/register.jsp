@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="path" value="${pageContext.request.contextPath}" />
 
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
@@ -16,92 +14,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/resources/css/register.css">
 
-<style type="text/css">
-body {
-	font-family: 'Noto Sans KR', sans-serif;
-	background-color: #eee;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-}
-
-.signup-form {
-	background-color: #ffffff;
-	padding: 20px;
-	border-radius: 5px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	width: 350px;
-}
-
-.signup-form input {
-	width: 100%;
-	padding: 10px;
-	margin-bottom: 10px;
-	border: 1px solid #e0e0e0;
-	border-radius: 5px;
-	font-size: 14px;
-}
-
-.signup-form button {
-	width: 100%;
-	padding: 10px;
-	border: none;
-	border-radius: 5px;
-	background-color: #007bff;
-	color: #ffffff;
-	font-size: 16px;
-	cursor: pointer;
-}
-
-.signup-form button:hover {
-	background-color: #0056b3;
-}
-
-.btn {
-	display: inline-block;
-	font-weight: 400;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	border: 1px solid transparent;
-	padding: .375rem .75rem;
-	font-size: 5rem;
-	line-height: 1.5;
-	border-radius: .25rem;
-	transition: color .15s ease-in-out, background-color .15s ease-in-out,
-		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-
-.btn-lg {
-	padding: .5rem 1rem;
-	font-size: 2rem;;
-	line-height: 1.5;
-	border-radius: .3rem;
-}
-
-.btn-primary {
-	color: #fff;
-	background-color: #007bff;
-	border-color: #007bff;
-}
-
-.btn-primary:hover {
-	color: #fff;
-	background-color: #0056b3;
-	border-color: #004085;
-}
-
-.btn-block {
-	display: block;
-	width: 100%;
-}
-</style>
 </head>
 <body>
 	<div class="signup-form">
