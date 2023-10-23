@@ -36,6 +36,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${userGrade} = #{userGrade}
 		where ${memberId} = #{memberId}
 	</update>
+	<!-- 비밀번호 미포함 -->
+	<update id="updateUserDetails" parameterType="map">
+		update ${member}
+		set 
+		${name} = #{name},
+		${phone} = #{phone},
+		${email} = #{email},
+		${address} = #{address}
+		where ${memberId} = #{memberId}
+	</update>
+	<!-- 비밀번호만 수정 -->
+	<update id="updateUserPassword" parameterType="map">
+		update ${member}
+		set 
+		${password} = #{password}
+		where ${memberId} = #{memberId}
+	</update>
+	
+	
 	
 	<delete id="delete">
 		delete from ${member}

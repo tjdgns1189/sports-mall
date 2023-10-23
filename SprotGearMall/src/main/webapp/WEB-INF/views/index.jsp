@@ -24,7 +24,7 @@
           <input type="submit" value="Log out" />
           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
       </form>
-	<a href="/info" >마이페이지</a>
+	<a href="member/mypage" >마이페이지</a>
 </sec:authorize>
 <sec:authorize access="isAnonymous()">
 <a href="member/loginForm">로그인</a>

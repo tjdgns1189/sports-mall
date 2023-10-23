@@ -26,9 +26,11 @@
 	 <intercept-url pattern="/index" access="permitAll"/>
 	 <intercept-url pattern="/member/login" access="isAnonymous()"/>
 	 <intercept-url pattern="/member/register" access="isAnonymous()"/>
+	 <intercept-url pattern="/member/delete" access="isAuthenticated()"/>
 	 <intercept-url pattern="/info" access="isAuthenticated()"/>
 	 <intercept-url pattern="/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>
+	  
 	 
 		<form-login login-page="/member/loginForm"
 			login-processing-url="/login"
@@ -50,8 +52,8 @@
 
 <!-- 비밀번호 암호화 -->
 	<b:bean id="PasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-	<b:bean id="CustomUserDetailService" class="edu.spring.mall.service.CustomUserDetailService" />
-
+	<b:bean id="CustomUserDetailService" class="edu.spring.mall.security.CustomUserDetailService" />
+	
 
 	<authentication-manager>
 		<authentication-provider user-service-ref="CustomUserDetailService">
