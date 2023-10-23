@@ -183,12 +183,12 @@ public class LoginController {
 
 		    // 비밀번호 검증
 		    if (!passwordEncoder.matches(password, encodedPassword)) {
-		        logger.info("비밀번호 틀림!");
+		        logger.info("비밀번호 틀림");
 		        return "redirect:/member/delete?error";
 		    }
 		    try {
 		        if (service.delete(memberId) != 1) {
-		            return "redirect:/member/delete"; // 탈퇴 처리 실패
+		            return "redirect:/member/delete?error"; // 탈퇴 처리 실패
 		        }
 		        // 로그아웃 처리
 		        Authentication auth = SecurityContextHolder.getContext().getAuthentication();

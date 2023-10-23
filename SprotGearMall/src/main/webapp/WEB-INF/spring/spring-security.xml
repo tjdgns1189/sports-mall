@@ -27,6 +27,7 @@
 	 <intercept-url pattern="/member/login" access="isAnonymous()"/>
 	 <intercept-url pattern="/member/register" access="isAnonymous()"/>
 	 <intercept-url pattern="/member/delete" access="isAuthenticated()"/>
+	 <intercept-url pattern="/member/mypage" access="isAuthenticated()"/>
 	 <intercept-url pattern="/info" access="isAuthenticated()"/>
 	 <intercept-url pattern="/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>
