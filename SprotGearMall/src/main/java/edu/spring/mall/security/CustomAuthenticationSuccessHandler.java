@@ -31,7 +31,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 				String targetURL = savedRequest.getRedirectUrl();
 				redirectStrategy.sendRedirect(request, response, targetURL);
 				return;
-			}
+			}	
 			
 	        redirectStrategy.sendRedirect(request, response, "/index");
 

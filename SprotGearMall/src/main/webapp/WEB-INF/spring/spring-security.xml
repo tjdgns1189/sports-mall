@@ -6,8 +6,12 @@
 
 	<!-- 핸들러 빈 -->
 	<b:bean id="successHandler" class="edu.spring.mall.security.CustomAuthenticationSuccessHandler"/>
-	<b:bean id="deniedHandler" class="edu.spring.mall.security.CustomAccessDeniedHandler"/>
+	<b:bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl" />
 	
+	<b:bean id="rememberMeTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+    <b:property name="dataSource" ref="ds"/>
+	</b:bean>
+
 	<http pattern="/member" security="none"/>
 	<http pattern="/member/checkid" security="none"/>
 	<http pattern="/member/register" security="none"/>
@@ -19,10 +23,12 @@
 	 <access-denied-handler ref="accessDeniedHandler"/>
 	
 	 <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
-	 <intercept-url pattern="/index" access="isAuthenticated()"/>
+	 <intercept-url pattern="/index" access="permitAll"/>
 	 <intercept-url pattern="/member/login" access="isAnonymous()"/>
 	 <intercept-url pattern="/member/register" access="isAnonymous()"/>
 	 <intercept-url pattern="/info" access="isAuthenticated()"/>
+	 <intercept-url pattern="/logout" access="isAuthenticated()"/>
+	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>
 	 
 		<form-login login-page="/member/loginForm"
 			login-processing-url="/login"
@@ -33,11 +39,11 @@
 			username-parameter="memberId" 
 			password-parameter="password" />
 			
-			<remember-me key="myAppKey"/>
+			 <remember-me token-repository-ref="rememberMeTokenRepository" key="athwartbriefly"/>
 				
 			<logout
 				logout-url="/logout"
-				logout-success-url="/member/loginForm"
+				logout-success-url="/index"
 				delete-cookies="JSESSIONID, remember-me"/>
 			
 	</http>

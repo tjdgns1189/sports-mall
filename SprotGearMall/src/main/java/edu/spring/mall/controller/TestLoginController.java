@@ -108,11 +108,7 @@ public class TestLoginController {
 	}
 	
 	
-	
-	@GetMapping("/logout")
-	public void logoutGET() {
-		
-	}
+
 	
 
 	
