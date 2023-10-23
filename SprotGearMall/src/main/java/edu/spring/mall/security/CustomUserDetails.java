@@ -20,6 +20,8 @@ public class CustomUserDetails implements UserDetails {
 	private String address;
 	private String userGrade;
 
+	
+	
 	public String getMemberId() {
 		return memberId;
 	}
@@ -79,6 +81,8 @@ public class CustomUserDetails implements UserDetails {
 	public CustomUserDetails() {
 		super();
 	}
+	
+
 
 	public CustomUserDetails(String memberId, String password, String name, String phone, String email, String address,
 			String userGrade) {

@@ -1,4 +1,4 @@
-package edu.spring.mall.service;
+package edu.spring.mall.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import edu.spring.mall.persistence.MemberDAO;
-import edu.spring.mall.security.CustomUserDetails;
 
 
 

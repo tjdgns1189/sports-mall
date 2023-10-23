@@ -4,33 +4,62 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
 
-	<http pattern="/" security="none"></http>
-	<http pattern="/index" security="none"></http>
-	<http pattern="/member" security="none"></http>
-	<http pattern="/member/checkid" security="none"></http>
-	<http pattern="/member/register" security="none"></http>
-	<http pattern="/member/login" security="none"></http>
-	<http pattern="/member/loginForm/*" security="none"></http>
+	<!-- 핸들러 빈 -->
+	<b:bean id="successHandler" class="edu.spring.mall.security.CustomAuthenticationSuccessHandler"/>
+	<b:bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl" />
+	
+	<b:bean id="rememberMeTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+    <b:property name="dataSource" ref="ds"/>
+	</b:bean>
+
+	<http pattern="/member" security="none"/>
+	<http pattern="/member/checkid" security="none"/>
+	<http pattern="/member/register" security="none"/>
+	<http pattern="/member/loginForm/*" security="none"/>
+	
 	
 
 	<http auto-config="true" use-expressions="true">
+	 <access-denied-handler ref="accessDeniedHandler"/>
+	
+	 <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+	 <intercept-url pattern="/index" access="permitAll"/>
+	 <intercept-url pattern="/member/login" access="isAnonymous()"/>
+	 <intercept-url pattern="/member/register" access="isAnonymous()"/>
+	 <intercept-url pattern="/member/delete" access="isAuthenticated()"/>
+	 <intercept-url pattern="/info" access="isAuthenticated()"/>
+	 <intercept-url pattern="/logout" access="isAuthenticated()"/>
+	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>
+	  
+	 
 		<form-login login-page="/member/loginForm"
-			login-processing-url="/member/login"
-			default-target-url="/member/info"
+			login-processing-url="/login"
+			default-target-url="/index"
+			always-use-default-target="false"
+			authentication-success-handler-ref="successHandler"
 			authentication-failure-url="/member/loginForm?error"
 			username-parameter="memberId" 
 			password-parameter="password" />
+			
+			 <remember-me token-repository-ref="rememberMeTokenRepository" key="athwartbriefly"/>
+				
+			<logout
+				logout-url="/logout"
+				logout-success-url="/index"
+				delete-cookies="JSESSIONID, remember-me"/>
+			
 	</http>
+
+<!-- 비밀번호 암호화 -->
+	<b:bean id="PasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<b:bean id="CustomUserDetailService" class="edu.spring.mall.security.CustomUserDetailService" />
 	
-<b:bean id="PasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-<b:bean id="CustomUserDetailService" class="edu.spring.mall.service.CustomUserDetailService" />
 
-
-<authentication-manager>
-	<authentication-provider user-service-ref="CustomUserDetailService">
-		<password-encoder ref="PasswordEncoder" />
-	</authentication-provider>
-</authentication-manager>
+	<authentication-manager>
+		<authentication-provider user-service-ref="CustomUserDetailService">
+			<password-encoder ref="PasswordEncoder" />
+		</authentication-provider>
+	</authentication-manager>
 </b:beans>
 
-<!-- 이 부분을 <b:beans> 밖으로 이동합니다 -->
+<!--  -->

@@ -1,6 +1,5 @@
 package edu.spring.mall.persistence;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +54,18 @@ public class MemberDAOImple implements MemberDAO {
 	public CustomUserDetails login(String memberId) {
 		logger.info("login(호출)");
 		return sqlSession.selectOne(NAMESPACE + ".findByMemberId", memberId);
+	}
+
+	@Override
+	public int updateUserDetail(Map user) {
+		logger.info("updateUserDetail 호출");
+		return sqlSession.update(NAMESPACE + ".updateUserDetails", user);
+	}
+
+	@Override
+	public int updateUserPassword(Map user) {
+		logger.info("updateUserPassword 호출");
+		return sqlSession.update(NAMESPACE + ".updateUserPassword", user);
 	}
 
 }

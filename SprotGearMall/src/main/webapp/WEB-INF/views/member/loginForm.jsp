@@ -19,14 +19,17 @@
 	
 	
 <div class="container">
-      <form class="form-signin" method="POST" action="login">
+      <form class="form-signin" method="POST" action="../login">
         <h2 class="form-signin-heading"><a href="/mall/index">로그인</a></h2>
         
-       <c:if test="${not empty error}"> <div class="alert alert-danger" role="alert">로그인 실패하였습니다</div>
+       <c:if test="${not empty error}"> 
+       <div class="alert alert-danger" role="alert">로그인 실패하였습니다</div>
        </c:if>
        
         <p><input type="text" id="username" name="memberId" class="form-control" placeholder="아이디" required="required"></p>
         <p><input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" required="required"></p>
+        <label for="rememberMe">로그인 유지 여부</label>
+        <input type="checkbox" id="remember-me" name="remember-me"/><br>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
