@@ -14,6 +14,8 @@
 
 	<http pattern="/member" security="none"/>
 	<http pattern="/member/checkid" security="none"/>
+	<http pattern="/member/passwordCheck" security="none"/>
+	
 	<http pattern="/member/register" security="none"/>
 	<http pattern="/member/loginForm/*" security="none"/>
 	<http pattern="/resources/**" security="none"/>
@@ -29,6 +31,8 @@
 	 <intercept-url pattern="/member/register" access="isAnonymous()"/>
 	 <intercept-url pattern="/member/delete" access="isAuthenticated()"/>
 	 <intercept-url pattern="/member/mypage" access="isAuthenticated()"/>
+	 
+	
 	 <intercept-url pattern="/info" access="isAuthenticated()"/>
 	 <intercept-url pattern="/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>

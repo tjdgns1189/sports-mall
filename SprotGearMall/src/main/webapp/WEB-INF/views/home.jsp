@@ -19,7 +19,9 @@
 <P>  The time on the server is ${serverTime}. </P>
 <sec:authorize access="isAuthenticated()">
     로그인한 사용자: <sec:authentication property="principal.username"/>
-      <form class="form-inline" action="/logout" method="post">
+    
+    <c:url var="logoutUrl" value="/logout"/>
+      <form class="form-inline" action="${logoutUrl}" method="post">
           <input type="submit" value="Log out" />
           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
       </form>

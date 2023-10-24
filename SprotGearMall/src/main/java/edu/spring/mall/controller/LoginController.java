@@ -117,9 +117,13 @@ public class LoginController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 		String name = user.getName();
+		System.out.println(name);
 		String phone = user.getPhone();
+		System.out.println(phone);
 		String email = user.getEmail();
-		String address[] = user.getAddress().split(".");
+		System.out.println(email);
+		System.out.println(user.getAddress());
+		String address[] = user.getAddress().split("\\.");
 
 		model.addAttribute("name", name);
 		model.addAttribute("phone", phone);
@@ -164,6 +168,22 @@ public class LoginController {
 		}
 
 	}
+	
+	@PostMapping("/updatePassword")
+	public String updatePasswordPOST(@RequestParam("memberId") String memberId,
+			@RequestParam("newPassword") String newPassword) {
+		logger.info("updatePasswordPOST »£√‚");
+		Map<String, String> user = new HashMap<String, String>();
+		user.put("memberId", memberId);
+		user.put("password", newPassword);
+		try {
+			int result = service.update(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "redirect:/member/mypage";
+	}
 
 	@GetMapping("/delete")
 	public void deleteGET() {
@@ -199,4 +219,8 @@ public class LoginController {
 		        return "redirect:/member/delete"; 
 		    }
 		}
+	
+	
+	
+	
 }
