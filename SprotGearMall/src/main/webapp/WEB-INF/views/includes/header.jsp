@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	
+<%@ page language="java" contentType="text/html; charset=UTF-8"pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:url var="logoutUrl" value="/logout"/>
 <style>
     color: #666;
     font-family: "Noto Sans KR", "Helvetica Neue", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", "돋움", dotum, sans-serif;
@@ -14,11 +14,9 @@
     z-index: 100;
 </style>
 
-
 <div class="b_header_gnb">
 	<div class="inner">
-		<h1 class="c_gnb_logo" data-log-actionid-area="header_menu"
-			data-log-actionid-label="11st_logo">
+		<h1 class="c_gnb_logo" data-log-actionid-area="header_menu">
 			<span class="bi_11st"><a href="index">스포츠몰</a></span>
 		</h1>
 		<div class="c_gnb_search c_gnb_search_tab" id="tSearch">
@@ -27,14 +25,8 @@
 					<div class="c_gnb_search_listbox ">
 						<button type="button" class="listbox_button" aria-haspopup="listbox" aria-labelledby="ar-listbox-label 통합검색" id="ar-listbox-button" aria-expanded="false"data-log-actionid-area="searchbox" data-log-actionid-label="vertical" data-log-body="{&quot;btn_name&quot;:&quot;통합검색&quot;,&quot;check_value&quot;:&quot;open&quot;}">통합검색</button>
 					</div>
-					<input type="text" class="search_text search_text_ad" title="통합검색"
-						autocomplete="off" data-log-actionid-area="searchbox"
-						data-log-actionid-label="open"
-						data-log-body="{&quot;referer&quot;:&quot;https://11st.co.kr/&quot;}">
-					<button type="submit" class="search_button"
-						data-log-actionid-area="searchbox"
-						data-log-actionid-label="adlink"
-						data-log-body="{&quot;search_keyword&quot;:&quot;크로플? 크룽지? 내맘대로 다 해먹자&quot;}">검색</button>
+					<input type="text" class="search_text search_text_ad" title="통합검색">
+					<button type="submit" class="search_button">검색</button>
 				</fieldset>
 			</form>
 		</div>
@@ -46,6 +38,8 @@
 				<li class="order"><a href=""data-log-actionid-area="header_util" data-log-actionid-label="orderdlv_inquiry" class="menu">주문</a></li>
 				<li class="cart"><a href="https://buy.11st.co.kr/cart/CartAction.tmall?method=getCartList" class="menu" data-log-actionid-area="header_util"data-log-actionid-label="cart">장바구니</a></li>
 				<li class="lately"><button class="menu" aria-haspopup="dialog" aria-controls="gnbInventory">최근 본 상품</button></li>
+				<li class="lately"><a href="/logout"><button class="menu" >로그아웃</button></a></li>
+				
 			</ul>
 		</div>
 
