@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="path" value="${pageContext.request.contextPath}" />
 
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
@@ -16,8 +14,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Insert title here</title>
-
+<link rel="stylesheet" type="text/css" href="/resources/css/register.css">
 <style type="text/css">
+
+
 body {
 	font-family: 'Noto Sans KR', sans-serif;
 	background-color: #eee;
@@ -123,7 +123,7 @@ body {
 				<input type="text" id="postcode"name="postcode" required="required" placeholder="우편번호"> 
 				<input type="text" id="Address" name="address" class="d_form std"placeholder="주소"> 
 				<input type="text" id="detailAddress"name="detailAddress" class="d_form std" placeholder="상세주소">
-				<input type="hidden" name="userGrade" value="user">
+				<input type="hidden" name="userGrade" value="ROLE_USER">
 			</div>
 			<input type="submit" class="btn btn-lg btn-primary btn-block"
 				value="회원 가입">

@@ -101,7 +101,7 @@ public class CustomUserDetails implements UserDetails {
 		ArrayList<GrantedAuthority> authorities = new ArrayList<>();
 
 		// 예를 들어, userGrade가 'ADMIN'이면 'ROLE_ADMIN' 권한을 추가
-		if ("ADMIN".equals(userGrade)) {
+		if ("ROLE_ADMIN".equals(userGrade)) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		} else {
 			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
