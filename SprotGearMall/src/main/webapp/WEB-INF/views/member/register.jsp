@@ -14,7 +14,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/resources/css/register.css">
 <style type="text/css">
 
 
@@ -119,7 +118,7 @@ body {
 			<input type="email" name=email required="required" placeholder="이메일"><br>
 			
 			<div>
-				<input type="button" onclick="searchPost()" value="우편번호 찾기"class="post_btn"><br> 
+				<input type="button" onclick="searchPost()" value="우편번호 찾기" class="post_btn">
 				<input type="text" id="postcode"name="postcode" required="required" placeholder="우편번호"> 
 				<input type="text" id="Address" name="address" class="d_form std"placeholder="주소"> 
 				<input type="text" id="detailAddress"name="detailAddress" class="d_form std" placeholder="상세주소">
@@ -221,6 +220,17 @@ body {
 			}
 		});//end phone.on
 		
+	
+	
+	function checkAllConditions() {
+	    if (idChecked && passwordCheck && phoneCheck) {
+	        $('#submitButton').prop('disabled', false); // 버튼 활성화
+	    } else {
+	        $('#submitButton').prop('disabled', true); // 버튼 비활성화
+	    }
+	}//end checkAllConditions
+		
+	})//end document.ready
 	function searchPost() {
 	    new daum.Postcode({
 	        oncomplete: (data) => {
@@ -237,17 +247,6 @@ body {
 	        }//end onclose
 	    }).open();//end Postcode
 	}//end searchPost
-	
-	function checkAllConditions() {
-	    if (idChecked && passwordCheck && phoneCheck) {
-	        $('#submitButton').prop('disabled', false); // 버튼 활성화
-	    } else {
-	        $('#submitButton').prop('disabled', true); // 버튼 비활성화
-	    }
-	}//end checkAllConditions
-		
-	})//end document.ready
-	
 	
 
 </script>
