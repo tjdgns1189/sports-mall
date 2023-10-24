@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.spring.mall.domain.QnaBoardVO;
+import edu.spring.mall.qnapageutil.PageCriteria;
 
 @Repository
 public class QnaBoardDAOImple implements QnaBoardDAO{
@@ -32,6 +33,26 @@ public class QnaBoardDAOImple implements QnaBoardDAO{
 	public List<QnaBoardVO> select() {
 		logger.info("select() 호출");
 		return sqlSession.selectList(NAMESPACE + ".select_all");
+	}
+
+	@Override
+	public QnaBoardVO select(int qnaBoardId) {
+		logger.info("select() 호출 : qnaBoardId = " + qnaBoardId);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_qna_board_id", qnaBoardId);
+	}
+
+	@Override
+	public List<QnaBoardVO> select(PageCriteria criteria) {
+		logger.info("select() 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		return sqlSession.selectList(NAMESPACE + ".paging", criteria);
+	}
+
+	@Override
+	public int getTotalCounts() {
+		logger.info("getTotalCounts()");
+		return sqlSession.selectOne(NAMESPACE + ".total_count");
 	}
 
 }

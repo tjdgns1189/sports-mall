@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>QNA 게시판입니다</h1>
+
 </body>
 </html>

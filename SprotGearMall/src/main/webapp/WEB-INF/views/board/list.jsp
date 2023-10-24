@@ -23,7 +23,7 @@ li {
 <title>Insert title here</title>
 </head>
 <body>
-<a href="qnaboard">qnaboard</a>
+<a href="qnaBoard">qnaboard</a>
 <h1>상품목록리스트</h1>
 
 	<table>
