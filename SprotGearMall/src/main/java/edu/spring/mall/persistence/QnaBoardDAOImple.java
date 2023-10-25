@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.spring.mall.domain.QnaBoardVO;
-import edu.spring.mall.qnapageutil.PageCriteria;
+import edu.spring.mall.pageutil.PageCriteria;
 
 @Repository
 public class QnaBoardDAOImple implements QnaBoardDAO{

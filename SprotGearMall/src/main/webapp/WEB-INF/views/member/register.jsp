@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Insert title here</title>
-<<<<<<< HEAD
+
 <link rel="stylesheet" type="text/css" href="/resources/css/register.css">
 <style type="text/css">
 
@@ -27,10 +27,10 @@ body {
 	align-items: center;
 	height: 100vh;
 }
-=======
+
 
 <link href="<c:url value="/resources/css/register.css" />" rel="stylesheet"> 
->>>>>>> refs/remotes/origin/develop
+
 
 </head>
 <body>
@@ -53,11 +53,8 @@ body {
 				<input type="text" id="postcode"name="postcode" required="required" placeholder="우편번호"> 
 				<input type="text" id="Address" name="address" class="d_form std"placeholder="주소"> 
 				<input type="text" id="detailAddress"name="detailAddress" class="d_form std" placeholder="상세주소">
-<<<<<<< HEAD
-				<input type="hidden" name="userGrade" value="ROLE_ADMIN">
-=======
 				<input type="hidden" name="userGrade" value="ROLE_USER">
->>>>>>> refs/remotes/origin/develop
+
 			</div>
 			<input type="submit" class="btn btn-lg btn-primary btn-block"
 				value="회원 가입">
@@ -154,12 +151,7 @@ body {
 				checkAllConditions();
 			}
 		});//end phone.on
-		
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> refs/remotes/origin/develop
 	
 	function checkAllConditions() {
 	    if (idChecked && passwordCheck && phoneCheck) {

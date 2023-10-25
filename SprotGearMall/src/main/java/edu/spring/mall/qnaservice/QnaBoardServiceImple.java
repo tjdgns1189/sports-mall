@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.spring.mall.domain.QnaBoardVO;
+import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.persistence.QnaBoardDAO;
-import edu.spring.mall.qnapageutil.PageCriteria;
 
 @Service
 public class QnaBoardServiceImple implements QnaBoardService {
