@@ -16,7 +16,7 @@ import edu.spring.mall.qnapageutil.PageMaker;
 import edu.spring.mall.qnaservice.QnaBoardService;
 
 @Controller
-@RequestMapping(value = "/board")
+@RequestMapping(value = "/qnaBoard")
 public class BoardController {
 	private static final Logger logger =
 			LoggerFactory.getLogger(BoardController.class);

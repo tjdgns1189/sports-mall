@@ -17,7 +17,7 @@ import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.persistence.ProductDAO;
 
 @Controller
-@RequestMapping(value = "/board")
+@RequestMapping(value = "/product")
 public class ListController {
 	private static final Logger logger =
 			LoggerFactory.getLogger(LoginController.class);

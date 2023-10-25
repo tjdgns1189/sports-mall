@@ -38,8 +38,11 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 		
 		
 		
+		
+	<input type="hidden" id="qnaBoardId" name="qnaBoardId" value="${vo.qnaBoardId }">	
+		
 	<div style="text-align: center;">
-		<input type="text" id="memberId" >
+		<input type="text" id="memberId" value="${sessionScope.memberId }" readonly="readonly">
 		<input type="text" id="qnaReplyContent">
 		<button id="btnAdd">작성</button>
 	</div>
@@ -133,6 +136,62 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 					}
 				); // end getJSON()
 			} // end getAllReplies()
+			
+			$('#replies').on('click', '.reply_item .btn_update', function(){
+				console.log(this);
+				
+				// 선택된 댓글의 replyId, replyContent 값을 저장
+				// prevAll() : 선택된 노드 이전에 있는 모든 형제 노드를 접근
+				var qnaReplyId = $(this).prevAll('#qnaReplyId').val();
+				var qnaReplyContent = $(this).prevAll('#qnaReplyContent').val();
+				console.log("선택된 댓글 번호 : " + qnaReplyId + ", 댓글 내용 : " + qnaReplyContent);
+				
+				// ajax 요청
+				$.ajax({
+					type : 'PUT', 
+					url : 'replies/' + qnaReplyId, 
+					headers : {
+						'Content-Type' : 'application/json'
+					},
+					data : qnaReplyContent,
+					success : function(result) {
+						console.log(result);
+						if(result == 1) {
+							alert('댓글 수정 성공!');
+							getAllReplies();
+						}
+					}
+				}); // end ajax()
+			}); // end replies.on()
+			
+			// 삭제 버튼을 클릭하면 선택된 댓글 삭제
+			$('#replies').on('click', '.reply_item .btn_delete', function(){
+				console.log(this);
+			
+				var qnaBoardId = $('#qnaBoardId').val();
+				var qnaReplyId = $(this).prevAll('#qnaReplyId').val();
+				console.log("선택된 댓글 번호 : " + qnaReplyId);
+				
+				// ajax 요청
+				$.ajax({
+					type : 'DELETE', 
+					url : 'replies/' + qnaReplyId, 
+					headers : {
+						'Content-Type' : 'application/json'
+					},
+					data : qnaBoardId,
+					success : function(result) {
+						console.log(result);
+						if(result == 1) {
+							alert('댓글 삭제 성공!');
+							getAllReplies();
+						}
+					}
+				}); // end ajax()
+			}); // end replies.on()
+			
+		}); // end document
+	</script>
 			
 </body>
 </html>

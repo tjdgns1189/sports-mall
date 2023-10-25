@@ -21,7 +21,7 @@ import edu.spring.mall.controller.QnaReplyRESTController;
 import edu.spring.mall.qnaservice.QnaReplyService;
 
 @RestController
-@RequestMapping(value="/replies")
+@RequestMapping(value="/qnaBoard/replies")
 public class QnaReplyRESTController {
 
 	private static final Logger logger = 
@@ -53,6 +53,6 @@ public class QnaReplyRESTController {
 		
 		List<QnaReplyVO> list = qnaReplyService.read(qnaBoardId);
 		return new ResponseEntity<List<QnaReplyVO>>(list, HttpStatus.OK);
-		
+
 	}
 }
