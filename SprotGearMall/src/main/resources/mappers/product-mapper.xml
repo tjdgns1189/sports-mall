@@ -3,21 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.spring.mall.ProductMapper">
-<!-- namespace : dao 클래스의 sqlSession과 연결하기 위한 키로 사용 -->
 
-	<!-- 
-	* mapper 태그
-	<insert>, <select>, <update>, <delete>
-	dao - sqlSession의 함수(insert, selectOne, selectList, update, delete)
-	와 매핑되어 쿼리를 수행
-	
-	* mapper 태그의 id 속성
-	dao 클래스의 sqlSession 특정 함수와 연결하기 위해 사용
-	
-	* mapper 쿼리 특징
-	${key 이름} : mybatis-config.xml의 property - name과 매칭. DB 테이블의 컬럼
-	#{key 이름} : dao 클래스의 sqlSession에서 전송받은 데이터 변수명(입력받은 데이터)
-	 -->
 	 
 	 <insert id="insert">
 	 	insert into ${product}
@@ -43,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	update ${product}
 	 	set ${productName} = #{productName}, ${productPrice} = #{productPrice}, ${productStock} = #{productStock}, 
 	 	${productMaker} = #{productMaker}, ${productImgPath} = #{productImgPath}, ${productCategory} = #{productCategory},
-	 	${productIsDeleted) = #{productIsDeleted}
+	 	${productIsDeleted} = #{productIsDeleted}
 	 	where ${productId} = #{productId}
 	 </update>
 	 
@@ -52,6 +38,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	where ${productName} = #{productName}
 	 </delete>
 	  
+	 <select id="paging" resultType="ProductVO">
+	 select ${productId}, ${productName}, ${productPrice}, ${productStock}, ${productMaker}, ${productImgPath}, ${productCategory}, ${productIsDeleted}
+	 from(
+	 	select rownum rn, a.* from(
+	 		select * from ${product} order by ${productName} desc
+	 	)a
+	 ) where rn between #{start} and #{end}
+	 </select>
+	 
+	 <select id="total_count" resultType="Integer">
+	 	select count(*) total_cnt from ${product}
+	 </select>
+	 
+	 <select id="select_by_productName" resultType="ProductVO">
+	 	select * from ${product}
+	 	where ${productName} like #{productName}
+	 </select>
 </mapper>
 
 

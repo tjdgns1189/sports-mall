@@ -1,13 +1,18 @@
 package edu.spring.mall;
 
 import java.text.DateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -32,8 +37,26 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+	    model.addAttribute("authorities", authorities);
 		
 		return "home";
+	}
+	
+	@GetMapping("/index")
+	public void indexGET(Model model) {
+		logger.info("index»£√‚");
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+	    model.addAttribute("authorities", authorities);
+	}
+	
+	@GetMapping("/info")
+	public void infoGET() {
+		
+		
 	}
 	
 }

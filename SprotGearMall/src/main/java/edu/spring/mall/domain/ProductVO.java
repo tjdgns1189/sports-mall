@@ -1,3 +1,4 @@
+
 package edu.spring.mall.domain;
 
 public class ProductVO {
@@ -106,8 +107,6 @@ public class ProductVO {
 	public void setProductIsDeleted(int productIsDeleted) {
 		this.productIsDeleted = productIsDeleted;
 	}
-
-
 	@Override
 	public String toString() {
 		return "ProductVO [productId=" + productId + ", productName=" + productName + ", productPrice=" + productPrice

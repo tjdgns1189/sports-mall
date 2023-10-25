@@ -8,16 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import edu.spring.mall.controller.LoginController;
-import edu.spring.mall.domain.OrdersVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.persistence.ProductDAO;
 
 @Controller
-@RequestMapping(value = "/board")
+@RequestMapping(value = "/product")
 public class ListController {
 	private static final Logger logger =
 			LoggerFactory.getLogger(LoginController.class);

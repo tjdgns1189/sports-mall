@@ -1,3 +1,4 @@
+
 package edu.spring.mall.domain;
 
 public class MemberVO {

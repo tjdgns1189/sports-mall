@@ -1,3 +1,4 @@
+
 package edu.spring.mall.controller;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import edu.spring.mall.domain.OrdersVO;
 import edu.spring.mall.persistence.OrdersDAO;
 
 @Controller
-@RequestMapping(value = "/board")
+@RequestMapping(value = "/product")
 public class OrdersController {
 	private static final Logger logger =
 			LoggerFactory.getLogger(LoginController.class);
@@ -39,3 +40,4 @@ public class OrdersController {
 
 	}
 }
+
