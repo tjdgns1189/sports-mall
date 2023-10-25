@@ -14,6 +14,6 @@ public interface ProductDAO {
 	List<ProductVO> select(PageCriteria criteria);
 	int getTotalCounts();
 	List<ProductVO> selectPaging(String productName);
-	
+	ProductVO select(int productId);
 	
 }

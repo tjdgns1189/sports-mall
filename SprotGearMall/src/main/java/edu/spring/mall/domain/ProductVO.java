@@ -1,3 +1,4 @@
+
 package edu.spring.mall.domain;
 
 public class ProductVO {
@@ -11,8 +12,12 @@ public class ProductVO {
 	private int productIsDeleted;
 	
 	
+	public ProductVO() {}
+
+
 	public ProductVO(int productId, String productName, int productPrice, int productStock, String productMaker,
 			String productImgPath, String productCategory, int productIsDeleted) {
+		super();
 		this.productId = productId;
 		this.productName = productName;
 		this.productPrice = productPrice;
@@ -22,57 +27,85 @@ public class ProductVO {
 		this.productCategory = productCategory;
 		this.productIsDeleted = productIsDeleted;
 	}
+
+
 	public int getProductId() {
 		return productId;
 	}
+
+
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
+
+
 	public String getProductName() {
 		return productName;
 	}
+
+
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+
+
 	public int getProductPrice() {
 		return productPrice;
 	}
+
+
 	public void setProductPrice(int productPrice) {
 		this.productPrice = productPrice;
 	}
+
+
 	public int getProductStock() {
 		return productStock;
 	}
+
+
 	public void setProductStock(int productStock) {
 		this.productStock = productStock;
 	}
+
+
 	public String getProductMaker() {
 		return productMaker;
 	}
+
+
 	public void setProductMaker(String productMaker) {
 		this.productMaker = productMaker;
 	}
+
+
 	public String getProductImgPath() {
 		return productImgPath;
 	}
+
+
 	public void setProductImgPath(String productImgPath) {
 		this.productImgPath = productImgPath;
 	}
+
+
 	public String getProductCategory() {
 		return productCategory;
 	}
+
+
 	public void setProductCategory(String productCategory) {
 		this.productCategory = productCategory;
 	}
+
+
 	public int getProductIsDeleted() {
 		return productIsDeleted;
 	}
+
+
 	public void setProductIsDeleted(int productIsDeleted) {
 		this.productIsDeleted = productIsDeleted;
-	}
-//staging test
-	public ProductVO() {
-		super();
 	}
 	@Override
 	public String toString() {
@@ -81,6 +114,9 @@ public class ProductVO {
 				+ productImgPath + ", productCategory=" + productCategory + ", productIsDeleted=" + productIsDeleted
 				+ "]";
 	}
+	
+	
+	
 	
 	
 }

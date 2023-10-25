@@ -31,11 +31,7 @@ public class ProductDAOImple implements ProductDAO{
 	
 	
 
-	@Override
-	public List<ProductVO> select() {
-		logger.info("select() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_all");
-	}
+
 
 	@Override
 	public ProductVO select(String productName) {
@@ -74,5 +70,20 @@ public class ProductDAOImple implements ProductDAO{
 		logger.info("selectPaging() 호출 : product = " + productName);
 		return sqlSession.selectList(NAMESPACE + ".select_by_productName","%" + productName + "%");
 	}
+
+	@Override
+	public List<ProductVO> select() {
+		logger.info("select() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_all");
+	}
+
+	@Override
+	public ProductVO select(int productId) {
+		logger.info("select() 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
+	}
+
+	
+	
 
 }

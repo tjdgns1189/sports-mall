@@ -5,6 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 
+<%@ include file="/WEB-INF/views/includes/headerTest.jsp" %>
+
 
 <html>
 <head>
@@ -17,6 +19,7 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+
 <sec:authorize access="isAuthenticated()">
     로그인한 사용자: <sec:authentication property="principal.username"/>
     
@@ -31,6 +34,7 @@
 <a href="member/loginForm">로그인</a>
 <a href="member/register">회원가입</a>
 </sec:authorize>
+
 
 </body>
 </html>

@@ -14,6 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Insert title here</title>
+<<<<<<< HEAD
 <link rel="stylesheet" type="text/css" href="/resources/css/register.css">
 <style type="text/css">
 
@@ -26,82 +27,11 @@ body {
 	align-items: center;
 	height: 100vh;
 }
+=======
 
-.signup-form {
-	background-color: #ffffff;
-	padding: 20px;
-	border-radius: 5px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	width: 350px;
-}
+<link href="<c:url value="/resources/css/register.css" />" rel="stylesheet"> 
+>>>>>>> refs/remotes/origin/develop
 
-.signup-form input {
-	width: 100%;
-	padding: 10px;
-	margin-bottom: 10px;
-	border: 1px solid #e0e0e0;
-	border-radius: 5px;
-	font-size: 14px;
-}
-
-.signup-form button {
-	width: 100%;
-	padding: 10px;
-	border: none;
-	border-radius: 5px;
-	background-color: #007bff;
-	color: #ffffff;
-	font-size: 16px;
-	cursor: pointer;
-}
-
-.signup-form button:hover {
-	background-color: #0056b3;
-}
-
-.btn {
-	display: inline-block;
-	font-weight: 400;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	border: 1px solid transparent;
-	padding: .375rem .75rem;
-	font-size: 5rem;
-	line-height: 1.5;
-	border-radius: .25rem;
-	transition: color .15s ease-in-out, background-color .15s ease-in-out,
-		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-
-.btn-lg {
-	padding: .5rem 1rem;
-	font-size: 2rem;;
-	line-height: 1.5;
-	border-radius: .3rem;
-}
-
-.btn-primary {
-	color: #fff;
-	background-color: #007bff;
-	border-color: #007bff;
-}
-
-.btn-primary:hover {
-	color: #fff;
-	background-color: #0056b3;
-	border-color: #004085;
-}
-
-.btn-block {
-	display: block;
-	width: 100%;
-}
-</style>
 </head>
 <body>
 	<div class="signup-form">
@@ -119,11 +49,15 @@ body {
 			<input type="email" name=email required="required" placeholder="이메일"><br>
 			
 			<div>
-				<input type="button" onclick="searchPost()" value="우편번호 찾기"class="post_btn"><br> 
+				<input type="button" onclick="searchPost()" value="우편번호 찾기" class="post_btn">
 				<input type="text" id="postcode"name="postcode" required="required" placeholder="우편번호"> 
 				<input type="text" id="Address" name="address" class="d_form std"placeholder="주소"> 
 				<input type="text" id="detailAddress"name="detailAddress" class="d_form std" placeholder="상세주소">
+<<<<<<< HEAD
 				<input type="hidden" name="userGrade" value="ROLE_ADMIN">
+=======
+				<input type="hidden" name="userGrade" value="ROLE_USER">
+>>>>>>> refs/remotes/origin/develop
 			</div>
 			<input type="submit" class="btn btn-lg btn-primary btn-block"
 				value="회원 가입">
@@ -221,7 +155,11 @@ body {
 			}
 		});//end phone.on
 		
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> refs/remotes/origin/develop
 	
 	function checkAllConditions() {
 	    if (idChecked && passwordCheck && phoneCheck) {

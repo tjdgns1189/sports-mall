@@ -1,5 +1,7 @@
 package edu.spring.mall.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,12 @@ public class OrdersDAOImple implements OrdersDAO {
 	public int insert(OrdersVO vo) {
 		logger.info("insert() 호출");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
+	}
+
+	@Override
+	public List<OrdersVO> select(String memberId) {
+		logger.info("select() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_by_member_id", memberId);
 	}
 
 }
