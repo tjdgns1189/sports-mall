@@ -1,7 +1,6 @@
 package edu.spring.mall.domain;
 
 import java.util.Date;
-import edu.spring.mall.persistence.ProductDAO;
 
 public class OrdersVO {
 	private int orderId;
@@ -86,14 +85,6 @@ public class OrdersVO {
 		this.orderCreatedDate = orderCreatedDate;
 	}
 
-	private static ProductDAO dao;
-	
-	public String getOrderProductName() {
-	
-		ProductVO vo = dao.select(productId);
-		String productName = vo.getProductName();
-		return productName;
-	}
 
 	@Override
 	public String toString() {

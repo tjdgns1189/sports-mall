@@ -48,7 +48,7 @@ public class QnaReplyRESTController {
 	
 	@GetMapping("/all/{qnaBoardId}")
 	public ResponseEntity<List<QnaReplyVO>> readReplies(
-			@PathVariable("QnaBoardId") int qnaBoardId) {
+			@PathVariable("qnaBoardId") int qnaBoardId) {
 		logger.info("readReplies() »£√‚ : qnaBoardId = " + qnaBoardId);
 		
 		List<QnaReplyVO> list = qnaReplyService.read(qnaBoardId);
