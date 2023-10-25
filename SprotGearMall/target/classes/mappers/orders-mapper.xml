@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.OrdersMapper">
+
+	 
+	 <insert id="insert">
+	 	insert into ${orders}
+	 	(${memberId}, ${productId}, ${productPrice}, ${productQuantity}) <!-- $는 테이블컬럼명.mybatis랑 매칭 -->
+	 	values (#{memberId}, #{productId}, #{productPrice}, #{productQuantity}) <!-- #는 물음표. vo랑 동일히 지어라 vo.get이 알아서 들어감.-->
+	 </insert>
+	 
+	 <select id="select_by_member_id" resultType="OrdersVO">
+	 	select * from ${orders} where ${memberId} = #{memberId}
+	 </select>
+	 
+	 <select id="select_by_member_id$product_id" resultType="OrdersVO">
+	 	select * from ${orders} where ${memberId} = #{memberId} and ${productId} = #{productId}
+	 </select>
+	 
+	 <delete id="delete">
+	 	delete from ${orders}
+	 	where ${memberId} = #{memberId} and ${productId} = #{productId}
+	 </delete>
+	  
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

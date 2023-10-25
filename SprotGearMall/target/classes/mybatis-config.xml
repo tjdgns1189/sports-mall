@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- DB 테이블과 컬럼들을 mapper에 매핑하기 위한 변수 선언 -->
+	<!-- 
+	* property
+	- name : mapper.xml에서 사용될 이름
+	- value : DB 테이블 및 컬럼 이름
+	 -->
+	 
+	 <properties>
+	 	<property name="member" value="member"/>
+	 	<property name="memberId" value="member_id"/> 
+	 	<property name="password" value="password"/>
+	 	<property name="name" value="name"/>
+	 	<property name="phone" value="phone"/>
+	 	<property name="email" value="email"/>
+	 	<property name="address" value="address"/>
+	 	<property name="userGrade" value="user_grade"/>
+	 	
+	 	<property name="product" value="product"/>
+	 	<property name="productId" value="product_id"/> 
+	 	<property name="productName" value="product_name"/>
+	 	<property name="productPrice" value="product_price"/>
+	 	<property name="productStock" value="product_stock"/>
+	 	<property name="productMaker" value="product_maker"/>
+	 	<property name="productImgPath" value="product_img_path"/>
+	 	<property name="productCategory" value="product_category"/>
+	 	<property name="productIsDeleted" value="product_is_deleted"/>
+	 	
+	    <property name="orders" value="orders"/>
+	 	<property name="orderId" value="order_id"/> 
+	 	<property name="memberId" value="member_id"/>
+	 	<property name="productId" value="product_id"/>
+	 	<property name="productPrice" value="product_price"/>
+	 	<property name="productQuantity" value="product_quantity"/>
+	 	<property name="orderCreatedDate" value="order_created_date"/>
+	 	
+	 	<property name="likes" value="likes"/>
+	 	<property name="likes" value="likes"/> 
+	 	<property name="memberId" value="member_id"/>
+	 	<property name="productId" value="product_id"/>
+	 	
+	 	<property name="qna_board" value="qna_board"/>
+	 	<property name="qnaBoardId" value="qna_board_id"/> 
+	 	<property name="memberId" value="member_id"/>
+	 	<property name="qnaBoardTitle" value="qna_board_title"/>
+	 	<property name="qnaBoardContent" value="qna_board_content"/>
+	 	<property name="qnaBoardCreatedDate" value="qna_board_created_date"/>
+	 	
+	 	<property name="qna_reply" value="qna_reply"/>
+	 	<property name="qnaReplyId" value="qna_reply_id"/> 
+	 	<property name="qnaBoardId" value="qna_board_id"/>
+	 	<property name="memberId" value="member_id"/>
+	 	<property name="qnaReplyContent" value="qna_reply_content"/>
+	 	<property name="qnaplyCreatedDate" value="qna_reply_created_date"/>
+	 	
+	 	<property name="product_reply" value="product_reply"/>
+	 	<property name="productReplyId" value="product_reply_id"/> 
+	 	<property name="productId" value="product_id"/>
+	 	<property name="memberId" value="member_id"/>
+	 	<property name="productReplyContent" value="product_reply_content"/>
+	 	<property name="productReplyCreatedDate" value="product_reply_created_date"/>
+	 	
+	 	<property name="review" value="review"/>
+	 	<property name="reviewId" value="review_id"/> 
+	 	<property name="productId" value="product_id"/>
+	 	<property name="review" value="review"/>
+	 	<property name="reviewRating" value="review_rating"/>
+	 	<property name="reviewCreatedDate" value="review_created_date"/>
+	 	<property name="memberId" value="member_id"/>
+	 	
+	 	<property name="notice_board" value="notice_board"/>
+	 	<property name="noticeId" value="notice_id"/> 
+	 	<property name="noticeTitle" value="notice_title"/>
+	 	<property name="noticeContent" value="notice_content"/>
+	 	<property name="noticeCreatedDate" value="notice_created_date"/>
+
+ 	 </properties>
+	 
+	 
+	 
+	 <!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->
+	 <settings>
+	 	<setting name="mapUnderscoreToCamelCase" value="true"></setting>
+	 </settings>
+	 
+	 <!-- typeAliases : mapper.xml의 select 리턴 타입에 들어갈 클래스 경로를 설정 -->
+	 <typeAliases>
+	 	<package name="edu.spring.mall"/>
+	 </typeAliases>
+	 
+</configuration>
+
+
+	 
