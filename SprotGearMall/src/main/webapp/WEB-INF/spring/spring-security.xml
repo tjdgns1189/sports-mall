@@ -15,8 +15,6 @@
 	<http pattern="/member" security="none"/>
 	<http pattern="/member/checkid" security="none"/>
 	<http pattern="/member/passwordCheck" security="none"/>
-
-
 	<http pattern="/member/register" security="none"/>
 	<http pattern="/member/loginForm/*" security="none"/>
 	<http pattern="/resources/**" security="none"/>

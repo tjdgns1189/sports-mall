@@ -1,4 +1,4 @@
-package edu.spring.mall.qnaservice;
+package edu.spring.mall.service;
 
 import java.util.List;
 

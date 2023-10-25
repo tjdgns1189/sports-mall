@@ -136,9 +136,12 @@ public class LoginController {
 	}
 
 	@PostMapping("/update")
-	public String updatePOST(@RequestParam("memberId") String memberId, @RequestParam("name") String name,
-			@RequestParam("phone") String phone, @RequestParam("email") String email,
-			@RequestParam("postcode") String postcode, @RequestParam("address") String address,
+	public String updatePOST(@RequestParam("memberId") String memberId,
+			@RequestParam("name") String name,
+			@RequestParam("phone") String phone,
+			@RequestParam("email") String email,
+			@RequestParam("postcode") String postcode,
+			@RequestParam("address") String address,
 			@RequestParam("detailAddress") String detailAddress) {
 
 		logger.info("updatePOST 호출");
@@ -156,10 +159,7 @@ public class LoginController {
 			if (result == 1) {
 				logger.info("update 성공");
 				return "redirect:/member/mypage";
-			} else {
-				logger.info("update 실패");
-				return "redirect:/member/update?error";
-			}
+			} 
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,13 +167,18 @@ public class LoginController {
 			return "redirect:/member/update?error";
 
 		}
+			logger.info("업데이트 실패");
+			return "redirect:/member/update?error";
 
 	}
 	
 	@PostMapping("/updatePassword")
-	public String updatePasswordPOST(@RequestParam("memberId") String memberId,
+	public String updatePasswordPOST(
+			@RequestParam("memberId") String memberId,
 			@RequestParam("newPassword") String newPassword) {
 		logger.info("updatePasswordPOST 호출");
+		
+		
 		Map<String, String> user = new HashMap<String, String>();
 		user.put("memberId", memberId);
 		user.put("password", newPassword);
@@ -194,16 +199,16 @@ public class LoginController {
 	public String deletePOST(@RequestParam("memberId") String memberId,
 			@RequestParam("password") String password,
 			HttpServletRequest request,
-			HttpServletResponse response) {
-		
+			HttpServletResponse response,
+			Model model) {
+			logger.info("deletePOST호출");
 			//비밀번호 검증을 위한 변수
 		  	UserDetails user = userService.loadUserByUsername(memberId);
 		    String encodedPassword = user.getPassword();
-		  
 		    // 비밀번호 검증
 		    if (!passwordEncoder.matches(password, encodedPassword)) {
 		        logger.info("비밀번호 틀림");
-		        return "redirect:/member/delete?error";
+		        return "redirect:/member/delete?error=password";
 		    }
 		    try {
 		        if (service.delete(memberId) != 1) {
@@ -217,7 +222,7 @@ public class LoginController {
 		        return "redirect:/index"; // 탈퇴 및 로그아웃 성공
 		    } catch (Exception e) {
 		        e.printStackTrace();
-		        return "redirect:/member/delete"; 
+		        return "redirect:/member/delete?error"; 
 		    }
 		}
 	
