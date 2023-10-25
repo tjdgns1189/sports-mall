@@ -4,23 +4,29 @@
     
      <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+	<%@ include file="/WEB-INF/views/includes/headerTest.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" 
+ rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" 
+ rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
 		 <h2><a href="/mall/index">회원탈퇴</a></h2>
-		<c:if test="${not empty error}"> 
-       		<div class="alert alert-danger" role="alert">비밀번호가 맞지 않습니다</div>
+		 <c:if test="${not empty param.error}"> 
+       		<div class="alert alert-danger" role="alert">비밀번호가 틀렸습니다</div>
        </c:if>
 		<form action="delete" method="post">
 		<input type="hidden" name="memberId" id ="memberId" value="${pageContext.request.userPrincipal.name}" required="required" placeholder="아이디"><br>
-		<p><input type="password" id="password" name="password" class="form-control" placeholder="비밀번호확인" required="required"></p>
+		<p><input type="password" id="password" name="password" placeholder="비밀번호확인" required="required"></p>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<button type="submit">회원탈퇴</button>
-		</form>
 		<a href="/mall/index"><button type="submit" >취소</button></a>
+		</form>
 </body>
 </html>

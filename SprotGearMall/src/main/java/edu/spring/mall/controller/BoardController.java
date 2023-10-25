@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import edu.spring.mall.domain.QnaBoardVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
-import edu.spring.mall.qnaservice.QnaBoardService;
+import edu.spring.mall.service.QnaBoardService;
 
 @Controller
 @RequestMapping(value = "/qnaBoard")

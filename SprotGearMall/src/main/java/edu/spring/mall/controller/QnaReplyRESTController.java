@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.spring.mall.domain.QnaReplyVO;
-import edu.spring.mall.qnaservice.QnaReplyService;
+import edu.spring.mall.service.QnaReplyService;
 
 @RestController
 @RequestMapping(value="/qnaBoard/replies")

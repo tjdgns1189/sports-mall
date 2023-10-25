@@ -4,7 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-
 	<%@ include file="/WEB-INF/views/includes/headerTest.jsp" %>
 	
 	
@@ -50,7 +49,6 @@
 						<dd><sec:authentication property="principal.email" /></dd>
 					</dl> <a href="update"><button type="button" ><span>변경하기</span></button> </a>
 				</td>
-				<td><a href="delete"><button type="button">회원탈퇴</button></a></td>
 				<sec:authorize access="hasRole('ROLE_USER')">
 				<td><a href="delete"><button type="button">회원탈퇴</button></a></td>
 				</sec:authorize>
@@ -61,54 +59,30 @@
 	<div class="modal" id="myModal">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<!-- Modal Header -->
 			<div class="modal-header">
 				<h4 class="modal-title">비밀번호 변경</h4>
 				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 			
-			<!-- Modal body -->
 			<div class="modal-body">
 				<form action="updatePassword" id="form" method="POST">
 				<input type="hidden" id="memberId" name="memberId" value="${pageContext.request.userPrincipal.name}">
-				<input type="password" id="password" name="password" required placeholder="기존 비밀번호"><br>
-
-				<input type="password" id="newPassword" name="newPassword" required placeholder="새 비밀번호"><br>
-				<input type="password" id="newPasswordConfirm" name="newPasswordConfirm" required placeholder="새 비밀번호 확인"><br>
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-				<hr><br>
-				<input type="submit" id="btnSubmit" class="btn btn-primary" onclick="changePassword(event)"value="변경">
-				<button type="button" class="btn btn-danger" 
-				data-bs-dismiss="modal">취소</button>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-<script type="text/javascript">
-	function changePassword(event){
-		
-		event.preventDefault();
-		var memberId = $('#memberId').val();
-		var password = $('#password').val();
-		var newPassword = $('#newPassword').val();
-		var newPasswordConfirm = $('#newPasswordConfirm').val();
-
-				
+				<input type="password" id="password" name="password"  placeholder="기존 비밀번호" required> <br>
 				<input type="password" id="newPassword" name="newPassword" required placeholder="새 비밀번호"><br>
 				<input type="password" id="newPasswordConfirm" name="newPasswordConfirm" required placeholder="새 비밀번호 확인"><br>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				<hr><br>
 				<div id="passwordText"></div>
-				<input type="submit" id="btnSubmit" class="btn btn-primary" onclick="changePassword(event)"value="변경">
-				<button type="button" class="btn btn-danger" 
-				data-bs-dismiss="modal">취소</button>
+				
+				<input type="submit" id="btnSubmit" class="btn btn-primary" onclick="changePassword(event)" value="변경">
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
+
+<script type="text/javascript">	
 	function changePassword(event){
 		
 		event.preventDefault();
@@ -117,24 +91,20 @@
 		var newPassword = $('#newPassword').val();
 		var newPasswordConfirm = $('#newPasswordConfirm').val();
 		
-		var regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,20}$/;
+		var regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{5,20}$/;
 	    if(!regex.test(password) ||
 	    	!regex.test(newPassword)) {
 	        $('#passwordText').text('비밀번호는 5~20자의 영문자와 숫자 조합이여야 합니다.');
 	        return;
 	    }
-		
-		
 		  if (!password || !newPassword || !newPasswordConfirm) {
 	            alert('모든 필드를 채워주세요.');
 	            return;
 	        }
-		  
 		  if (newPassword !== newPasswordConfirm) {
 	            alert('새 비밀번호가 일치하지 않습니다.');
 	            return;
 	        }
-		  
 			$.ajax({
 				type : 'POST',
 				url : 'passwordCheck',
@@ -146,9 +116,12 @@
 			success : function(result){
 				console.log('에이젝스 success', result);
 				if(result == 1){
+					alert('비밀번호 변경 성공.');
 					$('#form').submit();
+					$('#myModal').modal('hide');
 				}else{
 					alert('기존 비밀번호가 일치하지 않습니다.');
+			        $('#passwordText').text('');
 					return;
 				}
 			}//end success
