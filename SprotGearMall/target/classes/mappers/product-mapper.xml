@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.ProductMapper">
+
+	 
+	 <insert id="insert">
+	 	insert into ${product}
+	 	(${productName}, ${productPrice}, ${productStock}, ${productMaker}, ${productImgPath}, ${productCategory}, ${productIsDeleted})
+	 	values (#{productName}, #{productPrice}, #{productStock}, #{productMaker}, #{productImgPath}, #{productCategory}, #{productIsDeleted})
+	 </insert>
+	 
+	 <select id="select_all" resultType="ProductVO">
+	 	select * from ${product}
+	 	order by ${productId} desc
+	 </select>
+	 
+	 <select id="select_by_product_name" resultType="ProductVO">
+	 	select * from ${product} where ${productName} = #{productName}
+	 </select>
+	 
+	 
+	 <select id="select_by_product_id" resultType="ProductVO">
+	 	select * from ${product} where ${productId} = #{productId}
+	 </select>
+	 
+	 <update id="update">
+	 	update ${product}
+	 	set ${productName} = #{productName}, ${productPrice} = #{productPrice}, ${productStock} = #{productStock}, 
+	 	${productMaker} = #{productMaker}, ${productImgPath} = #{productImgPath}, ${productCategory} = #{productCategory},
+	 	${productIsDeleted} = #{productIsDeleted}
+	 	where ${productId} = #{productId}
+	 </update>
+	 
+	 <delete id="delete">
+	 	delete from ${product}
+	 	where ${productName} = #{productName}
+	 </delete>
+	  
+	 <select id="paging" resultType="ProductVO">
+	 select ${productId}, ${productName}, ${productPrice}, ${productStock}, ${productMaker}, ${productImgPath}, ${productCategory}, ${productIsDeleted}
+	 from(
+	 	select rownum rn, a.* from(
+	 		select * from ${product} order by ${productName} desc
+	 	)a
+	 ) where rn between #{start} and #{end}
+	 </select>
+	 
+	 <select id="total_count" resultType="Integer">
+	 	select count(*) total_cnt from ${product}
+	 </select>
+	 
+	 <select id="select_by_productName" resultType="ProductVO">
+	 	select * from ${product}
+	 	where ${productName} like #{productName}
+	 </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

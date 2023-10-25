@@ -4,65 +4,62 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.spring.mall.MemberMapper">
 
-	 <insert id="insert">
-	 	insert into ${member}
-	 	(${memberId}, ${password}, ${phone}, ${email}, ${address}, ${userGrade})
-	 	values (#{memberId}, #{password}, #{phone}, #{email}, #{address}, #{userGrade})
-	 </insert>
-	 
-	 <select id="select_all" resultType="BoardVO">
-	 	select * from ${test_board}
-	 	order by ${boardId} desc
-	 </select>
-	 
-	 <select id="select_by_board_id" resultType="BoardVO">
-	 	select * from ${test_board} where ${boardId} = #{boardId}
-	 </select>
-	 
-	 <update id ="update">
-	 	update ${test_board}
-	 	set ${boardTitle} = #{boardTitle}, ${boardContent} = #{boardContent}
-	 	where ${boardId} = #{boardId}
-	 </update>
-	 
-	 <update id="update_reply_cnt">
-	 	update ${test_board}
-	 	set ${replyCnt} = ${replyCnt} + #{amount}
-	 	where ${boardId} = #{boardId}
-	 </update>
-	 
-	 <delete id ="delete">
-	 	delete from ${test_board}
-	 	where ${boardId} = #{boardId}
-	 </delete>
-	 
-	 <select id="paging" resultType="BoardVO">
-	 	select ${boardId}, ${boardTitle}, ${boardContent}, ${memberId}, ${boardDateCreated}, ${replyCnt}
-	 	from(
-	 		select rownum rn, a.* from(
-	 			select * from ${test_board} order by ${boardId} desc
-	 		)a
-	 	) where rn between #{start} and #{end}
-	 </select>
-	 
-	 <!-- 
-	 #{start} : criteria.getStart()
-	 #{end } : criteria.getEnd()
-	  -->
-	  
-	  <select id="total_count" resultType="Integer">
-	  	select count(*) total_cnt from ${test_board}
-	  </select>
-	  
-	  <select id="select_by_memberid" resultType="BoardVO">
-	  	select * from ${test_board}
-	  	where ${memberId} like #{memberId}
-	  </select>
-	  
-	  <select id="select_by_title_content" resultType="BoardVO">
-	  	select * from ${test_board}
-	  	where ${boardTitle} like #{keyword} or
-	  		${boardContent} like #{keyword}
-	  		order by ${boardId} desc
-	  </select>
+	<insert id="insert">
+		insert into ${member}
+		(${memberId}, ${password}, ${name}, ${phone}, ${email},${address}, ${userGrade})
+		values (#{memberId}, #{password}, #{name}, #{phone}, #{email},
+		#{address}, #{userGrade})
+	</insert>
+
+	<select id="select_all" resultType="MemberVO">
+		select * from ${member}
+	</select>
+	
+	<select id="select_checked_id" resultType="Integer">
+		select count(${memberId}) from ${member}
+		where ${memberId} = #{memberId}
+	</select>
+	
+	 <select id="findByMemberId" resultType="CustomUserDetails">
+        select * from ${member}
+		where ${memberId} = #{memberId}
+    </select>
+	
+	<update id="update" parameterType="map">
+		update ${member}
+		set 
+		${password} = #{password},
+		${name} = #{name},
+		${phone} = #{phone},
+		${email} = #{email},
+		${address} = #{address},
+		${userGrade} = #{userGrade}
+		where ${memberId} = #{memberId}
+	</update>
+	<!-- 비밀번호 미포함 -->
+	<update id="updateUserDetails" parameterType="map">
+		update ${member}
+		set 
+		${name} = #{name},
+		${phone} = #{phone},
+		${email} = #{email},
+		${address} = #{address}
+		where ${memberId} = #{memberId}
+	</update>
+	<!-- 비밀번호만 수정 -->
+	<update id="updateUserPassword" parameterType="map">
+		update ${member}
+		set 
+		${password} = #{password}
+		where ${memberId} = #{memberId}
+	</update>
+	
+	
+	
+	<delete id="delete">
+		delete from ${member}
+		where ${memberId} = #{memberId}
+	</delete>
+
+
 </mapper>
