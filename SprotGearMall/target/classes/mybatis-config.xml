@@ -46,25 +46,25 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="productId" value="product_id"/>
 	 	
 	 	<property name="qna_board" value="qna_board"/>
-	 	<property name="qBoardId" value="q_board_id"/> 
+	 	<property name="qnaBoardId" value="qna_board_id"/> 
 	 	<property name="memberId" value="member_id"/>
-	 	<property name="qBoardTitle" value="q_board_title"/>
-	 	<property name="qBoardContent" value="q_board_content"/>
-	 	<property name="qBoardCreatedDate" value="q_board_created_date"/>
+	 	<property name="qnaBoardTitle" value="qna_board_title"/>
+	 	<property name="qnaBoardContent" value="qna_board_content"/>
+	 	<property name="qnaBoardCreatedDate" value="qna_board_created_date"/>
 	 	
 	 	<property name="qna_reply" value="qna_reply"/>
-	 	<property name="qReplyId" value="q_reply_id"/> 
-	 	<property name="qBoardId" value="q_board_id"/>
+	 	<property name="qnaReplyId" value="qna_reply_id"/> 
+	 	<property name="qnaBoardId" value="qna_board_id"/>
 	 	<property name="memberId" value="member_id"/>
-	 	<property name="qReplyContent" value="q_reply_content"/>
-	 	<property name="qReplyCreatedDate" value="q_reply_created_date"/>
+	 	<property name="qnaReplyContent" value="qna_reply_content"/>
+	 	<property name="qnaplyCreatedDate" value="qna_reply_created_date"/>
 	 	
 	 	<property name="product_reply" value="product_reply"/>
-	 	<property name="pReplyId" value="p_reply_id"/> 
+	 	<property name="productReplyId" value="product_reply_id"/> 
 	 	<property name="productId" value="product_id"/>
 	 	<property name="memberId" value="member_id"/>
-	 	<property name="pReplyContent" value="p_reply_content"/>
-	 	<property name="pReplyCreatedDate" value="p_reply_created_date"/>
+	 	<property name="productReplyContent" value="product_reply_content"/>
+	 	<property name="productReplyCreatedDate" value="product_reply_created_date"/>
 	 	
 	 	<property name="review" value="review"/>
 	 	<property name="reviewId" value="review_id"/> 

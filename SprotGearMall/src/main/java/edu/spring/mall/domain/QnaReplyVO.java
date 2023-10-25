@@ -3,43 +3,44 @@ package edu.spring.mall.domain;
 import java.util.Date;
 
 public class QnaReplyVO {
-	private int qReplyId;
-	private int qBoardId;
+	private int qnaReplyId;
+	private int qnaBoardId;
 	private String memberId;
-	private String qReplyContent;
-	private Date qReplyCreatedDate;
+	private String qnaReplyContent;
+	private Date qnaReplyCreatedDate;
 	
 	
 	public QnaReplyVO() {}
 
 
-	public QnaReplyVO(int qReplyId, int qBoardId, String memberId, String qReplyContent, Date qReplyCreatedDate) {
+	public QnaReplyVO(int qnaReplyId, int qnaBoardId, String memberId, String qnaReplyContent,
+			Date qnaReplyCreatedDate) {
 		super();
-		this.qReplyId = qReplyId;
-		this.qBoardId = qBoardId;
+		this.qnaReplyId = qnaReplyId;
+		this.qnaBoardId = qnaBoardId;
 		this.memberId = memberId;
-		this.qReplyContent = qReplyContent;
-		this.qReplyCreatedDate = qReplyCreatedDate;
+		this.qnaReplyContent = qnaReplyContent;
+		this.qnaReplyCreatedDate = qnaReplyCreatedDate;
 	}
 
 
-	public int getqReplyId() {
-		return qReplyId;
+	public int getQnaReplyId() {
+		return qnaReplyId;
 	}
 
 
-	public void setqReplyId(int qReplyId) {
-		this.qReplyId = qReplyId;
+	public void setQnaReplyId(int qnaReplyId) {
+		this.qnaReplyId = qnaReplyId;
 	}
 
 
-	public int getqBoardId() {
-		return qBoardId;
+	public int getQnaBoardId() {
+		return qnaBoardId;
 	}
 
 
-	public void setqBoardId(int qBoardId) {
-		this.qBoardId = qBoardId;
+	public void setQnaBoardId(int qnaBoardId) {
+		this.qnaBoardId = qnaBoardId;
 	}
 
 
@@ -53,33 +54,32 @@ public class QnaReplyVO {
 	}
 
 
-	public String getqReplyContent() {
-		return qReplyContent;
+	public String getQnaReplyContent() {
+		return qnaReplyContent;
 	}
 
 
-	public void setqReplyContent(String qReplyContent) {
-		this.qReplyContent = qReplyContent;
+	public void setQnaReplyContent(String qnaReplyContent) {
+		this.qnaReplyContent = qnaReplyContent;
 	}
 
 
-	public Date getqReplyCreatedDate() {
-		return qReplyCreatedDate;
+	public Date getQnaReplyCreatedDate() {
+		return qnaReplyCreatedDate;
 	}
 
 
-	public void setqReplyCreatedDate(Date qReplyCreatedDate) {
-		this.qReplyCreatedDate = qReplyCreatedDate;
+	public void setQnaReplyCreatedDate(Date qnaReplyCreatedDate) {
+		this.qnaReplyCreatedDate = qnaReplyCreatedDate;
 	}
 
 
 	@Override
 	public String toString() {
-		return "QnaReply [qReplyId=" + qReplyId + ", qBoardId=" + qBoardId + ", memberId=" + memberId
-				+ ", qReplyContent=" + qReplyContent + ", qReplyCreatedDate=" + qReplyCreatedDate + "]";
+		return "QnaReplyVO [qnaReplyId=" + qnaReplyId + ", qnaBoardId=" + qnaBoardId + ", memberId=" + memberId
+				+ ", qnaReplyContent=" + qnaReplyContent + ", qnaReplyCreatedDate=" + qnaReplyCreatedDate + "]";
 	}
+
 	
-	
-	
-	
+
 }

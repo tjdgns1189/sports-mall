@@ -54,11 +54,12 @@ public class MemberServiceImple implements MemberService {
 	@Override
 	public int update(Map userDetail) throws Exception {
 		int result = 0;
+		String memberId = (String) userDetail.get("memberId");
 		if (userDetail.containsKey("password")) {
+			
 			userDetail.put("password", passwordEncoder.encode((String) userDetail.get("password")));
 			result = dao.updateUserPassword(userDetail);
 			if (result == 1) {
-				String memberId = (String) userDetail.get("memberId");
 				UserDetails user = service.loadUserByUsername(memberId);
 				Authentication newAuth = new UsernamePasswordAuthenticationToken(user, user.getPassword(),
 						user.getAuthorities());
@@ -68,7 +69,6 @@ public class MemberServiceImple implements MemberService {
 			logger.info("user정보 수정");
 			result = dao.updateUserDetail(userDetail);
 			if (result == 1) {
-				String memberId = (String) userDetail.get("memberId");
 				UserDetails user = service.loadUserByUsername(memberId);
 				Authentication newAuth = new UsernamePasswordAuthenticationToken(user, user.getPassword(),
 						user.getAuthorities());

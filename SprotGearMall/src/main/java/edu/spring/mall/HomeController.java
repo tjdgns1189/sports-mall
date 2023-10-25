@@ -37,6 +37,9 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+	    model.addAttribute("authorities", authorities);
 		
 		return "home";
 	}
