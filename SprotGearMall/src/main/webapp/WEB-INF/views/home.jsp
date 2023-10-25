@@ -3,7 +3,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/WEB-INF/views/includes/headerTest.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 <footer>
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 </footer>

@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-	<%@ include file="/WEB-INF/views/includes/headerTest.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 	
 	
 <!DOCTYPE html>

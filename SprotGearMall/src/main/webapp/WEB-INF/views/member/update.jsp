@@ -4,7 +4,7 @@
     <c:set var="path" value="${pageContext.request.contextPath}"/>
     <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-	<%@ include file="/WEB-INF/views/includes/headerTest.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
