@@ -82,7 +82,28 @@ public class ProductController {
 		model.addAttribute("page",page);
 	} // end updateGET()
 	
+	@PostMapping("/update")
+	public String updatePOST(ProductVO vo, Integer page) {
+		logger.info("updatePOST() 호출 : vo = " + vo.toString());
+		int result = productService.update(vo);
+		
+		if(result == 1) {
+			return "redirect:/board/list?page=" + page;
+		} else {
+			return "redirect:/board/update?productName=" + vo.getProductName();
+		}
+	} // end updatePOST()
 	
+	@PostMapping("/delete")
+	public String delete(String productName) {
+		logger.info("delete() 호출 : productName = " + productName);
+		int result = productService.delete(productName);
+		if(result == 1) {
+			return "redirect:/board/list";
+		} else {
+			return "redirect:/board/list";
+		}
+	} // end delete()
 	
 	
 } // end ProductController

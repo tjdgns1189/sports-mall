@@ -20,11 +20,14 @@ li {
 }
 </style>
 <head>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 <a href="../qnaBoard/qnaBoard">qna게시판</a>
+<a href="register"><input type="button" value="상품 등록"></a>
+<hr>
 <h1>상품목록리스트</h1>
 
 	<table>
@@ -43,7 +46,7 @@ li {
     		<c:forEach var="vo" items="${list }"> <!-- 서블릿에서 넘어온 list데이터. 어트리뷰트로. -->
     			<tr>
     				<td>${vo.productId }</td>
-    				<td><a href="detail?productId=${vo.productId }">${vo.productName }</a></td> <!--  사이트이동하는데 데이터보내면서-->
+    				<td><a href="detail?productName=${vo.productName }&page=${pageMaker.criteria.page}">${vo.productName }</a></td> <!--  사이트이동하는데 데이터보내면서-->
     				<td>${vo.productPrice }</td>
     				<td>${vo.productStock }</td>
     				<td>${vo.productMaker }</td>
@@ -54,6 +57,26 @@ li {
     	</tbody>
     </table>
 
-</body>
+	<ul>	
+		<c:if test="${pageMaker.hasPrev }">
+			<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
+		</c:if>
+		<c:forEach begin="${pageMaker.startPageNo }" end="${pageMakger.endPageNo }" var="num">
+		<li><a href="list?page=${num }">${num }</a></li>
+		</c:forEach>
+		<c:if test="${pageMaker.hasNext }">
+			<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
+		</c:if>
+	</ul>
 
+	<input type="hidden" id="insertAlert" value="${insert_result }">
+
+	<script type="text/javascript">
+		var result = $('#insertAlert').val();
+		if(result == 'success') {
+			alert('새 상품 등록 성공!');
+		}
+	</script>
+	
+</body>
 </html>
