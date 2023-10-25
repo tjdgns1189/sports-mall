@@ -1,7 +1,5 @@
 package edu.spring.mall.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -120,9 +118,13 @@ public class LoginController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 		String name = user.getName();
+		System.out.println(name);
 		String phone = user.getPhone();
+		System.out.println(phone);
 		String email = user.getEmail();
-		String address[] = user.getAddress().split(".");
+		System.out.println(email);
+		System.out.println(user.getAddress());
+		String address[] = user.getAddress().split("\\.");
 
 		model.addAttribute("name", name);
 		model.addAttribute("phone", phone);
@@ -167,6 +169,22 @@ public class LoginController {
 		}
 
 	}
+	
+	@PostMapping("/updatePassword")
+	public String updatePasswordPOST(@RequestParam("memberId") String memberId,
+			@RequestParam("newPassword") String newPassword) {
+		logger.info("updatePasswordPOST 호출");
+		Map<String, String> user = new HashMap<String, String>();
+		user.put("memberId", memberId);
+		user.put("password", newPassword);
+		try {
+			int result = service.update(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "redirect:/member/mypage";
+	}
 
 	@GetMapping("/delete")
 	public void deleteGET() {
@@ -181,15 +199,15 @@ public class LoginController {
 			//비밀번호 검증을 위한 변수
 		  	UserDetails user = userService.loadUserByUsername(memberId);
 		    String encodedPassword = user.getPassword();
-
+		  
 		    // 비밀번호 검증
 		    if (!passwordEncoder.matches(password, encodedPassword)) {
-		        logger.info("비밀번호 틀림!");
+		        logger.info("비밀번호 틀림");
 		        return "redirect:/member/delete?error";
 		    }
 		    try {
 		        if (service.delete(memberId) != 1) {
-		            return "redirect:/member/delete"; // 탈퇴 처리 실패
+		            return "redirect:/member/delete?error"; // 탈퇴 처리 실패
 		        }
 		        // 로그아웃 처리
 		        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -202,4 +220,8 @@ public class LoginController {
 		        return "redirect:/member/delete"; 
 		    }
 		}
+	
+	
+	
+	
 }

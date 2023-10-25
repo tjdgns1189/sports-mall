@@ -35,9 +35,9 @@ public class ProductServiceImple implements ProductService {
 	}
 
 	@Override
-	public ProductVO read(String ProductName) {
-		logger.info("read() 호출 : ProductName = " + ProductName);
-		return dao.select(ProductName);
+	public ProductVO read(String productName) {
+		logger.info("read() 호출 : ProductName = " + productName);
+		return dao.select(productName);
 	}
 
 	@Override
@@ -47,9 +47,9 @@ public class ProductServiceImple implements ProductService {
 	}
 
 	@Override
-	public int delete(String ProductName) {
-		logger.info("delete() 호출 : ProductName = " + ProductName);
-		return dao.delete(ProductName);
+	public int delete(String productName) {
+		logger.info("delete() 호출 : productName = " + productName);
+		return dao.delete(productName);
 	}
 
 	@Override

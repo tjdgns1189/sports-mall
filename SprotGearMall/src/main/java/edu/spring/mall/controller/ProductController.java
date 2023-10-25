@@ -67,6 +67,22 @@ public class ProductController {
 	} // end registerPOST()
 	
 	@GetMapping("/detail")
+	public void detail(Model model, String productName, Integer page ) {
+		logger.info("detail() 호출 : ProductName = " + productName);
+		ProductVO vo = productService.read(productName);
+		model.addAttribute("vo",vo);
+		model.addAttribute("page",page);
+	} // end detail()
+	
+	@GetMapping("/update")
+	public void updateGET(Model model, String productName, Integer page) {
+		logger.info("updateGET() 호출 : productName = " + productName);
+		ProductVO vo = productService.read(productName);
+		model.addAttribute("vo",vo);
+		model.addAttribute("page",page);
+	} // end updateGET()
+	
+	
 	
 	
 } // end ProductController

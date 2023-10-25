@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,13 @@ public class RestLoginController {
 
 	@Autowired
 	private MemberDAO dao;
+	
+	@Autowired
+	private UserDetailsService service;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 
 
 	@PostMapping("member/checkid")
@@ -41,6 +51,25 @@ public class RestLoginController {
 //		return new ResponseEntity<String>(user, Http);
 //		
 //	}
+	
+	@PostMapping("member/passwordCheck")
+	public ResponseEntity<Integer> passwordCheck(@RequestBody Map<String,String> request){
+		Integer result = 0;
+		String memberId = request.get("memberId");
+		String password = request.get("password");
+		UserDetails user = service.loadUserByUsername(memberId);
+	    String encodedPassword = user.getPassword();
+	    
+
+	    if (passwordEncoder.matches(password, encodedPassword)) {
+	    	result = 1;
+	    	return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	    }else {
+	    	return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	    }
+		
+		
+	}
 	
 	
 
