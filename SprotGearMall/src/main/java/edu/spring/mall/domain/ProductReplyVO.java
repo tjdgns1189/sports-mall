@@ -3,70 +3,87 @@ package edu.spring.mall.domain;
 import java.util.Date;
 
 public class ProductReplyVO {
-	private int pReplyId;
+	private int productReplyId;
 	private int productId;
 	private String memberId;
-	private String pReplyContent;
-	private Date pReplyCreatedDate;
+	private String productReplyContent;
+	private Date productReplyCreatedDate;
+	
 	
 	public ProductReplyVO() {}
 
-	public ProductReplyVO(int pReplyId, int productId, String memberId, String pReplyContent, Date pReplyCreatedDate) {
+
+	public ProductReplyVO(int productReplyId, int productId, String memberId, String productReplyContent,
+			Date productReplyCreatedDate) {
 		super();
-		this.pReplyId = pReplyId;
+		this.productReplyId = productReplyId;
 		this.productId = productId;
 		this.memberId = memberId;
-		this.pReplyContent = pReplyContent;
-		this.pReplyCreatedDate = pReplyCreatedDate;
+		this.productReplyContent = productReplyContent;
+		this.productReplyCreatedDate = productReplyCreatedDate;
 	}
 
-	public int getpReplyId() {
-		return pReplyId;
+
+	public int getProductReplyId() {
+		return productReplyId;
 	}
 
-	public void setpReplyId(int pReplyId) {
-		this.pReplyId = pReplyId;
+
+	public void setProductReplyId(int productReplyId) {
+		this.productReplyId = productReplyId;
 	}
+
 
 	public int getProductId() {
 		return productId;
 	}
 
+
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
+
 
 	public String getMemberId() {
 		return memberId;
 	}
 
+
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 
-	public String getpReplyContent() {
-		return pReplyContent;
+
+	public String getProductReplyContent() {
+		return productReplyContent;
 	}
 
-	public void setpReplyContent(String pReplyContent) {
-		this.pReplyContent = pReplyContent;
+
+	public void setProductReplyContent(String productReplyContent) {
+		this.productReplyContent = productReplyContent;
 	}
 
-	public Date getpReplyCreatedDate() {
-		return pReplyCreatedDate;
+
+	public Date getProductReplyCreatedDate() {
+		return productReplyCreatedDate;
 	}
 
-	public void setpReplyCreatedDate(Date pReplyCreatedDate) {
-		this.pReplyCreatedDate = pReplyCreatedDate;
+
+	public void setProductReplyCreatedDate(Date productReplyCreatedDate) {
+		this.productReplyCreatedDate = productReplyCreatedDate;
 	}
+
 
 	@Override
 	public String toString() {
-		return "ProductReplyVO [pReplyId=" + pReplyId + ", productId=" + productId + ", memberId=" + memberId
-				+ ", pReplyContent=" + pReplyContent + ", pReplyCreatedDate=" + pReplyCreatedDate + "]";
+		return "ProductReplyVO [productReplyId=" + productReplyId + ", productId=" + productId + ", memberId="
+				+ memberId + ", productReplyContent=" + productReplyContent + ", productReplyCreatedDate="
+				+ productReplyCreatedDate + "]";
 	}
 	
 	
+	
+
 	
 	
 }
