@@ -79,6 +79,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="noticeTitle" value="notice_title"/>
 	 	<property name="noticeContent" value="notice_content"/>
 	 	<property name="noticeCreatedDate" value="notice_created_date"/>
+	 	
+	 	
+	 	<property name="likes_table" value="likes"/>
+	 	<property name="likesId" value="likes_id"/>
+	 	<property name="memberId" value="member_id"/>
+	 	<property name="productId" value="product_id"/>
 
  	 </properties>
 	 

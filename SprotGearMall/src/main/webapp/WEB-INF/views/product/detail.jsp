@@ -7,6 +7,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <meta charset="UTF-8">
 <title>${vo.productName }</title>
+<link href="<c:url value="/resources/css/headers.css" />" rel="stylesheet">
 </head>
 <body>
 	<h2>상품 정보</h2>
@@ -14,19 +15,15 @@
 	<div>
 		<p>상품 번호 : ${vo.productId }</p>
 	</div>
-	
 	<div>
 		<p>상품 이름 : ${vo.productName } </p>
 	</div>
-	
 	<div>
 		<p>상품 가격 : ${vo.productPrice }</p>
 	</div>
-	
 	<div>
 		<p>상품 재고 : ${vo.productStock }</p>
 	</div>
-	
 	<div>
 		<p>상품 제조사 : ${vo.productMaker }</p>
 	</div>
@@ -48,6 +45,17 @@
 		<input type="submit" value="상품 삭제">
 	</form>
 	
+	<button class="like-btn">
+        <span class="heart"></span>
+    </button>
+	<script type="text/javascript">
+	$(()=>{
+		$('.like-btn').on('click',()=>{
+			$('.heart').toggleClass('heart-filled');
+		})
+	})
+	
+	</script>
 </body>
-
+	
 </html>
