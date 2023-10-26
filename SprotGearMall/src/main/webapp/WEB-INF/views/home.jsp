@@ -3,17 +3,19 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
-<footer>
-    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
-</footer>
+
+<!DOCTYPE html>
 
 <html>
 <head>
 <meta charset="UTF-8">
 	<title>Home</title>
+
 </head>
 <body>
+<header>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+</header>
 <h1>
 	Hello world! 
 </h1>
@@ -35,6 +37,8 @@
 <a href="member/register">회원가입</a>
 </sec:authorize>
 
-
+<footer>
+    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+</footer>
 </body>
 </html>

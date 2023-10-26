@@ -27,6 +27,10 @@
 
 </head>
 <body>
+<header>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+</header>
+
 	<div class="signup-form">
 		<form action="register" method="POST">
 			<input type="text" name="memberId" id="memberId" required="required"
@@ -174,5 +178,8 @@
 	
 
 </script>
+<footer>
+    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+</footer>
 </body>
 </html>

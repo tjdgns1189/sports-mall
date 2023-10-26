@@ -107,6 +107,10 @@ body {
 </style>
 </head>
 <body>
+<header>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+</header>
+
  <div class="signup-form">
 	<form action="update" method="POST">
 	 <c:if test="${not empty error}"> 
@@ -184,5 +188,8 @@ body {
 	
 
 </script>
+<footer>
+    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+</footer>
 </body>
 </html>

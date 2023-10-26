@@ -17,7 +17,9 @@
  rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
-
+<header>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+</header>
 	
 	
 <div class="container">
@@ -40,5 +42,8 @@
       		<a href="register" >회원가입</a>
       </div>
 </div>
+<footer>
+    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+</footer>
 </body>
 </html>

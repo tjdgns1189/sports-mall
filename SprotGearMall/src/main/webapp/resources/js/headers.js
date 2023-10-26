@@ -1,6 +1,5 @@
 
-
-$(document).ready(function() {
+$(()=>{
     $(".menu-button").click(function() {
         $(".dropdown").toggle();
     });
@@ -10,5 +9,6 @@ $(document).ready(function() {
             $(".dropdown").hide();
         }
     });
-});
-
+    
+    consol
+});//end document ready

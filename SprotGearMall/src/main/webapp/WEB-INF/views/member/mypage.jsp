@@ -129,5 +129,9 @@
 		
 	}
 </script>
+
+<footer>
+    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+</footer>
 </body>
 </html>
