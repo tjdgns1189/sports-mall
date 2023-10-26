@@ -20,15 +20,13 @@ public class RestLikeController {
 	
 	
 	@PostMapping("/like")
-	public ResponseEntity<Integer> Like(@RequestBody LikesVO vo){
-		Integer result = 0;
+	public ResponseEntity<String> InsertLike(@RequestBody LikesVO vo){
+		logger.info("좋아요 insert");
+		String result = "";
 		
 		//처음 디테일 들어갔을때 좋아요인지 아닌지 판단해야함
 		//버튼을 누르면 memberId productId를 가져올거임
-		
-		//만약아닐경우
-		
-		
+
 		
 		logger.info("좋아요 기능 수행");
 		
