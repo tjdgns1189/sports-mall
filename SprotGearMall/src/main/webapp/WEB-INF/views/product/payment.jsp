@@ -32,10 +32,10 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 		</div>
 		<hr>
 	
-	<form action="orderlist" method="POST">
+	<form action="../orders/orderlist" method="POST">
 		<div>
 			<p>접속중인 아이디 : </p>
-			<input type="text" name="memberId" value="${sessionScope.memberId }" readonly="readonly">
+			<input type="text" name="memberId" value="test" readonly="readonly">
 		</div>
 		<div>
 			<input type="hidden" name="productId" value="${vo.productId }" readonly="readonly">

@@ -15,4 +15,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where ${qnaBoardId} = #{qnaBoardId}
 		order by ${qnaReplyId}
 	</select>
+
+	<update id="update">
+		update ${qna_reply}
+		set ${qnaReplyContent} = #{qnaReplyContent}
+		where ${qnaReplyId} = #{qnaReplyId}
+	</update>
+
+	<delete id="delete">
+		delete from ${qna_reply}
+		where ${qnaReplyId} = #{qnaReplyId}
+	</delete>
+
 </mapper>
+
+
+
+
+
+
+
+
+
+
+

@@ -9,5 +9,7 @@ public interface QnaBoardService {
 	int create(QnaBoardVO vo);
 	List<QnaBoardVO> read(PageCriteria criteria);	
 	QnaBoardVO read(int qnaBoardId);
+	int update(QnaBoardVO vo);
+	int delete(int qnaBoardId);
 	int getTotalCounts();
 }

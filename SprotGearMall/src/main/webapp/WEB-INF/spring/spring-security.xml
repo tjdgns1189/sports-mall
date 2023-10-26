@@ -21,6 +21,8 @@
 	<http pattern="/product/**" security="none"/>
 	<http pattern="/css/**" security="none"/>
 
+	<http pattern="/qnaBoard/**" security="none"/>
+	<http pattern="/orders/**" security="none"/>
 	
 	
 
