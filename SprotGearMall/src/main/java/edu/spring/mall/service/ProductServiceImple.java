@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.pageutil.PageCriteria;
+import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
 
 
@@ -19,6 +20,9 @@ public class ProductServiceImple implements ProductService {
 	
 	@Autowired
 	private ProductDAO dao;
+	
+	@Autowired
+	private LikesDAO likes;
 
 	@Override
 	public int create(ProductVO vo) {
@@ -35,9 +39,10 @@ public class ProductServiceImple implements ProductService {
 	}
 
 	@Override
-	public ProductVO read(String productName) {
-		logger.info("read() 호출 : ProductName = " + productName);
-		return dao.select(productName);
+	public ProductVO read(String productId) {
+		logger.info("read() 호출 : ProductName = " + productId);
+		//최종적으로 이 형태이긴할거임
+		return dao.select(productId);
 	}
 
 	@Override

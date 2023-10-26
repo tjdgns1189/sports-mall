@@ -37,6 +37,7 @@
 <a href="member/register">회원가입</a>
 </sec:authorize>
 
+
 <footer>
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 </footer>

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,17 +15,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
+import edu.spring.mall.persistence.ProductDAO;
 import edu.spring.mall.service.ProductService;
 
-@RequestMapping(value="/product")
+@Controller
+@RequestMapping(value = "product")
 public class ProductController {
-	private static final Logger logger = 
-			LoggerFactory.getLogger(ProductController.class);
+	private final Logger logger = LoggerFactory.getLogger(ProductController.class);
 	
+	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private ProductDAO dao;
+	
 	@GetMapping("/list")
-	public void list(Model model, Integer page, Integer numsPerPage) {
+	public void listGET(Model model, Integer page, Integer numsPerPage) {
 		logger.info("list() 호출");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 		
@@ -47,6 +54,14 @@ public class ProductController {
 		
 	} // end list()
 	
+	@GetMapping("/payment")
+	public void paymentGET(Model model, Integer productId) {
+		logger.info("paymentGET() 호출");
+		ProductVO vo = dao.select(productId);
+		model.addAttribute("vo", vo);
+	}
+	
+	
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("registerGET()");
@@ -67,9 +82,9 @@ public class ProductController {
 	} // end registerPOST()
 	
 	@GetMapping("/detail")
-	public void detail(Model model, String productName, Integer page ) {
-		logger.info("detail() 호출 : ProductName = " + productName);
-		ProductVO vo = productService.read(productName);
+	public void detail(Model model, String productId, Integer page) {
+		logger.info("detail() 호출 : productId = " + productId);
+		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo",vo);
 		model.addAttribute("page",page);
 	} // end detail()
