@@ -37,6 +37,7 @@
 <a href="member/register">회원가입</a>
 </sec:authorize>
 
+
 <hr>
 
 
@@ -92,6 +93,7 @@
 			alert('새 상품 등록 성공!');
 		}
 	</script>
+
 
 <footer>
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
