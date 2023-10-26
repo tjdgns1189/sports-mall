@@ -18,6 +18,7 @@
 	<http pattern="/member/register" security="none"/>
 	<http pattern="/member/loginForm/*" security="none"/>
 	<http pattern="/resources/**" security="none"/>
+	<http pattern="/product/**" security="none"/>
 	<http pattern="/css/**" security="none"/>
 
 	
