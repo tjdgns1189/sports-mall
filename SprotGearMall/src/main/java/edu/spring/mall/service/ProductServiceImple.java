@@ -32,17 +32,16 @@ public class ProductServiceImple implements ProductService {
 
 	@Override
 	public List<ProductVO> read(PageCriteria criteria) {
-		logger.info("read() 호출");
+		logger.info("read(criteria) 호출");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return dao.select(criteria);
 	}
 
 	@Override
-	public ProductVO read(String productId) {
-		logger.info("read() 호출 : ProductName = " + productId);
-		//최종적으로 이 형태이긴할거임
-		return dao.select(productId);
+	public ProductVO read(int productId) {
+		logger.info("read(productId) 호출 : productId = " + productId);
+		return dao.selectById(productId);
 	}
 
 	@Override

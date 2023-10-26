@@ -26,7 +26,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		HttpSession session = request.getSession(false);
 		if(session != null) {
 			SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
-			
 			if(savedRequest != null) {
 				String targetURL = savedRequest.getRedirectUrl();
 				redirectStrategy.sendRedirect(request, response, targetURL);

@@ -8,12 +8,12 @@ import edu.spring.mall.pageutil.PageCriteria;
 public interface ProductDAO {
 	int insert(ProductVO vo);
 	List<ProductVO> select();
-	ProductVO select(String productName);
+	ProductVO selectByName(String productName);
+	ProductVO selectById(int productId);
+	List<ProductVO> select(PageCriteria criteria);
 	int update(ProductVO vo);
 	int delete(String productName);
-	List<ProductVO> select(PageCriteria criteria);
 	int getTotalCounts();
 	List<ProductVO> selectPaging(String productName);
-	ProductVO select(int productId);
 	
 }

@@ -22,7 +22,7 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 
-<sec:authorize access="isAuthenticated()">
+	<sec:authorize access="isAuthenticated()">
     로그인한 사용자: <sec:authentication property="principal.username"/>
     
     <c:url var="logoutUrl" value="/logout"/>

@@ -1,10 +1,16 @@
 package edu.spring.mall.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +22,7 @@ import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
 import edu.spring.mall.persistence.ProductDAO;
+import edu.spring.mall.security.CustomUserDetails;
 import edu.spring.mall.service.ProductService;
 
 @Controller
@@ -57,7 +64,7 @@ public class ProductController {
 	@GetMapping("/payment")
 	public void paymentGET(Model model, Integer productId) {
 		logger.info("paymentGET() 호출");
-		ProductVO vo = dao.select(productId);
+		ProductVO vo = dao.selectById(productId);
 		model.addAttribute("vo", vo);
 	}
 	
@@ -82,17 +89,16 @@ public class ProductController {
 	} // end registerPOST()
 	
 	@GetMapping("/detail")
-	public void detail(Model model, String productId, Integer page) {
+	public void detail(int productId, Model model) {
 		logger.info("detail() 호출 : productId = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo",vo);
-		model.addAttribute("page",page);
 	} // end detail()
 	
 	@GetMapping("/update")
-	public void updateGET(Model model, String productName, Integer page) {
-		logger.info("updateGET() 호출 : productName = " + productName);
-		ProductVO vo = productService.read(productName);
+	public void updateGET(Model model, int productId, Integer page) {
+		logger.info("updateGET() 호출 : productName = " + productId);
+		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo",vo);
 		model.addAttribute("page",page);
 	} // end updateGET()

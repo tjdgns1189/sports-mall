@@ -13,6 +13,8 @@
 
 </head>
 <body>
+    로그인한 사용자: <sec:authentication property="principal.username"/>
+
 	<h2>상품 정보</h2>
 	
 	<div>
@@ -36,16 +38,16 @@
 		<p>상품 이미지 : ${vo.productImgPath }</p>
 	</div>
 	 -->
-
+	
 	<div style="text-align">
-		<button><a href="payment?productId=${vo.productId }">구매</button>
+		<a href="payment?productId=${vo.productId }"><button>구매</button></a>
 	</div>
 	
 	<a href="list?page=${page }"><input type="button" value="상품 목록"></a>
 	<a href="update?productName=${vo.productName }&page=${page }"><input type="button" value="상품 수정"></a>
 	<form action="delete" method="POST">
 		<input type="hidden" id="productId" name="productId" value="${vo.productId }">
-		<input type="hidden" id="memberId" name="memberId" value="${pageContext.request.userPrincipal.name}">
+		<input type="hidden" id="memberId" name="memberId" value="${memberId }">
 
 		<input type="submit" value="상품 삭제">
 	</form>
@@ -56,7 +58,7 @@
 	<script type="text/javascript">
 	$(()=>{
 		$('.like-btn').on('click',()=>{
-			$isLike();
+			isLike();
 		})
 	})
 	function isLike() {
@@ -66,37 +68,47 @@
     if ($('.heart').hasClass('heart-filled')) {
         $.ajax({
             type: "DELETE", 
-            url: '/likes',
+            url: 'likes',
             headers: { 'Content-Type': 'application/json' },
             data: JSON.stringify({
                 "memberId": memberId,
-                "productId": productId
+                "productId": productId,
             }),
             success: (result) => {
                 console.log(result);
                 if (result === 'success') {
                     $('.heart').toggleClass('heart-filled');
+                }
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                if (jqXHR.status == 403) {
+                    alert("로그인이 필요합니다");
                 }
             }
         });
     } else {
         $.ajax({
             type: "POST",
-            url: '/likes',
+            url: 'likes',
             headers: { 'Content-Type': 'application/json' },
             data: JSON.stringify({
                 "memberId": memberId,
-                "productId": productId
+                "productId": productId,
             }),
             success: (result) => {
                 console.log(result);
                 if (result === 'success') {
                     $('.heart').toggleClass('heart-filled');
                 }
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                if (jqXHR.status == 403) {
+                    alert("로그인이 필요합니다");
+                }
             }
         });
     }
-}
+	}
 	</script>
 </body>
 	
