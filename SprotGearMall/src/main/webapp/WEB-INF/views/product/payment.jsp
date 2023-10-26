@@ -2,10 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE html>
 <html>
-<script src="https://code.jquery.com/jquery-3.7.1.js" 
-integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
 </script>
 <head>
 <meta charset="UTF-8">
@@ -35,7 +36,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	<form action="../orders/orderlist" method="POST">
 		<div>
 			<p>접속중인 아이디 : </p>
-			<input type="text" name="memberId" value="test" readonly="readonly">
+			<input type="text" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">
 		</div>
 		<div>
 			<input type="hidden" name="productId" value="${vo.productId }" readonly="readonly">

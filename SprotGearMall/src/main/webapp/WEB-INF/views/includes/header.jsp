@@ -14,10 +14,10 @@
 		<h1><a href="${pageContext.request.contextPath}/index">스포츠용품 쇼핑몰</a></h1>
 	<div class="header-container">
     	<ul class="nav-list">
-        	<li><a href="#">메뉴</a></li>
+        	<li><a href="${pageContext.request.contextPath}/product/list">메뉴</a></li>
        		<li><a href="#">들어</a></li>
         	<li><a href="#">갈곳</a></li>
-        	<li><a href="#">qna게시판</a></li>
+        	<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard">QNA</a></li>
     	</ul>
     
     <div class="search-bar">

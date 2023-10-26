@@ -18,7 +18,9 @@
 	<http pattern="/member/register" security="none"/>
 	<http pattern="/member/loginForm/*" security="none"/>
 	<http pattern="/resources/**" security="none"/>
-	<http pattern="/product/**" security="none"/>
+	<http pattern="/product/list" security="none"/>
+	<http pattern="/product/detail" security="none"/>
+	
 	<http pattern="/css/**" security="none"/>
 
 	<http pattern="/qnaBoard/**" security="none"/>
@@ -38,6 +40,9 @@
 	 <intercept-url pattern="/info" access="isAuthenticated()"/>
 	 <intercept-url pattern="/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>
+	 <intercept-url pattern="/product/payment/**" access="isAuthenticated()"/>
+	 
+
 	  
 	 
 		<form-login login-page="/member/loginForm"
