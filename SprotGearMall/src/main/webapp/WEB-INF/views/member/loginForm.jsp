@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-	<%@ include file="/WEB-INF/views/includes/headerTest.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
 <!DOCTYPE html>
 
@@ -17,7 +17,9 @@
  rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
-
+<header>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+</header>
 	
 	
 <div class="container">
@@ -40,5 +42,8 @@
       		<a href="register" >회원가입</a>
       </div>
 </div>
+<footer>
+    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+</footer>
 </body>
 </html>

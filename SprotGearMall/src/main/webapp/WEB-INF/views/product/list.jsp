@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -29,10 +28,10 @@ li {
 <a href="register"><input type="button" value="상품 등록"></a>
 <hr>
 <h1>상품목록리스트</h1>
-
 	<table>
     	<thead>
     		<tr>
+    		<!--  상품 헤드 -->
     			<th style="width : 60px">번호</th>
     			<th style="width : 100px">이름</th>
     			<th style="width : 100px">가격</th>
@@ -43,11 +42,15 @@ li {
     		</tr>
     	</thead>
     	<tbody>
-    		<c:forEach var="vo" items="${list }"> <!-- 서블릿에서 넘어온 list데이터. 어트리뷰트로. -->
+    	
+    	<!-- 상품 목록 -->
+    		<c:forEach var="vo" items="${list }"> 
     			<tr>
     				<td>${vo.productId }</td>
-    				<td><a href="detail?productName=${vo.productName }&page=${pageMaker.criteria.page}">${vo.productName }</a></td> <!--  사이트이동하는데 데이터보내면서-->
     				<td>${vo.productPrice }</td>
+    				 <!--  사이트이동하는데 데이터보내면서-->
+    				 <!-- productName이 아니라 Id써야됨 -->
+    				<td><a href="detail?productId=${vo.productId }">${vo.productName }</a></td>
     				<td>${vo.productStock }</td>
     				<td>${vo.productMaker }</td>
     				<td>${vo.productImgPath }</td>
@@ -56,7 +59,6 @@ li {
     		</c:forEach>
     	</tbody>
     </table>
-
 	<ul>	
 		<c:if test="${pageMaker.hasPrev }">
 			<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>

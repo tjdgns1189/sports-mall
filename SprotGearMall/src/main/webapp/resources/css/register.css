@@ -1,15 +1,21 @@
 @charset "UTF-8";
 
 body {
+	margin: 0; 
 	font-family: 'Noto Sans KR', sans-serif;
 	background-color: #eee;
-	display: flex;
+    flex-direction: column; 
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
 }
 
+#registerLogo{
+	text-align: center;
+}
 .signup-form {
+	padding-top: 60px; 
+    padding-bottom: 60px; 
 	background-color: #ffffff;
 	padding: 20px;
 	border-radius: 5px;
@@ -40,7 +46,6 @@ body {
 .signup-form button:hover {
 	background-color: #0056b3;
 }
-
 
 
 .btn {

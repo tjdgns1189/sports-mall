@@ -34,8 +34,15 @@ public class ListController {
 	@GetMapping("/detail")
 	public void detailGET(Model model, Integer productId) {
 		logger.info("detailGET() 호출");
-		ProductVO vo = dao.select(productId);
-		model.addAttribute("vo", vo);
+		try {
+			logger.info("productId : " + productId);
+			ProductVO vo = dao.select(productId);
+			model.addAttribute("vo", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("productId 안넘어온상태");
+		}
+		
 	}
 	
 	@GetMapping("/payment")

@@ -4,7 +4,7 @@
     <c:set var="path" value="${pageContext.request.contextPath}"/>
     <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-	<%@ include file="/WEB-INF/views/includes/headerTest.jsp" %>
+	<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
     
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -107,6 +107,10 @@ body {
 </style>
 </head>
 <body>
+<header>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+</header>
+
  <div class="signup-form">
 	<form action="update" method="POST">
 	 <c:if test="${not empty error}"> 
@@ -184,5 +188,8 @@ body {
 	
 
 </script>
+<footer>
+    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+</footer>
 </body>
 </html>
