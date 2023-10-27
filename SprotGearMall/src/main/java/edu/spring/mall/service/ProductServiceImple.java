@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.persistence.LikesDAO;
@@ -37,7 +38,8 @@ public class ProductServiceImple implements ProductService {
 		logger.info("end = " + criteria.getEnd());
 		return dao.select(criteria);
 	}
-
+	
+	//디테일 호출
 	@Override
 	public ProductVO read(int productId) {
 		logger.info("read(productId) 호출 : productId = " + productId);

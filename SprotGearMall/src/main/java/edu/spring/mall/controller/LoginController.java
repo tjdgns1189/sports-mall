@@ -48,7 +48,7 @@ public class LoginController {
 	@GetMapping("/loginForm")
 	public void loginGet(Model model, 
 	                     @RequestParam(name = "error", required = false) String error,
-	                     @CookieValue("targeturl") String targeturl) {
+	                     @CookieValue(name = "targeturl", required = false) String targeturl) {
 	    logger.info("loginGet »£√‚");
 	    if (error != null) {
 	        model.addAttribute("error", "error");

@@ -38,26 +38,21 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			}
 
 			Cookie[] cookies = request.getCookies();
-		    if (cookies != null) {
-		        for (Cookie cookie : cookies) {
-		            if ("targeturl".equals(cookie.getName())) {
-		                logger.info("헤더 로그인 호출");
-		                String decodedUrl = URLDecoder.decode(cookie.getValue(), "UTF-8");
-		                logger.info("targetURL : " + decodedUrl);
-		                cookie.setMaxAge(0);  
-		                cookie.setPath("/"); 
-		                response.addCookie(cookie);  
-
-		                redirectStrategy.sendRedirect(request, response, decodedUrl);
-		                return;
-
-		            }
-		        }
-		    }
-
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if ("targeturl".equals(cookie.getName())) {
+						logger.info("헤더 로그인 호출");
+						String decodedUrl = URLDecoder.decode(cookie.getValue(), "UTF-8");
+						logger.info("targetURL : " + decodedUrl);
+						cookie.setMaxAge(0);
+						cookie.setPath("/");
+						response.addCookie(cookie);
+						redirectStrategy.sendRedirect(request, response, decodedUrl);
+						return;
+					}
+				}
+			}
 			redirectStrategy.sendRedirect(request, response, "/index");
-
 		}
 	}
-
 }

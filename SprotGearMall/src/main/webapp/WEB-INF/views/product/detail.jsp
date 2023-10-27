@@ -9,6 +9,11 @@
 <meta charset="UTF-8">
 <title>${vo.productName }</title>
 <link href="<c:url value="/resources/css/like.css" />" rel="stylesheet">
+<script src="<c:url value="/resources/js/like.js" />"></script>
+<script>
+    var isLiked = ${isLiked}; 
+    	
+</script>
 
 </head>
 <body>
@@ -58,66 +63,7 @@
 	<button class="like-btn">
         <span class="heart"></span>
     </button>
-	<script type="text/javascript">
-	$(()=>{
-		$('.like-btn').on('click',()=>{
-			isLike();
-		})
-	})
-	function isLike() {
-    var productId = $('#productId').val();
-    var memberId = $('#memberId').val();
-    var csrfToken = $("#csrfToken").val();
-    var headers = {
-            'Content-Type': 'application/json'
-        };
-        headers['X-CSRF-TOKEN'] = csrfToken;
 
-    if ($('.heart').hasClass('heart-filled')) {
-        $.ajax({
-            type: "DELETE", 
-            url: 'likes',
-            headers: headers,
-            data: JSON.stringify({
-                "memberId": memberId,
-                "productId": productId,
-            }),
-            success: (result) => {
-                console.log(result);
-                if (result === 'success') {
-                    $('.heart').toggleClass('heart-filled');
-                }
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                if (jqXHR.status == 403) {
-                    alert("로그인이 필요합니다");
-                }
-            }
-        });
-    } else {
-        $.ajax({
-            type: "POST",
-            url: 'likes',
-            headers: headers,
-            data: JSON.stringify({
-                "memberId": memberId,
-                "productId": productId,
-            }),
-            success: (result) => {
-                console.log(result);
-                if (result === 'success') {
-                    $('.heart').toggleClass('heart-filled');
-                }
-            },
-            error: (jqXHR, textStatus, errorThrown) => {
-                if (jqXHR.status == 403) {
-                    alert("로그인이 필요합니다");
-                }
-            }
-        });
-    }
-	}
-	</script>
 </body>
 	
 </html>
