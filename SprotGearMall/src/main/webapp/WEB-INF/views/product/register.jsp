@@ -18,7 +18,7 @@
 		
 		<div>
 			<p>가격 : </p>
-			<input type="text" name="productPrice" value="판매자" >
+			<input type="text" name="productPrice" required>
 		</div>
 		
 		<div>
@@ -38,7 +38,7 @@
 		
 		<div>
 			<p>종류 :</p>
-			<input type="text" name="productCategory"> 
+			<input type="text" name="productCategory" required> 
 		</div>
 	
 		<div>

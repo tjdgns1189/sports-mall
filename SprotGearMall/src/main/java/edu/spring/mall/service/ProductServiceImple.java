@@ -26,40 +26,39 @@ public class ProductServiceImple implements ProductService {
 
 	@Override
 	public int create(ProductVO vo) {
-		logger.info("create() È£Ãâ : vo = " + vo.toString()); 
+		logger.info("create() È£ï¿½ï¿½ : vo = " + vo.toString()); 
 		return dao.insert(vo);
 	}
 
 	@Override
 	public List<ProductVO> read(PageCriteria criteria) {
-		logger.info("read() È£Ãâ");
+		logger.info("read(criteria) È£ï¿½ï¿½");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return dao.select(criteria);
 	}
 
 	@Override
-	public ProductVO read(String productId) {
-		logger.info("read() È£Ãâ : ProductName = " + productId);
-		//ÃÖÁ¾ÀûÀ¸·Î ÀÌ ÇüÅÂÀÌ±äÇÒ°ÅÀÓ
-		return dao.select(productId);
+	public ProductVO read(int productId) {
+		logger.info("read(productId) È£ï¿½ï¿½ : productId = " + productId);
+		return dao.selectById(productId);
 	}
 
 	@Override
 	public int update(ProductVO vo) {
-		logger.info("update() È£Ãâ : vo = " + vo.toString());
+		logger.info("update() È£ï¿½ï¿½ : vo = " + vo.toString());
 		return dao.update(vo);
 	}
 
 	@Override
 	public int delete(String productName) {
-		logger.info("delete() È£Ãâ : productName = " + productName);
+		logger.info("delete() È£ï¿½ï¿½ : productName = " + productName);
 		return dao.delete(productName);
 	}
 
 	@Override
 	public int getTotalCounts() {
-		logger.info("getTotalCounts() È£Ãâ");
+		logger.info("getTotalCounts() È£ï¿½ï¿½");
 		return dao.getTotalCounts();
 	}
 
