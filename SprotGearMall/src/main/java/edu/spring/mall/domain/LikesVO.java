@@ -4,31 +4,17 @@ public class LikesVO {
 	private int likes;
 	private String memberId;
 	private int productId;
-	private boolean isLiked;
 	
-	public LikesVO(int likes, String memberId, int productId, boolean isLiked) {
+	public LikesVO(int likes, String memberId, int productId) {
 		this.likes = likes;
 		this.memberId = memberId;
 		this.productId = productId;
-		this.isLiked = isLiked;
 	}
 
-	public boolean isLiked() {
-		return isLiked;
-	}
-
-	public void setLiked(boolean isLiked) {
-		this.isLiked = isLiked;
-	}
 
 	public LikesVO() {}
 
-	public LikesVO(int likes, String memberId, int productId) {
-		super();
-		this.likes = likes;
-		this.memberId = memberId;
-		this.productId = productId;
-	}
+
 
 	public int getLikes() {
 		return likes;
@@ -56,8 +42,7 @@ public class LikesVO {
 
 	@Override
 	public String toString() {
-		return "LikesVO [likes=" + likes + ", memberId=" + memberId + ", productId=" + productId + ", isLiked="
-				+ isLiked + "]";
+		return "LikesVO [likes=" + likes + ", memberId=" + memberId + ", productId=" + productId + "]";
 	}
 	
 	

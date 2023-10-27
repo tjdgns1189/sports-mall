@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.persistence.LikesDAO;
@@ -32,33 +33,35 @@ public class ProductServiceImple implements ProductService {
 
 	@Override
 	public List<ProductVO> read(PageCriteria criteria) {
-		logger.info("read(criteria) ȣ��");
+
+		logger.info("read(criteria) 호출");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return dao.select(criteria);
 	}
-
+	
+	//디테일 호출용
 	@Override
 	public ProductVO read(int productId) {
-		logger.info("read(productId) ȣ�� : productId = " + productId);
+		logger.info("read(productId) 호출 : productId = " + productId);
 		return dao.selectById(productId);
 	}
 
 	@Override
 	public int update(ProductVO vo) {
-		logger.info("update() ȣ�� : vo = " + vo.toString());
+		logger.info("update() 호출 : vo = " + vo.toString());
 		return dao.update(vo);
 	}
 
 	@Override
 	public int delete(String productName) {
-		logger.info("delete() ȣ�� : productName = " + productName);
+		logger.info("delete() 호출 : productName = " + productName);
 		return dao.delete(productName);
 	}
 
 	@Override
 	public int getTotalCounts() {
-		logger.info("getTotalCounts() ȣ��");
+		logger.info("getTotalCounts() 호출");
 		return dao.getTotalCounts();
 	}
 

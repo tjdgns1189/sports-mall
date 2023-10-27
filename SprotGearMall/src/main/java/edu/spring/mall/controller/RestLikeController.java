@@ -2,35 +2,54 @@ package edu.spring.mall.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.spring.mall.domain.LikesVO;
+import edu.spring.mall.persistence.LikesDAO;
 
 @RestController
 @RequestMapping
 public class RestLikeController {
 	private final Logger logger = LoggerFactory.getLogger(RestLikeController.class);
-	
 
-	
-	
-//	@PostMapping("/like")
-//	public ResponseEntity<String> InsertLike(@RequestBody LikesVO vo){
-//		logger.info("ÁÁ¾Æ¿ä insert");
-//		String result = "";
-//		
-//		//Ã³À½ µðÅ×ÀÏ µé¾î°¬À»¶§ ÁÁ¾Æ¿äÀÎÁö ¾Æ´ÑÁö ÆÇ´ÜÇØ¾ßÇÔ
-//		//¹öÆ°À» ´©¸£¸é memberId productId¸¦ °¡Á®¿Ã°ÅÀÓ
-//
-//		
-//		logger.info("ÁÁ¾Æ¿ä ±â´É ¼öÇà");
-//		
-//		
-////		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-//	}
+
+	@Autowired
+	private LikesDAO dao;
+
+	@PostMapping("product/likes")
+	public ResponseEntity<String> insertLike(@RequestBody LikesVO vo, Authentication authentication) {
+		logger.info("ì¢‹ì•„ìš” insert");
+		String result = "";
+		if(vo.getMemberId().isBlank()||vo.getMemberId()==null) {
+			return new ResponseEntity<String>(result, HttpStatus.FORBIDDEN);
+		}
+		
+		int success = dao.insert(vo);
+		if (success == 1) {
+			result = "success";
+		}
+
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+	}
+
+	@DeleteMapping("product/likes")
+	public ResponseEntity<String> deleteLike(@RequestBody LikesVO vo) {
+		logger.info("ì¢‹ì•„ìš” ì‚­ì œ í˜¸ì¶œ");
+		String result = "";
+		int success = dao.delete(vo);
+		if (success == 1) {
+			result = "success";
+		}
+		return new ResponseEntity<String>(result, HttpStatus.OK);
+
+	}
+
 }
