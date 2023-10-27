@@ -27,13 +27,12 @@ public class ProductServiceImple implements ProductService {
 
 	@Override
 	public int create(ProductVO vo) {
-		logger.info("create() ȣ�� : vo = " + vo.toString()); 
+		logger.info("create() 호출 : vo = " + vo.toString()); 
 		return dao.insert(vo);
 	}
 
 	@Override
 	public List<ProductVO> read(PageCriteria criteria) {
-
 		logger.info("read(criteria) 호출");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
