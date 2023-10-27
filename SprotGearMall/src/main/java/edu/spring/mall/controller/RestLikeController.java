@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,9 +24,13 @@ public class RestLikeController {
 	private LikesDAO dao;
 
 	@PostMapping("product/likes")
-	public ResponseEntity<String> insertLike(@RequestBody LikesVO vo) {
+	public ResponseEntity<String> insertLike(@RequestBody LikesVO vo, Authentication authentication) {
 		logger.info("¡¡æ∆ø‰ insert");
 		String result = "";
+		if(vo.getMemberId().isBlank()||vo.getMemberId()==null) {
+			return new ResponseEntity<String>(result, HttpStatus.FORBIDDEN);
+		}
+		
 		int success = dao.insert(vo);
 		if (success == 1) {
 			result = "success";

@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
 <!DOCTYPE html>
 

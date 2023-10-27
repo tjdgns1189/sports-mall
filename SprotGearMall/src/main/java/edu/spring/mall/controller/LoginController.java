@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,11 +46,19 @@ public class LoginController {
 	private UserDetailsService userService;
 
 	@GetMapping("/loginForm")
-	public void loginGet(Model model, @RequestParam(name = "error", required = false) String error) {
-		logger.info("loginGet 호출");
-		if (error != null) {
-			model.addAttribute("error", "error");
-		}
+	public void loginGet(Model model, 
+	                     @RequestParam(name = "error", required = false) String error,
+	                     @CookieValue("targeturl") String targeturl) {
+	    logger.info("loginGet 호출");
+	    if (error != null) {
+	        model.addAttribute("error", "error");
+	    }
+	    
+	    if(targeturl!=null) {
+	    	model.addAttribute("targeturl", targeturl);
+	    }
+	    
+	 
 	}
 
 	// 스프링 내장 로그인 기능 사용으로 주석처리
