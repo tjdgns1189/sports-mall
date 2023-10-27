@@ -37,20 +37,20 @@ public class ProductDAOImple implements ProductDAO{
 
 	//검색
 	@Override
-	public ProductVO select(String productName) {
-		logger.info("select() 호출 : productName = " + productName);
+	public ProductVO selectByName(String productName) {
+		logger.info("select(productName) 호출 : productName = " + productName);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_name",productName);
 	}
 	//디테일접근용
 	@Override
-	public ProductVO select(int productId) {
-		logger.info("select() 호출");
+	public ProductVO selectById(int productId) {
+		logger.info("select(productId) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
 	}
 	
 	@Override
 	public List<ProductVO> select(PageCriteria criteria) {
-		logger.info("select() 호출");
+		logger.info("select(criteria) 호출");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return sqlSession.selectList(NAMESPACE + ".paging" , criteria);

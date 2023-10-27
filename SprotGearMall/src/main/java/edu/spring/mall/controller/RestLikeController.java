@@ -31,6 +31,7 @@ public class RestLikeController {
 //		logger.info("좋아요 기능 수행");
 //		
 //		
-//		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+
+////		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 //	}
 }

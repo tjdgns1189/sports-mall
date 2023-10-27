@@ -57,8 +57,8 @@ public class ProductController {
 	
 	@GetMapping("/payment")
 	public void paymentGET(Model model, Integer productId) {
-		logger.info("paymentGET() ȣ��");
-		ProductVO vo = dao.select(productId);
+		logger.info("paymentGET() 호출");
+		ProductVO vo = dao.selectById(productId);
 		model.addAttribute("vo", vo);
 	}
 	
@@ -82,20 +82,19 @@ public class ProductController {
 		}
 	} // end registerPOST()
 	
-	
-	
+
 	@GetMapping("/detail")
-	public void detail(Model model, String productName, Integer page ) {
-		logger.info("detail() 호출 : ProductName = " + productName);
-		ProductVO vo = productService.read(productName);
+	public void detail(Model model, Integer productId, Integer page) {
+		logger.info("detail() 호출 : productId = " + productId);
+		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo",vo);
 		model.addAttribute("page",page);
 	} // end detail()
 	
 	@GetMapping("/update")
-	public void updateGET(Model model, String productName, Integer page) {
-		logger.info("updateGET() 호출 : productName = " + productName);
-		ProductVO vo = productService.read(productName);
+	public void updateGET(Model model, Integer productId, Integer page) {
+		logger.info("updateGET() 호출 : productId = " + productId);
+		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo",vo);
 		model.addAttribute("page",page);
 	} // end updateGET()
@@ -108,7 +107,7 @@ public class ProductController {
 		if(result == 1) {
 			return "redirect:/board/list?page=" + page;
 		} else {
-			return "redirect:/board/update?productName=" + vo.getProductName();
+			return "redirect:/board/update?productId=" + vo.getProductId();
 		}
 	} // end updatePOST()
 	

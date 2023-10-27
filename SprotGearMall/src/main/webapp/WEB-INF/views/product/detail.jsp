@@ -42,7 +42,7 @@
 	</div>
 	
 	<a href="list?page=${page }"><input type="button" value="상품 목록"></a>
-	<a href="update?productName=${vo.productName }&page=${page }"><input type="button" value="상품 수정"></a>
+	<a href="update?productId=${vo.productId }&page=${page }"><input type="button" value="상품 수정"></a>
 	<form action="delete" method="POST">
 		<input type="hidden" id="productId" name="productId" value="${vo.productId }">
 		<input type="hidden" id="memberId" name="memberId" value="${pageContext.request.userPrincipal.name}">

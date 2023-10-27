@@ -9,7 +9,7 @@
 <body>
 	<h2>상품 수정 페이지</h2>
 	
-	<form action="update" method="POST">
+	<form action="update" method="POST" enctype="multipart/form-data">
 		<input type="hidden" name="page" value="${page }">
 		<div>
 			<p> 상품 번호 : ${vo.productId }</p>
