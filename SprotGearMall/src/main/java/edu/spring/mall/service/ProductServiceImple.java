@@ -26,13 +26,13 @@ public class ProductServiceImple implements ProductService {
 
 	@Override
 	public int create(ProductVO vo) {
-		logger.info("create() ȣ�� : vo = " + vo.toString()); 
+		logger.info("create() 호출 : vo = " + vo.toString()); 
 		return dao.insert(vo);
 	}
 
 	@Override
 	public List<ProductVO> read(PageCriteria criteria) {
-		logger.info("read(criteria) ȣ��");
+		logger.info("read(criteria) 호출");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return dao.select(criteria);
@@ -40,25 +40,25 @@ public class ProductServiceImple implements ProductService {
 
 	@Override
 	public ProductVO read(int productId) {
-		logger.info("read(productId) ȣ�� : productId = " + productId);
+		logger.info("read(productId) 호출 : productId = " + productId);
 		return dao.selectById(productId);
 	}
 
 	@Override
 	public int update(ProductVO vo) {
-		logger.info("update() ȣ�� : vo = " + vo.toString());
+		logger.info("update() 호출 : vo = " + vo.toString());
 		return dao.update(vo);
 	}
 
 	@Override
 	public int delete(String productName) {
-		logger.info("delete() ȣ�� : productName = " + productName);
+		logger.info("delete() 호출 : productName = " + productName);
 		return dao.delete(productName);
 	}
 
 	@Override
 	public int getTotalCounts() {
-		logger.info("getTotalCounts() ȣ��");
+		logger.info("getTotalCounts() 호출");
 		return dao.getTotalCounts();
 	}
 

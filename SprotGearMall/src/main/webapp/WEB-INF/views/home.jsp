@@ -64,7 +64,8 @@
     				<td>${vo.productPrice }</td>
     				 <!--  사이트이동하는데 데이터보내면서-->
     				 <!-- productName이 아니라 Id써야됨 -->
-    				<td><a href="detail?productId=${vo.productId }">${vo.productName }</a></td>
+    				<td><a href="product/detail?productId=${vo.productId }&page=${pageMaker.criteria.page}">${vo.productName }</a></td>
+    				<!-- 여기서는 경로에 앞에 product를 붙여줘야함 -->
     				<td>${vo.productStock }</td>
     				<td>${vo.productMaker }</td>
     				<td>${vo.productImgPath }</td>
