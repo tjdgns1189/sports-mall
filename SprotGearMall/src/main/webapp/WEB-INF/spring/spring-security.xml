@@ -17,9 +17,6 @@
 	<http pattern="/member/register" security="none"/>
 	<http pattern="/member/loginForm/*" security="none"/>
 	<http pattern="/resources/**" security="none"/>
-	<http pattern="/product/list" security="none"/>
-	<http pattern="/product/detail/**" security="none"/>
-	
 	<http pattern="/css/**" security="none"/>
 
 	<http auto-config="true" use-expressions="true">
@@ -27,6 +24,7 @@
 	
 	 <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 	 <intercept-url pattern="/index" access="permitAll"/>
+	 <intercept-url pattern="/member/loginForm" access="isAnonymous()"/>
 	 <intercept-url pattern="/member/login" access="isAnonymous()"/>
 	 <intercept-url pattern="/member/register" access="isAnonymous()"/>
 	 <intercept-url pattern="/member/delete" access="isAuthenticated()"/>

@@ -22,7 +22,7 @@ public class RestLikeController {
 	@Autowired
 	private LikesDAO dao;
 
-	@PostMapping("/like")
+	@PostMapping("product/likes")
 	public ResponseEntity<String> insertLike(@RequestBody LikesVO vo) {
 		logger.info("좋아요 insert");
 		String result = "";
@@ -34,9 +34,9 @@ public class RestLikeController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/like")
+	@DeleteMapping("product/likes")
 	public ResponseEntity<String> deleteLike(@RequestBody LikesVO vo) {
-		logger.info("deleteLike 호출");
+		logger.info("좋아요 삭제 호출");
 		String result = "";
 		int success = dao.delete(vo);
 		if (success == 1) {

@@ -1,7 +1,6 @@
 <%@page import="edu.spring.mall.domain.ProductVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,8 +12,11 @@
 
 </head>
 <body>
-    로그인한 사용자: <sec:authentication property="principal.username"/>
 
+	<sec:authorize access="isAuthenticated()">
+    로그인한 사용자: <sec:authentication property="principal.username"/><br>
+	로그인한 사용자 권한 : <sec:authentication property="authorities"/>
+	</sec:authorize>
 	<h2>상품 정보</h2>
 	
 	<div>
@@ -47,8 +49,9 @@
 	<a href="update?productName=${vo.productName }&page=${page }"><input type="button" value="상품 수정"></a>
 	<form action="delete" method="POST">
 		<input type="hidden" id="productId" name="productId" value="${vo.productId }">
-		<input type="hidden" id="memberId" name="memberId" value="${memberId }">
-
+		<input type="hidden" id="memberId" name="memberId" value="${pageContext.request.userPrincipal.name}">
+		<input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
+		
 		<input type="submit" value="상품 삭제">
 	</form>
 	
@@ -64,12 +67,17 @@
 	function isLike() {
     var productId = $('#productId').val();
     var memberId = $('#memberId').val();
+    var csrfToken = $("#csrfToken").val();
+    var headers = {
+            'Content-Type': 'application/json'
+        };
+        headers['X-CSRF-TOKEN'] = csrfToken;
 
     if ($('.heart').hasClass('heart-filled')) {
         $.ajax({
             type: "DELETE", 
             url: 'likes',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             data: JSON.stringify({
                 "memberId": memberId,
                 "productId": productId,
@@ -90,7 +98,7 @@
         $.ajax({
             type: "POST",
             url: 'likes',
-            headers: { 'Content-Type': 'application/json' },
+            headers: headers,
             data: JSON.stringify({
                 "memberId": memberId,
                 "productId": productId,
