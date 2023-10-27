@@ -24,7 +24,6 @@ import edu.spring.mall.service.QnaReplyService;
 @RestController
 @RequestMapping(value="/qnaBoard/replies")
 public class QnaReplyRESTController {
-
 	private static final Logger logger = 
 			LoggerFactory.getLogger(QnaReplyRESTController.class);
 	
@@ -33,15 +32,12 @@ public class QnaReplyRESTController {
 	
 	@PostMapping
 	public ResponseEntity<Integer> createReply(@RequestBody QnaReplyVO vo) {
-
 		logger.info("createReply() »£√‚ : vo = " + vo.toString());
-		
 
 		int result = 0;
 		try {
 			result = qnaReplyService.create(vo);
 		} catch (Exception e) {
-
 			e.printStackTrace();
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);

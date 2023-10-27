@@ -17,7 +17,7 @@
         	<li><a href="${pageContext.request.contextPath}/product/list">메뉴</a></li>
        		<li><a href="#">들어</a></li>
         	<li><a href="#">갈곳</a></li>
-        	<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard">QNA</a></li>
+        	<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard?memberId=${pageContext.request.userPrincipal.name}">QNA</a></li>
     	</ul>
     
     <div class="search-bar">
@@ -39,7 +39,7 @@
         			<li><a href="${pageContext.request.contextPath}/member/loginForm">로그인</a></li>
         			<li><a href="${pageContext.request.contextPath}/member/register">회원가입</a></li>
            		</sec:authorize>
-          			<li><a href="#">주문내역</a></li>
+          			<li><a href="${pageContext.request.contextPath}/orders/orderlist?memberId=${pageContext.request.userPrincipal.name}">주문내역</a></li>
         			<li><a href="${pageContext.request.contextPath}/member/mypage">내 정보</a></li>
         			<li><a href="#">고객센터</a></li>
         		<sec:authorize access="isAuthenticated()">

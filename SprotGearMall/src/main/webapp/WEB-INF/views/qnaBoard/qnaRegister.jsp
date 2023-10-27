@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
 		</div>
 		<div>
 			<p>작성자 : </p>
-			<input type="text" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">
+			<input type="text" name="memberId" value="${memberId}" readonly="readonly">
 		</div>
 		<div>
 			<p>내용 : </p>

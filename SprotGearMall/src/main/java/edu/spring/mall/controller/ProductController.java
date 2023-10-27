@@ -82,6 +82,8 @@ public class ProductController {
 		}
 	} // end registerPOST()
 	
+	
+	
 	@GetMapping("/detail")
 	public void detail(Model model, String productName, Integer page ) {
 		logger.info("detail() 호출 : ProductName = " + productName);

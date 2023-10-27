@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,17 +23,16 @@ li {
 }
 </style>
 <meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.7.1.js" 
-integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
-</script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
 
-
 	<h1>QNA 게시판입니다</h1>
+	
+	<input type="hidden" id="memberId" name="memberId" value="${memberId }">
 
-	<a href="qnaRegister"><input type="button" value="글 작성"></a>
+	<a href="qnaRegister?memberId=${memberId }"><input type="button" value="글 작성"></a>
 	<hr>
 	<table>
 		<thead>
@@ -48,7 +48,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 				<tr>
 					<td>${vo.qnaBoardId }</td>
 					<td>${vo.memberId }</td>
-					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}">${vo.qnaBoardTitle }</a></td>
+					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}&memberId=${memberId }">${vo.qnaBoardTitle }</a></td>
 					<fmt:formatDate value="${vo.qnaBoardCreatedDate }"
 					pattern="yyyy-MM-dd HH:mm:ss" var="qnaBoardCreatedDate"/>
 					<td>${qnaBoardCreatedDate }</td>

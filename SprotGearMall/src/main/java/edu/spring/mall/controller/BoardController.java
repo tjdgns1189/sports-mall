@@ -1,5 +1,6 @@
 package edu.spring.mall.controller;
 
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class BoardController {
 	private QnaBoardService qnaBoardService;
 	
 	@GetMapping("/qnaBoard")
-	public void qnaBoardGET(Model model, Integer page, Integer numsPerPage) {
+	public void qnaBoardGET(Model model, Integer page, Integer numsPerPage, String memberId) {  //, Principal principal
 		logger.info("qnaBoardGET() 호출");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 		
@@ -48,27 +49,32 @@ public class BoardController {
 		pageMaker.setTotalCount(qnaBoardService.getTotalCounts());
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("memberId", memberId);	
+//		return principal.getName();
 	}
 	
 	@GetMapping("/qnaDetail")
-	public void detail(Model model, Integer qnaBoardId, Integer page) {
+	public void detail(Model model, Integer qnaBoardId, Integer page, String memberId) {
 		logger.info("detail() 호출 : qnaBoardId = " + qnaBoardId);
 		QnaBoardVO vo = qnaBoardService.read(qnaBoardId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);		
+		model.addAttribute("memberId", memberId);		
 	} // end detail()
 	
 	@GetMapping("/qnaRegister")
-	public void registerGET() {
+	public void registerGET(String memberId, Model model) {
+		model.addAttribute("memberId", memberId);	
 		logger.info("qnaRegisterGET()");
 	} // end registerGET()
 	
 	@PostMapping("/qnaRegister")
-	public String registerPOST(QnaBoardVO vo, RedirectAttributes reAttr) {
+	public String registerPOST(QnaBoardVO vo, RedirectAttributes reAttr, String memberId, Model model) {
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
 		int result = qnaBoardService.create(vo);
 		logger.info(result + "행 삽입");
+		model.addAttribute("memberId", memberId);		
 		if(result == 1) {
 			reAttr.addFlashAttribute("insert_result", "success");
 			return "redirect:/qnaBoard/qnaBoard";

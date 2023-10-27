@@ -25,16 +25,18 @@ public class OrdersController {
 	private OrdersDAO dao;
 	
 	@GetMapping("/orderlist")
-	public void orderlistGET() {
-		logger.info("paymentGET() 호출");
+	public void orderlistGET(Model model, String memberId) {
+		logger.info("paymentGET() 호출 : memberId = " + memberId);
+		List<OrdersVO> list = dao.select(memberId);
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("list", list);
+		logger.info("list" + list.toString());
 	}
 	
 	@PostMapping("/orderlist")
-	public void ordersPOST(Model model, OrdersVO vo) {
-		logger.info("paymentPOST() 호출 : vo = " + vo.toString());
-		int result = dao.insert(vo);
-		String memberId = vo.getMemberId();
-		
+	public void ordersPOST(Model model, String memberId) {
+		logger.info("paymentPOST() 호출 : memberId = " + memberId);
+
 		List<OrdersVO> list = dao.select(memberId);
 		model.addAttribute("list", list);
 
