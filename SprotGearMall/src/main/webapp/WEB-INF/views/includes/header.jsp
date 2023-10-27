@@ -1,6 +1,8 @@
+<%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -9,7 +11,8 @@
 <script src="<c:url value="/resources/js/headers.js" />"></script>
 
 
- <c:url var="logoutUrl" value="/logout"/>
+
+
 	<main>
 		<h1><a href="${pageContext.request.contextPath}/index">스포츠용품 쇼핑몰</a></h1>
 	<div class="header-container">
@@ -36,7 +39,7 @@
     		<div class="dropdown">
         		<ul>
             	<sec:authorize access="isAnonymous()">
-        			<li><a href="${pageContext.request.contextPath}/member/loginForm">로그인</a></li>
+        			<li><a href="#" onclick="targetURL()">로그인</a></li>
         			<li><a href="${pageContext.request.contextPath}/member/register">회원가입</a></li>
            		</sec:authorize>
           			<li><a href="#">주문내역</a></li>
@@ -44,7 +47,7 @@
         			<li><a href="#">고객센터</a></li>
         		<sec:authorize access="isAuthenticated()">
            			<li>
-           			<form class="form-inline" action="${logoutUrl}" method="post">
+           			<form class="form-inline" action="${pageContext.request.contextPath}/logout" method="post">
           			<input type="submit" value="로그아웃" />
           			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
       				</form>
