@@ -15,7 +15,9 @@
 
 	<main>
 		<h1><a href="${pageContext.request.contextPath}/index">스포츠용품 쇼핑몰</a></h1>
-
+	<div>
+	<!-- 네비게이션 바 기능 -->
+	</div>
 
 	<div class="header-container">
     	<ul class="nav-list">

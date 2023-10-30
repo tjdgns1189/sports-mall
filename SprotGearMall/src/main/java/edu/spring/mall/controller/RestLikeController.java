@@ -26,7 +26,7 @@ public class RestLikeController {
 
 	@PostMapping("product/likes")
 	public ResponseEntity<String> insertLike(@RequestBody LikesVO vo, Authentication authentication) {
-		logger.info("ì¢‹ì•„ìš” insert");
+		logger.info("ÁÁ¾Æ¿ä insert");
 		String result = "";
 		if(vo.getMemberId().isBlank()||vo.getMemberId()==null) {
 			return new ResponseEntity<String>(result, HttpStatus.FORBIDDEN);
@@ -42,7 +42,7 @@ public class RestLikeController {
 
 	@DeleteMapping("product/likes")
 	public ResponseEntity<String> deleteLike(@RequestBody LikesVO vo) {
-		logger.info("ì¢‹ì•„ìš” ì‚­ì œ í˜¸ì¶œ");
+		logger.info("ÁÁ¾Æ¿ä »èÁ¦");
 		String result = "";
 		int success = dao.delete(vo);
 		if (success == 1) {

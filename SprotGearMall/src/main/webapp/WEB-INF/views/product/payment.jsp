@@ -34,6 +34,8 @@
 						<hr>
 
 						<form action="orderlist" method="POST">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+						
 							<div>
 								<p>접속중인 아이디 : </p>
 								<input type="text" name="memberId" value="${pageContext.request.userPrincipal.name}"
