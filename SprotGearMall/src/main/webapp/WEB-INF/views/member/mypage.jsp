@@ -31,46 +31,6 @@
 </head>
 <body>
 	
-			<!--  
-	<table class="mytmall_table def">
-		<colgroup>
-			<col width="159">
-		</colgroup>
-		<tbody>
-			<tr>
-				<th scope="row">이름</th>
-				<td><sec:authentication property="principal.name" />
-			</tr>
-			<tr>
-				<th scope="row">아이디</th>
-				<td><sec:authentication property="principal.username" /></td>
-			</tr>
-			<tr>
-				<th scope="row">비밀번호</th>
-				<td><button type="button" data-bs-toggle="modal"data-bs-target="#myModal">비밀번호 변경</button></td>
-			</tr>
-			<tr>
-				<th scope="row">주소</th>
-				<td><sec:authentication property="principal.address" /></td>
-			</tr>
-			<tr>
-				<th scope="row">연락처</th>
-				<td class="contact">
-					<dl class="info_list">
-						<dt class="in_tit">전화 번호</dt>
-						<dd><sec:authentication property="principal.phone" /></dd>
-						<dt class="in_tit">이메일 주소</dt>
-						<dd><sec:authentication property="principal.email" /></dd>
-					</dl> <a href="update"><button type="button" ><span>변경하기</span></button> </a>
-				</td>
-				
-			</tr>
-		</tbody>
-	</table>
-	<sec:authorize access="hasRole('ROLE_USER')">
-				<td><a href="delete"><button type="button">회원탈퇴</button></a></td>
-	</sec:authorize>
-	-->
 	
 	<div class="container mt-4">
     <h2>마이 페이지</h2>

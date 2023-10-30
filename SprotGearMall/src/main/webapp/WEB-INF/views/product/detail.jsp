@@ -9,11 +9,8 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <meta charset="UTF-8">
 <title>${vo.productName }</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
-	rel="stylesheet">
-<link href="<c:url value="/resources/css/detail.css" />"
-	rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+<link href="<c:url value="/resources/css/detail.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/js/detail.js" />"></script>
 <script>
 	var isLiked = ${isLiked};
@@ -67,9 +64,8 @@
 -->
 
 
-
-	<a href="update?productName=${vo.productName }&page=${page }"><input
-		type="button" value="상품 수정"></a>
+   <sec:authorize access="hasRole('ROLE_USER')">
+	<a href="update?productName=${vo.productName }&page=${page }"><input type="button" value="상품 수정"></a>
 	<form action="delete" method="POST">
 		<input type="hidden" id="productId" name="productId"
 			value="${vo.productId }"> <input type="hidden" id="memberId"
@@ -77,7 +73,7 @@
 		<input type="hidden" id="csrfToken" name="${_csrf.parameterName}"
 			value="${_csrf.token}"> <input type="submit" value="상품 삭제">
 	</form>
-
+</sec:authorize>
 
 </body>
 
