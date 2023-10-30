@@ -8,4 +8,5 @@ public interface OrdersDAO {
 	int insert(OrdersVO vo);
 	List<OrdersVO> select(String memberId);
 	int delete(String memberId, int productId);
+	int delete(int orderId);
 }

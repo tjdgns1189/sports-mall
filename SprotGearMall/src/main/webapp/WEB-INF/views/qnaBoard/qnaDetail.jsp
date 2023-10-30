@@ -118,19 +118,22 @@
 								readonly = '';
 							}
 							
+
 							list += '<div class="reply_item">'
-								+ '<pre>'
-								+ '<input type="hidden" id="qnaReplyId" value="' + this.qnaReplyId +'">'
-								+ this.memberId
-								+ '&nbsp;&nbsp;' // 공백
-								+ '<input type="text" id="qnaReplyContent" value="' + this.qnaReplyContent + '">'
-								+ '&nbsp;&nbsp;' // 공백
-								+ qnaReplyCreatedDate
-								+ '&nbsp;&nbsp;' // 공백
-								+ '<button class="btn_update" >수정</button>'
-								+ '<button class="btn_delete" >삭제</button>'
-								+ '</pre>'
-								+ '</div>';
+					            + '<pre>'
+					            + '<input type="hidden" id="qnaReplyId" value="' + this.qnaReplyId + '">'
+					            + '<button class="btn_replyReply" >' + this.memberId + '</button>'
+					            + '&nbsp;&nbsp;' // 공백
+					            + '<input type="text" id="qnaReplyContent" value="' + this.qnaReplyContent + '">'
+					            + '&nbsp;&nbsp;' // 공백
+					            + qnaReplyCreatedDate
+					            + '&nbsp;&nbsp;' // 공백
+					            + '<button class="btn_update">수정</button>'
+					            + '<button class="btn_delete">삭제</button>'
+					            + '</pre>'
+					          //  + '<div class="replyReplies" id="replies_' + this.qnaReplyId + '">' + getReplyReplies(this.qnaReplyId) + '</div>' // 대댓글을 미리 가져와서 표시할 위치
+					            + '</div>';
+					            
 						}); // end each()
 
 						$('#replies').html(list);
@@ -192,6 +195,8 @@
 					}
 				}); // end ajax()
 			}); // end replies.on()
+			
+
 			
 		}); // end document
 	</script>

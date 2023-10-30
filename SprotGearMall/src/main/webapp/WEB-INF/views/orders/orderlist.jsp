@@ -64,4 +64,32 @@ li {
 	<div>
 		<button id="btnDeleteCheck">선택목록삭제</button>
 	</div>
+	
+	<script>
+    $(document).ready(function() {
+        $("#btnDeleteCheck").click(function() {
+            var checkedIds = [];
+            $("input[type=checkbox]:checked").each(function() {
+                checkedIds.push($(this).attr("id"));
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "delete", 
+                headers : {
+					'Content-Type' : 'application/json'
+				},
+                data: JSON.stringify(checkedIds),
+                success: function(result) {
+                    console.log(result);
+                    alert("구매내역 삭제 성공");
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
+
+
+	
 </html>

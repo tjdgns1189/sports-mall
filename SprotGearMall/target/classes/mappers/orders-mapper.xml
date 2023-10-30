@@ -24,6 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	where ${memberId} = #{memberId} and ${productId} = #{productId}
 	 </delete>
 	  
+	 <delete id="delete_by_order_id">
+	 	delete from ${orders}
+	 	where ${orderId} = #{orderId} 
+	 </delete>
+	 
 </mapper>
 
 
