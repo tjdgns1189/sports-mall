@@ -20,12 +20,13 @@ import edu.spring.mall.persistence.LikesDAO;
 public class RestLikeController {
 	private final Logger logger = LoggerFactory.getLogger(RestLikeController.class);
 
+
 	@Autowired
 	private LikesDAO dao;
 
 	@PostMapping("product/likes")
 	public ResponseEntity<String> insertLike(@RequestBody LikesVO vo, Authentication authentication) {
-		logger.info("ÁÁ¾Æ¿ä insert");
+		logger.info("ì¢‹ì•„ìš” insert");
 		String result = "";
 		if(vo.getMemberId().isBlank()||vo.getMemberId()==null) {
 			return new ResponseEntity<String>(result, HttpStatus.FORBIDDEN);
@@ -41,7 +42,7 @@ public class RestLikeController {
 
 	@DeleteMapping("product/likes")
 	public ResponseEntity<String> deleteLike(@RequestBody LikesVO vo) {
-		logger.info("ÁÁ¾Æ¿ä »èÁ¦ È£Ãâ");
+		logger.info("ì¢‹ì•„ìš” ì‚­ì œ í˜¸ì¶œ");
 		String result = "";
 		int success = dao.delete(vo);
 		if (success == 1) {
@@ -50,4 +51,5 @@ public class RestLikeController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 
 	}
+
 }
