@@ -9,14 +9,12 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <meta charset="UTF-8">
 <title>${vo.productName }</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
-	rel="stylesheet">
-<link href="<c:url value="/resources/css/detail.css" />"
-	rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+<link href="<c:url value="/resources/css/detail.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/js/detail.js" />"></script>
 <script>
-	var isLiked = ${isLiked};
+    var isLiked = ${isLiked}; 
+    	
 </script>
 
 </head>
@@ -64,14 +62,19 @@
 	<div>
 		<p>상품 이미지 : ${vo.productImgPath }</p>
 	</div>
--->
+	-->
 
+   <sec:authorize access="hasRole('ROLE_USER')">
+	<a href="update?productName=${vo.productName }&page=${page }"><input type="button" value="상품 수정"></a>
 
-
-
-	
 
 	<a href="update?productName=${vo.productName }&page=${page }"><input type="button" value="상품 수정"></a>
+	<div style="text-align">
+		<a href="payment?productId=${vo.productId }"><button>구매</button></a>
+	</div>
+	
+	<a href="list?page=${page }"><input type="button" value="상품 목록"></a>
+	<a href="update?productId=${vo.productId }&page=${page }"><input type="button" value="상품 수정"></a>
 	<form action="delete" method="POST">
 		<input type="hidden" id="productId" name="productId" value="${vo.productId }">
 		<input type="hidden" id="memberId" name="memberId" value="${pageContext.request.userPrincipal.name}">
@@ -81,6 +84,7 @@
 	</form>
 	
 
+</sec:authorize>
 
 </body>
 
