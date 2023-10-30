@@ -37,7 +37,7 @@ public class ProductController {
 
 	@GetMapping("/list")
 	public void listGET(Model model, Integer page, Integer numsPerPage) {
-		logger.info("list() Ìò∏Ï∂ú");
+		logger.info("list() »£√‚");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 
 		PageCriteria criteria = new PageCriteria();
@@ -60,11 +60,34 @@ public class ProductController {
 
 	} // end list()
 	
+	@GetMapping("/productListTest")
+	public void listTestGET(Model model, Integer page, Integer numsPerPage) {
+		logger.info("listTest() »£√‚");
+		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
+
+		List<ProductVO> list = productService.read(criteria);
+		model.addAttribute("list", list);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(productService.getTotalCounts());
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+
+	} // end list()
 
 	@GetMapping("/payment")
 	public void paymentGET(Model model, Integer productId) {
-		logger.info("paymentGET() Ìò∏Ï∂ú");
+		logger.info("paymentGET() »£√‚");
 		ProductVO vo = dao.selectById(productId);
 		model.addAttribute("vo", vo);
 	}
@@ -76,7 +99,7 @@ public class ProductController {
 
 	@PostMapping("/register")
 	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
-		logger.info("registerPOST() Ìò∏Ï∂ú");
+		logger.info("registerPOST() »£√‚");
 		logger.info(vo.toString());
 		int result = productService.create(vo);
 		logger.info(result + "result");
@@ -91,12 +114,12 @@ public class ProductController {
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
-		logger.info("detail() Ìò∏Ï∂ú  = " + productId);
+		logger.info("detail() »£√‚  = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 	
 		if (principal != null) {
-			logger.info("principalÌò∏Ï∂ú" + principal.getName());
+			logger.info("principal»£√‚" + principal.getName());
 			String memberId = principal.getName();
 			LikesVO likesVO = new LikesVO(0, memberId, productId);
 			int result = likesDAO.select(likesVO);
@@ -115,7 +138,7 @@ public class ProductController {
 	@GetMapping("/update")
 
 	public void updateGET(Model model, int productId, Integer page) {
-		logger.info("updateGET() Ìò∏Ï∂ú : productName = " + productId);
+		logger.info("updateGET() »£√‚ : productName = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
@@ -124,7 +147,7 @@ public class ProductController {
 
 	@PostMapping("/update")
 	public String updatePOST(ProductVO vo, Integer page) {
-		logger.info("updatePOST() Ìò∏Ï∂ú : vo = " + vo.toString());
+		logger.info("updatePOST() »£√‚ : vo = " + vo.toString());
 		int result = productService.update(vo);
 
 		if (result == 1) {
@@ -136,7 +159,7 @@ public class ProductController {
 
 	@PostMapping("/delete")
 	public String delete(String productName) {
-		logger.info("delete() Ìò∏Ï∂ú : productName = " + productName);
+		logger.info("delete() »£√‚ : productName = " + productName);
 		int result = productService.delete(productName);
 		if (result == 1) {
 			return "redirect:/board/list";

@@ -39,9 +39,8 @@
 	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/orderlist/**" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/orderlist" access="isAuthenticated()"/>
+	 <intercept-url pattern="/product/likes" access="isAuthenticated()"/>
 	 
-	 
-	 <intercept-url pattern="/product/likes/**" access="permitAll"/>
 	 
     <http-basic entry-point-ref="ajaxAwareAuthenticationEntryPoint" />
 
