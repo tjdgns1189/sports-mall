@@ -19,7 +19,7 @@
     	<ul class="nav-list">
         	<li><a href="${pageContext.request.contextPath}/product/list">메뉴</a></li>
        		<li><a href="#">들어</a></li>
-        	<li><a href="#">갈곳</a></li>
+        	<li><a href="${pageContext.request.contextPath}/product/productListTest">갈곳</a></li>
         	<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard">QNA</a></li>
     	</ul>
     

@@ -18,10 +18,14 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+	<h4>회원정보</h4>
+	<hr><br>
 	<table class="mytmall_table def">
+		
 		<colgroup>
 			<col width="159">
 		</colgroup>
+	
 		<tbody>
 			<tr>
 				<th scope="row">이름</th>

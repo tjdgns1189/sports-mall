@@ -59,6 +59,31 @@ public class ProductController {
 		model.addAttribute("pageMaker", pageMaker);
 
 	} // end list()
+	
+	@GetMapping("/productListTest")
+	public void listTestGET(Model model, Integer page, Integer numsPerPage) {
+		logger.info("listTest() »£√‚");
+		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
+
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
+
+		List<ProductVO> list = productService.read(criteria);
+		model.addAttribute("list", list);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(productService.getTotalCounts());
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+
+	} // end list()
 
 	@GetMapping("/payment")
 	public void paymentGET(Model model, Integer productId) {
