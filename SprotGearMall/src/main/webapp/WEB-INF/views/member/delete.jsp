@@ -1,10 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
-     <%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-	<%@ include file="/WEB-INF/views/includes/headerTest.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -17,6 +13,10 @@
  rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
+<header>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+</header>
+
 		 <h2><a href="/mall/index">회원탈퇴</a></h2>
 		 <c:if test="${not empty param.error}"> 
        		<div class="alert alert-danger" role="alert">비밀번호가 틀렸습니다</div>
@@ -28,5 +28,9 @@
 		<button type="submit">회원탈퇴</button>
 		<a href="/mall/index"><button type="submit" >취소</button></a>
 		</form>
+		
+<footer>
+    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+</footer>
 </body>
 </html>

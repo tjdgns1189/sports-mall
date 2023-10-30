@@ -28,15 +28,32 @@ public class ProductDAOImple implements ProductDAO{
 		logger.info("insert() 호출");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
-	
-	
-
-
-
+	//모두 호출
 	@Override
-	public ProductVO select(String productName) {
-		logger.info("select() 호출 : productName = " + productName);
+	public List<ProductVO> select() {
+		logger.info("select() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_all");
+	}
+
+	//검색
+	@Override
+	public ProductVO selectByName(String productName) {
+		logger.info("select(productName) 호출 : productName = " + productName);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_name",productName);
+	}
+	//디테일접근용
+	@Override
+	public ProductVO selectById(int productId) {
+		logger.info("select(productId) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
+	}
+	
+	@Override
+	public List<ProductVO> select(PageCriteria criteria) {
+		logger.info("select(criteria) 호출");
+		logger.info("start = " + criteria.getStart());
+		logger.info("end = " + criteria.getEnd());
+		return sqlSession.selectList(NAMESPACE + ".paging" , criteria);
 	}
 
 	@Override
@@ -51,13 +68,7 @@ public class ProductDAOImple implements ProductDAO{
 		return sqlSession.delete(NAMESPACE + ".delete",productName);
 	}
 
-	@Override
-	public List<ProductVO> select(PageCriteria criteria) {
-		logger.info("select() 호출");
-		logger.info("start = " + criteria.getStart());
-		logger.info("end = " + criteria.getEnd());
-		return sqlSession.selectList(NAMESPACE + ".paging" , criteria);
-	}
+	
 
 	@Override
 	public int getTotalCounts() {
@@ -71,17 +82,8 @@ public class ProductDAOImple implements ProductDAO{
 		return sqlSession.selectList(NAMESPACE + ".select_by_productName","%" + productName + "%");
 	}
 
-	@Override
-	public List<ProductVO> select() {
-		logger.info("select() 호출");
-		return sqlSession.selectList(NAMESPACE + ".select_all");
-	}
 
-	@Override
-	public ProductVO select(int productId) {
-		logger.info("select() 호출");
-		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
-	}
+
 
 	
 	

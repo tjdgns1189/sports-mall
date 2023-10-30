@@ -2,16 +2,10 @@
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <c:set var="path" value="${pageContext.request.contextPath}"/>
-    <%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-	<%@ include file="/WEB-INF/views/includes/headerTest.jsp" %>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
     
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    
-    
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +15,11 @@
 <title>Insert title here</title>
 
 <style type="text/css">
-
+ <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    
+    
 
 body {
     font-family: 'Noto Sans KR', sans-serif; 
@@ -107,6 +105,10 @@ body {
 </style>
 </head>
 <body>
+<header>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+</header>
+
  <div class="signup-form">
 	<form action="update" method="POST">
 	 <c:if test="${not empty error}"> 
@@ -184,5 +186,8 @@ body {
 	
 
 </script>
+<footer>
+    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+</footer>
 </body>
 </html>

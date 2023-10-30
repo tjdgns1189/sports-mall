@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.LikesMapper">
+
+	 <insert id="insert">
+	 	insert into ${likes_table}
+	 	(${memberId}, ${productId})
+	 	values (#{memberId}, #{productId})
+	 </insert>
+	 
+	 <select id="checkByLiked" resultType="Integer">
+	 select count(${productId}) from ${likes_table}
+	 where ${memberId} = #{memberId}
+	 and ${productId} = #{productId}
+	 </select>
+	 
+	 <delete id="delete">
+	 	delete from ${likes_table}
+	 	where ${memberId} = #{memberId} 
+	 	and ${productId} = #{productId}
+	 </delete>
+</mapper>

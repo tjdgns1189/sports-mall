@@ -5,14 +5,16 @@ public class LikesVO {
 	private String memberId;
 	private int productId;
 	
-	public LikesVO() {}
-
 	public LikesVO(int likes, String memberId, int productId) {
-		super();
 		this.likes = likes;
 		this.memberId = memberId;
 		this.productId = productId;
 	}
+
+
+	public LikesVO() {}
+
+
 
 	public int getLikes() {
 		return likes;
