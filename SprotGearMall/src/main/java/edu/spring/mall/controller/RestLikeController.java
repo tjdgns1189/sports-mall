@@ -20,6 +20,7 @@ import edu.spring.mall.persistence.LikesDAO;
 public class RestLikeController {
 	private final Logger logger = LoggerFactory.getLogger(RestLikeController.class);
 
+
 	@Autowired
 	private LikesDAO dao;
 
@@ -41,7 +42,7 @@ public class RestLikeController {
 
 	@DeleteMapping("product/likes")
 	public ResponseEntity<String> deleteLike(@RequestBody LikesVO vo) {
-		logger.info("좋아요 삭제 호출");
+		logger.info("좋아요 삭제");
 		String result = "";
 		int success = dao.delete(vo);
 		if (success == 1) {
@@ -50,4 +51,5 @@ public class RestLikeController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 
 	}
+
 }
