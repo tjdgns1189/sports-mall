@@ -46,7 +46,7 @@
 					</div>
 					<!-- 좋아요 버튼 -->
 					<div class="col-3 px-1">
-						<button class="like-btn btn btn-outline-secondary btn-lg w-100">
+						<button class="like-btn btn btn-outline-danger btn-lg w-100">
 							<span class="heart"></span>
 						</button>
 					</div>

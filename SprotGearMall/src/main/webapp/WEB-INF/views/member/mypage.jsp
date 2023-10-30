@@ -135,6 +135,7 @@
                         <label for="confirm-password">새 비밀번호 확인</label>
                         <input type="password" class="form-control" name ="newPasswordConfirm" id="newPasswordConfirm" required>
                     </div>
+                   	<hr>
                    	<div id="passwordText">
                    	</div>
                     <button type="submit" onclick="changePassword(event)" class="btn btn-primary">비밀번호 변경</button>
