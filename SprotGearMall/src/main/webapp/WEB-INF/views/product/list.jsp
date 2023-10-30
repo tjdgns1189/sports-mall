@@ -48,8 +48,6 @@ li {
     			<tr>
     				<td>${vo.productId }</td>
     				<td>${vo.productPrice }</td>
-    				 <!--  사이트이동하는데 데이터보내면서-->
-    				 <!-- productName이 아니라 Id써야됨 -->
     				<td><a href="detail?productId=${vo.productId }">${vo.productName }</a></td>
     				<td>${vo.productStock }</td>
     				<td>${vo.productMaker }</td>

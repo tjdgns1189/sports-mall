@@ -1,15 +1,13 @@
 $(() => {
     $(".menu-button").click(() => {
-        $(".dropdown").toggle();
+        $(".dropdown-content").toggle();
     });//end menu-button.click
 
     $(document).click((event) => {
         if (!$(event.target).closest('.menu').length) {
-            $(".dropdown").hide();
+            $(".dropdown-content").hide();
         }
     });//end document.click
-
-
 });//end document ready
 
 function targetURL() {

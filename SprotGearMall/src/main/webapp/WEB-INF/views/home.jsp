@@ -14,11 +14,8 @@
 <body>
 
 
-<h1>
-	Hello world! 
-</h1>
 
-<P>  The time on the server is ${serverTime}. </P>
+<h2>메인 페이지</h2>
 
 	<sec:authorize access="isAuthenticated()">
     로그인한 사용자: <sec:authentication property="principal.username"/>

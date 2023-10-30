@@ -19,7 +19,7 @@ public class AjaxAwareAuthenticationEntryPoint extends LoginUrlAuthenticationEnt
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, "접근권한 없음");
 		} else {
 			super.commence(request, response, authException);
 		}
