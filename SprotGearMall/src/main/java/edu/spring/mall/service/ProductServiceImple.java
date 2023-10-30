@@ -39,7 +39,7 @@ public class ProductServiceImple implements ProductService {
 		return dao.select(criteria);
 	}
 	
-	//디테일 호출용
+	//�뵒�뀒�씪 �샇異쒖슜
 	@Override
 	public ProductVO read(int productId) {
 		logger.info("read(productId) 호출 : productId = " + productId);

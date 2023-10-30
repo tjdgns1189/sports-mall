@@ -23,12 +23,12 @@
     	<ul class="nav-list">
         	<li><a href="${pageContext.request.contextPath}/product/list">메뉴</a></li>
        		<li><a href="#">들어</a></li>
-        	<li><a href="${pageContext.request.contextPath}/product/productListTest">갈곳</a></li>
+        	<li><a href="#">갈곳</a></li>
         	<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard">QNA</a></li>
     	</ul>
     
     <div class="search-bar">
-		<form action="${pageContext.request.contextPath}/search" method="get">
+		<form action="#" method="get">
         <input type="text" placeholder="검색창">
         <button id="searchBtn" class="menu-button">
         	<img src="<c:url value="/resources/img/search_icon.png" />" alt="검색" >
