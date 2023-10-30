@@ -29,7 +29,7 @@ function isLike() {
                 "memberId": memberId,
                 "productId": productId,
             }),
-            success: (result) => {
+            success: (result)=> {
                 console.log(result);
                 if (result === 'success') {
                     $('.heart').toggleClass('heart-filled');

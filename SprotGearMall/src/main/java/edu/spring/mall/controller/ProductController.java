@@ -37,7 +37,7 @@ public class ProductController {
 
 	@GetMapping("/list")
 	public void listGET(Model model, Integer page, Integer numsPerPage) {
-		logger.info("list() È£Ãâ");
+		logger.info("list() íšŠì§™íš„ì°½");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 
 		PageCriteria criteria = new PageCriteria();
@@ -87,7 +87,7 @@ public class ProductController {
 
 	@GetMapping("/payment")
 	public void paymentGET(Model model, Integer productId) {
-		logger.info("paymentGET() È£Ãâ");
+		logger.info("paymentGET() íšŠì§™íš„ì°½");
 		ProductVO vo = dao.selectById(productId);
 		model.addAttribute("vo", vo);
 	}
@@ -99,10 +99,10 @@ public class ProductController {
 
 	@PostMapping("/register")
 	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
-		logger.info("registerPOST() È£Ãâ");
+		logger.info("registerPOST() íšŠì§™íš„ì°½");
 		logger.info(vo.toString());
 		int result = productService.create(vo);
-		logger.info(result + "Çà »ðÀÔ");
+		logger.info(result + "íš‰íšª ì¨©ì±¨ï¿½íšš");
 		if (result == 1) {
 			reAttr.addFlashAttribute("insert_result", "success");
 			return "redirect:/product/list";
@@ -114,11 +114,12 @@ public class ProductController {
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
-		logger.info("detail() È£Ãâ : productId = " + productId);
+		logger.info("detail() íšŠì§™íš„ì°½ : productId = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
+	
 		if (principal != null) {
-			logger.info("principal°ª È®ÀÎ" + principal.getName());
+			logger.info("principalì§¸ì§§ íšŠì§°ï¿½íš“" + principal.getName());
 			String memberId = principal.getName();
 			LikesVO likesVO = new LikesVO(0, memberId, productId);
 			int result = likesDAO.select(likesVO);
@@ -135,28 +136,30 @@ public class ProductController {
 	} // end detail()
 
 	@GetMapping("/update")
+
 	public void updateGET(Model model, int productId, Integer page) {
-		logger.info("updateGET() È£Ãâ : productName = " + productId);
+		logger.info("updateGET() íšŠì§™íš„ì°½ : productName = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
+
 	} // end updateGET()
 
 	@PostMapping("/update")
 	public String updatePOST(ProductVO vo, Integer page) {
-		logger.info("updatePOST() È£Ãâ : vo = " + vo.toString());
+		logger.info("updatePOST() íšŠì§™íš„ì°½ : vo = " + vo.toString());
 		int result = productService.update(vo);
 
 		if (result == 1) {
 			return "redirect:/board/list?page=" + page;
 		} else {
-			return "redirect:/board/update?productName=" + vo.getProductName();
+			return "redirect:/board/update?productId=" + vo.getProductId();
 		}
 	} // end updatePOST()
 
 	@PostMapping("/delete")
 	public String delete(String productName) {
-		logger.info("delete() È£Ãâ : productName = " + productName);
+		logger.info("delete() íšŠì§™íš„ì°½ : productName = " + productName);
 		int result = productService.delete(productName);
 		if (result == 1) {
 			return "redirect:/board/list";
