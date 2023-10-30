@@ -37,7 +37,7 @@ public class ProductController {
 
 	@GetMapping("/list")
 	public void listGET(Model model, Integer page, Integer numsPerPage) {
-		logger.info("list() È£Ãâ");
+		logger.info("list() 횊짙횄창");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 
 		PageCriteria criteria = new PageCriteria();
@@ -62,7 +62,7 @@ public class ProductController {
 
 	@GetMapping("/payment")
 	public void paymentGET(Model model, Integer productId) {
-		logger.info("paymentGET() È£Ãâ");
+		logger.info("paymentGET() 횊짙횄창");
 		ProductVO vo = dao.selectById(productId);
 		model.addAttribute("vo", vo);
 	}
@@ -74,10 +74,10 @@ public class ProductController {
 
 	@PostMapping("/register")
 	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
-		logger.info("registerPOST() È£Ãâ");
+		logger.info("registerPOST() 횊짙횄창");
 		logger.info(vo.toString());
 		int result = productService.create(vo);
-		logger.info(result + "Çà »ðÀÔ");
+		logger.info(result + "횉횪 쨩챨�횚");
 		if (result == 1) {
 			reAttr.addFlashAttribute("insert_result", "success");
 			return "redirect:/product/list";
@@ -89,12 +89,12 @@ public class ProductController {
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
-	public void detail(Model model, Integer productId, Integer page) {
-		logger.info("detail() È£Ãâ : productId = " + productId);
+		logger.info("detail() 횊짙횄창 : productId = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
+	
 		if (principal != null) {
-			logger.info("principal°ª È®ÀÎ" + principal.getName());
+			logger.info("principal째짧 횊짰�횓" + principal.getName());
 			String memberId = principal.getName();
 			LikesVO likesVO = new LikesVO(0, memberId, productId);
 			int result = likesDAO.select(likesVO);
@@ -113,7 +113,7 @@ public class ProductController {
 	@GetMapping("/update")
 
 	public void updateGET(Model model, int productId, Integer page) {
-		logger.info("updateGET() È£Ãâ : productName = " + productId);
+		logger.info("updateGET() 횊짙횄창 : productName = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
@@ -122,7 +122,7 @@ public class ProductController {
 
 	@PostMapping("/update")
 	public String updatePOST(ProductVO vo, Integer page) {
-		logger.info("updatePOST() È£Ãâ : vo = " + vo.toString());
+		logger.info("updatePOST() 횊짙횄창 : vo = " + vo.toString());
 		int result = productService.update(vo);
 
 		if (result == 1) {
@@ -134,7 +134,7 @@ public class ProductController {
 
 	@PostMapping("/delete")
 	public String delete(String productName) {
-		logger.info("delete() È£Ãâ : productName = " + productName);
+		logger.info("delete() 횊짙횄창 : productName = " + productName);
 		int result = productService.delete(productName);
 		if (result == 1) {
 			return "redirect:/board/list";
