@@ -17,7 +17,7 @@
 		</div>
 		<div>
 			<p>작성자 : </p>
-			<input type="text" name="memberId" value="${memberId}" readonly="readonly">
+			<input type="text" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">
 		</div>
 		<div>
 			<p>내용 : </p>

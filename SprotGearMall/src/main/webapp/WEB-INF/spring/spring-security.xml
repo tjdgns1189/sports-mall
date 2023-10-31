@@ -21,10 +21,11 @@
 	<http pattern="/resources/**" security="none"/>
 	<http pattern="/css/**" security="none"/>
 
-	<http pattern="/qnaBoard/**" security="none"/>
-	<http pattern="/qnaBoard/replies/*" security="none"/>
+	<http pattern="/qnaBoard/replies" security="none"/>
+	<http pattern="/qnaBoard/qnaRegister" security="none"/>
+	<http pattern="/qnaBoard/delete" security="none"/>
 	<http pattern="/orders/delete" security="none"/>
-	<http pattern="/orders/orderlist" security="none"/>
+
 	
 	
 
