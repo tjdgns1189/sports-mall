@@ -10,6 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	values (#{memberId}, #{productId})
 	 </insert>
 	 
+	 <select id="checkByLiked" resultType="Integer">
+	 select count(${productId}) from ${likes_table}
+	 where ${memberId} = #{memberId}
+	 and ${productId} = #{productId}
+	 </select>
+	 
 	 <delete id="delete">
 	 	delete from ${likes_table}
 	 	where ${memberId} = #{memberId} 

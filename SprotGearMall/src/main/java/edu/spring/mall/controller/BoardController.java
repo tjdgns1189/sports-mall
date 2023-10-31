@@ -73,7 +73,7 @@ public class BoardController {
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
 		int result = qnaBoardService.create(vo);
-		logger.info(result + "행 삽입");
+		logger.info(result + "행 추가");
 		model.addAttribute("memberId", memberId);		
 		if(result == 1) {
 			reAttr.addFlashAttribute("insert_result", "success");
@@ -116,15 +116,3 @@ public class BoardController {
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-

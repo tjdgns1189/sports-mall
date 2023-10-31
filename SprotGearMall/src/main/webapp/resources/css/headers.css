@@ -1,3 +1,6 @@
+
+
+
 .form-control-dark {
 	border-color: var(- -bs-gray);
 }
@@ -113,6 +116,7 @@
 	padding: 10px 20px;
 	border-bottom: 1px solid #e5e5e5;
 	background-color: #fff;
+    overflow: visible; /* 드롭다운 메뉴가 헤더 밖으로 확장될 수 있도록 설정 */
 }
 
 .logo {
@@ -199,3 +203,4 @@
 .dropdown li a:hover {
 	color: #007BFF;
 }
+

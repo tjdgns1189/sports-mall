@@ -12,7 +12,9 @@
 </head>
 
 <body>
+<div>
 	<h1 id="registerLogo"><a href="${pageContext.request.contextPath}/index">스포츠용품 쇼핑몰</a></h1>
+	</div>
 	<div class="signup-form">
 		<form action="register" method="POST">
 			<input type="text" name="memberId" id="memberId" required="required"

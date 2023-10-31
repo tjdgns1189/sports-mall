@@ -26,39 +26,39 @@ public class ProductServiceImple implements ProductService {
 
 	@Override
 	public int create(ProductVO vo) {
-		logger.info("create() í˜¸ì¶œ : vo = " + vo.toString()); 
+		logger.info("create() È£Ãâ : vo = " + vo.toString()); 
 		return dao.insert(vo);
 	}
 
 	@Override
 	public List<ProductVO> read(PageCriteria criteria) {
-		logger.info("read(criteria) í˜¸ì¶œ");
+		logger.info("read(criteria) È£Ãâ");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return dao.select(criteria);
 	}
-
+	
 	@Override
 	public ProductVO read(int productId) {
-		logger.info("read(productId) í˜¸ì¶œ : productId = " + productId);
+		logger.info("read(productId) È£Ãâ : productId = " + productId);
 		return dao.selectById(productId);
 	}
 
 	@Override
 	public int update(ProductVO vo) {
-		logger.info("update() í˜¸ì¶œ : vo = " + vo.toString());
+		logger.info("update() È£Ãâ : vo = " + vo.toString());
 		return dao.update(vo);
 	}
 
 	@Override
 	public int delete(String productName) {
-		logger.info("delete() í˜¸ì¶œ : productName = " + productName);
+		logger.info("delete()  È£Ãâ: productName = " + productName);
 		return dao.delete(productName);
 	}
 
 	@Override
 	public int getTotalCounts() {
-		logger.info("getTotalCounts() í˜¸ì¶œ");
+		logger.info("getTotalCounts() È£Ãâ");
 		return dao.getTotalCounts();
 	}
 
