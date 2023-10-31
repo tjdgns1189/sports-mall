@@ -25,6 +25,10 @@
        <c:if test="${not empty error}"> 
        <div class="alert alert-danger" role="alert">로그인 실패하였습니다</div>
        </c:if>
+		<c:if test="${not empty state}">
+        <div class="alert alert-success" role="alert">회원가입에 성공했습니다</div>
+       </c:if>
+       
         <p><input type="hidden" id="redirect" name="redirect"  value="${uri }"></p>
         <p><input type="text" id="username" name="memberId" class="form-control" placeholder="아이디" required="required"></p>
         <p><input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" required="required"></p>

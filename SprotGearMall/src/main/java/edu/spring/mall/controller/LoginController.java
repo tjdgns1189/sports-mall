@@ -48,10 +48,14 @@ public class LoginController {
 	@GetMapping("/loginForm")
 	public void loginGet(Model model, 
 	                     @RequestParam(name = "error", required = false) String error,
+	                     @RequestParam(name = "state", required = false) String state,
 	                     @CookieValue(name = "targeturl", required = false) String targeturl) {
 	    logger.info("loginGet 호출");
 	    if (error != null) {
 	        model.addAttribute("error", "error");
+	    }
+	    if(state != null) {
+	    	model.addAttribute("state", state);
 	    }
 	    
 	    if(targeturl!=null) {
@@ -107,7 +111,7 @@ public class LoginController {
 			int result = service.create(vo);
 			if (result == 1) {
 				logger.info("회원가입 성공");
-				return "redirect:/member/loginForm";
+				return "redirect:/member/loginForm?state=success";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

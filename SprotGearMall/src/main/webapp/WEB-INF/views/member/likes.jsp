@@ -47,7 +47,7 @@
 	<script type="text/javascript">
 	$(() => {
 	    $(".btn-delete").click(function() {
-	    	console.log('삭제버튼 클릭했음')
+	    	if(confirm('삭제하시겠습니까?') == true){
 	    	var productId = $(this).data('product-id'); 	    	 
 	    	var memberId = $('#memberId').val();
 	    	 var csrfToken = $("#csrfToken").val();
@@ -71,6 +71,9 @@
 	                }
 	            } 
 	        }); // end ajax
+	    	}else{
+	    		return;
+	    	}
 	    }); // end btn click
 	}); //end document.ready
 

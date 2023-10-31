@@ -1,5 +1,6 @@
 package edu.spring.mall.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -20,8 +21,10 @@ public class LikesController {
 	LikesServiceImple service;
 	
 	@GetMapping("/member/likes")
-	public void likesGET(String memberId, Model model) {
-		logger.info("likesGET 호출" + memberId);
+	public void likesGET(Principal principal, Model model) {
+		logger.info("likesGET 호출" + principal.getName());
+		String memberId = principal.getName();
+		
 		List<ProductVO> list = service.read(memberId);
 		model.addAttribute("list", list);
 		    
