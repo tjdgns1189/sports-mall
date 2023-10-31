@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.spring.mall.domain.QnaBoardVO;
-import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.persistence.QnaBoardDAO;
+import edu.spring.mall.pageutil.PageCriteria;
 
 @Service
 public class QnaBoardServiceImple implements QnaBoardService {
@@ -43,6 +43,18 @@ public class QnaBoardServiceImple implements QnaBoardService {
 	public int getTotalCounts() {
 		logger.info("getTotalCounts() 호출");
 		return dao.getTotalCounts();
+	}
+
+	@Override
+	public int update(QnaBoardVO vo) {
+		logger.info("update() 호출 : vo = " + vo.toString());
+		return dao.update(vo);
+	}
+
+	@Override
+	public int delete(int qnaBoardId) {
+		logger.info("delete() 호출 : qnaBoardId = " + qnaBoardId);
+		return dao.delete(qnaBoardId);
 	}
 
 }

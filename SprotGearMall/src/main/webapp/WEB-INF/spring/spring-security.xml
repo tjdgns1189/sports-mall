@@ -21,6 +21,16 @@
 	<http pattern="/resources/**" security="none"/>
 	<http pattern="/css/**" security="none"/>
 
+	<http pattern="/qnaBoard/**" security="none"/>
+	<http pattern="/qnaBoard/replies/*" security="none"/>
+	<http pattern="/orders/delete" security="none"/>
+	<http pattern="/orders/orderlist" security="none"/>
+	
+	
+
+
+	
+	
 	<http auto-config="true" use-expressions="true">
 	
 	
@@ -37,6 +47,10 @@
 	 <intercept-url pattern="/info" access="isAuthenticated()"/>
 	 <intercept-url pattern="/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>
+	 <intercept-url pattern="/product/payment/**" access="isAuthenticated()"/>
+
+
+
 	 <intercept-url pattern="/product/orderlist/**" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/orderlist" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/likes" access="isAuthenticated()"/>
