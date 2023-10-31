@@ -1,7 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
+
 
 <!DOCTYPE html>
 
@@ -45,7 +45,7 @@
 								<!-- 상품 이름-->
 								<span class="fw-bolder">${vo.productName}</span><br>
 								<!-- 가격들어가는곳-->
-								${vo.productPrice } 원
+                			<fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
 							</div>
 						</div>
 					</div>

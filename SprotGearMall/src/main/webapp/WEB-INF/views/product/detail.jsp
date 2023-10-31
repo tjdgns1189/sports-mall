@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -32,7 +34,7 @@
 				<h1>${vo.productName}</h1>
 				<p class="h6 my-2">제조사 : ${vo.productMaker}</p>
 				<hr>
-				<p class="price h4 my-2">판매가 : ${vo.productPrice}</p><hr>
+				<p class="price h4 my-2">판매가 : <fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원</p><hr>
 				
 				<!-- 버튼 컨테이너 -->
 				<div class="d-flex justify-content-between align-items-center mt-4 gx-2">
