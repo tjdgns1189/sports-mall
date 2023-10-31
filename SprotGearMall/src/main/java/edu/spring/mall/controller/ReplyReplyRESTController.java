@@ -23,7 +23,7 @@ import edu.spring.mall.service.ReplyReplyService;
 @RequestMapping(value="/qnaBoard/replyReplies")
 public class ReplyReplyRESTController {
 	private static final Logger logger = 
-			LoggerFactory.getLogger(QnaReplyRESTController.class);
+			LoggerFactory.getLogger(ReplyReplyRESTController.class);
 	
 	@Autowired
 	private ReplyReplyService replyReplyService;
