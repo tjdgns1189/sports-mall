@@ -20,6 +20,7 @@
 	<http pattern="/css/**" security="none"/>
 	<http pattern="/qnaBoard/replies/*" security="none"/>
 	
+	
 	<http auto-config="true" use-expressions="true">
 	 <access-denied-handler ref="accessDeniedHandler"/>
 	 <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
@@ -44,7 +45,7 @@
 
 		<form-login login-page="/member/loginForm"
 			login-processing-url="/login"
-			default-target-url="/index"
+			default-target-url="/"
 			always-use-default-target="false"
 			authentication-success-handler-ref="accessSuccessHandler"
 			authentication-failure-url="/member/loginForm?error"

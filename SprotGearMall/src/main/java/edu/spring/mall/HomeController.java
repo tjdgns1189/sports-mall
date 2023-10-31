@@ -40,14 +40,6 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model,Integer page, Integer numsPerPage) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 	    model.addAttribute("authorities", authorities);
@@ -59,14 +51,11 @@ public class HomeController {
 		if(page != null) {
 			criteria.setPage(page);
 		}
-		
 		if(numsPerPage != null) {
 			criteria.setNumsPerPage(numsPerPage);
 		}
-		
 		List<ProductVO> list = productService.read(criteria);
 		model.addAttribute("list",list);
-		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(productService.getTotalCounts());

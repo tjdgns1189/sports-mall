@@ -15,12 +15,12 @@
 
 
 	<main>
-		<h1><a href="${pageContext.request.contextPath}/index">스포츠용품 쇼핑몰</a></h1>
+		<h1><a href="${pageContext.request.contextPath}/">스포츠용품 쇼핑몰</a></h1>
 	<div>
 	<!-- 네비게이션 바 기능 -->
 	</div>
 	
-	<div class="header-container" style="background-color: #e3f2fd;">
+	<div class="header-container bg-secondary " >
     	<ul class="nav-list">
         	<li><a href="${pageContext.request.contextPath}/product/list">메뉴</a></li>
        		<li><a href="#">들어</a></li>
