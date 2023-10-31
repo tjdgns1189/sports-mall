@@ -21,8 +21,6 @@
 	<http pattern="/resources/**" security="none"/>
 	<http pattern="/css/**" security="none"/>
 	<http pattern="/qnaBoard/replies/*" security="none"/>
-	<http pattern="/orders/delete" security="none"/>
-	<http pattern="/orders/orderlist" security="none"/>
 	
 	<http auto-config="true" use-expressions="true">
 	 <access-denied-handler ref="accessDeniedHandler"/>

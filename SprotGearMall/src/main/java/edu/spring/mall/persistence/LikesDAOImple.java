@@ -33,7 +33,7 @@ public class LikesDAOImple implements LikesDAO {
 	
 	@Override
 	public List<Integer> selectUserLiked(String memberId) {
-		logger.info("selectUserLiked 호출 member");
+		logger.info("selectUserLiked 호출");
 		return sqlSession.selectList(NAMESPACE + ".select" , memberId);
 	}
 

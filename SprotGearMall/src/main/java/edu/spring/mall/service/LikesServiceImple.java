@@ -27,13 +27,13 @@ public class LikesServiceImple implements LikesService {
 	@Override
 	public List<ProductVO> read(String memberId) {
 		logger.info("read »£√‚");
-		
-		List<Integer> likeList = likesDAO.selectUserLiked(memberId);
-        List<ProductVO> likedProducts = new ArrayList<>();
+
+        List<Integer> likeNumber = likesDAO.selectUserLiked(memberId);
+        List<ProductVO> likedProducts = new ArrayList<ProductVO>();
         
-        for(Integer x: likeList) {
-            ProductVO product = productDAO.selectByIds(x);
-            likedProducts.add(product);
+        for(Integer x : likeNumber) {
+        	ProductVO vo = productDAO.selectById(x);
+        	likedProducts.add(vo);
         }
 
 		return likedProducts;
