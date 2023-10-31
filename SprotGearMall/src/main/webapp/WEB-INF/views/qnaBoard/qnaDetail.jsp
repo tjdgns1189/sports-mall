@@ -118,7 +118,7 @@
 								readonly = '';
 							}
 							
-
+// 
 							list += '<div class="reply_item">'
 					            + '<pre>'
 					            + '<input type="hidden" id="qnaReplyId" value="' + this.qnaReplyId + '">'
