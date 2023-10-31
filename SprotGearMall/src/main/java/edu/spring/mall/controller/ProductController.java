@@ -1,16 +1,24 @@
 package edu.spring.mall.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.spring.mall.domain.LikesVO;
@@ -26,6 +34,10 @@ import edu.spring.mall.service.ProductService;
 public class ProductController {
 	private final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
+	// servlet-context.xml 파일에 설정된 문자열 리소스 주입
+	 @Resource(name = "uploadPath")
+	 private String uploadPath;
+	
 	@Autowired
 	private ProductService productService;
 
@@ -37,7 +49,7 @@ public class ProductController {
 
 	@GetMapping("/list")
 	public void listGET(Model model, Integer page, Integer numsPerPage) {
-		logger.info("list() 횊짙횄창");
+		logger.info("list() 호출");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 
 		PageCriteria criteria = new PageCriteria();
@@ -62,9 +74,10 @@ public class ProductController {
 	
 	@GetMapping("/productListTest")
 	public void listTestGET(Model model, Integer page, Integer numsPerPage) {
-		logger.info("listTest() ȣ��");
+		logger.info("listTest() 호출");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
-
+		
+		
 		PageCriteria criteria = new PageCriteria();
 		if (page != null) {
 			criteria.setPage(page);
@@ -82,12 +95,15 @@ public class ProductController {
 		pageMaker.setTotalCount(productService.getTotalCounts());
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
+		
+		
 
 	} // end list()
+	
 
 	@GetMapping("/payment")
 	public void paymentGET(Model model, Integer productId) {
-		logger.info("paymentGET() 횊짙횄창");
+		logger.info("paymentGET() 호출");
 		ProductVO vo = dao.selectById(productId);
 		model.addAttribute("vo", vo);
 	}
@@ -98,11 +114,24 @@ public class ProductController {
 	} // end registerGET()
 
 	@PostMapping("/register")
-	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
-		logger.info("registerPOST() 횊짙횄창");
+	public String registerPOST(ProductVO vo,@RequestParam("productImgPath") MultipartFile file, RedirectAttributes reAttr) {
+		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
+		logger.info("파일 이름 : " + file.getOriginalFilename());
+		logger.info("파일 크기 : " + file.getSize());
+		
+		if (!file.isEmpty()) {
+			try {
+				// 이미지를 서버에 저장하고 파일명 변환
+				String savedFileName = saveUploadFile(file);
+				vo.setProductImgPath(savedFileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		int result = productService.create(vo);
-		logger.info(result + "횉횪 쨩챨�횚");
+		logger.info(result + "행 삽입");
 		if (result == 1) {
 			reAttr.addFlashAttribute("insert_result", "success");
 			return "redirect:/product/list";
@@ -110,16 +139,31 @@ public class ProductController {
 			return "redirect:/product/register";
 		}
 	} // end registerPOST()
+	
+	private String saveUploadFile(MultipartFile file) {
+		// UUID : 업로드하는 파일 이름이 중복되지 않도록 값 생성
+		UUID uuid = UUID.randomUUID();
+		String savedName = uuid + "_" + file.getOriginalFilename();
+		File target = new File(uploadPath, savedName);
+		
+		try {
+			FileCopyUtils.copy(file.getBytes(),target);
+			return savedName;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
-		logger.info("detail() 횊짙횄창 : productId = " + productId);
+		logger.info("detail() 호출 : productId = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 	
 		if (principal != null) {
-			logger.info("principal째짧 횊짰�횓" + principal.getName());
+			logger.info("principal 호출" + principal.getName());
 			String memberId = principal.getName();
 			LikesVO likesVO = new LikesVO(0, memberId, productId);
 			int result = likesDAO.select(likesVO);
@@ -138,7 +182,7 @@ public class ProductController {
 	@GetMapping("/update")
 
 	public void updateGET(Model model, int productId, Integer page) {
-		logger.info("updateGET() 횊짙횄창 : productName = " + productId);
+		logger.info("updateGET() 호출 : productName = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
@@ -147,7 +191,7 @@ public class ProductController {
 
 	@PostMapping("/update")
 	public String updatePOST(ProductVO vo, Integer page) {
-		logger.info("updatePOST() 횊짙횄창 : vo = " + vo.toString());
+		logger.info("updatePOST() 호출 : vo = " + vo.toString());
 		int result = productService.update(vo);
 
 		if (result == 1) {
@@ -159,7 +203,7 @@ public class ProductController {
 
 	@PostMapping("/delete")
 	public String delete(String productName) {
-		logger.info("delete() 횊짙횄창 : productName = " + productName);
+		logger.info("delete() 호출 : productName = " + productName);
 		int result = productService.delete(productName);
 		if (result == 1) {
 			return "redirect:/board/list";

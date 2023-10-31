@@ -51,7 +51,7 @@ li {
     				<td><a href="detail?productId=${vo.productId }">${vo.productName }</a></td>
     				<td>${vo.productStock }</td>
     				<td>${vo.productMaker }</td>
-    				<td>${vo.productImgPath }</td>
+    				<td><img src="${vo.productImgPath }"></td>
     				<td>${vo.productCategory }</td>
     			</tr>
     		</c:forEach>

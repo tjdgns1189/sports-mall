@@ -63,7 +63,7 @@
     				<!-- 여기서는 경로에 앞에 product를 붙여줘야함 -->
     				<td>${vo.productStock }</td>
     				<td>${vo.productMaker }</td>
-    				<td>${vo.productImgPath }</td>
+    				<td><img src="${vo.productImgPath }"></td>
     				<td>${vo.productCategory }</td>
     			</tr>
     		</c:forEach>
