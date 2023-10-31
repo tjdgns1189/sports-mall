@@ -36,7 +36,8 @@ public class ProductController {
 	private LikesDAO likesDAO;
 
 	@GetMapping("/list")
-	public void listGET(Model model, Integer page, Integer numsPerPage) {
+
+	public void list(Model model, Integer page, Integer numsPerPage) {
 		logger.info("list() »£√‚");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 
@@ -169,3 +170,4 @@ public class ProductController {
 	} // end delete()
 
 } // end ProductController
+

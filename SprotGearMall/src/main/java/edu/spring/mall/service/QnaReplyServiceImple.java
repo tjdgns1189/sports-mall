@@ -7,8 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.spring.mall.service.QnaReplyServiceImple;
+import edu.spring.mall.domain.QnaBoardVO;
 import edu.spring.mall.domain.QnaReplyVO;
 import edu.spring.mall.persistence.QnaReplyDAO;
+import edu.spring.mall.pageutil.PageCriteria;
 
 @Service
 public class QnaReplyServiceImple implements QnaReplyService {
@@ -34,15 +37,18 @@ public class QnaReplyServiceImple implements QnaReplyService {
 
 	@Override
 	public int update(int qnaReplyId, String qnaReplyContent) {
-		// TODO Auto-generated method stub
-		return 0;
+		logger.info("update() 호출");
+		logger.info("qnaReplyId = " + qnaReplyId + ", qnaReplyContent = " + qnaReplyContent);
+		return qnaReplyDAO.update(qnaReplyId, qnaReplyContent);
 	}
 
 	@Override
-	public int delete(int qnaReplyId, int qnaBoardId) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delete(int qnaReplyId) throws Exception {
+		logger.info("delete() 호출 : qnaReplyId = " + qnaReplyId);
+		return qnaReplyDAO.delete(qnaReplyId);
 	}
+	
+	
 	
 	
 }

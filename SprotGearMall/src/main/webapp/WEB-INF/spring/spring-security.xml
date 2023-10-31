@@ -20,12 +20,12 @@
 	<http pattern="/member/register" security="none"/>
 	<http pattern="/resources/**" security="none"/>
 	<http pattern="/css/**" security="none"/>
-
+	<http pattern="/qnaBoard/replies/*" security="none"/>
+	<http pattern="/orders/delete" security="none"/>
+	<http pattern="/orders/orderlist" security="none"/>
+	
 	<http auto-config="true" use-expressions="true">
-	
-	
 	 <access-denied-handler ref="accessDeniedHandler"/>
-	
 	 <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 	 <intercept-url pattern="/index" access="permitAll"/>
 	 <intercept-url pattern="/member/loginForm" access="isAnonymous()"/>
@@ -37,6 +37,7 @@
 	 <intercept-url pattern="/info" access="isAuthenticated()"/>
 	 <intercept-url pattern="/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>
+	 <intercept-url pattern="/product/payment/**" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/orderlist/**" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/orderlist" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/likes" access="isAuthenticated()"/>
@@ -52,19 +53,15 @@
 			authentication-failure-url="/member/loginForm?error"
 			username-parameter="memberId" 
 			password-parameter="password" />
-			
 			 <remember-me token-repository-ref="rememberMeTokenRepository" key="athwartbriefly"/>
 				
 			<logout
 				logout-url="/logout"
 				logout-success-url="/index"
 				delete-cookies="JSESSIONID, remember-me"/>
-		
-			
+	
 	</http>
 	
-
-
 <!-- 비밀번호 암호화 -->
 	<b:bean id="PasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<b:bean id="CustomUserDetailService" class="edu.spring.mall.security.CustomUserDetailService" />

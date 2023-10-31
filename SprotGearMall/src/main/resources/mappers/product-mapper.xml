@@ -24,6 +24,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="select_by_product_id" resultType="ProductVO">
 	 	select * from ${product} where ${productId} = #{productId}
 	 </select>
+	 <!-- 좋아요한 상품가져오기 -->
+	 <select id="select_products_by_ids" resultType="ProductVO">
+    		SELECT * FROM ${product}
+   		 WHERE ${productId} IN
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+	</select>
 	 
 	 <update id="update">
 	 	update ${product}

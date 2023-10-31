@@ -11,9 +11,12 @@ public interface ProductDAO {
 	ProductVO selectByName(String productName);
 	ProductVO selectById(int productId);
 	List<ProductVO> select(PageCriteria criteria);
+	ProductVO selectByIds(int productId);
+
 	int update(ProductVO vo);
 	int delete(String productName);
 	int getTotalCounts();
 	List<ProductVO> selectPaging(String productName);
+	
 	
 }

@@ -9,6 +9,10 @@ public interface QnaBoardDAO {
 	int insert(QnaBoardVO vo);
 	List<QnaBoardVO> select();
 	QnaBoardVO select(int qnaBoardId);
+	int update(QnaBoardVO vo);
+	int delete(int qnaBoardId);
 	List<QnaBoardVO> select(PageCriteria criteria);
 	int getTotalCounts();
+	List<QnaBoardVO> select(String memberId);
+	List<QnaBoardVO> selectByTitleOrContent(String keyword);
 }

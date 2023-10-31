@@ -117,7 +117,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		logger.info("getUsername호출");
+		logger.info("getUsername호출" + this.memberId);
 		return this.memberId;
 	}
 

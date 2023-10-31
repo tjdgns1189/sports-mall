@@ -47,6 +47,12 @@ public class ProductDAOImple implements ProductDAO{
 		logger.info("select(productId) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
 	}
+	//좋아요용
+	@Override
+	public ProductVO selectByIds(int productId) {
+		logger.info("select(productId) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_products_by_ids", productId);
+	}
 	
 	@Override
 	public List<ProductVO> select(PageCriteria criteria) {
@@ -81,6 +87,7 @@ public class ProductDAOImple implements ProductDAO{
 		logger.info("selectPaging() 호출 : product = " + productName);
 		return sqlSession.selectList(NAMESPACE + ".select_by_productName","%" + productName + "%");
 	}
+
 
 
 

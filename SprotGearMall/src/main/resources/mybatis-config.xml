@@ -57,7 +57,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="qnaBoardId" value="qna_board_id"/>
 	 	<property name="memberId" value="member_id"/>
 	 	<property name="qnaReplyContent" value="qna_reply_content"/>
-	 	<property name="qnaplyCreatedDate" value="qna_reply_created_date"/>
+	 	<property name="qnaReplyCreatedDate" value="qna_reply_created_date"/>
+	 	
+	 	<property name="reply_reply" value="reply_reply"/>
+	 	<property name="replyReplyId" value="reply_reply_id"/> 
+	 	<property name="qnaReplyId" value="qna_reply_id"/>
+	 	<property name="memberId" value="member_id"/>
+	 	<property name="replyReplyContent" value="reply_reply_content"/>
+	 	<property name="replyReplyCreatedDate" value="reply_reply_created_date"/>
 	 	
 	 	<property name="product_reply" value="product_reply"/>
 	 	<property name="productReplyId" value="product_reply_id"/> 
