@@ -116,7 +116,7 @@ public class ProductController {
 
 	@PostMapping("/register")
 
-	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
+	public String registerPOST(ProductVO vo, RedirectAttributes reAttr,MultipartFile file) {
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
 		logger.info("파일명 " + file.getOriginalFilename());
