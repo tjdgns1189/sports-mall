@@ -1,75 +1,62 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
+
 
 <!DOCTYPE html>
 
 <html>
 <head>
+<link href="<c:url value="/resources/css/products.css" />" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
 <meta charset="UTF-8">
+
 	<title>Home</title>
 
 </head>
 <body>
 
-
-
-<h2>메인 페이지</h2>
-
-	<sec:authorize access="isAuthenticated()">
-    로그인한 사용자: <sec:authentication property="principal.username"/>
-    	
-    <c:url var="logoutUrl" value="/logout"/>
-      <form class="form-inline" action="${logoutUrl}" method="post">
-          <input type="submit" value="Log out" />
-          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-      </form>
-	<a href="member/mypage" >마이페이지</a>
-</sec:authorize>
-<sec:authorize access="isAnonymous()">
-<a href="member/loginForm">로그인</a>
-<a href="member/register">회원가입</a>
-</sec:authorize>
-
-
-<hr>
-
-
 <h1>상품목록리스트</h1>
-	<table>
-    	<thead>
-    		<tr>
-    		<!--  상품 헤드 -->
-    			<th style="width : 60px">번호</th>
-    			<th style="width : 100px">이름</th>
-    			<th style="width : 100px">가격</th>
-    			<th style="width : 100px">재고</th>
-    			<th style="width : 100px">제조사</th>
-    			<th style="width : 100px">이미지</th>
-    			<th style="width : 100px">분류</th>
-    		</tr>
-    	</thead>
-    	<tbody>
-    	
-    	<!-- 상품 목록 -->
-    		<c:forEach var="vo" items="${list }"> 
-    			<tr>
-    				<td>${vo.productId }</td>
-    				<td>${vo.productPrice }</td>
-    				 <!--  사이트이동하는데 데이터보내면서-->
-    				 <!-- productName이 아니라 Id써야됨 -->
-    				<td><a href="product/detail?productId=${vo.productId }&page=${pageMaker.criteria.page}">${vo.productName }</a></td>
-    				<!-- 여기서는 경로에 앞에 product를 붙여줘야함 -->
-    				<td>${vo.productStock }</td>
-    				<td>${vo.productMaker }</td>
-    				<td><img src="${vo.productImgPath }"></td>
-    				<td>${vo.productCategory }</td>
-    			</tr>
-    		</c:forEach>
-    	</tbody>
-    </table>
-	<ul>	
+
+<!-- Header-->
+	<header class="bg-dark py-5">
+		<div class="container px-4 px-lg-5 my-5">
+			<div class="text-center text-white">
+				<h1 class="display-4 fw-bolder">메인페이지</h1>
+				<p class="lead fw-normal text-white-50 mb-0">이미지랑 글자 넣기</p>
+			</div>
+		</div>
+	</header>
+	
+	<!-- Section-->
+	<section class="py-5"><h3>&nbsp;신상품</h3><hr>
+			<div class="container px-4 px-lg-5 mt-5">
+				<div
+					class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+					<c:forEach var="vo" items="${list }">
+					<div class="col mb-5">
+						<div class="card h-100" onclick="location.href='${pageContext.request.contextPath}/product/detail?productId=${vo.productId}'">
+						
+							<!-- 상품 이미지-->
+							<img class="card-img-top"
+								src="<c:url value="/resources/img/product1.webp" />" alt="이미지" />
+							<div class="text-center">
+								<!-- 상품 이름-->
+								<span class="fw-bolder">${vo.productName}</span><br>
+								<!-- 가격들어가는곳-->
+                			<fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+				</div>
+			</div>
+
+		</section>
+		<ul>
+
 		<c:if test="${pageMaker.hasPrev }">
 			<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
 		</c:if>

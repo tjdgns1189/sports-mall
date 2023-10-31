@@ -33,7 +33,7 @@
 						</div>
 						<hr>
 
-						<form action="orderlist" method="POST">
+						<form action="../orders/orderlist" method="POST">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						
 							<div>
@@ -77,3 +77,4 @@
 				</body>
 
 				</html>
+

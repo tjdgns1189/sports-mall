@@ -1,5 +1,7 @@
 package edu.spring.mall.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,12 +30,20 @@ public class LikesDAOImple implements LikesDAO {
 		logger.info("좋아요 눌렀는지 확인하는거");
 		return sqlSession.selectOne(NAMESPACE + ".checkByLiked", vo);
 	}
+	
+	@Override
+	public List<Integer> selectUserLiked(String memberId) {
+		logger.info("selectUserLiked 호출");
+		return sqlSession.selectList(NAMESPACE + ".select" , memberId);
+	}
 
 	@Override
 	public int delete(LikesVO vo) {
 		logger.info("delete 호출");
 		return sqlSession.delete(NAMESPACE + ".delete", vo);
 	}
+
+	
 
 
 

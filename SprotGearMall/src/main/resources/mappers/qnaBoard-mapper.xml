@@ -33,6 +33,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="select_by_qna_board_id" resultType="QnaBoardVO">
 	 	select * from ${qna_board} where ${qnaBoardId} = #{qnaBoardId}
 	 </select>
+	 
+	 <update id="update">
+	 	update ${qna_board}
+	 	set ${qnaBoardTitle} = #{qnaBoardTitle}, ${qnaBoardContent} = #{qnaBoardContent}
+	 	where ${qnaBoardId} = #{qnaBoardId}
+	 </update>
+	 
+	 <delete id="delete">
+	 	delete from ${qna_board}
+	 	where ${qnaBoardId} = #{qnaBoardId}
+	 </delete>
 	
      <select id="paging" resultType="QnaBoardVO">
 	 	select ${qnaBoardId}, ${memberId}, ${qnaBoardTitle}, ${qnaBoardContent}, ${qnaBoardCreatedDate}
@@ -45,6 +56,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 <select id="total_count" resultType="Integer">
 	 	select count(*) total_cnt from ${qna_board}
+	 </select>
+	 
+	 <select id="select_by_qna_memberid" resultType="QnaBoardVO">
+	 	select * from ${qna_board}
+	 	where ${memberId} like #{memberId}
+	 </select>
+	 
+	 <select id="select_by_title_content" resultType="QnaBoardVO">
+	 	select * from ${qna_board}
+	 	where ${qnaBoardTitle} like #{keyword} or
+	 		${qnaBoardContent} like #{keyword}
+	 		order by ${qnaBoardId} desc
 	 </select>
 </mapper>
 

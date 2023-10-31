@@ -16,6 +16,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 and ${productId} = #{productId}
 	 </select>
 	 
+	 <select id="select" resultType="Integer">
+	 select ${productId} from ${likes_table}
+	 where ${memberId} = #{memberId}
+	 </select>
+	 
 	 <delete id="delete">
 	 	delete from ${likes_table}
 	 	where ${memberId} = #{memberId} 

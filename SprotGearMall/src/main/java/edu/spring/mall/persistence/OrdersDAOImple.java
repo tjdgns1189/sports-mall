@@ -1,6 +1,8 @@
 package edu.spring.mall.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -32,6 +34,21 @@ public class OrdersDAOImple implements OrdersDAO {
 	public List<OrdersVO> select(String memberId) {
 		logger.info("select() 호출");
 		return sqlSession.selectList(NAMESPACE + ".select_by_member_id", memberId);
+	}
+
+	@Override
+	public int delete(String memberId, int productId) {
+		logger.info("delete() 호출");
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("memberId", memberId);
+		args.put("productId", productId);
+		return sqlSession.delete(NAMESPACE + ".delete", args);
+	}
+
+	@Override
+	public int delete(int orderId) {
+		logger.info("delete() 호출");
+		return sqlSession.delete(NAMESPACE + ".delete_by_order_id", orderId);
 	}
 
 }

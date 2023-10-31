@@ -47,7 +47,6 @@ public class ProductDAOImple implements ProductDAO{
 		logger.info("select(productId) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
 	}
-	
 	@Override
 	public List<ProductVO> select(PageCriteria criteria) {
 		logger.info("select(criteria) 호출");
@@ -81,6 +80,7 @@ public class ProductDAOImple implements ProductDAO{
 		logger.info("selectPaging() 호출 : product = " + productName);
 		return sqlSession.selectList(NAMESPACE + ".select_by_productName","%" + productName + "%");
 	}
+
 
 
 

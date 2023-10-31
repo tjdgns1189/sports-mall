@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,59 +16,57 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.spring.mall.domain.QnaReplyVO;
-import edu.spring.mall.controller.QnaReplyRESTController;
-import edu.spring.mall.service.QnaReplyService;
+import edu.spring.mall.domain.ReplyReplyVO;
+import edu.spring.mall.service.ReplyReplyService;
 
 @RestController
-@RequestMapping(value="/qnaBoard/replies")
-public class QnaReplyRESTController {
+@RequestMapping(value="/qnaBoard/replyReplies")
+public class ReplyReplyRESTController {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(QnaReplyRESTController.class);
 	
 	@Autowired
-	private QnaReplyService qnaReplyService;
+	private ReplyReplyService replyReplyService;
 	
 	@PostMapping
-	public ResponseEntity<Integer> createReply(@RequestBody QnaReplyVO vo) {
+	public ResponseEntity<Integer> createReply(@RequestBody ReplyReplyVO vo) {
 		logger.info("createReply() 호출 : vo = " + vo.toString());
 
 		int result = 0;
 		try {
-			result = qnaReplyService.create(vo);
+			result = replyReplyService.create(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("/all/{qnaBoardId}")
-	public ResponseEntity<List<QnaReplyVO>> readReplies(
-			@PathVariable("qnaBoardId") int qnaBoardId) {
-		logger.info("readReplies() 호출 : qnaBoardId = " + qnaBoardId);
+	@GetMapping("/all/{qnaReplyId}")
+	public ResponseEntity<List<ReplyReplyVO>> readReplies(
+			@PathVariable("qnaReplyId") int qnaReplyId) {
+		logger.info("readReplies() 호출 : qnaReplyId = " + qnaReplyId);
 		
-		List<QnaReplyVO> list = qnaReplyService.read(qnaBoardId);
-		return new ResponseEntity<List<QnaReplyVO>>(list, HttpStatus.OK);
-
+		List<ReplyReplyVO> list = replyReplyService.read(qnaReplyId);
+		return new ResponseEntity<List<ReplyReplyVO>>(list, HttpStatus.OK);
 	}
 	
-	@PutMapping("/{qnaReplyId}")
+	@PutMapping("/{replyReplyId}")
 	public ResponseEntity<Integer> updateReply(
-			@PathVariable("qnaReplyId") int qnaReplyId,
-			@RequestBody String qnaReplyContent
+			@PathVariable("replyReplyId") int replyReplyId,
+			@RequestBody String replyReplyContent
 			){
-		int result = qnaReplyService.update(qnaReplyId, qnaReplyContent);
+		int result = replyReplyService.update(replyReplyId, replyReplyContent);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{qnaReplyId}")
+	@DeleteMapping("/{replyReplyId}")
 	public ResponseEntity<Integer> deleteReply(
-			@PathVariable("qnaReplyId") int qnaReplyId){
-		logger.info("qnaReplyId = " + qnaReplyId);
+			@PathVariable("replyReplyId") int replyReplyId){
+		logger.info("replyReplyId = " + replyReplyId);
 		
 		int result = 0;
 		try {
-			result = qnaReplyService.delete(qnaReplyId);
+			result = replyReplyService.delete(replyReplyId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

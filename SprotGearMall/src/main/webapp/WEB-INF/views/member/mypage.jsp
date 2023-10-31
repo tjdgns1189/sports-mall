@@ -47,7 +47,7 @@
             <tr>
                 <th scope="row">비밀번호</th>
                 <td>				
-				<button type="button" class ="btn btn-link" data-bs-toggle="modal" data-bs-target="#myModal">비밀번호 변경</button>
+				<button type="button" class ="btn btn-link modal-dialog-centered" data-bs-toggle="modal" data-bs-target="#myModal">비밀번호 변경</button>
                 </td>
             </tr>
             <tr>

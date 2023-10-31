@@ -1,6 +1,8 @@
 package edu.spring.mall.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -35,14 +37,18 @@ public class QnaReplyDAOImple implements QnaReplyDAO {
 
 	@Override
 	public int update(int qnaReplyId, String qnaReplyContent) {
-		// TODO Auto-generated method stub
-		return 0;
+		logger.info("update() 호출");
+		logger.info("qnaReplyId = " + qnaReplyId + ", qnaReplyContent = " + qnaReplyContent);
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("qnaReplyId", qnaReplyId);
+		args.put("qnaReplyContent", qnaReplyContent);
+		return sqlSession.update(NAMESPACE + ".update", args);
 	}
 
 	@Override
 	public int delete(int qnaReplyId) {
-		// TODO Auto-generated method stub
-		return 0;
+		logger.info("delete() 호출 : qnaReplyId = " + qnaReplyId);
+		return sqlSession.delete(NAMESPACE + ".delete", qnaReplyId);
 	}
 
 }
