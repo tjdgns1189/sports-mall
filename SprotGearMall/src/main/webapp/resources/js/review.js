@@ -1,10 +1,8 @@
 $(()=>{
   // 모든 리뷰하기 버튼에 대한 클릭 이벤트를 설정합니다.
   $('.review-btn').click(function(){
-    // data-productid 속성을 사용하여 현재 클릭된 상품의 ID를 가져옵니다.
     var productId = $(this).data('productid');
 
-    // 상품 ID를 기반으로 상품 정보를 불러오는 코드를 여기에 추가하십시오.
     // 예시: $('#productName').text('상품명: ' + productName);
 
     // 모달 창을 띄웁니다.
