@@ -46,20 +46,15 @@ public class ProductController {
 	private LikesDAO likesDAO;
 
 	@GetMapping("/list")
-
 	public void list(Model model, Integer page, Integer numsPerPage) {
-
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
-
 		PageCriteria criteria = new PageCriteria();
 		if (page != null) {
 			criteria.setPage(page);
 		}
-
 		if (numsPerPage != null) {
 			criteria.setNumsPerPage(numsPerPage);
 		}
-
 		List<ProductVO> list = productService.read(criteria);
 		model.addAttribute("list", list);
 
@@ -75,17 +70,14 @@ public class ProductController {
 	public void listTestGET(Model model, Integer page, Integer numsPerPage) {
 		logger.info("listTest() 호출");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
-		
-		
+
 		PageCriteria criteria = new PageCriteria();
 		if (page != null) {
 			criteria.setPage(page);
 		}
-
 		if (numsPerPage != null) {
 			criteria.setNumsPerPage(numsPerPage);
 		}
-
 		List<ProductVO> list = productService.read(criteria);
 		model.addAttribute("list", list);
 
@@ -95,8 +87,6 @@ public class ProductController {
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
 		
-		
-
 	} // end list()
 	
 
@@ -159,7 +149,6 @@ public class ProductController {
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
-
 		logger.info("detail() 호출  = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
