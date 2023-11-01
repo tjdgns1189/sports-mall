@@ -16,36 +16,30 @@
 			<p>이름 : </p>
 			<input type="text" name="productName" placeholder="상품 이름 입력" required>  
 		</div>
-		
 		<div>
 			<p>가격 : </p>
 			<input type="text" name="productPrice" required>
 		</div>
-		
 		<div>
 			<p>재고 : </p>
 			<input type="text" name="productStock" required>
 		</div>
-		
 		<div>
 			<p>제조사 : </p>
 			<input type="text" name="productMaker" required>
 		</div>
-		
 		<div>
 			<p>이미지 :</p>
 			<input type="file" name="productImgPath">
 		</div>
-		
 		<div>
 			<p>종류 :</p>
 			<input type="text" name="productCategory" required> 
 		</div>
-	
+	      	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><br>
 		<div>
 			<input type="submit" value="등록">
 		</div>
-	
 	</form>
 </body>
 </html>

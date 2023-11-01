@@ -3,6 +3,7 @@ package edu.spring.mall.controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +12,9 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -110,12 +114,12 @@ public class ProductController {
 	}
 
 	@GetMapping("/register")
-	public void registerGET() {
+	public void registerGET(Model model) {
 		logger.info("registerGET()");
+		
 	} // end registerGET()
 
 	@PostMapping("/register")
-
 	public String registerPOST(ProductVO vo, RedirectAttributes reAttr,MultipartFile file) {
 		logger.info("registerPOST() »£√‚");
 		logger.info(vo.toString());

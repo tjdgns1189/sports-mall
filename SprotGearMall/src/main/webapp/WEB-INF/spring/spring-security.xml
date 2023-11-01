@@ -19,6 +19,8 @@
 	<http pattern="/resources/**" security="none"/>
 	<http pattern="/css/**" security="none"/>
 	<http pattern="/qnaBoard/replies/*" security="none"/>
+	<http pattern="/product/register" security="none"/>
+	
 	
 	<http auto-config="true" use-expressions="true">
 	 <access-denied-handler ref="accessDeniedHandler"/>
@@ -38,8 +40,9 @@
 	 <intercept-url pattern="/product/orderlist/**" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/orderlist" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/likes" access="isAuthenticated()"/>
-	 
-	 
+	 <!--  
+	 <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
+	 -->
     <http-basic entry-point-ref="ajaxAwareAuthenticationEntryPoint" />
 
 		<form-login login-page="/member/loginForm"

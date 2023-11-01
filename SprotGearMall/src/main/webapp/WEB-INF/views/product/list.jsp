@@ -14,7 +14,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <link href="<c:url value="/resources/css/products.css" />" rel="stylesheet">
 </head>
 <body>
-<<<<<<< HEAD
+
 <a href="../qnaBoard/qnaBoard">qna게시판</a>
 <a href="register"><input type="button" value="상품 등록"></a>
 <hr>
@@ -59,8 +59,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 			<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
 		</c:if>
 	</ul>
-=======
->>>>>>> refs/remotes/origin/feature/detailui
+
 
 	<!-- Header-->
 	<header class="bg-dark py-5">
