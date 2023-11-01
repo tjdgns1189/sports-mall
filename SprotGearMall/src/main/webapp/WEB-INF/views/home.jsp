@@ -17,9 +17,6 @@
 
 </head>
 <body>
-
-<h1>상품목록리스트</h1>
-
 <!-- Header-->
 	<header class="bg-dark py-5">
 		<div class="container px-4 px-lg-5 my-5">
@@ -56,15 +53,21 @@
 
 		</section>
 		<ul>
-
 		<c:if test="${pageMaker.hasPrev }">
-			<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
+		    <li class="page-item">
+      	<a class="page-link" href="${pageMaker.startPageNo - 1 }" aria-label="Previous">
+       	 <span aria-hidden="true">&laquo;</span>
+     	 </a>
+    	</li>
 		</c:if>
 		<c:forEach begin="${pageMaker.startPageNo }" end="${pageMakger.endPageNo }" var="num">
 		<li><a href="list?page=${num }">${num }</a></li>
 		</c:forEach>
 		<c:if test="${pageMaker.hasNext }">
-			<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
+		<li class="page-item">
+      		<a class="page-link" href="list?page=${pageMaker.endPageNo + 1 }" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+     		 </a>
 		</c:if>
 	</ul>
 
