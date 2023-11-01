@@ -37,11 +37,9 @@
 	</div>
 	</c:if>
 	<c:if test="${empty list}">
-	
 	<div class="container mt-5">
         <h2>찜 한 상품이 없어요</h2>
 	</div>
-	
 	</c:if>
 
 	<script type="text/javascript">
