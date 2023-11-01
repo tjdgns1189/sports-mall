@@ -119,6 +119,7 @@ public class ProductController {
 		
 	} // end registerGET()
 
+
 	@PostMapping("/register")
 	public String registerPOST(ProductVO vo, RedirectAttributes reAttr,MultipartFile file) {
 		logger.info("registerPOST() »£√‚");

@@ -10,7 +10,6 @@
 		<param-value>
 			/WEB-INF/spring/*.xml
 			/WEB-INF/spring/appServlet/*.xml
-			
 		</param-value>
 	</context-param>
 

@@ -1,5 +1,6 @@
 package edu.spring.mall.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -29,11 +30,12 @@ public class ReplyReplyRESTController {
 	private ReplyReplyService replyReplyService;
 	
 	@PostMapping
-	public ResponseEntity<Integer> createReply(@RequestBody ReplyReplyVO vo) {
+	public ResponseEntity<Integer> createReply(@RequestBody ReplyReplyVO vo, Principal principal) {
 		logger.info("createReply() »£√‚ : vo = " + vo.toString());
 
 		int result = 0;
 		try {
+			vo.setMemberId(principal.getName());
 			result = replyReplyService.create(vo);
 		} catch (Exception e) {
 			e.printStackTrace();

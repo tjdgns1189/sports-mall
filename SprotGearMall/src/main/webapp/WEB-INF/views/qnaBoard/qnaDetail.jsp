@@ -43,7 +43,7 @@
 	
 		
 	<div style="text-align: center;">
-		<input type="text" id="memberId" value="${memberId }" readonly="readonly">
+		<input type="text" id="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">
 		<input type="text" id="qnaReplyContent">
 		<button id="btnAdd">작성</button>
 	</div>
