@@ -32,7 +32,7 @@ li {
 	
 	<input type="hidden" id="memberId" name="memberId" value="${memberId }">
 
-	<a href="qnaRegister?memberId=${memberId }"><input type="button" value="글 작성"></a>
+	<a href="qnaRegister"><input type="button" value="글 작성"></a>
 	<hr>
 	<table>
 		<thead>
@@ -48,7 +48,7 @@ li {
 				<tr>
 					<td>${vo.qnaBoardId }</td>
 					<td>${vo.memberId }</td>
-					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}&memberId=${memberId }">${vo.qnaBoardTitle }</a></td>
+					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}">${vo.qnaBoardTitle }</a></td>
 					<fmt:formatDate value="${vo.qnaBoardCreatedDate }"
 					pattern="yyyy-MM-dd HH:mm:ss" var="qnaBoardCreatedDate"/>
 					<td>${qnaBoardCreatedDate }</td>

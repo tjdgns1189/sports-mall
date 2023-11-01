@@ -25,7 +25,7 @@
         	<li><a href="${pageContext.request.contextPath}/product/list">메뉴</a></li>
        		<li><a href="#">들어</a></li>
         	<li><a href="#">갈곳</a></li>
-        	<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard?memberId=${pageContext.request.userPrincipal.name}">QNA</a></li>
+        	<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard">QNA</a></li>
     	</ul>
     
     <div class="search-bar">
@@ -46,7 +46,7 @@
             <a class="dropdown-item" href="#" onclick="targetURL()">로그인</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/member/register">회원가입</a>
         </sec:authorize>
-        <a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist?memberId=${pageContext.request.userPrincipal.name}">주문내역</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>
         <a class="dropdown-item" href="${pageContext.request.contextPath}/member/mypage">내 정보</a>
         <a class="dropdown-item" href="#">고객센터</a>
         <sec:authorize access="isAuthenticated()">

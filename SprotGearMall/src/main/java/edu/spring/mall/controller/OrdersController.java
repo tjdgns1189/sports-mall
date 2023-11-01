@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,17 +31,25 @@ public class OrdersController {
 	private OrdersDAO dao;
 	
 	@PostMapping("/orderlist")
-	public void ordersPOST(Model model, OrdersVO vo, String memberId) {
+	public void ordersPOST(Model model, OrdersVO vo) {
 		logger.info("paymentPOST() 호출 : vo = " + vo.toString());
 		int result = dao.insert(vo);
+		String memberId = vo.getMemberId();
 		
 		List<OrdersVO> list = dao.select(memberId);
-		model.addAttribute("memberId", memberId);
 		model.addAttribute("list", list);
 	}
 	
 	@GetMapping("/orderlist")
-	public void orderlistGET(Model model, String memberId) {
+	public void orderlistGET(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+
+	        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+	        String memberId = userDetails.getUsername(); // memberId를 가져옵니다.
+	        // 이제 memberId를 사용하여 원하는 작업을 수행할 수 있습니다.
+
+		
 		logger.info("paymentGET() 호출 : memberId = " + memberId);
 		List<OrdersVO> list = dao.select(memberId);
 		model.addAttribute("memberId", memberId);

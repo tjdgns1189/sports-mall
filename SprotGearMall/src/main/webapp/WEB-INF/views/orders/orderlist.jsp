@@ -29,7 +29,7 @@ li {
 <body>
 <!-- ${vo.getOrderProductName() } -->
 <!--  ${vo.product.productName }-->
-	<h1>${memberId }의 구입내역출력</h1>
+	<h1>${pageContext.request.userPrincipal.name}의 구입내역출력</h1>
 	
 		<table>
     	<thead>

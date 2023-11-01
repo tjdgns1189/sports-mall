@@ -22,7 +22,7 @@
 	<http pattern="/css/**" security="none"/>
 
 	<http pattern="/qnaBoard/replies" security="none"/>
-	<http pattern="/qnaBoard/qnaRegister" security="none"/>
+	<http pattern="/qnaBoard/register" security="none"/>
 	<http pattern="/qnaBoard/delete" security="none"/>
 	<http pattern="/qnaBoard/qnaUpdate" security="none"/>
 	<http pattern="/qnaBoard/replyReplies" security="none"/>
@@ -54,8 +54,7 @@
 
 
 
-	 <intercept-url pattern="/product/orderlist/**" access="isAuthenticated()"/>
-	 <intercept-url pattern="/product/orderlist" access="isAuthenticated()"/>
+	 <intercept-url pattern="/orders/orderlist" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/likes" access="isAuthenticated()"/>
 	 
 	 

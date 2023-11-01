@@ -68,7 +68,7 @@ public class BoardController {
 		logger.info("qnaRegisterGET()");
 	} // end registerGET()
 	
-	@PostMapping("/qnaRegister")
+	@PostMapping("/register")
 	public String registerPOST(QnaBoardVO vo, RedirectAttributes reAttr, String memberId, Model model) {
 		logger.info("registerPOST() »£√‚");
 		logger.info(vo.toString());
