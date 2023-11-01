@@ -9,8 +9,14 @@
 <style type="text/css">
 table, th, td {
    border-style : solid;
-   border-width : 1px;
+   border-width : 0px;
    text-align : center;
+
+}
+
+th, td {
+   border-top: 1px solid black;
+   border-bottom: 1px solid black;
 }
 
 ul {
@@ -34,25 +40,31 @@ li {
 		<table>
     	<thead>
     		<tr>
-    			<th style="width : 50px">삭제</th>
     			<th style="width : 80px">주문번호</th>
+    		    <th style="width : 100px">이미지</th>
     			<th style="width : 200px">상품이름</th>
     			<th style="width : 100px">상품구매수량</th>
     			<th style="width : 100px">상품 총 가격</th>
     			<th style="width : 150px">구매 날짜</th>
+    			<th style="width : 50px">삭제</th>
     		</tr>
     	</thead>
     	<tbody>
     		<c:forEach var="vo" items="${list }"> 
     			<tr>
-    				<td><input id="${vo.orderId }" type="checkbox"></td> 
     				<td>${vo.orderId }</td> 				
+    				<td>
+    					<img class="card-img-top"
+        				src="<c:url value="/resources/img/product1.webp" />" alt="이미지"
+        				style="width: 150px; height: 100px;" />
+    				</td>
     				<td>
 						테이블 조인예정
     				</td>
     				<td>${vo.productQuantity }</td>
     				<td>${vo.productQuantity * vo.productPrice }</td>
     				<td>${vo.orderCreatedDate }</td>
+    				<td><input id="${vo.orderId }" type="checkbox"></td> 
     			</tr>
     		</c:forEach>
     	</tbody>

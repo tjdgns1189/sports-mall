@@ -115,12 +115,12 @@ public class ProductController {
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
-		logger.info("detail() ȣ��  = " + productId);
+		logger.info("detail() 호출  = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 	
 		if (principal != null) {
-			logger.info("principalȣ��" + principal.getName());
+			logger.info("principal호출" + principal.getName());
 			String memberId = principal.getName();
 			LikesVO likesVO = new LikesVO(0, memberId, productId);
 			int result = likesDAO.select(likesVO);
