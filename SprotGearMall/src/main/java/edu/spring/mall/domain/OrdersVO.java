@@ -16,7 +16,6 @@ public class OrdersVO {
 
 	public OrdersVO(int orderId, String memberId, int productId, int productPrice, int productQuantity,
 			Date orderCreatedDate) {
-		super();
 		this.orderId = orderId;
 		this.memberId = memberId;
 		this.productId = productId;

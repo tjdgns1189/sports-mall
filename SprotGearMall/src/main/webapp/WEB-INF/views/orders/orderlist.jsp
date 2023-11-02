@@ -58,17 +58,17 @@ li {
     	<tbody>
     		<c:forEach var="vo" items="${list }"> 
     			<tr>
-    				<td><input id="${vo.orderId }" type="checkbox"></td> 
-    				<td>${vo.orderId }</td> 				
-    				<td><a href="../product/detail?productId=${vo.productId}">
-						테이블 조인예정</a>
+    				<td><input id="${vo.order.orderId }" type="checkbox"></td> 
+    				<td>${vo.order.orderId }</td> 				
+    				<td><a href="../product/detail?productId=${vo.product.productId}">
+						${vo.product.productName }</a>
     				</td>
-    				<td>${vo.productQuantity }</td>
-    				<td>${vo.productQuantity * vo.productPrice }</td>
-    				<td>${vo.orderCreatedDate }</td>
+    				<td>${vo.order.productQuantity }</td>
+    				<td>${vo.order.productQuantity * vo.order.productPrice }</td>
+    				<td>${vo.order.orderCreatedDate }</td>
 				<td>
 				<button type="button" class="btn btn-primary review-btn" 
-				onclick="openReviewWindow('../member/review?orderId=${vo.orderId}&productId=${vo.productId}');">리뷰하기</button>
+				onclick="openReviewWindow('../member/review?orderId=${vo.order.orderId}&productId=${vo.product.productId}');">리뷰하기</button>
 				</td>
     			</tr>
     		</c:forEach>
