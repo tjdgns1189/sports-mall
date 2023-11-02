@@ -14,11 +14,11 @@
   <div class="accordion" id="accordionExample">
     <c:forEach var="vo" items="${list }" varStatus="status">
       <div class="card">
-        <div class="card-header" id="heading${status.index}">
+        <div class="card-header" id="heading${status.index}" 
+             data-bs-toggle="collapse" data-bs-target="#collapse${status.index}"
+             aria-expanded="false" aria-controls="collapse${status.index}" style="cursor:pointer;">
           <h5 class="mb-0">
-            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${status.index}" aria-expanded="true" aria-controls="collapse${status.index}">
-              상품명 : ${vo.product.productName} - ${vo.product.productPrice }원 - 별점 : ${vo.review.reviewRating }
-            </button>
+            상품명 : ${vo.product.productName} - ${vo.product.productPrice }원 - 별점 : ${vo.review.reviewRating }
           </h5>
         </div>
         
