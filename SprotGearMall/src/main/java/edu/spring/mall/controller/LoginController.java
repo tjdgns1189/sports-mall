@@ -131,12 +131,8 @@ public class LoginController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 		String name = user.getName();
-		System.out.println(name);
 		String phone = user.getPhone();
-		System.out.println(phone);
 		String email = user.getEmail();
-		System.out.println(email);
-		System.out.println(user.getAddress());
 		String address[] = user.getAddress().split("\\.");
 
 		model.addAttribute("name", name);
@@ -223,6 +219,7 @@ public class LoginController {
 		        logger.info("비밀번호 틀림");
 		        return "redirect:/member/delete?error=password";
 		    }
+		    
 		    try {
 		        if (service.delete(memberId) != 1) {
 		            return "redirect:/member/delete?error"; // 탈퇴 처리 실패

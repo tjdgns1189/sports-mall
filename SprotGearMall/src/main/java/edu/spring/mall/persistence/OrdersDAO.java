@@ -7,6 +7,7 @@ import edu.spring.mall.domain.OrdersVO;
 public interface OrdersDAO {
 	int insert(OrdersVO vo);
 	List<OrdersVO> select(String memberId);
+	OrdersVO select(int orderId);
 	int delete(String memberId, int productId);
 	int delete(int orderId);
 }

@@ -1,6 +1,7 @@
 
 package edu.spring.mall.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -28,17 +29,22 @@ public class OrdersController {
 	private OrdersDAO dao;
 	
 	@PostMapping("/orderlist")
-	public void ordersPOST(Model model, OrdersVO vo, String memberId) {
+
+	public String ordersPOST(Model model, OrdersVO vo, Principal principal) {
 		logger.info("paymentPOST() 호출 : vo = " + vo.toString());
 		int result = dao.insert(vo);
-		
+		String memberId = principal.getName();
 		List<OrdersVO> list = dao.select(memberId);
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("list", list);
+
+		return "redirect:/orders/orderlist";
 	}
 	
 	@GetMapping("/orderlist")
-	public void orderlistGET(Model model, String memberId) {
+	public void orderlistGET(Model model, Principal principal) {
+		String memberId = principal.getName();
+
 		logger.info("paymentGET() 호출 : memberId = " + memberId);
 		List<OrdersVO> list = dao.select(memberId);
 		model.addAttribute("memberId", memberId);
@@ -46,19 +52,11 @@ public class OrdersController {
 		logger.info("list" + list.toString());
 	}
 	
-//	@PostMapping("/orderlist")
-//	public void ordersPOST(Model model, String memberId) {
-//		logger.info("paymentPOST() 호출 : memberId = " + memberId);
-//
-//		List<OrdersVO> list = dao.select(memberId);
-//		model.addAttribute("list", list);
-//
-//	}
-	
 	@PostMapping("/delete")
 	public ResponseEntity<Integer> ordersDeletePOST(@RequestBody List<Integer> checkedIds) {
 		logger.info("orderDeletePOST() 호출 : " + checkedIds.toString());
 		int totalDeleted = 0; // 삭제된 항목 수를 추적하는 변수
+
 
 	    try {
 	        for (Integer id : checkedIds) {

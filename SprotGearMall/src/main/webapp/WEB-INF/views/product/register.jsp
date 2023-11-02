@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,7 +11,7 @@
 	<h2>상품 등록 페이지</h2>
 	
 	
-	<form action="register" method="POST" enctype="multipart/form-data">
+	<form action="${pageContext.request.contextPath}/product/register" method="POST" enctype="multipart/form-data">
 		<div>
 			<p>이름 : </p>
 			<input type="text" name="productName" placeholder="상품 이름 입력" required>  
