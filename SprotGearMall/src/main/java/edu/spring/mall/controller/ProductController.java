@@ -1,7 +1,10 @@
 package edu.spring.mall.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -10,9 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.spring.mall.domain.LikesVO;
@@ -42,7 +47,7 @@ public class ProductController {
 
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage) {
-		logger.info("list() È£Ãâ");
+		logger.info("list() È£ï¿½ï¿½");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 		PageCriteria criteria = new PageCriteria();
 		if (page != null) {
@@ -64,7 +69,7 @@ public class ProductController {
 
 	@GetMapping("/productListTest")
 	public void listTestGET(Model model, Integer page, Integer numsPerPage) {
-		logger.info("listTest() È£Ãâ");
+		logger.info("listTest() È£ï¿½ï¿½");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 
 		PageCriteria criteria = new PageCriteria();
@@ -89,7 +94,7 @@ public class ProductController {
 
 	@GetMapping("/payment")
 	public void paymentGET(Model model, Integer productId) {
-		logger.info("paymentGET() È£Ãâ");
+		logger.info("paymentGET() È£ï¿½ï¿½");
 		ProductVO vo = dao.selectById(productId);
 		model.addAttribute("vo", vo);
 	}
@@ -102,7 +107,7 @@ public class ProductController {
 	@PostMapping("/register")
 
 	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
-		logger.info("registerPOST() È£Ãâ");
+		logger.info("registerPOST() È£ï¿½ï¿½");
 		logger.info(vo.toString());
 
 		int result = productService.create(vo);
@@ -119,13 +124,13 @@ public class ProductController {
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
-		logger.info("detail() È£Ãâ  = " + productId);
+		logger.info("detail() È£ï¿½ï¿½  = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 	
 		if (principal != null) {
 
-			logger.info("principalÈ£Ãâ" + principal.getName());
+			logger.info("principalÈ£ï¿½ï¿½" + principal.getName());
 			String memberId = principal.getName();
 			LikesVO likesVO = new LikesVO(0, memberId, productId);
 			int result = likesDAO.select(likesVO);
@@ -144,7 +149,7 @@ public class ProductController {
 	@GetMapping("/update")
 	public void updateGET(Model model, int productId, Integer page) {
 
-		logger.info("updateGET() È£Ãâ : productName = " + productId);
+		logger.info("updateGET() È£ï¿½ï¿½ : productName = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
@@ -155,7 +160,7 @@ public class ProductController {
 	public String updatePOST(ProductVO vo, Integer page) {
 
 
-		logger.info("updatePOST() È£Ãâ: vo = " + vo.toString());
+		logger.info("updatePOST() È£ï¿½ï¿½: vo = " + vo.toString());
 
 		int result = productService.update(vo);
 
@@ -168,7 +173,7 @@ public class ProductController {
 
 	@PostMapping("/delete")
 	public String delete(String productName) {
-		logger.info("delete()È£Ãâ : productName = " + productName);
+		logger.info("delete()È£ï¿½ï¿½ : productName = " + productName);
 
 		int result = productService.delete(productName);
 		if (result == 1) {
@@ -177,6 +182,11 @@ public class ProductController {
 			return "redirect:/board/list";
 		}
 	} // end delete()
+	
+	@GetMapping("/cart")
+	public void cartGET(Model model) {
+
+	}
 
 } // end ProductController
 

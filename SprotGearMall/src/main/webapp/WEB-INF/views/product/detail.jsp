@@ -52,7 +52,7 @@
 					</div>
 					<!-- 장바구니 버튼 -->
 					<div class="col-3 px-1">
-						<button class="btn btn-outline-primary btn-lg w-100"> <i class="bi bi-cart3"></i></button>
+						<button class="btn btn-outline-primary btn-lg w-100" id="addToCartButton"> <i class="bi bi-cart3"></i></button>
 					</div>
 				</div>
 			</div>
@@ -65,5 +65,36 @@
 		<input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<input type="submit" value="상품 삭제">
 	</form>
+	
+	<script type="text/javascript">
+	document.getElementById("addToCartButton").addEventListener("click", function() {
+        var productId = "${vo.productId}";
+        
+        // 쿠키에서 장바구니 항목 가져오기
+        var cartItems = getCookie("cartItems") || "[]";
+        var cartItemsArray = JSON.parse(cartItems);
+
+        // 이미 있는지 확인하고 없으면 추가
+        if (cartItemsArray.indexOf(productId) === -1) {
+            cartItemsArray.push(productId);
+
+            // JSON 형태로 직렬화하여 쿠키에 저장
+            document.cookie = "cartItems=" + JSON.stringify(cartItemsArray) + "; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+            console.log(cartItemsArray);
+            alert("장바구니에 상품이 추가되었습니다.");
+        } else {
+            console.log(cartItemsArray);
+            alert("이미 장바구니에 있는 상품입니다.");
+        }
+    });
+
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+	</script>
+	
+	
 </body>
 </html>
