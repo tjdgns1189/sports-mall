@@ -287,16 +287,7 @@
 					}
 				); // end getJSON()
 			});
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
 			$('#replies').on('click', '.reply_item .btn_update', function(){
 				console.log(this);
 				

@@ -81,11 +81,7 @@ li {
 	<div>
 		<button id="btnDeleteCheck">선택목록삭제</button>
 	</div>
-	
 
-
-
-	
 	<script>
     $(document).ready(function() {
         $("#btnDeleteCheck").click(function() {
