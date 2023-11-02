@@ -20,7 +20,7 @@
 			<input type="text" name="qnaBoardTitle" value="${vo.qnaBoardTitle }">
 		</div>
 		<div>
-			<p>작성자 : ${vo.memberId }</p>
+			<p>작성자 : ${pageContext.request.userPrincipal.name}</p>
 			<p>작성일 : ${vo.qnaBoardCreatedDate }</p>
 		</div>
 		<div>

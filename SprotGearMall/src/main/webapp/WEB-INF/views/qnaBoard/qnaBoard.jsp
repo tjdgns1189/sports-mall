@@ -8,7 +8,23 @@
 <html>
 <head>
 
+<style type="text/css">
+table, th, td {
+	border-style : solid;
+	border-width : 1px;
+	text-align : center;
+}
+
+ul {
+	list-style-type : none;
+}
+
+li {
+	display : inline-block;
+}
+</style>
 <meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -16,7 +32,9 @@
 	<h1>QNA 게시판입니다</h1>
 	
 	<input type="hidden" id="memberId" name="memberId" value="${memberId }">
-	<a href="qnaRegister?memberId=${memberId }"><input type="button" value="글 작성"></a>
+
+
+	<a href="qnaRegister"><input type="button" value="글 작성"></a>
 	<hr>
 	<table class="table table-striped table-hover">
 		<thead>
@@ -25,6 +43,7 @@
 				<th>작성자</th>
 				<th>게시글제목</th>
 				<th>작성일</th>
+
 			</tr>
 		</thead>
 		<tbody>
@@ -32,7 +51,7 @@
 				<tr>
 					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}&memberId=${memberId }">${vo.qnaBoardId }</a></td>
 					<td>${vo.memberId }</td>
-					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}&memberId=${memberId }">${vo.qnaBoardTitle }</a></td>
+					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}">${vo.qnaBoardTitle }</a></td>
 					<fmt:formatDate value="${vo.qnaBoardCreatedDate }"
 					pattern="yyyy-MM-dd HH:mm:ss" var="qnaBoardCreatedDate"/>
 					<td>${qnaBoardCreatedDate }</td>
@@ -40,6 +59,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
+<<<<<<< HEAD
 	<nav aria-label="Page navigation example">
 	<ul class="pagination">
 		<c:if test="${pageMaker.hasPrev }">
@@ -55,5 +75,6 @@
 
 	</ul>
 	</nav>
+
 </body>
 </html>

@@ -1,6 +1,5 @@
 package edu.spring.mall.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -24,18 +23,17 @@ import edu.spring.mall.service.ReplyReplyService;
 @RequestMapping(value="/qnaBoard/replyReplies")
 public class ReplyReplyRESTController {
 	private static final Logger logger = 
-			LoggerFactory.getLogger(QnaReplyRESTController.class);
+			LoggerFactory.getLogger(ReplyReplyRESTController.class);
 	
 	@Autowired
 	private ReplyReplyService replyReplyService;
 	
 	@PostMapping
-	public ResponseEntity<Integer> createReply(@RequestBody ReplyReplyVO vo, Principal principal) {
+	public ResponseEntity<Integer> createReply(@RequestBody ReplyReplyVO vo) {
 		logger.info("createReply() »£√‚ : vo = " + vo.toString());
 
 		int result = 0;
 		try {
-			vo.setMemberId(principal.getName());
 			result = replyReplyService.create(vo);
 		} catch (Exception e) {
 			e.printStackTrace();

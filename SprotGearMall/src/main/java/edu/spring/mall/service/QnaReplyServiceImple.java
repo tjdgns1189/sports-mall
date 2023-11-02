@@ -47,8 +47,5 @@ public class QnaReplyServiceImple implements QnaReplyService {
 		logger.info("delete() »£√‚ : qnaReplyId = " + qnaReplyId);
 		return qnaReplyDAO.delete(qnaReplyId);
 	}
-	
-	
-	
-	
+
 }
