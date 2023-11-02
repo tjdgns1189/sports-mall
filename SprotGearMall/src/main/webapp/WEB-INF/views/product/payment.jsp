@@ -3,8 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<<<<<<< HEAD
-=======
+
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -14,7 +13,7 @@ table, th, td {
    border-width : 0px;
    text-align : center;
 }
->>>>>>> refs/remotes/origin/feature/VO
+
 
 th, td {
    border-top: 1px solid #ddd;
@@ -49,7 +48,7 @@ li {
     width: 50%;
 }
 
-<<<<<<< HEAD
+
 						<form action="../orders/orderlist" method="POST">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						
@@ -79,7 +78,7 @@ li {
 							<p>상품 총 가격 : </p>
 							<input type="number" name="totalPrice" id="totalPrice" readonly="readonly">
 						</div>
-=======
+
 #final {
 	border-bottom : 1px solid #ddd;
     width: 50%;
@@ -239,18 +238,14 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	
 
 	</script>
->>>>>>> refs/remotes/origin/feature/VO
 
-
-
-<<<<<<< HEAD
 
 				</body>
 
 				</html>
 
-=======
+
 </div>
 </body>
 </html>
->>>>>>> refs/remotes/origin/feature/VO
+
