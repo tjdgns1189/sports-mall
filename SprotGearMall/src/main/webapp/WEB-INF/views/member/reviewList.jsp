@@ -9,7 +9,12 @@
 <title></title>
 </head>
 <body>
-	아코디언 테스트
+
+<c:if test="${not empty list }">
+	<c:forEach var="vo" items="${list }">
+	<tr>
+	상품명 : <td>${vo.product.productName}</td>
+        </tr>
 	<div class="accordion" id="accordionExample">
 	1div안
   	<div class="accordion-item">
@@ -26,5 +31,8 @@
     </div>
   </div>
   </div>
+  </c:forEach>
+</c:if>
+
 </body>
 </html>

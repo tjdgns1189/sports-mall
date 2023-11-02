@@ -25,7 +25,6 @@
 					<p>카테고리 : ${vo.productCategory }</p>
 					<p>가격 : ${vo.productPrice}원</p>
 					<p>재고 : ${vo.productStock }</p>
-					
 				</div>
 				<div class="col-md-3">
 					<button type="button" class="btn btn-danger btn-delete" data-product-id="${vo.productId}">삭제</button>
