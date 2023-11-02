@@ -18,26 +18,12 @@
 	<http pattern="/member/checkid" security="none"/>
 	<http pattern="/resources/**" security="none"/>
 	<http pattern="/css/**" security="none"/>
-<<<<<<< HEAD
-	<http pattern="/qnaBoard/replies/*" security="none"/>
-	<http pattern="/qnaBoard/replies" security="none"/>
-	<http pattern="/qnaBoard/qnaRegister" security="none"/>
-	
-	
-=======
-
 	<http pattern="/qnaBoard/replies" security="none"/>
 	<http pattern="/qnaBoard/register" security="none"/>
 	<http pattern="/qnaBoard/delete" security="none"/>
 	<http pattern="/qnaBoard/qnaUpdate" security="none"/>
 	<http pattern="/qnaBoard/replyReplies" security="none"/>
-	<http pattern="/orders/delete" security="none"/>
-	
-	
-	
 
-
->>>>>>> refs/remotes/origin/feature/VO
 	
 	
 	<http auto-config="true" use-expressions="true">

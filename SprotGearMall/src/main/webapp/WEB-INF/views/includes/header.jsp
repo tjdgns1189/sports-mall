@@ -27,13 +27,6 @@
 	</ul>
 	<div class="search-bar">
 		<form action="#" method="get">
-<<<<<<< HEAD
-			<input type="text" placeholder="검색창">
-			<button id="searchBtn" class="menu-button">
-				<img src="<c:url value="/resources/img/search_icon.png" />" alt="검색">
-			</button>
-		</form>
-=======
         <input type="text" placeholder="검색창">
         <button id="searchBtn" class="menu-button">
         	<img src="<c:url value="/resources/img/search_icon.png" />" alt="검색" >
@@ -62,36 +55,8 @@
         </sec:authorize>
     </div>
 </div>
->>>>>>> refs/remotes/origin/feature/VO
-	</div>
-<<<<<<< HEAD
-	<div class="menu">
-		<button class="menu-button" type="button">
-			<img src="<c:url value='/resources/img/user-logo.png' />" alt="메뉴아이콘" />
-		</button>
-	<div class="dropdown-menu dropdown-content dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-		<sec:authorize access="isAnonymous()">
-			<a class="dropdown-item" href="#" onclick="targetURL()">로그인</a>
-			<a class="dropdown-item" href="${pageContext.request.contextPath}/member/register">회원가입</a>
-		</sec:authorize>
-			<a class="dropdown-item" href="${pageContext.request.contextPath}/member/mypage">내 정보</a> 
-			<a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist?memberId=${pageContext.request.userPrincipal.name}">주문내역</a>
-			<a class="dropdown-item" href="${pageContext.request.contextPath}/member/likes">찜한 상품</a> 
-			<a class="dropdown-item" href="#">고객센터</a>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/adminPage">관리자 페이지</a>
-		</sec:authorize>
-		<sec:authorize access="isAuthenticated()">
-			<div class="dropdown-divider"></div>
-			<form action="${pageContext.request.contextPath}/logout" method="post">
-			&nbsp;&nbsp;<input type="submit" class="btn btn-danger btn-block" value="로그아웃" /> 
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		</form>
-		</sec:authorize>
+</div>
 
-
-		</div>
-	</div>
 
 
 </main>

@@ -59,7 +59,6 @@ li {
 			</c:forEach>
 		</tbody>
 	</table>
-<<<<<<< HEAD
 	<nav aria-label="Page navigation example">
 	<ul class="pagination">
 		<c:if test="${pageMaker.hasPrev }">
