@@ -31,13 +31,14 @@ public class OrdersController {
 	private OrdersDAO dao;
 	
 	@PostMapping("/orderlist")
-	public void ordersPOST(Model model, OrdersVO vo) {
+	public String ordersPOST(Model model, OrdersVO vo) {
 		logger.info("paymentPOST() »£√‚ : vo = " + vo.toString());
 		int result = dao.insert(vo);
 		String memberId = vo.getMemberId();
 		
 		List<OrdersVO> list = dao.select(memberId);
 		model.addAttribute("list", list);
+		return "redirect:/orders/orderlist";
 	}
 	
 	@GetMapping("/orderlist")

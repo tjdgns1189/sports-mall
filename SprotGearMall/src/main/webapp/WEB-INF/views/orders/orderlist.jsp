@@ -15,8 +15,8 @@ table, th, td {
 }
 
 th, td {
-   border-top: 1px solid black;
-   border-bottom: 1px solid black;
+   border-top: 1px solid #ddd;
+   border-bottom: 1px solid #ddd;
 }
 
 ul {
@@ -35,7 +35,9 @@ li {
 <body>
 <!-- ${vo.getOrderProductName() } -->
 <!--  ${vo.product.productName }-->
+	<br>
 	<h1>${pageContext.request.userPrincipal.name}의 구입내역출력</h1>
+	<br>
 	
 		<table>
     	<thead>
