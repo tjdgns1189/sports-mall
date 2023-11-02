@@ -2,6 +2,7 @@
 package edu.spring.mall.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -16,8 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import edu.spring.mall.domain.OrdersProductJoinVO;
 import edu.spring.mall.domain.OrdersVO;
+import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.persistence.OrdersDAO;
+import edu.spring.mall.persistence.ProductDAO;
+import edu.spring.mall.service.ProductService;
 
 @Controller
 @RequestMapping(value = "/orders")
@@ -27,6 +32,9 @@ public class OrdersController {
 	
 	@Autowired
 	private OrdersDAO dao;
+	
+	@Autowired
+	private ProductService service;
 	
 	@PostMapping("/orderlist")
 
@@ -46,10 +54,15 @@ public class OrdersController {
 		String memberId = principal.getName();
 
 		logger.info("paymentGET() »£√‚ : memberId = " + memberId);
-		List<OrdersVO> list = dao.select(memberId);
+		List<OrdersVO> orders = dao.select(memberId);
+		List<OrdersProductJoinVO> list = new ArrayList<OrdersProductJoinVO>();
+		for(OrdersVO order : orders) {
+			ProductVO product = service.read(order.getProductId());
+			OrdersProductJoinVO join = new OrdersProductJoinVO(order, product);
+			list.add(join);
+		}
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("list", list);
-		logger.info("list" + list.toString());
 	}
 	
 	@PostMapping("/delete")

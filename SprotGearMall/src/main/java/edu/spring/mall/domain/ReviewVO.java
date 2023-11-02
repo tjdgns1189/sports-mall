@@ -10,14 +10,7 @@ public class ReviewVO {
 	private Date reviewCreatedDate;
 	private String memberId;
 
-
-
-
-
-
 	public ReviewVO() {}
-
-	
 
 	public int getReviewId() {
 		return reviewId;
