@@ -34,7 +34,7 @@
         <p><input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" required="required"></p>
         &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="remember-me" class="form-check-input" name="remember-me"/>
         <label for="rememberMe">로그인 상태 유지</label>
-      	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><br>
+      	<input type="hidden"name="${_csrf.parameterName}" value="${_csrf.token}"><br>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
       </form>
@@ -45,5 +45,6 @@
 <footer>
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 </footer>
+
 </body>
 </html>

@@ -43,7 +43,6 @@ public class OrdersController {
 		List<OrdersVO> list = dao.select(memberId);
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("list", list);
-		logger.info("list" + list.toString());
 	}
 	
 //	@PostMapping("/orderlist")

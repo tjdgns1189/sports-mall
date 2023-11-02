@@ -101,6 +101,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="reviewRating" value="review_rating"/>
 		<property name="reviewCreatedDate" value="review_created_date"/>
 		<property name="memberId" value="member_id"/>
+		<property name="orderId" value="order_id"/>
  	 </properties>
 	 
 	 

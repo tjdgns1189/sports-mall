@@ -9,7 +9,12 @@ public class ReviewVO {
 	private int reviewRating;
 	private Date reviewCreatedDate;
 	private String memberId;
-	
+
+
+
+
+
+
 	public ReviewVO() {}
 
 	
@@ -68,7 +73,6 @@ public class ReviewVO {
 
 	public ReviewVO(int reviewId, int productId, String reviewContent, int reviewRating, Date reviewCreatedDate,
 			String memberId) {
-		super();
 		this.reviewId = reviewId;
 		this.productId = productId;
 		this.reviewContent = reviewContent;

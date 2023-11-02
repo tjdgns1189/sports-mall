@@ -51,4 +51,10 @@ public class OrdersDAOImple implements OrdersDAO {
 		return sqlSession.delete(NAMESPACE + ".delete_by_order_id", orderId);
 	}
 
+	@Override
+	public OrdersVO select(int orderId) {
+		logger.info("select(orderId) »£√‚");
+		return sqlSession.selectOne(NAMESPACE + ".select_by_order_Id", + orderId);
+	}
+
 }
