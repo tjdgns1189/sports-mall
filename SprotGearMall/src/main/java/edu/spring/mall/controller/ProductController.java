@@ -3,7 +3,6 @@ package edu.spring.mall.controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,15 +11,14 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -118,48 +116,65 @@ public class ProductController {
 		logger.info("registerGET()");
 		
 	} // end registerGET()
-
-
-	@PostMapping("/register")
-	public String registerPOST(ProductVO vo, RedirectAttributes reAttr,MultipartFile file) {
-		logger.info("registerPOST() 호출");
-		logger.info(vo.toString());
-		logger.info("파일명 " + file.getOriginalFilename());
-		logger.info("파일 사이즈 " + file.getSize());
-		
-		if (!file.isEmpty()) {
-			try {
-				String savedFileName = saveUploadFile(file);
-				vo.setProductImgPath(savedFileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		int result = productService.create(vo);
-
-		logger.info(result + "result");
-		if (result == 1) {
-			reAttr.addFlashAttribute("insert_result", "success");
-			return "redirect:/product/list";
-		} else {
-			return "redirect:/product/register";
-		}
-	} // end registerPOST()
 	
-	private String saveUploadFile(MultipartFile file) {
-		UUID uuid = UUID.randomUUID();
-		String savedName = uuid + "_" + file.getOriginalFilename();
-		File target = new File(uploadPath, savedName);
+	@PostMapping("/register")
+	public void testregister(MultipartFile productImgPath) {
+		logger.info("testregister()호출");
 		
-		try {
-			FileCopyUtils.copy(file.getBytes(),target);
-			return savedName;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+		logger.info("파일 이름 : " + productImgPath.getOriginalFilename());
+		logger.info("파일 타입 : " + productImgPath.getContentType());
+		logger.info("파일 크기 : " + productImgPath.getSize());
+		
+		String uploadFolder = "C:\\upload";
 	}
+	
+	
+//===============================================================================================================================	
+
+//	@PostMapping("/register")
+//	public String registerPOST(@ModelAttribute ProductVO vo, RedirectAttributes reAttr, MultipartFile uploadImgFile) {
+//		logger.info("registerPOST() 호출");
+//		logger.info(vo.toString());
+//		logger.info("파일명 " + uploadImgFile.getOriginalFilename());
+//		logger.info("파일 타입 : " + uploadImgFile.getContentType());
+//		logger.info("파일 사이즈 " + uploadImgFile.getSize());
+//		
+//		if (!uploadImgFile.isEmpty()) {
+//			try {
+//				String savedFileName = saveUploadFile(uploadImgFile);
+//				vo.setProductImgPath(savedFileName);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		int result = productService.create(vo);
+//
+//		logger.info(result + "result");
+//		if (result == 1) {
+//			reAttr.addFlashAttribute("insert_result", "success");
+//			return "redirect:/product/list";
+//		} else {
+//			return "redirect:/product/register";
+//		}
+//	} // end registerPOST()
+//	
+//	private String saveUploadFile(MultipartFile uploadImgFile) {
+//		String uploadPath = new String("C:\\upload\\temp");
+//		UUID uuid = UUID.randomUUID();
+//		String savedName = uuid + "_" + uploadImgFile.getOriginalFilename();
+//		File target = new File(uploadPath, savedName);
+//		
+//		try {
+//			FileCopyUtils.copy(uploadImgFile.getBytes(),target);
+//			return savedName;
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	} // end saveUploadFile()
+	
+//======================================================================================================================================
 
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {

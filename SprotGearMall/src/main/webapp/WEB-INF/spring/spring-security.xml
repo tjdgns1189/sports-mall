@@ -21,6 +21,7 @@
 	<http pattern="/qnaBoard/replies/*" security="none"/>
 	<http pattern="/qnaBoard/replies" security="none"/>
 	<http pattern="/qnaBoard/qnaRegister" security="none"/>
+	<http pattern="/product/register" security="none"/>
 	
 	
 	

@@ -16,7 +16,7 @@
       <h4 class="bg-secondary">상품 관리</h4>
       <ul class="nav flex-column">
         <li class="nav-item"><a href="#" class="nav-link">상품 목록</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">상품 등록</a></li>
+        <li class="nav-item"><a href="../product/register" class="nav-link">상품 등록</a></li>
         <li class="nav-item"><a href="#" class="nav-link">상품 삭제</a></li>
       </ul>
      	<hr>
