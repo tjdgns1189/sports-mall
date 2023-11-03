@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -184,9 +186,11 @@ public class ProductController {
 	} // end delete()
 	
 	@GetMapping("/cart")
-	public void cartGET(Model model) {
+	public String cartGET() {
 
+	    return "product/cart";
 	}
+
 
 } // end ProductController
 

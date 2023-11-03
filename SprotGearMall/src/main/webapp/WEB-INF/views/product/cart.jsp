@@ -8,28 +8,76 @@
 <title>Insert title here</title>
 </head>
 <body>
-장바구니
+장바구니 ${vo.productId}
 
-<section class="py-5"><h3>&nbsp;신상품</h3><hr>
-			<div class="container px-4 px-lg-5 mt-5">
-				<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-					<c:forEach var="vo" items="${productList }">
-					<div class="col mb-5">
-						<div class="card h-100" onclick="location.href='detail?productId=${vo.productId}'">
-							<!-- 상품 이미지-->
-							<img class="card-img-top"
-								src="<c:url value="/resources/img/product1.webp" />" alt="이미지" />
-							<div class="text-center">
-								<!-- 상품 이름-->
-								<span class="fw-bolder">${vo.productName}</span><br>
-								<!-- 가격들어가는곳-->
-								${vo.productPrice } 원
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-				</div>
-			</div>
-		</section>
+
+<!-- 
+<table>
+        <thead>
+            <tr>
+                <th style="width : 250px" colspan="2">상품정보</th>
+                <th style="width : 100px">상품금액</th>
+                <th style="width : 80px">구매갯수</th>
+                <th style="width : 100px">배송비</th>
+                <th style="width : 150px">상품 총 가격</th>
+            </tr>	
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <img class="card-img-top"
+                    src="<c:url value="/resources/img/product1.webp" />" alt="이미지"
+                    style="width: 150px; height: 100px;" />
+                </td>
+                <td>
+                    <input type="text" name="productName" value="${vo.productName }" readonly="readonly">
+                </td>
+                <td>
+                    <input type="number" name="productPrice" value="${vo.productPrice }" id="productPrice" readonly="readonly">
+                </td>
+                <td>
+                    <input type="number" name="productQuantity" id="productQuantity" oninput="calculateTotalPrice()" min="1"><br>
+                </td>
+                <td>
+                    배송비 무료
+                </td>
+                <td>
+                    <input type="number" name="totalPrice" id="totalPrice" readonly="readonly">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+ -->
+
+<table class="table">
+    	<thead>
+    		<tr>
+    			<th>삭제</th>
+    			<th>주문번호</th>
+    			<th>상품이름</th>
+    			<th>상품구매수량</th>
+    			<th>상품 총 가격</th>
+    			<th>구매 날짜</th>
+    			<th>버튼 들어갈곳</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		<c:forEach var="vo" items="${productList }"> 
+    			<tr>
+    				<td>${vo.productId }</td> 
+    				<td>${vo.productName }</td> 				
+    				<td>
+						${vo.productPrice }
+    				</td>
+    				<td>${vo.productName }</td>
+    				<td>${vo.productName }</td>
+    				<td>${vo.productName }</td>
+
+    			</tr>
+    		</c:forEach>
+    	</tbody>
+    </table>
+		
+		
 </body>
 </html>
