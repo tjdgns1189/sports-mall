@@ -68,31 +68,35 @@
 	
 	<script type="text/javascript">
 	document.getElementById("addToCartButton").addEventListener("click", function() {
-        var productId = "${vo.productId}";
-        
-        // 쿠키에서 장바구니 항목 가져오기
-        var cartItems = getCookie("cartItems") || "[]";
-        var cartItemsArray = JSON.parse(cartItems);
+	    var productId = "${vo.productId}";
+	    
+	    // 쿠키에서 장바구니 항목 가져오기
+	    var cartItems = getCookie("cartItems") || "[]";
+	    var cartItemsArray = JSON.parse(cartItems);
 
-        // 이미 있는지 확인하고 없으면 추가
-        if (cartItemsArray.indexOf(productId) === -1) {
-            cartItemsArray.push(productId);
+	    // 이미 있는지 확인하고 없으면 추가, 있으면 삭제
+	    var index = cartItemsArray.indexOf(productId);
+	    if (index === -1) {
+	        cartItemsArray.push(productId);
+	        // JSON 형태로 직렬화하여 쿠키에 저장
+	        document.cookie = "cartItems=" + JSON.stringify(cartItemsArray) + "; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+	        console.log(cartItemsArray);
+	        alert("장바구니에 상품이 추가되었습니다.");
+	    } else {
+	        cartItemsArray.splice(index, 1); // 해당 상품을 배열에서 제거
+	        // 쿠키를 덮어쓰고 만료일을 현재 시간 이전으로 설정하여 삭제
+	        document.cookie = "cartItems=" + JSON.stringify(cartItemsArray) + "; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+	        console.log(cartItemsArray);
+	        alert("장바구니에서 상품이 제거되었습니다.");
+	    }
+	});
 
-            // JSON 형태로 직렬화하여 쿠키에 저장
-            document.cookie = "cartItems=" + JSON.stringify(cartItemsArray) + "; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-            console.log(cartItemsArray);
-            alert("장바구니에 상품이 추가되었습니다.");
-        } else {
-            console.log(cartItemsArray);
-            alert("이미 장바구니에 있는 상품입니다.");
-        }
-    });
+	function getCookie(name) {
+	    var value = "; " + document.cookie;
+	    var parts = value.split("; " + name + "=");
+	    if (parts.length === 2) return parts.pop().split(";").shift();
+	}
 
-    function getCookie(name) {
-        var value = "; " + document.cookie;
-        var parts = value.split("; " + name + "=");
-        if (parts.length === 2) return parts.pop().split(";").shift();
-    }
 	</script>
 	
 	
