@@ -46,9 +46,12 @@
 	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/payment/**" access="isAuthenticated()"/>
 	 <intercept-url pattern="/orders/orderlist" access="isAuthenticated()"/>
-
 	 <intercept-url pattern="/product/likes" access="isAuthenticated()"/>
-	 <intercept-url pattern="/qnaBoard/replies" access="isAuthenticated()"/>
+
+	 <!--  
+	 <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
+	 -->
+
 	 
 
 	 

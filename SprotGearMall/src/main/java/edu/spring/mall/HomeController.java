@@ -44,7 +44,7 @@ public class HomeController {
 	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 	    model.addAttribute("authorities", authorities);
 		
-	    logger.info("list() È£Ãâ");
+	    logger.info("list() í˜¸ì¶œ");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 		
 		PageCriteria criteria = new PageCriteria();
@@ -67,7 +67,7 @@ public class HomeController {
 	
 	@GetMapping("/index")
 	public void indexGET(Model model) {
-		logger.info("indexÈ£Ãâ");
+		logger.info("indexí˜¸ì¶œ");
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

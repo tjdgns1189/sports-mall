@@ -19,7 +19,7 @@ public class AjaxAwareAuthenticationEntryPoint extends LoginUrlAuthenticationEnt
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN, "Á¢±Ù±ÇÇÑ ¾øÀ½");
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, "ì ‘ê·¼ê¶Œí•œ ì—†ìŒ");
 		} else {
 			super.commence(request, response, authException);
 		}

@@ -35,9 +35,9 @@ public class RestLoginController {
 
 	@PostMapping("member/checkid")
     public ResponseEntity<Integer> checkId(@RequestBody Map<String, String> request) {
-		logger.info("아이디 중복체크 메소드 호출");
+		logger.info("아이디 중복확인");
 		Integer result = dao.select(request.get("memberId"));
-		logger.info("중복 아이디 갯수 : " + result);
+		logger.info("아이디 존재여부 : " + result);
 
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 		

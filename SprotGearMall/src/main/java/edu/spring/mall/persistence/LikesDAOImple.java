@@ -21,25 +21,25 @@ public class LikesDAOImple implements LikesDAO {
 
 	@Override
 	public int insert(LikesVO vo) {
-		logger.info("inser È£Ãâ");
+		logger.info("inser í˜¸ì¶œ");
 		return sqlSession.insert(NAMESPACE + ".insert" , vo);
 	}
 
 	@Override
 	public int select(LikesVO vo) {
-		logger.info("ÁÁ¾Æ¿ä ´­·¶´ÂÁö È®ÀÎÇÏ´Â°Å");
+		logger.info("í•´ë‹¹ ìƒí’ˆ ë¦¬ë·° ê°€ì ¸ì˜¤ê¸°");
 		return sqlSession.selectOne(NAMESPACE + ".checkByLiked", vo);
 	}
 	
 	@Override
 	public List<Integer> selectUserLiked(String memberId) {
-		logger.info("selectUserLiked È£Ãâ");
+		logger.info("selectUserLiked í˜¸ì¶œ");
 		return sqlSession.selectList(NAMESPACE + ".select" , memberId);
 	}
 
 	@Override
 	public int delete(LikesVO vo) {
-		logger.info("delete È£Ãâ");
+		logger.info("delete í˜¸ì¶œ");
 		return sqlSession.delete(NAMESPACE + ".delete", vo);
 	}
 

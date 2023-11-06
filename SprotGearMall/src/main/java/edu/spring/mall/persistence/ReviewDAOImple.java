@@ -28,7 +28,7 @@ public class ReviewDAOImple implements ReviewDAO{
 
 	@Override
 	public List<ReviewVO> select(String memberId) {
-		logger.info("select 호출");
+		logger.info("select호출");
 		return sqlSession.selectList(NAMESPACE + ".select" , memberId);
 	}
 
