@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.spring.mall.domain.AttachImageVO;
 import edu.spring.mall.domain.LikesVO;
@@ -54,10 +55,6 @@ public class ProductController {
 	private LikesDAO likesDAO;
 
 	@GetMapping("/list")
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/develop
 	public void list(Model model, Integer page, Integer numsPerPage) {
 		logger.info("list() 호출");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
@@ -116,7 +113,6 @@ public class ProductController {
 		logger.info("registerGET()");
 		
 	} // end registerGET()
-<<<<<<< HEAD
 
 	
 	@PostMapping(value="/register" , produces = MediaType.APPLICATION_JSON_VALUE)
@@ -310,7 +306,6 @@ public class ProductController {
 //	} // end registerPOST()
 
 	
-=======
 
 	@PostMapping("/register")
 	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
@@ -326,7 +321,6 @@ public class ProductController {
 		}
 	} // end registerPOST()
 
->>>>>>> refs/remotes/origin/develop
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
