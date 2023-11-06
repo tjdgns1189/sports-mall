@@ -65,7 +65,8 @@ public class LoginController {
 	 
 	}
 
-	// ������ ���� �α��� ��� ������� �ּ�ó��
+	// 스프링 내장 로그인 기능 사용으로 주석처리
+
 //	@PostMapping("/login")
 //	public String loginPost(String memberId, String password) {
 //		logger.info("loginPOST 호출");
@@ -75,7 +76,8 @@ public class LoginController {
 //
 //		    String encodedPassword= user.getPassword();
 //		    if(passwordEncoder.matches(password, encodedPassword)) {
-//		    	logger.info("");
+//		    	logger.info("로그인 성공");
+
 //		    	SecurityContext context = SecurityContextHolder.createEmptyContext(); 
 //		    	Authentication auth =
 //		    			new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
@@ -84,9 +86,11 @@ public class LoginController {
 //
 //		    	return "redirect:/index";
 //		    }
-//		  
+//		    logger.info("로그인 실패");
 //		    return "redirect:/member/loginForm?error";
 //		} catch (UsernameNotFoundException e) {
+//			logger.info("아이디 조회 실패");
+
 //			e.printStackTrace();
 //		    return "redirect:/member/loginForm?error";
 //
@@ -109,6 +113,8 @@ public class LoginController {
 		try {
 			int result = service.create(vo);
 			if (result == 1) {
+				logger.info("회원가입 성공");
+
 				return "redirect:/member/loginForm?state=success";
 			}
 		} catch (Exception e) {
@@ -164,15 +170,19 @@ public class LoginController {
 		try {
 			result = service.update(userDetail);
 			if (result == 1) {
-				logger.info("update ����");
+				logger.info("update 성공");
+
 				return "redirect:/member/mypage";
 			} 
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.info("예외 발생");
 			return "redirect:/member/update?error";
 
 		}
+			logger.info("업데이트 실패");
+
 			return "redirect:/member/update?error";
 
 	}
@@ -207,22 +217,28 @@ public class LoginController {
 			HttpServletResponse response,
 			Model model) {
 			logger.info("deletePOST호출");
+			//비밀번호 검증을 위한 변수
 		  	UserDetails user = userService.loadUserByUsername(memberId);
 		    String encodedPassword = user.getPassword();
+		    // 비밀번호 검증
 		    if (!passwordEncoder.matches(password, encodedPassword)) {
+		        logger.info("비밀번호 틀림");
+
 		        return "redirect:/member/delete?error=password";
 		    }
 		    
 		    try {
 		        if (service.delete(memberId) != 1) {
-		            return "redirect:/member/delete?error"; 
+		            return "redirect:/member/delete?error"; // 탈퇴 처리 실패
 		        }
-		     
+		     // 로그아웃 처리
+
 		        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		        if (auth != null) {
 		            new SecurityContextLogoutHandler().logout(request, response, auth);
 		        }
-		        return "redirect:/index";
+		        return "redirect:/index"; // 탈퇴 및 로그아웃 성공
+
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		        return "redirect:/member/delete?error"; 

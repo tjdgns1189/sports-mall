@@ -40,7 +40,6 @@ public class ProductServiceImple implements ProductService {
 	
 	@Override
 	public ProductVO read(int productId) {
-
 		logger.info("read(productId) 호출 : productId = " + productId);
 		return dao.selectById(productId);
 	}

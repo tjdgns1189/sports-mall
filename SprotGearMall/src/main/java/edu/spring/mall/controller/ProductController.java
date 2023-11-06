@@ -113,6 +113,7 @@ public class ProductController {
 		
 	} // end registerGET()
 
+
 	
 	@PostMapping(value="/register" , produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AttachImageVO>> testregisterPOST(MultipartFile[] productImgPath) {

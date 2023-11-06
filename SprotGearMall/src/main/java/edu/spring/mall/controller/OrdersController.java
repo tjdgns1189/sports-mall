@@ -39,7 +39,8 @@ public class OrdersController {
 	@PostMapping("/orderlist")
 
 	public String ordersPOST(Model model, OrdersVO vo, Principal principal) {
-		logger.info("paymentPOST() 호출: vo = " + vo.toString());
+		logger.info("paymentPOST() 호출 : vo = " + vo.toString());
+
 		int result = dao.insert(vo);
 		String memberId = principal.getName();
 		List<OrdersVO> list = dao.select(memberId);
@@ -52,8 +53,6 @@ public class OrdersController {
 	@GetMapping("/orderlist")
 	public void orderlistGET(Model model, Principal principal) {
 		String memberId = principal.getName();
-
-
 		logger.info("paymentGET() 호출 : memberId = " + memberId);
 		List<OrdersVO> orders = dao.select(memberId);
 		List<OrdersProductJoinVO> list = new ArrayList<OrdersProductJoinVO>();
@@ -69,9 +68,7 @@ public class OrdersController {
 	@PostMapping("/delete")
 	public ResponseEntity<Integer> ordersDeletePOST(@RequestBody List<Integer> checkedIds) {
 		logger.info("orderDeletePOST() 호출 : " + checkedIds.toString());
-		int totalDeleted = 0; 
-
-
+		int totalDeleted = 0; // 삭제된 항목 수를 추적하는 변수
 	    try {
 	        for (Integer id : checkedIds) {
 	            int result = dao.delete(id);
@@ -79,8 +76,11 @@ public class OrdersController {
 	        }
 
 	        if (totalDeleted > 0) {
+	        	// 적어도 하나의 항목이 성공적으로 삭제됐을 경우
 	            return new ResponseEntity<>(totalDeleted, HttpStatus.OK);
 	        } else {
+	        	// 삭제된 항목이 없는 경우
+
 	            return new ResponseEntity<>(0, HttpStatus.NOT_FOUND);
 	        }
 	    } catch (Exception e) {
