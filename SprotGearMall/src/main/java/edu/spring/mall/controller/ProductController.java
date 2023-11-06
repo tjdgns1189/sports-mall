@@ -54,6 +54,10 @@ public class ProductController {
 	private LikesDAO likesDAO;
 
 	@GetMapping("/list")
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/develop
 	public void list(Model model, Integer page, Integer numsPerPage) {
 		logger.info("list() 호출");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
@@ -112,6 +116,7 @@ public class ProductController {
 		logger.info("registerGET()");
 		
 	} // end registerGET()
+<<<<<<< HEAD
 
 	
 	@PostMapping(value="/register" , produces = MediaType.APPLICATION_JSON_VALUE)
@@ -305,6 +310,23 @@ public class ProductController {
 //	} // end registerPOST()
 
 	
+=======
+
+	@PostMapping("/register")
+	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
+		logger.info("registerPOST() 호출");
+		logger.info(vo.toString());
+		int result = productService.create(vo);
+		logger.info(result + "result");
+		if (result == 1) {
+			reAttr.addFlashAttribute("insert_result", "success");
+			return "redirect:/product/list";
+		} else {
+			return "redirect:/product/register";
+		}
+	} // end registerPOST()
+
+>>>>>>> refs/remotes/origin/develop
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
