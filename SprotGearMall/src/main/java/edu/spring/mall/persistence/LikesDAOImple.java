@@ -21,19 +21,19 @@ public class LikesDAOImple implements LikesDAO {
 
 	@Override
 	public int insert(LikesVO vo) {
-		logger.info("inser 호출");
+		logger.info("insert 호출");
 		return sqlSession.insert(NAMESPACE + ".insert" , vo);
 	}
 
 	@Override
 	public int select(LikesVO vo) {
-		logger.info("해당 상품 리뷰 가져오기");
+		logger.info("select 호출");
 		return sqlSession.selectOne(NAMESPACE + ".checkByLiked", vo);
 	}
 	
 	@Override
 	public List<Integer> selectUserLiked(String memberId) {
-		logger.info("selectUserLiked 호출");
+		logger.info("selectUserLiked 호출 member");
 		return sqlSession.selectList(NAMESPACE + ".select" , memberId);
 	}
 

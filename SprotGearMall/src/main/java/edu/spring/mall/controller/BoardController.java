@@ -76,6 +76,7 @@ public class BoardController {
 		int result = qnaBoardService.create(vo);
 
 		logger.info(result + "행 추가");
+
 		model.addAttribute("memberId", memberId);		
 		if(result == 1) {
 			reAttr.addFlashAttribute("insert_result", "success");

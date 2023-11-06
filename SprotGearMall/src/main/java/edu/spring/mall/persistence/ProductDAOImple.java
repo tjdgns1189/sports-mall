@@ -28,6 +28,8 @@ public class ProductDAOImple implements ProductDAO{
 		logger.info("insert() 호출");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
+
+
 	//리스트 불러오기
 	@Override
 	public List<ProductVO> select() {
@@ -35,12 +37,15 @@ public class ProductDAOImple implements ProductDAO{
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	}
 
+
 	//검색용
 	@Override
 	public ProductVO selectByName(String productName) {
 		logger.info("select(productName) 호출 : productName = " + productName);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_name",productName);
 	}
+
+
 	//디테일용
 	@Override
 	public ProductVO selectById(int productId) {
