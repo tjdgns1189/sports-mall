@@ -57,6 +57,7 @@ public class ReviewServiceImple implements ReviewService {
 
 	@Override
 	public List<ReviewProductJoinVO> read(String memberId) throws Exception {
+
 		logger.info("read호출");
 		List<ReviewVO> list = dao.select(memberId);
 		 List<ReviewProductJoinVO> reviewProduct = new ArrayList<>();

@@ -52,6 +52,7 @@ public class ReviewController {
 		if(principal != null) {
 			String memberId = principal.getName();
 			List<ReviewProductJoinVO> list = reviewService.read(memberId);
+
 			logger.info("리뷰한 상품 가져옴");
 			model.addAttribute("list", list);
 		}

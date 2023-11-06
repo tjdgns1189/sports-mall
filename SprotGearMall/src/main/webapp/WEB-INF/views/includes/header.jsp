@@ -46,6 +46,7 @@
         <a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>
         <a class="dropdown-item" href="${pageContext.request.contextPath}/member/mypage">내 정보</a>
         <a class="dropdown-item" href="#">고객센터</a>
+
         <sec:authorize access="hasRole('ROLE_ADMIN')">
        <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/adminPage">관리자 페이지</a>
         </sec:authorize>

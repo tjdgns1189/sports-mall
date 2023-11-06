@@ -1,17 +1,6 @@
 <%@page import="org.springframework.security.core.context.SecurityContextHolder"%>
 <%@page import="edu.spring.mall.domain.ProductVO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
->>>>>>> refs/remotes/origin/feature/product
-
-=======
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
->>>>>>> refs/remotes/origin/feature/VO
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -21,10 +10,7 @@ table, th, td {
    border-width : 0px;
    text-align : center;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/feature/product
 
 th, td {
    border-top: 1px solid #ddd;
@@ -59,8 +45,7 @@ li {
     width: 50%;
 }
 
-<<<<<<< HEAD
-=======
+
 
 						<form action="../orders/orderlist" method="POST">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -92,7 +77,6 @@ li {
 							<input type="number" name="totalPrice" id="totalPrice" readonly="readonly">
 						</div>
 
->>>>>>> refs/remotes/origin/feature/product
 #final {
 	border-bottom : 1px solid #ddd;
     width: 50%;
@@ -249,6 +233,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	        
 	        
 		}
+
 		
 		function checkAll(checkAllId, className) {
 	        var checkAllCheckbox = document.getElementById(checkAllId);
@@ -259,6 +244,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	        }
 	    }
 	</script>
+ 
 
 </body>
 </html>

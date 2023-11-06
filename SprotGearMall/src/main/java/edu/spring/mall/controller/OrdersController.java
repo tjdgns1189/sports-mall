@@ -53,6 +53,7 @@ public class OrdersController {
 	public void orderlistGET(Model model, Principal principal) {
 		String memberId = principal.getName();
 
+
 		logger.info("paymentGET() 호출 : memberId = " + memberId);
 		List<OrdersVO> orders = dao.select(memberId);
 		List<OrdersProductJoinVO> list = new ArrayList<OrdersProductJoinVO>();
