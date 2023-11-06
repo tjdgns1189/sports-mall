@@ -25,7 +25,7 @@ public class QnaReplyServiceImple implements QnaReplyService {
 	public int create(QnaReplyVO vo) throws Exception {
 		logger.info("create() 호출 : vo = " + vo.toString());
 		int resultInsert = qnaReplyDAO.insert(vo);
-		logger.info(resultInsert + " �� ��� �Է� ����");
+		logger.info(resultInsert + "행 삽입");
 		return 1;
 	}
 

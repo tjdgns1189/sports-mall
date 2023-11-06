@@ -15,6 +15,7 @@
     <div class="col-md-1 bg-light">
       <h4 class="bg-secondary">상품 관리</h4>
       <ul class="nav flex-column">
+
         <li class="nav-item">
           <a href="#" class="nav-link" onclick="loadContent('productList', 'contentDiv')">상품 목록</a>
         </li>

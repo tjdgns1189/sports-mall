@@ -31,7 +31,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		if (session != null) {
 			SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 			if (savedRequest != null) {
-				logger.info("원래 접근하려는 uri 접근");
+				logger.info("기존 접근 uri 보내기");
 				String targetURL = savedRequest.getRedirectUrl();
 				redirectStrategy.sendRedirect(request, response, targetURL);
 				return;
@@ -41,7 +41,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			if (cookies != null) {
 				for (Cookie cookie : cookies) {
 					if ("targeturl".equals(cookie.getName())) {
-						logger.info("헤더 로그인 호출");
+						logger.info("헤더 로그인으로 접근");
 						String decodedUrl = URLDecoder.decode(cookie.getValue(), "UTF-8");
 						logger.info("targetURL : " + decodedUrl);
 						cookie.setMaxAge(0);

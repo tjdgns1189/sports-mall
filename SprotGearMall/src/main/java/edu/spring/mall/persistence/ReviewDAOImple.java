@@ -22,7 +22,6 @@ public class ReviewDAOImple implements ReviewDAO{
 	@Override
 	public int insert(ReviewVO vo) {
 		logger.info("insert 호출");
-		
 		return sqlSession.insert(NAMESPACE + ".insert" , vo);
 	}
 
