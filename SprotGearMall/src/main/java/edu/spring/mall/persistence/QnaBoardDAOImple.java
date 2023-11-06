@@ -25,25 +25,25 @@ public class QnaBoardDAOImple implements QnaBoardDAO{
 	
 	@Override
 	public int insert(QnaBoardVO vo) {
-		logger.info("insert() È£Ãâ");
+		logger.info("insert() í˜¸ì¶œ");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 
 	@Override
 	public List<QnaBoardVO> select() {
-		logger.info("select() È£Ãâ");
+		logger.info("select() í˜¸ì¶œ");
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	}
 
 	@Override
 	public QnaBoardVO select(int qnaBoardId) {
-		logger.info("select() È£Ãâ : qnaBoardId = " + qnaBoardId);
+		logger.info("select() í˜¸ì¶œ : qnaBoardId = " + qnaBoardId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_qna_board_id", qnaBoardId);
 	}
 
 	@Override
 	public List<QnaBoardVO> select(PageCriteria criteria) {
-		logger.info("select() È£Ãâ");
+		logger.info("select() í˜¸ì¶œ");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return sqlSession.selectList(NAMESPACE + ".paging", criteria);
@@ -57,25 +57,25 @@ public class QnaBoardDAOImple implements QnaBoardDAO{
 
 	@Override
 	public int update(QnaBoardVO vo) {
-		logger.info("update() È£Ãâ : vo = " + vo.toString());
+		logger.info("update() í˜¸ì¶œ : vo = " + vo.toString());
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 	@Override
 	public int delete(int qnaBoardId) {
-		logger.info("delete() È£Ãâ : qnaBoardId = " + qnaBoardId);
+		logger.info("delete() í˜¸ì¶œ : qnaBoardId = " + qnaBoardId);
 		return sqlSession.delete(NAMESPACE + ".delete", qnaBoardId);
 	}
 
 	@Override
 	public List<QnaBoardVO> select(String memberId) {
-		logger.info("select() È£Ãâ : memberId = " + memberId);
+		logger.info("select() í˜¸ì¶œ : memberId = " + memberId);
 		return sqlSession.selectList(NAMESPACE + ".select_by_memberid", "%" + memberId + "%");
 	}
 
 	@Override
 	public List<QnaBoardVO> selectByTitleOrContent(String keyword) {
-		logger.info("selectByTitleOrContent() È£Ãâ");
+		logger.info("selectByTitleOrContent() í˜¸ì¶œ");
 		return sqlSession.selectList(NAMESPACE + ".select_by_title_content", "%" + keyword + "%");
 	}
 

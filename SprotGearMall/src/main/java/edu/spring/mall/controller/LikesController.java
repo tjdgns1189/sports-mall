@@ -22,7 +22,7 @@ public class LikesController {
 	
 	@GetMapping("/member/likes")
 	public void likesGET(Principal principal, Model model) {
-		logger.info("likesGET È£Ãâ" + principal.getName());
+		logger.info("likesGET í˜¸ì¶œ" + principal.getName());
 		String memberId = principal.getName();
 		
 		List<ProductVO> list = service.read(memberId);

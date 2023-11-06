@@ -23,28 +23,28 @@ public class QnaReplyServiceImple implements QnaReplyService {
 
 	@Override
 	public int create(QnaReplyVO vo) throws Exception {
-		logger.info("create() È£Ãâ : vo = " + vo.toString());
+		logger.info("create() í˜¸ì¶œ : vo = " + vo.toString());
 		int resultInsert = qnaReplyDAO.insert(vo);
-		logger.info(resultInsert + " Çà ´ñ±Û ÀÔ·Â ¼º°ø");
+		logger.info(resultInsert + "í–‰ ì‚½ìž…");
 		return 1;
 	}
 
 	@Override
 	public List<QnaReplyVO> read(int qnaBoardId) {
-		logger.info("read() È£Ãâ : qnaBoardId = " + qnaBoardId);
+		logger.info("read() í˜¸ì¶œ : qnaBoardId = " + qnaBoardId);
 		return qnaReplyDAO.select(qnaBoardId);
 	}
 
 	@Override
 	public int update(int qnaReplyId, String qnaReplyContent) {
-		logger.info("update() È£Ãâ");
+		logger.info("update() í˜¸ì¶œ");
 		logger.info("qnaReplyId = " + qnaReplyId + ", qnaReplyContent = " + qnaReplyContent);
 		return qnaReplyDAO.update(qnaReplyId, qnaReplyContent);
 	}
 
 	@Override
 	public int delete(int qnaReplyId) throws Exception {
-		logger.info("delete() È£Ãâ : qnaReplyId = " + qnaReplyId);
+		logger.info("delete() í˜¸ì¶œ : qnaReplyId = " + qnaReplyId);
 		return qnaReplyDAO.delete(qnaReplyId);
 	}
 

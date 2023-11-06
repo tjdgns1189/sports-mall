@@ -22,7 +22,7 @@
 	<ul class="nav-list">
 		<li><a href="${pageContext.request.contextPath}/product/list">메뉴</a></li>
 		<li><a href="#">들어</a></li>
-		<li><a href="#">갈곳</a></li>
+		<li><a href="${pageContext.request.contextPath}/product/cart">장바구니</a></li>
 		<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard?page=1">QNA</a></li>
 	</ul>
 	<div class="search-bar">
@@ -46,10 +46,6 @@
         <a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>
         <a class="dropdown-item" href="${pageContext.request.contextPath}/member/mypage">내 정보</a>
         <a class="dropdown-item" href="#">고객센터</a>
-
-       
-        <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/adminPage">관리자 페이지</a>
-        
 
         <sec:authorize access="hasRole('ROLE_ADMIN')">
        <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/adminPage">관리자 페이지</a>

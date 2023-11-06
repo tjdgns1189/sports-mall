@@ -25,14 +25,14 @@ public class ReviewServiceImple implements ReviewService {
 
 	@Override
 	public int create(ReviewVO vo) throws Exception {
-		logger.info("create È£Ãâ");
+		logger.info("create í˜¸ì¶œ");
 		int result = dao.insert(vo);
 		return result;
 	}
 
 	@Override
 	public List<ReviewVO> read(Principal principal) throws Exception {
-		logger.info("read È£Ãâ");
+		logger.info("read í˜¸ì¶œ");
 		String memberId = "";
 		if(principal != null) {
 			memberId = principal.getName();
@@ -43,21 +43,22 @@ public class ReviewServiceImple implements ReviewService {
 
 	@Override
 	public int update(ReviewVO vo) throws Exception {
-		logger.info("update È£Ãâ");
+		logger.info("update í˜¸ì¶œ");
 		int result = dao.update(vo);
 		return result;
 	}
 
 	@Override
 	public int delete(int reviewId) throws Exception {
-		logger.info("delete È£Ãâ");
+		logger.info("delete í˜¸ì¶œ");
 		int result = dao.delete(reviewId);
 		return result;
 	}
 
 	@Override
 	public List<ReviewProductJoinVO> read(String memberId) throws Exception {
-		logger.info("readÈ£Ãâ");
+
+		logger.info("readí˜¸ì¶œ");
 		List<ReviewVO> list = dao.select(memberId);
 		 List<ReviewProductJoinVO> reviewProduct = new ArrayList<>();
 		 for(ReviewVO review : list) {

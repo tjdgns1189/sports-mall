@@ -39,7 +39,7 @@ public class OrdersController {
 	@PostMapping("/orderlist")
 
 	public String ordersPOST(Model model, OrdersVO vo, Principal principal) {
-		logger.info("paymentPOST() È£Ãâ : vo = " + vo.toString());
+		logger.info("paymentPOST() í˜¸ì¶œ: vo = " + vo.toString());
 		int result = dao.insert(vo);
 		String memberId = principal.getName();
 		List<OrdersVO> list = dao.select(memberId);
@@ -53,7 +53,8 @@ public class OrdersController {
 	public void orderlistGET(Model model, Principal principal) {
 		String memberId = principal.getName();
 
-		logger.info("paymentGET() È£Ãâ : memberId = " + memberId);
+
+		logger.info("paymentGET() í˜¸ì¶œ : memberId = " + memberId);
 		List<OrdersVO> orders = dao.select(memberId);
 		List<OrdersProductJoinVO> list = new ArrayList<OrdersProductJoinVO>();
 		for(OrdersVO order : orders) {
@@ -67,8 +68,8 @@ public class OrdersController {
 	
 	@PostMapping("/delete")
 	public ResponseEntity<Integer> ordersDeletePOST(@RequestBody List<Integer> checkedIds) {
-		logger.info("orderDeletePOST() È£Ãâ : " + checkedIds.toString());
-		int totalDeleted = 0; // »èÁ¦µÈ Ç×¸ñ ¼ö¸¦ ÃßÀûÇÏ´Â º¯¼ö
+		logger.info("orderDeletePOST() í˜¸ì¶œ : " + checkedIds.toString());
+		int totalDeleted = 0; 
 
 
 	    try {
@@ -78,10 +79,8 @@ public class OrdersController {
 	        }
 
 	        if (totalDeleted > 0) {
-	            // Àû¾îµµ ÇÏ³ªÀÇ Ç×¸ñÀÌ ¼º°øÀûÀ¸·Î »èÁ¦µÆÀ» °æ¿ì
 	            return new ResponseEntity<>(totalDeleted, HttpStatus.OK);
 	        } else {
-	            // »èÁ¦µÈ Ç×¸ñÀÌ ¾ø´Â °æ¿ì
 	            return new ResponseEntity<>(0, HttpStatus.NOT_FOUND);
 	        }
 	    } catch (Exception e) {

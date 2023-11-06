@@ -7,6 +7,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-
 import edu.spring.mall.domain.AttachImageVO;
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.ProductVO;
@@ -134,6 +134,7 @@ public class ProductController {
 		
 		if(uploadPath.exists() == false) {
 			uploadPath.mkdirs();
+
 		}
 		
 		/* 이미저 정보 담는 객체 */
@@ -150,6 +151,7 @@ public class ProductController {
 			vo.setUploadPath(datePath);
 			
 			/* uuid 적용 파일 이름 */
+
 			String uuid = UUID.randomUUID().toString();
 			vo.setUuid(uuid);
 			
@@ -159,6 +161,7 @@ public class ProductController {
 			File saveFile = new File(uploadPath, uploadFileName);
 			
 			/* 파일 저장 */
+
 			try {
 				multipartFile.transferTo(saveFile);
 				
@@ -212,6 +215,7 @@ public class ProductController {
 		        .size(width, height)
 		        .toFile(thumbnailFile);
 				
+
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -250,6 +254,7 @@ public class ProductController {
 //		logger.info("파일명 " + uploadImgFile.getOriginalFilename());
 //		logger.info("파일 타입 : " + uploadImgFile.getContentType());
 //		logger.info("파일 사이즈 " + uploadImgFile.getSize());
+
 //		
 //		if (!uploadImgFile.isEmpty()) {
 //			try {
@@ -291,6 +296,7 @@ public class ProductController {
 //	@PostMapping("/register")
 //	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
 //		logger.info("registerPOST() 호출");
+
 //		logger.info(vo.toString());
 //
 //		int result = productService.create(vo);
@@ -366,6 +372,13 @@ public class ProductController {
 			return "redirect:/board/list";
 		}
 	} // end delete()
+	
+	@GetMapping("/cart")
+	public String cartGET() {
+
+	    return "product/cart";
+	}
+
 
 } // end ProductController
 
