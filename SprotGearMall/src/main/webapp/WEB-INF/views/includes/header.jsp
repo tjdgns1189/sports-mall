@@ -49,14 +49,14 @@
         <a class="dropdown-item" href="#">고객센터</a>
 
         <sec:authorize access="hasRole('ROLE_ADMIN')">
-       <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/adminPage">관리자 페이지</a>
+       <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/adminPage">관리자페이지</a>
         </sec:authorize>
 
         <sec:authorize access="isAuthenticated()">
             <div class="dropdown-divider"></div>
             <form action="${pageContext.request.contextPath}/logout" method="post">
                 &nbsp;&nbsp;<input type="submit" class="btn btn-danger btn-block" value="로그아웃" />
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="hidden" id="csrfToken"name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </sec:authorize>
     </div>

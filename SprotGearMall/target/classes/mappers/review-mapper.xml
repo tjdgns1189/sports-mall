@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert">
     insert into ${review_table}
-    (${productId}, ${reviewContent}, ${reviewRating}, ${memberId})
-    values(#{productId}, #{reviewContent}, #{reviewRating}, #{memberId})    
+    (${productId}, ${reviewContent}, ${reviewRating}, ${memberId}, ${orderId})
+    values(#{productId}, #{reviewContent}, #{reviewRating}, #{memberId}, #{orderId})    
 </insert>
 
 <select id="select" resultType="ReviewVO">
@@ -24,10 +24,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where ${reviewId} = #{reviewId}
 </update>
 
+<select id="select_by_reviewId" resultType="ReviewVO">
+	select * from ${review_table}
+	where ${reviewId} = #{reviewId}
+</select>
+
+
+
 <delete id="delete">
     delete from ${review_table}
     where ${reviewId} = #{reviewId}
 </delete>
+
+
 </mapper>
 
 

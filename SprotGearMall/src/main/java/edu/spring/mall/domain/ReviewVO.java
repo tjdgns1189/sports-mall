@@ -9,6 +9,27 @@ public class ReviewVO {
 	private int reviewRating;
 	private Date reviewCreatedDate;
 	private String memberId;
+	private int orderId;
+
+	public ReviewVO(int reviewId, int productId, String reviewContent, int reviewRating, Date reviewCreatedDate,
+			String memberId, int orderId) {
+		super();
+		this.reviewId = reviewId;
+		this.productId = productId;
+		this.reviewContent = reviewContent;
+		this.reviewRating = reviewRating;
+		this.reviewCreatedDate = reviewCreatedDate;
+		this.memberId = memberId;
+		this.orderId = orderId;
+	}
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
 
 	public ReviewVO() {}
 

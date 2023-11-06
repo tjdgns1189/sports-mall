@@ -44,6 +44,9 @@ public class ReviewServiceImple implements ReviewService {
 	@Override
 	public int update(ReviewVO vo) throws Exception {
 		logger.info("update 호출");
+		logger.info("reviewId : " + vo.getReviewId());
+		logger.info("리뷰 내용 : "+ vo.getReviewContent());
+		logger.info("별점 " + vo.getReviewRating());
 		int result = dao.update(vo);
 		return result;
 	}
@@ -52,6 +55,7 @@ public class ReviewServiceImple implements ReviewService {
 	public int delete(int reviewId) throws Exception {
 		logger.info("delete 호출");
 		int result = dao.delete(reviewId);
+		System.out.println("result = " + result);
 		return result;
 	}
 
@@ -68,5 +72,14 @@ public class ReviewServiceImple implements ReviewService {
 	
 		return reviewProduct;
 	}
+
+	@Override
+	public ReviewVO read(int reviewId) throws Exception{
+		logger.info("read(reviewId ) 호출");
+		ReviewVO review = dao.select(reviewId);
+		return review;
+	}
+	
+	
 
 }

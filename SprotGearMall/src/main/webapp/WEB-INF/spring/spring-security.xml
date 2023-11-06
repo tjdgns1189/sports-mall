@@ -39,8 +39,8 @@
 	 <intercept-url pattern="/member/mypage" access="isAuthenticated()"/>
 	 <intercept-url pattern="/member/likes" access="isAuthenticated()"/>
 	 <intercept-url pattern="/member/passwordCheck" access="isAuthenticated()"/>
-	 <intercept-url pattern="/ member/review" access="isAuthenticated()"/>
-
+	 <intercept-url pattern="/member/review" access="isAuthenticated()"/>
+	 <intercept-url pattern="/member/reviewDelete" access="isAuthenticated()"/>
 	 <intercept-url pattern="/info" access="isAuthenticated()"/>
 	 <intercept-url pattern="/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>

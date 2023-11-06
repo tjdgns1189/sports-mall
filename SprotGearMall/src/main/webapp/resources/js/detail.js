@@ -15,9 +15,9 @@ function isLike() {
     var memberId = $('#memberId').val();
     var csrfToken = $("#csrfToken").val();
     var headers = {
-        'Content-Type': 'application/json'
-    };
-    headers['X-CSRF-TOKEN'] = csrfToken;
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': csrfToken
+      };
 
     if ($('.heart').hasClass('heart-filled')) {
         $.ajax({

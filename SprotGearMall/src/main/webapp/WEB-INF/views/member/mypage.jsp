@@ -89,7 +89,6 @@
             <div class="modal-body">
 				<form action="updatePassword" id="form" method="POST">
                         <input type="hidden" name="memberId" id="memberId" value="${pageContext.request.userPrincipal.name}">
-                        <input type="hidden" name="${_csrf.parameterName}" id ="csrfToken" value="${_csrf.token}">
                     <div class="form-group">
                         <label for="current-password">현재 비밀번호</label>
                         <input type="password" class="form-control" name="password" id="password" required>

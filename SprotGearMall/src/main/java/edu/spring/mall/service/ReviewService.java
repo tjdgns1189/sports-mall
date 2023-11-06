@@ -12,4 +12,5 @@ public interface ReviewService {
 	List<ReviewProductJoinVO> read(String memberId) throws Exception;
 	int update(ReviewVO vo)throws Exception;
 	int delete(int reviewId) throws Exception;
+	ReviewVO read(int reviewId) throws Exception;
 }
