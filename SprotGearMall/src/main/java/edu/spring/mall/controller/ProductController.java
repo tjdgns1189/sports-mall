@@ -312,6 +312,7 @@ public class ProductController {
 //	} // end registerPOST()
 
 	
+
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
@@ -332,8 +333,6 @@ public class ProductController {
 			}
 		}
 		model.addAttribute("isLiked", isLiked);
-
-		
 
 	} // end detail()
 
@@ -379,7 +378,6 @@ public class ProductController {
 
 	    return "product/cart";
 	}
-
 
 } // end ProductController
 
