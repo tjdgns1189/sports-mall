@@ -2,11 +2,16 @@
 <%@page import="edu.spring.mall.domain.ProductVO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 >>>>>>> refs/remotes/origin/feature/product
 
+=======
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+>>>>>>> refs/remotes/origin/feature/VO
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -188,7 +193,7 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
     <h4>약관 동의</h4>
     <table id="final">
     	<tr>
-    		<th><input type="checkbox">전체 동의하기</th>
+    		<th><input type="checkbox" id="checkAll" onclick="checkAll('checkAll', 'check')">전체 동의하기</th>
     		<th rowspan="2">
     		주문자이름 확인<br>
     		주소확인<br>
@@ -197,9 +202,9 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
     	</tr>
     	<tr>
     		<th rowspan="2">
-    		<input type="checkbox">개인정보 제3자 제공에 동의합니다. 상세보기<br>
-    		<input type="checkbox">결제대행서비스 이용약관에 동의합니다. 상세보기<br>
-    		<input type="checkbox">주문할 상품설명에 명시된 내용과 사용조건을 확인하였으며, 취소. 환불규정에 동의합니다.
+    		<input type="checkbox" class="check">환불절대 안됨에 동의합니다. 상세보기<br>
+    		<input type="checkbox" class="check">리뷰 별5개에 동의합니다. 상세보기<br>
+    		<input type="checkbox" class="check">물건에 하자가 있을시 구매자책임에 동의합니다. 상세보기
     		</th> 		
     	</tr>
     	<tr>
@@ -244,7 +249,17 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
 	        
 	        
 		}
+		
+		function checkAll(checkAllId, className) {
+	        var checkAllCheckbox = document.getElementById(checkAllId);
+	        var checkboxes = document.getElementsByClassName(className);
+
+	        for (var i = 0; i < checkboxes.length; i++) {
+	            checkboxes[i].checked = checkAllCheckbox.checked;
+	        }
+	    }
 	</script>
+
 </body>
 </html>
 

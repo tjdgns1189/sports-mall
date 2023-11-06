@@ -5,8 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+	
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.pageutil.PageCriteria;
@@ -50,7 +49,7 @@ public class ProductController {
 
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage) {
-		logger.info("list() È£Ãâ");
+		logger.info("list() È£ï¿½ï¿½");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 		PageCriteria criteria = new PageCriteria();
 		if (page != null) {
@@ -72,7 +71,7 @@ public class ProductController {
 
 	@GetMapping("/productListTest")
 	public void listTestGET(Model model, Integer page, Integer numsPerPage) {
-		logger.info("listTest() È£Ãâ");
+		logger.info("listTest() È£ï¿½ï¿½");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 
 		PageCriteria criteria = new PageCriteria();
@@ -97,7 +96,7 @@ public class ProductController {
 
 	@GetMapping("/payment")
 	public void paymentGET(Model model, Integer productId) {
-		logger.info("paymentGET() È£Ãâ");
+		logger.info("paymentGET() È£ï¿½ï¿½");
 		ProductVO vo = dao.selectById(productId);
 		model.addAttribute("vo", vo);
 	}
@@ -110,22 +109,19 @@ public class ProductController {
 
 	
 	@PostMapping("/register")
-	public void testregister(MultipartFile[] productImgPath) {
-		logger.info("testregister()È£Ãâ");
-		
-		String uploadFolder = "C:\\upload";
-		
-		// ³¯Â¥ Æú´õ °æ·Î
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		String str = sdf.format(date);
-		String datePath = str.replace("-", File.separator);
-		
-		/* Æú´õ »ý¼º */
-		File uploadPath = new File(uploadFolder, datePath);
-		
-		if(uploadPath.exists() == false) {
-			uploadPath.mkdirs();
+
+
+	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
+		logger.info("registerPOST() È£ï¿½ï¿½");
+		logger.info(vo.toString());
+
+		int result = productService.create(vo);
+		logger.info(result + "result");
+		if (result == 1) {
+			reAttr.addFlashAttribute("insert_result", "success");
+			return "redirect:/product/list";
+		} else {
+			return "redirect:/product/register";
 		}
 		
 		for(MultipartFile multipartFile : productImgPath) {
@@ -240,13 +236,13 @@ public class ProductController {
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
-		logger.info("detail() È£Ãâ  = " + productId);
+		logger.info("detail() È£ï¿½ï¿½  = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 	
 		if (principal != null) {
 
-			logger.info("principalÈ£Ãâ" + principal.getName());
+			logger.info("principalÈ£ï¿½ï¿½" + principal.getName());
 			String memberId = principal.getName();
 			LikesVO likesVO = new LikesVO(0, memberId, productId);
 			int result = likesDAO.select(likesVO);
@@ -265,7 +261,7 @@ public class ProductController {
 	@GetMapping("/update")
 	public void updateGET(Model model, int productId, Integer page) {
 
-		logger.info("updateGET() È£Ãâ : productName = " + productId);
+		logger.info("updateGET() È£ï¿½ï¿½ : productName = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
@@ -276,7 +272,7 @@ public class ProductController {
 	public String updatePOST(ProductVO vo, Integer page) {
 
 
-		logger.info("updatePOST() È£Ãâ: vo = " + vo.toString());
+		logger.info("updatePOST() È£ï¿½ï¿½: vo = " + vo.toString());
 
 		int result = productService.update(vo);
 
@@ -289,7 +285,7 @@ public class ProductController {
 
 	@PostMapping("/delete")
 	public String delete(String productName) {
-		logger.info("delete()È£Ãâ : productName = " + productName);
+		logger.info("delete()È£ï¿½ï¿½ : productName = " + productName);
 
 		int result = productService.delete(productName);
 		if (result == 1) {
@@ -298,6 +294,13 @@ public class ProductController {
 			return "redirect:/board/list";
 		}
 	} // end delete()
+	
+	@GetMapping("/cart")
+	public String cartGET() {
+
+	    return "product/cart";
+	}
+
 
 } // end ProductController
 

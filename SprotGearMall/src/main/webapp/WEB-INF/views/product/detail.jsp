@@ -52,7 +52,7 @@
 					</div>
 					<!-- 장바구니 버튼 -->
 					<div class="col-3 px-1">
-						<button class="btn btn-outline-primary btn-lg w-100"> <i class="bi bi-cart3"></i></button>
+						<button class="btn btn-outline-primary btn-lg w-100" id="addToCart"> <i class="bi bi-cart3"></i></button>
 					</div>
 				</div>
 			</div>
@@ -65,5 +65,11 @@
 		<input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<input type="submit" value="상품 삭제">
 	</form>
+	
+	<script type="text/javascript">
+
+	</script>
+	
+	
 </body>
 </html>
