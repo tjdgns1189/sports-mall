@@ -15,6 +15,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where ${memberId} = #{memberId}
 </select>
 
+<select id="select_by_reviewId" resultType="ReviewVO">
+	select * from ${review_table}
+	where ${reviewId} = #{reviewId}
+</select>
+
+ 	<select id="count_Review" resultType="int">
+        SELECT COUNT(*) FROM ${review_table} 
+        WHERE ${orderId} = #{orderId}
+    </select>
+
 
 
 <update id="update">
@@ -24,10 +34,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where ${reviewId} = #{reviewId}
 </update>
 
-<select id="select_by_reviewId" resultType="ReviewVO">
-	select * from ${review_table}
-	where ${reviewId} = #{reviewId}
-</select>
 
 
 

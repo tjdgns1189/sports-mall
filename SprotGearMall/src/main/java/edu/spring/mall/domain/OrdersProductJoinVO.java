@@ -3,6 +3,14 @@ package edu.spring.mall.domain;
 public class OrdersProductJoinVO {
 	private OrdersVO order;
 	private ProductVO product;
+	private boolean hasReview;
+	
+	public boolean isHasReview() {
+		return hasReview;
+	}
+	public void setHasReview(boolean hasReview) {
+		this.hasReview = hasReview;
+	}
 	public OrdersProductJoinVO(OrdersVO order, ProductVO product) {
 	
 		this.order = order;

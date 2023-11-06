@@ -67,8 +67,10 @@ li {
     				<td>${vo.order.productQuantity * vo.order.productPrice }</td>
     				<td>${vo.order.orderCreatedDate }</td>
 				<td>
+				 <c:if test="${!vo.hasReview}">
 				<button type="button" class="btn btn-primary review-btn" 
 				onclick="openReviewWindow('../member/review?orderId=${vo.order.orderId}&productId=${vo.product.productId}');">리뷰하기</button>
+				</c:if>
 				</td>
     			</tr>
     		</c:forEach>
