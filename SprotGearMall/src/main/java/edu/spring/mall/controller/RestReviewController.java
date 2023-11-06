@@ -25,7 +25,7 @@ public class RestReviewController {
 	
 	@PostMapping("/member/review")
 	public ResponseEntity<String> reviewPost(@RequestBody ReviewVO vo,Principal principal) throws Exception{
-		logger.info("reviewPOST È£Ãâ");
+		logger.info("reviewPOST í˜¸ì¶œ");
 		String result = "";
 		String memberId = "";
 		int dbResult = 0;
@@ -33,12 +33,12 @@ public class RestReviewController {
 			memberId = principal.getName();
 			vo.setMemberId(memberId);
 		}else {
-			logger.info("·Î±×ÀÎ Á¤º¸ Ã£À» ¼ö ¾øÀ½");
+			logger.info("ë¡œê·¸ì¸ ì •ë³´ ì°¾ì„ ìˆ˜ ì—†ìŒ");
 			return new ResponseEntity<String>(result, HttpStatus.FORBIDDEN);
 		}
 		dbResult = reviewService.create(vo);
 		if(dbResult == 1) {
-			logger.info("¸®ºä µî·Ï ¼º°ø");
+			logger.info("ë¦¬ë·° ë“±ë¡ ì„±ê³µ");
 			result = "success";
 		}
 		return new ResponseEntity<String>(result, HttpStatus.OK);

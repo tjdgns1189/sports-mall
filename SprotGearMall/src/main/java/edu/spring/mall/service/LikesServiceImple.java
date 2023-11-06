@@ -26,7 +26,7 @@ public class LikesServiceImple implements LikesService {
 	
 	@Override
 	public List<ProductVO> read(String memberId) {
-		logger.info("read È£Ãâ");
+		logger.info("read í˜¸ì¶œ");
 
         List<Integer> likeNumber = likesDAO.selectUserLiked(memberId);
         List<ProductVO> likedProducts = new ArrayList<ProductVO>();

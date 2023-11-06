@@ -29,7 +29,7 @@ public class BoardController {
 	
 	@GetMapping("/qnaBoard")
 	public void qnaBoardGET(Model model, Integer page, Integer numsPerPage, String memberId) {  //, Principal principal
-		logger.info("qnaBoardGET() È£Ãâ");
+		logger.info("qnaBoardGET() í˜¸ì¶œ");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 		
 		PageCriteria criteria = new PageCriteria();
@@ -55,7 +55,7 @@ public class BoardController {
 	
 	@GetMapping("/qnaDetail")
 	public void detail(Model model, Integer qnaBoardId, Integer page, String memberId) {
-		logger.info("detail() È£Ãâ : qnaBoardId = " + qnaBoardId);
+		logger.info("detail() í˜¸ì¶œ : qnaBoardId = " + qnaBoardId);
 		QnaBoardVO vo = qnaBoardService.read(qnaBoardId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);		
@@ -71,10 +71,10 @@ public class BoardController {
 
 	@PostMapping("/register")
 	public String registerPOST(QnaBoardVO vo, RedirectAttributes reAttr, String memberId, Model model) {
-		logger.info("registerPOST() È£Ãâ");
+		logger.info("registerPOST() í˜¸ì¶œ");
 		logger.info(vo.toString());
 		int result = qnaBoardService.create(vo);
-		logger.info(result + "Çà Ãß°¡");
+		logger.info(result + "í–‰ ì¶”ê°€");
 		model.addAttribute("memberId", memberId);		
 		if(result == 1) {
 			reAttr.addFlashAttribute("insert_result", "success");
@@ -86,7 +86,7 @@ public class BoardController {
 	
 	@GetMapping("/qnaUpdate")
 	public void updateGET(Model model, Integer qnaBoardId, Integer page) {
-		logger.info("updateGET() È£Ãâ : qnaBoardId = " + qnaBoardId);
+		logger.info("updateGET() í˜¸ì¶œ : qnaBoardId = " + qnaBoardId);
 		QnaBoardVO vo = qnaBoardService.read(qnaBoardId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
@@ -94,7 +94,7 @@ public class BoardController {
 	
 	@PostMapping("/qnaUpdate")
 	public String updatePOST(QnaBoardVO vo, Integer page) {
-		logger.info("updatePOST() È£Ãâ : vo " + vo.toString());
+		logger.info("updatePOST() í˜¸ì¶œ : vo " + vo.toString());
 		int result = qnaBoardService.update(vo);
 		
 		if(result == 1) {
@@ -106,7 +106,7 @@ public class BoardController {
 	
 	@PostMapping("/delete")
 	public String delete(Integer qnaBoardId) {
-		logger.info("delete() È£Ãâ : qnaBoardId = " + qnaBoardId);
+		logger.info("delete() í˜¸ì¶œ : qnaBoardId = " + qnaBoardId);
 		int result = qnaBoardService.delete(qnaBoardId);
 		if(result == 1) {
 			return "redirect:/qnaBoard/qnaBoard";

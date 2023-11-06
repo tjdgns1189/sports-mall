@@ -25,13 +25,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		logger.info("ÀÎÁõ¼º°ø ÇÚµé·¯ È£Ãâ(CustomAuthenticationSuccessHandler)");
+		logger.info("ì¸ì¦ì„±ê³µ í•¸ë“¤ëŸ¬ í˜¸ì¶œ(CustomAuthenticationSuccessHandler)");
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 			if (savedRequest != null) {
-				logger.info("¿ø·¡ Á¢±ÙÇÏ·Á´Â uri Á¢±Ù");
+				logger.info("ì›ë˜ ì ‘ê·¼í•˜ë ¤ëŠ” uri ì ‘ê·¼");
 				String targetURL = savedRequest.getRedirectUrl();
 				redirectStrategy.sendRedirect(request, response, targetURL);
 				return;
@@ -41,7 +41,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			if (cookies != null) {
 				for (Cookie cookie : cookies) {
 					if ("targeturl".equals(cookie.getName())) {
-						logger.info("Çì´õ ·Î±×ÀÎ È£Ãâ");
+						logger.info("í—¤ë” ë¡œê·¸ì¸ í˜¸ì¶œ");
 						String decodedUrl = URLDecoder.decode(cookie.getValue(), "UTF-8");
 						logger.info("targetURL : " + decodedUrl);
 						cookie.setMaxAge(0);
