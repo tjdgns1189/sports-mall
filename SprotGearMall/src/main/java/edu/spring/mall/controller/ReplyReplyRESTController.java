@@ -30,7 +30,7 @@ public class ReplyReplyRESTController {
 	
 	@PostMapping
 	public ResponseEntity<Integer> createReply(@RequestBody ReplyReplyVO vo) {
-		logger.info("createReply() È£Ãâ : vo = " + vo.toString());
+		logger.info("createReply() í˜¸ì¶œ : vo = " + vo.toString());
 
 		int result = 0;
 		try {
@@ -44,7 +44,7 @@ public class ReplyReplyRESTController {
 	@GetMapping("/all/{qnaReplyId}")
 	public ResponseEntity<List<ReplyReplyVO>> readReplies(
 			@PathVariable("qnaReplyId") int qnaReplyId) {
-		logger.info("readReplies() È£Ãâ : qnaReplyId = " + qnaReplyId);
+		logger.info("readReplies() í˜¸ì¶œ : qnaReplyId = " + qnaReplyId);
 		
 		List<ReplyReplyVO> list = replyReplyService.read(qnaReplyId);
 		return new ResponseEntity<List<ReplyReplyVO>>(list, HttpStatus.OK);

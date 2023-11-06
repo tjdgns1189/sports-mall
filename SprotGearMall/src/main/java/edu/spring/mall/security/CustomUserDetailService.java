@@ -18,11 +18,11 @@ public class CustomUserDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) 
 			throws UsernameNotFoundException {
-			logger.info("loadUserByUsername È£Ãâ username  : " + username);
+			logger.info("loadUserByUsername í˜¸ì¶œ username  : " + username);
 			CustomUserDetails user = dao.login(username);
 			if(user == null) {
-				logger.info("user == nullÀÏ¶§ È£ÃâµÊ");
-		    throw new UsernameNotFoundException("¾ÆÀÌµğ¸¦ Ã£À» ¼ö ¾øÀ½ " + username);
+				logger.info("user == null");
+		    throw new UsernameNotFoundException("ì•„ì´ë””ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŒ " + username);
 		    }
 			
 		    return user;

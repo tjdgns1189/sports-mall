@@ -21,26 +21,26 @@ public class ReviewDAOImple implements ReviewDAO{
 	
 	@Override
 	public int insert(ReviewVO vo) {
-		logger.info("insert È£Ãâ");
+		logger.info("insert í˜¸ì¶œ");
 		
 		return sqlSession.insert(NAMESPACE + ".insert" , vo);
 	}
 
 	@Override
 	public List<ReviewVO> select(String memberId) {
-		logger.info("select È£Ãâ");
+		logger.info("selectí˜¸ì¶œ");
 		return sqlSession.selectList(NAMESPACE + ".select" , memberId);
 	}
 
 	@Override
 	public int update(ReviewVO vo) {
-		logger.info("update È£Ãâ");
+		logger.info("update í˜¸ì¶œ");
 		return sqlSession.update(NAMESPACE + ".update" , vo);
 	}
 
 	@Override
 	public int delete(int reviewId) {
-		logger.info("delete È£Ãâ");
+		logger.info("delete í˜¸ì¶œ");
 		return sqlSession.delete(NAMESPACE + ".delete" , reviewId);
 	}
 

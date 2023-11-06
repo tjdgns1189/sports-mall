@@ -49,7 +49,7 @@ public class ProductController {
 
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage) {
-		logger.info("list() È£ï¿½ï¿½");
+		logger.info("list() í˜¸ì¶œ");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 		PageCriteria criteria = new PageCriteria();
 		if (page != null) {
@@ -71,7 +71,7 @@ public class ProductController {
 
 	@GetMapping("/productListTest")
 	public void listTestGET(Model model, Integer page, Integer numsPerPage) {
-		logger.info("listTest() È£ï¿½ï¿½");
+		logger.info("listTest() í˜¸ì¶œ");
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 
 		PageCriteria criteria = new PageCriteria();
@@ -96,7 +96,7 @@ public class ProductController {
 
 	@GetMapping("/payment")
 	public void paymentGET(Model model, Integer productId) {
-		logger.info("paymentGET() È£ï¿½ï¿½");
+		logger.info("paymentGET() í˜¸ì¶œ");
 		ProductVO vo = dao.selectById(productId);
 		model.addAttribute("vo", vo);
 	}
@@ -112,7 +112,7 @@ public class ProductController {
 
 
 	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
-		logger.info("registerPOST() È£ï¿½ï¿½");
+		logger.info("registerPOST() í˜¸ì¶œ");
 		logger.info(vo.toString());
 
 		int result = productService.create(vo);
@@ -126,18 +126,14 @@ public class ProductController {
 		
 		for(MultipartFile multipartFile : productImgPath) {
 			
-			/* ÆÄÀÏ ÀÌ¸§ */
 			String uploadFileName = multipartFile.getOriginalFilename();			
 			
-			/* uuid Àû¿ë ÆÄÀÏ ÀÌ¸§ */
 			String uuid = UUID.randomUUID().toString();
 			
 			uploadFileName = uuid + "_" + uploadFileName;
 			
-			/* ÆÄÀÏ À§Ä¡, ÆÄÀÏ ÀÌ¸§À» ÇÕÄ£ File °´Ã¼ */
 			File saveFile = new File(uploadPath, uploadFileName);
 			
-			/* ÆÄÀÏ ÀúÀå */
 			try {
 				multipartFile.transferTo(saveFile);
 				
@@ -146,15 +142,11 @@ public class ProductController {
 				// bo_image = buffered original image
 				BufferedImage bo_image = ImageIO.read(saveFile);
 				// bt_image = buffered thumbnail image
-				//  BufferedImage »ı¼ºÀÚÀÇ ¸Å°³º¯¼ö´Â '³ĞÀÌ', '³ôÀÌ', '»ı¼ºµÉ ÀÌ¹ÌÁöÀÇ Å¸ÀÔ'
 				BufferedImage bt_image = new BufferedImage(300, 500, BufferedImage.TYPE_3BYTE_BGR);
 								
 				Graphics2D graphic = bt_image.createGraphics();
 				
-				// draowImage ¸Ş¼­µåÀÇ Ã¹ ¹øÂ° ÀÎÀÚ´Â ±×·Á³õ°íÀÚ ÇÏ´Â ÀÌ¹ÌÁö
-				// µÎ ¹øÂ°, ¼¼ ¹øÂ° ÀÎÀÚ´Â ±×¸²À» ¾î´À ÁÂÇ¥ºÎÅÍ ±×¸± °ÍÀÎÁö¿¡ ´ëÇÑ 'x'°ª°ú 'y'°ª (ÁÂ »ó´Ü ¸Ç ³¡Á¡ÀÌ "0, 0")
-				// ³× ¹øÂ°, ´Ù¼¸ ¹øÂ° ÀÎÀÚ °ªÀº Ã¹ ¹øÂ° ÀÎÀÚ·Î ÀÛ¼ºÇÑ ÀÌ¹ÌÁöÀÇ '³ĞÀÌ'¿Í '³ôÀÌ'ÀÌ°í ÁöÁ¤ÇÑ '³ĞÀÌ'¿Í '³ôÀÌ'·Î ÀÌ¹ÌÁö Å©±â°¡ È®´ëorÃà¼ÒµÇ°í Å©±â°¡ º¯°æµÈ ÀÌ¹ÌÁö°¡ ±×·ÁÁü
-				// ¿©¼¸ ¹øÂ° ÀÎÀÚ´Â ImageObserver °´Ã¼ÀÔ´Ï´Ù. ImageObserver´Â ÀÌ¹ÌÁöÀÇ Á¤º¸¸¦ Àü´Ş¹Ş¾Æ¼­ ÀÌ¹ÌÁö¸¦ ¾÷µ¥ÀÌÆ®½ÃÅ°´Â ¿ªÇÒÀ» ÇÕ´Ï´Ù. ÀÏ¹İÀûÀÎ °æ¿ì nullÀ» Àü´ŞÇÏ¸é µË´Ï´Ù.
+				
 				graphic.drawImage(bo_image, 0, 0,300,500, null);
 					
 				ImageIO.write(bt_image, "jpg", thumbnailFile);
@@ -173,11 +165,8 @@ public class ProductController {
 
 //	@PostMapping("/register")
 //	public String registerPOST(@ModelAttribute ProductVO vo, RedirectAttributes reAttr, MultipartFile uploadImgFile) {
-//		logger.info("registerPOST() È£Ãâ");
+//		logger.info("registerPOST() í˜¸ì¶œ");
 //		logger.info(vo.toString());
-//		logger.info("ÆÄÀÏ¸í " + uploadImgFile.getOriginalFilename());
-//		logger.info("ÆÄÀÏ Å¸ÀÔ : " + uploadImgFile.getContentType());
-//		logger.info("ÆÄÀÏ »çÀÌÁî " + uploadImgFile.getSize());
 //		
 //		if (!uploadImgFile.isEmpty()) {
 //			try {
@@ -218,7 +207,7 @@ public class ProductController {
 
 //	@PostMapping("/register")
 //	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
-//		logger.info("registerPOST() È£Ãâ");
+//		logger.info("registerPOST() È£ï¿½ï¿½");
 //		logger.info(vo.toString());
 //
 //		int result = productService.create(vo);
@@ -236,13 +225,13 @@ public class ProductController {
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
-		logger.info("detail() È£ï¿½ï¿½  = " + productId);
+		logger.info("detail() í˜¸ì¶œ  = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 	
 		if (principal != null) {
 
-			logger.info("principalÈ£ï¿½ï¿½" + principal.getName());
+			logger.info("principalí˜¸ì¶œ" + principal.getName());
 			String memberId = principal.getName();
 			LikesVO likesVO = new LikesVO(0, memberId, productId);
 			int result = likesDAO.select(likesVO);
@@ -261,7 +250,7 @@ public class ProductController {
 	@GetMapping("/update")
 	public void updateGET(Model model, int productId, Integer page) {
 
-		logger.info("updateGET() È£ï¿½ï¿½ : productName = " + productId);
+		logger.info("updateGET() í˜¸ì¶œ : productName = " + productId);
 		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
@@ -272,7 +261,7 @@ public class ProductController {
 	public String updatePOST(ProductVO vo, Integer page) {
 
 
-		logger.info("updatePOST() È£ï¿½ï¿½: vo = " + vo.toString());
+		logger.info("updatePOST() í˜¸ì¶œ: vo = " + vo.toString());
 
 		int result = productService.update(vo);
 
@@ -285,7 +274,7 @@ public class ProductController {
 
 	@PostMapping("/delete")
 	public String delete(String productName) {
-		logger.info("delete()È£ï¿½ï¿½ : productName = " + productName);
+		logger.info("delete()í˜¸ì¶œ : productName = " + productName);
 
 		int result = productService.delete(productName);
 		if (result == 1) {

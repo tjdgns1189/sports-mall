@@ -45,10 +45,6 @@ public class FileUploadUtil {
 		return result;
 	}
 	
-	// 파일이 저장되는 폴더 이름을 날짜 형식(yyyy/MM/dd)으로 생성하기 위한 유틸
-	// 상위 폴더가 생성되어 있지 않으면 하위 폴더를 생성할 수 없다
-	// -> 연도 폴더 생성 -> 달 폴더 생성 -> 날짜 폴더 생성
-	// 마지막 리턴은 yyyy/MM/dd 형식으로
 	private static String getUploadPath(String uploadPath) {
 		Calendar calendar = Calendar.getInstance();
 		

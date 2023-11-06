@@ -26,7 +26,7 @@ public class AdminController {
 	
 	@GetMapping("/adminPage")
 	public void adminPageGET() {
-		logger.info("adminPageGET È£Ãâ");
+		logger.info("adminPageGET í˜¸ì¶œ");
 	}
 	
 	@GetMapping("/memberList")
@@ -36,7 +36,7 @@ public class AdminController {
 	
 	@GetMapping("/productList")
 	public void productListGET(Model model, Integer page, Integer numsPerPage) {
-		logger.info("productList È£Ãâ");
+		logger.info("productList í˜¸ì¶œ");
 
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 
@@ -57,11 +57,11 @@ public class AdminController {
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
 
-		logger.info("memberList È£Ãâ");
+		logger.info("memberList í˜¸ì¶œ");
 	}
 	
 	@GetMapping("/orderManage")
 	public void orderManagementGET() {
-		logger.info("orderManage È£Ãâ");
+		logger.info("orderManage í˜¸ì¶œ");
 	}
 }

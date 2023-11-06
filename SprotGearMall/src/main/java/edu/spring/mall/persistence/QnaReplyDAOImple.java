@@ -25,19 +25,19 @@ public class QnaReplyDAOImple implements QnaReplyDAO {
 	
 	@Override
 	public int insert(QnaReplyVO vo) {
-		logger.info("insert() È£Ãâ : vo = " + vo.toString());
+		logger.info("insert() í˜¸ì¶œ : vo = " + vo.toString());
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 
 	@Override
 	public List<QnaReplyVO> select(int qnaBoardId) {
-		logger.info("select() È£Ãâ : qnaBoardId = " + qnaBoardId);
+		logger.info("select() í˜¸ì¶œ : qnaBoardId = " + qnaBoardId);
 		return sqlSession.selectList(NAMESPACE + ".select_all_by_qna_board_id", qnaBoardId);
 	}
 
 	@Override
 	public int update(int qnaReplyId, String qnaReplyContent) {
-		logger.info("update() È£Ãâ");
+		logger.info("update() í˜¸ì¶œ");
 		logger.info("qnaReplyId = " + qnaReplyId + ", qnaReplyContent = " + qnaReplyContent);
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("qnaReplyId", qnaReplyId);
@@ -47,7 +47,7 @@ public class QnaReplyDAOImple implements QnaReplyDAO {
 
 	@Override
 	public int delete(int qnaReplyId) {
-		logger.info("delete() È£Ãâ : qnaReplyId = " + qnaReplyId);
+		logger.info("delete() í˜¸ì¶œ : qnaReplyId = " + qnaReplyId);
 		return sqlSession.delete(NAMESPACE + ".delete", qnaReplyId);
 	}
 
