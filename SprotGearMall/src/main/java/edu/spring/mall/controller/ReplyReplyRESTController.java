@@ -68,7 +68,6 @@ public class ReplyReplyRESTController {
 		try {
 			result = replyReplyService.delete(replyReplyId);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);

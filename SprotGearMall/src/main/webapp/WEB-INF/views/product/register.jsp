@@ -84,7 +84,10 @@
 		    	contentType : false,
 		    	data : formData,
 		    	type : 'POST',
-		    	dataType : 'json'
+		    	dataType : 'json',
+		    	success : function(result) {
+		    		console.log(result); // success 속성 값으로 콜백 함수를 부여한 뒤 전달받은 객체 데이터를 console에 출력
+		    	}
 			});
 			
 	    });

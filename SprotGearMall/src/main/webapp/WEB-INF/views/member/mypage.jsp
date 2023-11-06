@@ -33,10 +33,8 @@
             <div class="list-group">
                 <a href="orders" class="list-group-item list-group-item-action">구매 목록</a>
                 <a href="reviewList" class="list-group-item list-group-item-action">리뷰 관리</a>
-               
 	</div>
-        </div>
-        
+        </div> 
         <!-- 메인 콘텐츠 -->
         <div class="col-md-10">
             <h2>마이 페이지</h2>
@@ -78,7 +76,6 @@
        </div>
     </div>
 </div>
-
 <!-- 모달 -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -128,9 +125,6 @@
 			        'Content-Type': 'application/json'
 			    };
 		headers['X-CSRF-TOKEN'] = csrfToken;
-		console.log(memberId);
-
-		
 		var regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{5,20}$/;
 	    if(!regex.test(password) ||
 	    	!regex.test(newPassword)) {
@@ -165,9 +159,7 @@
 					return;
 				}
 			}//end success
-			
 			})//end ajax
-		
 	}
 </script>
 
