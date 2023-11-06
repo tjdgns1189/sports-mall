@@ -1,16 +1,16 @@
 package edu.spring.mall.domain;
 
 public class AttachImageVO {
-	/* °æ·Î */
+	/* ï¿½ï¿½ï¿½ */
 	private String uploadPath;
 	
 	/* uuid */
 	private String uuid;
 	
-	/* ÆÄÀÏ ÀÌ¸§ */
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ */
 	private String fileName;
 	
-	/* »óÇ° id */
+	/* ï¿½ï¿½Ç° id */
 	private int bookId;
 
 	public AttachImageVO() {

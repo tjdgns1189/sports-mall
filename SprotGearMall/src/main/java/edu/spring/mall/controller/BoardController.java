@@ -74,6 +74,7 @@ public class BoardController {
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
 		int result = qnaBoardService.create(vo);
+
 		logger.info(result + "행 추가");
 
 		model.addAttribute("memberId", memberId);		
