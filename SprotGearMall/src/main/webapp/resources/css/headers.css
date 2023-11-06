@@ -32,6 +32,12 @@
 	}
 }
 
+.logo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
 .b-example-divider {
 	height: 3rem;
 	background-color: rgba(0, 0, 0, .1);
@@ -115,7 +121,6 @@
 	align-items: center;
 	padding: 10px 20px;
 	border-bottom: 1px solid #e5e5e5;
-	background-color: #fff;
     overflow: visible; /* 드롭다운 메뉴가 헤더 밖으로 확장될 수 있도록 설정 */
 }
 

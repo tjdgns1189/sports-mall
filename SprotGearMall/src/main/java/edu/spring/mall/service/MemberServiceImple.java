@@ -31,16 +31,16 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public int create(MemberVO vo) throws Exception {
-		logger.info("create È£Ãâ vo = " + vo.toString());
+		logger.info("create í˜¸ì¶œ vo = " + vo.toString());
 		vo.setPassword(passwordEncoder.encode(vo.getPassword()));
-		logger.info("ºñ¹Ð¹øÈ£ ¾ÏÈ£È­ ¼º°ø");
+		logger.info("ë¹„ë°€ë²ˆí˜¸ ì•”í˜¸í™” ì„±ê³µ");
 		int result = dao.insert(vo);
 		return result;
 	}
 
 	@Override
 	public MemberVO read(String memberId, String password) throws Exception {
-		logger.info("read È£Ãâ");
+		logger.info("read í˜¸ì¶œ");
 		logger.info("memberId : " + memberId);
 
 		return null;
@@ -66,7 +66,7 @@ public class MemberServiceImple implements MemberService {
 				SecurityContextHolder.getContext().setAuthentication(newAuth);
 			}
 		} else {
-			logger.info("userÁ¤º¸ ¼öÁ¤");
+			logger.info("userì •ë³´ ìˆ˜ì •");
 			result = dao.updateUserDetail(userDetail);
 			if (result == 1) {
 				UserDetails user = service.loadUserByUsername(memberId);
@@ -82,7 +82,7 @@ public class MemberServiceImple implements MemberService {
 
 	@Override
 	public int delete(String MemberId) throws Exception {
-		logger.info("deleteÈ£Ãâ");
+		logger.info("deleteí˜¸ì¶œ");
 		int result = dao.delete(MemberId);
 		
 		return result;

@@ -21,13 +21,13 @@ public class QnaBoardServiceImple implements QnaBoardService {
 	
 	@Override
 	public int create(QnaBoardVO vo) {
-		logger.info("create() È£Ãâ : vo = " + vo.toString());
+		logger.info("create() í˜¸ì¶œ : vo = " + vo.toString());
 		return dao.insert(vo);
 	}
 
 	@Override
 	public List<QnaBoardVO> read(PageCriteria criteria) {
-		logger.info("read() È£Ãâ");
+		logger.info("read() í˜¸ì¶œ");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return dao.select(criteria);
@@ -35,25 +35,25 @@ public class QnaBoardServiceImple implements QnaBoardService {
 
 	@Override
 	public QnaBoardVO read(int qnaBoardId) {
-		logger.info("read() È£Ãâ : qnaBoardId = " + qnaBoardId);
+		logger.info("read() í˜¸ì¶œ : qnaBoardId = " + qnaBoardId);
 		return dao.select(qnaBoardId);
 	}
 
 	@Override
 	public int getTotalCounts() {
-		logger.info("getTotalCounts() È£Ãâ");
+		logger.info("getTotalCounts() í˜¸ì¶œ");
 		return dao.getTotalCounts();
 	}
 
 	@Override
 	public int update(QnaBoardVO vo) {
-		logger.info("update() È£Ãâ : vo = " + vo.toString());
+		logger.info("update() í˜¸ì¶œ : vo = " + vo.toString());
 		return dao.update(vo);
 	}
 
 	@Override
 	public int delete(int qnaBoardId) {
-		logger.info("delete() È£Ãâ : qnaBoardId = " + qnaBoardId);
+		logger.info("delete() í˜¸ì¶œ : qnaBoardId = " + qnaBoardId);
 		return dao.delete(qnaBoardId);
 	}
 

@@ -5,23 +5,12 @@ import java.util.Date;
 public class ReviewVO {
 	private int reviewId;
 	private int productId;
-	private String review;
+	private String reviewContent;
 	private int reviewRating;
 	private Date reviewCreatedDate;
 	private String memberId;
-	
-	public ReviewVO() {}
 
-	public ReviewVO(int reviewId, int productId, String review, int reviewRating, Date reviewCreatedDate,
-			String memberId) {
-		super();
-		this.reviewId = reviewId;
-		this.productId = productId;
-		this.review = review;
-		this.reviewRating = reviewRating;
-		this.reviewCreatedDate = reviewCreatedDate;
-		this.memberId = memberId;
-	}
+	public ReviewVO() {}
 
 	public int getReviewId() {
 		return reviewId;
@@ -39,13 +28,6 @@ public class ReviewVO {
 		this.productId = productId;
 	}
 
-	public String getReview() {
-		return review;
-	}
-
-	public void setReview(String review) {
-		this.review = review;
-	}
 
 	public int getReviewRating() {
 		return reviewRating;
@@ -71,13 +53,38 @@ public class ReviewVO {
 		this.memberId = memberId;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "ReviewVO [reviewId=" + reviewId + ", productId=" + productId + ", review=" + review + ", reviewRating="
-				+ reviewRating + ", reviewCreatedDate=" + reviewCreatedDate + ", memberId=" + memberId + "]";
+		return "ReviewVO [reviewId=" + reviewId + ", productId=" + productId + ", reviewContent=" + reviewContent
+				+ ", reviewRating=" + reviewRating + ", reviewCreatedDate=" + reviewCreatedDate + ", memberId="
+				+ memberId + "]";
 	}
-	
-	
-	
+
+
+
+	public ReviewVO(int reviewId, int productId, String reviewContent, int reviewRating, Date reviewCreatedDate,
+			String memberId) {
+		this.reviewId = reviewId;
+		this.productId = productId;
+		this.reviewContent = reviewContent;
+		this.reviewRating = reviewRating;
+		this.reviewCreatedDate = reviewCreatedDate;
+		this.memberId = memberId;
+	}
+
+
+
+	public String getReviewContent() {
+		return reviewContent;
+	}
+
+
+
+	public void setReviewContent(String reviewContent) {
+		this.reviewContent = reviewContent;
+	}
+
 	
 }

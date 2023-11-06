@@ -25,12 +25,16 @@
        <c:if test="${not empty error}"> 
        <div class="alert alert-danger" role="alert">로그인 실패하였습니다</div>
        </c:if>
+		<c:if test="${not empty state}">
+        <div class="alert alert-success" role="alert">회원가입에 성공했습니다</div>
+       </c:if>
+       
         <p><input type="hidden" id="redirect" name="redirect"  value="${uri }"></p>
         <p><input type="text" id="username" name="memberId" class="form-control" placeholder="아이디" required="required"></p>
         <p><input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" required="required"></p>
         &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="remember-me" class="form-check-input" name="remember-me"/>
         <label for="rememberMe">로그인 상태 유지</label>
-      	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><br>
+      	<input type="hidden"name="${_csrf.parameterName}" value="${_csrf.token}"><br>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
       </form>
@@ -41,5 +45,6 @@
 <footer>
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 </footer>
+
 </body>
 </html>

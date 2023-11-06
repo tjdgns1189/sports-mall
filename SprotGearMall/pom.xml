@@ -13,6 +13,8 @@
 		<org.springframework-version>5.3.28</org.springframework-version>
 		<org.aspectj-version>1.8.10</org.aspectj-version>
 		<org.slf4j-version>1.7.25</org.slf4j-version>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -141,6 +143,15 @@
 			<version>2.5.2.RELEASE</version>
 		</dependency>
 
+		<!-- thumbnail -->
+		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+		<dependency>
+		    <groupId>net.coobird</groupId>
+		    <artifactId>thumbnailator</artifactId>
+		    <version>0.4.13</version>
+		</dependency>
+
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -148,6 +159,20 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.12.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.dataformat</groupId>
+		    <artifactId>jackson-dataformat-xml</artifactId>
+		    <version>2.12.1</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>
@@ -201,7 +226,7 @@
 			<artifactId>imgscalr-lib</artifactId>
 			<version>4.2</version>
 		</dependency>
-
+		
 	</dependencies>
 
 

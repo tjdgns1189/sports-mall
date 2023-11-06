@@ -24,14 +24,10 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 			</div>
 		</div>
 	</header>
-	
-	
-	
 	<!-- Section-->
 	<section class="py-5"><h3>&nbsp;신상품</h3><hr>
 			<div class="container px-4 px-lg-5 mt-5">
-				<div
-					class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+				<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 					<c:forEach var="vo" items="${list }">
 					<div class="col mb-5">
 						<div class="card h-100" onclick="location.href='detail?productId=${vo.productId}'">
@@ -49,10 +45,8 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 				</c:forEach>
 				</div>
 			</div>
-
 		</section>
 	<input type="hidden" id="insertAlert" value="${insert_result }">
-
 	<script type="text/javascript">
 		var result = $('#insertAlert').val();
 		if (result == 'success') {

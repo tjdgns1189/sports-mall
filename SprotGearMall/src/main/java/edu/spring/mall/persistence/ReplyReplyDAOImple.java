@@ -1,3 +1,4 @@
+
 package edu.spring.mall.persistence;
 
 import java.util.HashMap;
@@ -25,19 +26,19 @@ public class ReplyReplyDAOImple implements ReplyReplyDAO {
 
 	@Override
 	public int insert(ReplyReplyVO vo) {
-		logger.info("insert() È£Ãâ : vo = " + vo.toString());
+		logger.info("insert() í˜¸ì¶œ : vo = " + vo.toString());
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 
 	@Override
 	public List<ReplyReplyVO> select(int qnaReplyId) {
-		logger.info("select() È£Ãâ : qnaReplyId = " + qnaReplyId);
+		logger.info("select() í˜¸ì¶œ : qnaReplyId = " + qnaReplyId);
 		return sqlSession.selectList(NAMESPACE + ".select_all_by_qna_reply_id", qnaReplyId);
 	}
 
 	@Override
 	public int update(int replyReplyId, String replyReplyContent) {
-		logger.info("update() È£Ãâ");
+		logger.info("update() í˜¸ì¶œ");
 		logger.info("replyReplyId = " + replyReplyId + ", replyReplyContent = " + replyReplyContent);
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("replyReplyId", replyReplyId);
@@ -47,7 +48,7 @@ public class ReplyReplyDAOImple implements ReplyReplyDAO {
 
 	@Override
 	public int delete(int replyReplyId) {
-		logger.info("delete() È£Ãâ : replyReplyId = " + replyReplyId);
+		logger.info("delete() í˜¸ì¶œ : replyReplyId = " + replyReplyId);
 		return sqlSession.delete(NAMESPACE + ".delete", replyReplyId);
 	}
 

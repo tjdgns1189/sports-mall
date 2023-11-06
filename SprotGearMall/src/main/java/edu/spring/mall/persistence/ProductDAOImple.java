@@ -25,32 +25,36 @@ public class ProductDAOImple implements ProductDAO{
 
 	@Override
 	public int insert(ProductVO vo) {
-		logger.info("insert() »£√‚");
+		logger.info("insert() Ìò∏Ï∂ú");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
-	//∏µŒ »£√‚
+
+
+	//Î¶¨Ïä§Ìä∏ Î∂àÎü¨Ïò§Í∏∞
 	@Override
 	public List<ProductVO> select() {
-		logger.info("select() »£√‚");
+		logger.info("select() Ìò∏Ï∂ú");
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	}
 
-	//∞Àªˆ
+
+	//Í≤ÄÏÉâÏö©
 	@Override
 	public ProductVO selectByName(String productName) {
-		logger.info("select(productName) »£√‚ : productName = " + productName);
+		logger.info("select(productName) Ìò∏Ï∂ú : productName = " + productName);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_name",productName);
 	}
-	//µ≈◊¿œ¡¢±ŸøÎ
+
+
+	//ÎîîÌÖåÏùºÏö©
 	@Override
 	public ProductVO selectById(int productId) {
-		logger.info("select(productId) »£√‚");
+		logger.info("select(productId) Ìò∏Ï∂ú");
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
 	}
-	
 	@Override
 	public List<ProductVO> select(PageCriteria criteria) {
-		logger.info("select(criteria) »£√‚");
+		logger.info("select(criteria) Ìò∏Ï∂ú");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return sqlSession.selectList(NAMESPACE + ".paging" , criteria);
@@ -58,13 +62,13 @@ public class ProductDAOImple implements ProductDAO{
 
 	@Override
 	public int update(ProductVO vo) {
-		logger.info("update() »£√‚ : vo = " + vo.toString() );
+		logger.info("update() Ìò∏Ï∂ú : vo = " + vo.toString() );
 		return sqlSession.update(NAMESPACE + ".update",vo);
 	}
 
 	@Override
 	public int delete(String productName) {
-		logger.info("delete() »£√‚ : productId = " + productName);
+		logger.info("delete() Ìò∏Ï∂ú : productId = " + productName);
 		return sqlSession.delete(NAMESPACE + ".delete",productName);
 	}
 
@@ -78,9 +82,10 @@ public class ProductDAOImple implements ProductDAO{
 
 	@Override
 	public List<ProductVO> selectPaging(String productName) {
-		logger.info("selectPaging() »£√‚ : product = " + productName);
+		logger.info("selectPaging() Ìò∏Ï∂ú : product = " + productName);
 		return sqlSession.selectList(NAMESPACE + ".select_by_productName","%" + productName + "%");
 	}
+
 
 
 

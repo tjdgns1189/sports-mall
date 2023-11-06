@@ -23,14 +23,14 @@ import edu.spring.mall.service.ReplyReplyService;
 @RequestMapping(value="/qnaBoard/replyReplies")
 public class ReplyReplyRESTController {
 	private static final Logger logger = 
-			LoggerFactory.getLogger(QnaReplyRESTController.class);
+			LoggerFactory.getLogger(ReplyReplyRESTController.class);
 	
 	@Autowired
 	private ReplyReplyService replyReplyService;
 	
 	@PostMapping
 	public ResponseEntity<Integer> createReply(@RequestBody ReplyReplyVO vo) {
-		logger.info("createReply() È£Ãâ : vo = " + vo.toString());
+		logger.info("createReply() í˜¸ì¶œ : vo = " + vo.toString());
 
 		int result = 0;
 		try {
@@ -44,7 +44,7 @@ public class ReplyReplyRESTController {
 	@GetMapping("/all/{qnaReplyId}")
 	public ResponseEntity<List<ReplyReplyVO>> readReplies(
 			@PathVariable("qnaReplyId") int qnaReplyId) {
-		logger.info("readReplies() È£Ãâ : qnaReplyId = " + qnaReplyId);
+		logger.info("readReplies() í˜¸ì¶œ : qnaReplyId = " + qnaReplyId);
 		
 		List<ReplyReplyVO> list = replyReplyService.read(qnaReplyId);
 		return new ResponseEntity<List<ReplyReplyVO>>(list, HttpStatus.OK);
@@ -68,7 +68,6 @@ public class ReplyReplyRESTController {
 		try {
 			result = replyReplyService.delete(replyReplyId);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);

@@ -16,4 +16,5 @@ public interface ProductDAO {
 	int getTotalCounts();
 	List<ProductVO> selectPaging(String productName);
 	
+	
 }

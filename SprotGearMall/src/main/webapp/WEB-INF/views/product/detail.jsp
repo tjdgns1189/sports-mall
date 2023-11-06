@@ -33,6 +33,8 @@
 			<br>
 				<h1>${vo.productName}</h1>
 				<p class="h6 my-2">제조사 : ${vo.productMaker}</p>
+				
+				
 				<hr>
 				<p class="price h4 my-2">판매가 : <fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원</p><hr>
 				
@@ -50,13 +52,12 @@
 					</div>
 					<!-- 장바구니 버튼 -->
 					<div class="col-3 px-1">
-						<button class="btn btn-outline-primary btn-lg w-100"> <i class="bi bi-cart3"></i></button>
+						<button class="btn btn-outline-primary btn-lg w-100" id="addToCart"> <i class="bi bi-cart3"></i></button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-   <sec:authorize access="hasRole('ROLE_ADMIN')">
 	<a href="update?productId=${vo.productId }&page=${page }"><input type="button" value="상품 수정"></a>
 	<form action="delete" method="POST">
 		<input type="hidden" id="productId" name="productId" value="${vo.productId }">
@@ -64,6 +65,11 @@
 		<input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<input type="submit" value="상품 삭제">
 	</form>
-</sec:authorize>
+	
+	<script type="text/javascript">
+
+	</script>
+	
+	
 </body>
 </html>

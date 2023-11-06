@@ -16,3 +16,4 @@ public interface QnaBoardDAO {
 	List<QnaBoardVO> select(String memberId);
 	List<QnaBoardVO> selectByTitleOrContent(String keyword);
 }
+

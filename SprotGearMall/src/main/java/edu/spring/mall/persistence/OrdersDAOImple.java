@@ -26,19 +26,19 @@ public class OrdersDAOImple implements OrdersDAO {
 
 	@Override
 	public int insert(OrdersVO vo) {
-		logger.info("insert() È£Ãâ");
+		logger.info("insert() í˜¸ì¶œ");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 
 	@Override
 	public List<OrdersVO> select(String memberId) {
-		logger.info("select() È£Ãâ");
+		logger.info("select() í˜¸ì¶œ");
 		return sqlSession.selectList(NAMESPACE + ".select_by_member_id", memberId);
 	}
 
 	@Override
 	public int delete(String memberId, int productId) {
-		logger.info("delete() È£Ãâ");
+		logger.info("delete() í˜¸ì¶œ");
 		Map<String, Object> args = new HashMap<String, Object>();
 		args.put("memberId", memberId);
 		args.put("productId", productId);
@@ -47,8 +47,15 @@ public class OrdersDAOImple implements OrdersDAO {
 
 	@Override
 	public int delete(int orderId) {
-		logger.info("delete() È£Ãâ");
+		logger.info("delete() í˜¸ì¶œ");
 		return sqlSession.delete(NAMESPACE + ".delete_by_order_id", orderId);
 	}
+
+	@Override
+	public OrdersVO select(int orderId) {
+		logger.info("select(orderId) í˜¸ì¶œ");
+		return sqlSession.selectOne(NAMESPACE + ".select_by_order_Id", + orderId);
+	}
+
 
 }

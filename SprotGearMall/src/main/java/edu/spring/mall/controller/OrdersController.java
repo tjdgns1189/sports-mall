@@ -1,6 +1,8 @@
 
 package edu.spring.mall.controller;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,8 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import edu.spring.mall.domain.OrdersProductJoinVO;
 import edu.spring.mall.domain.OrdersVO;
+import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.persistence.OrdersDAO;
+import edu.spring.mall.persistence.ProductDAO;
+import edu.spring.mall.service.ProductService;
 
 @Controller
 @RequestMapping(value = "/orders")
@@ -27,39 +33,42 @@ public class OrdersController {
 	@Autowired
 	private OrdersDAO dao;
 	
+	@Autowired
+	private ProductService service;
+	
 	@PostMapping("/orderlist")
-	public void ordersPOST(Model model, OrdersVO vo, String memberId) {
-		logger.info("paymentPOST() È£Ãâ : vo = " + vo.toString());
+
+	public String ordersPOST(Model model, OrdersVO vo, Principal principal) {
+		logger.info("paymentPOST() í˜¸ì¶œ : vo = " + vo.toString());
+
 		int result = dao.insert(vo);
-		
+		String memberId = principal.getName();
 		List<OrdersVO> list = dao.select(memberId);
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("list", list);
+
+		return "redirect:/orders/orderlist";
 	}
 	
 	@GetMapping("/orderlist")
-	public void orderlistGET(Model model, String memberId) {
-		logger.info("paymentGET() È£Ãâ : memberId = " + memberId);
-		List<OrdersVO> list = dao.select(memberId);
+	public void orderlistGET(Model model, Principal principal) {
+		String memberId = principal.getName();
+		logger.info("paymentGET() í˜¸ì¶œ : memberId = " + memberId);
+		List<OrdersVO> orders = dao.select(memberId);
+		List<OrdersProductJoinVO> list = new ArrayList<OrdersProductJoinVO>();
+		for(OrdersVO order : orders) {
+			ProductVO product = service.read(order.getProductId());
+			OrdersProductJoinVO join = new OrdersProductJoinVO(order, product);
+			list.add(join);
+		}
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("list", list);
-		logger.info("list" + list.toString());
 	}
-	
-//	@PostMapping("/orderlist")
-//	public void ordersPOST(Model model, String memberId) {
-//		logger.info("paymentPOST() È£Ãâ : memberId = " + memberId);
-//
-//		List<OrdersVO> list = dao.select(memberId);
-//		model.addAttribute("list", list);
-//
-//	}
 	
 	@PostMapping("/delete")
 	public ResponseEntity<Integer> ordersDeletePOST(@RequestBody List<Integer> checkedIds) {
-		logger.info("orderDeletePOST() È£Ãâ : " + checkedIds.toString());
-		int totalDeleted = 0; // »èÁ¦µÈ Ç×¸ñ ¼ö¸¦ ÃßÀûÇÏ´Â º¯¼ö
-
+		logger.info("orderDeletePOST() í˜¸ì¶œ : " + checkedIds.toString());
+		int totalDeleted = 0; // ì‚­ì œëœ í•­ëª© ìˆ˜ë¥¼ ì¶”ì í•˜ëŠ” ë³€ìˆ˜
 	    try {
 	        for (Integer id : checkedIds) {
 	            int result = dao.delete(id);
@@ -67,10 +76,11 @@ public class OrdersController {
 	        }
 
 	        if (totalDeleted > 0) {
-	            // Àû¾îµµ ÇÏ³ªÀÇ Ç×¸ñÀÌ ¼º°øÀûÀ¸·Î »èÁ¦µÆÀ» °æ¿ì
+	        	// ì ì–´ë„ í•˜ë‚˜ì˜ í•­ëª©ì´ ì„±ê³µì ìœ¼ë¡œ ì‚­ì œëì„ ê²½ìš°
 	            return new ResponseEntity<>(totalDeleted, HttpStatus.OK);
 	        } else {
-	            // »èÁ¦µÈ Ç×¸ñÀÌ ¾ø´Â °æ¿ì
+	        	// ì‚­ì œëœ í•­ëª©ì´ ì—†ëŠ” ê²½ìš°
+
 	            return new ResponseEntity<>(0, HttpStatus.NOT_FOUND);
 	        }
 	    } catch (Exception e) {

@@ -1,4 +1,3 @@
-
 $(() => {
 	if(isLiked) {
         $('.heart').addClass('heart-filled');
