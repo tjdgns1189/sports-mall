@@ -3,6 +3,7 @@ package edu.spring.mall.controller;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,11 +17,13 @@ import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +45,7 @@ import net.coobird.thumbnailator.Thumbnails;
 public class ProductController {
 	private final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-	 @Resource(name = "uploadFilePath")
-	 private String uploadFilePath;
+	String productImgPathName=null; 
 	
 	@Autowired
 	private ProductService productService;
@@ -115,12 +117,58 @@ public class ProductController {
 	} // end registerGET()
 
 	
+	@GetMapping("/testdisplay")
+	public ResponseEntity<byte[]> getImage(String fileName){
+		
+		logger.info("getImage() : " +fileName);
+		
+		File file = new File("c:\\upload\\" + fileName);
+		
+		ResponseEntity<byte[]> result = null;
+		
+		try {
+			
+			HttpHeaders header = new HttpHeaders();
+			
+			header.add("Content-type", Files.probeContentType(file.toPath()));
+			
+			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+			
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	@PostMapping(value="/register" , produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<AttachImageVO>> testregisterPOST(MultipartFile[] productImgPath) {
+	public ResponseEntity<List<AttachImageVO>> testregisterPOST(MultipartFile[] productImg) {
 		   // url 매핑 매서드의 리턴 타입을 void에서 ResponseEntity<List<AttachImageVO>>으로 변경. 
 		   // 의미는 반환 타입이 ResponseEntity객체이고 Http의 body에 추가될 데이터는 List<AttachImageVO>라는 의미
 		
 		logger.info("testregister()호출");
+		
+		/* 이미지 파일 체크 */
+		for(MultipartFile multipartFile: productImg) {
+			
+			File checkfile = new File(multipartFile.getOriginalFilename());
+			String type = null;
+			
+			try {
+				type = Files.probeContentType(checkfile.toPath());
+				logger.info("MIME TYPE : " + type);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			if(!type.startsWith("image")) {
+				
+				List<AttachImageVO> list = null;
+				return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
+				
+			}
+			
+		} // for 
 		
 		String uploadFolder = "C:\\upload";
 		
@@ -140,7 +188,7 @@ public class ProductController {
 		/* 이미저 정보 담는 객체 */
 		List<AttachImageVO> list = new ArrayList();
 		
-		for(MultipartFile multipartFile : productImgPath) {
+		for(MultipartFile multipartFile : productImg) {
 			
 			// 이미지 정보 객체
 			AttachImageVO vo = new AttachImageVO();
@@ -153,6 +201,8 @@ public class ProductController {
 			/* uuid 적용 파일 이름 */
 			String uuid = UUID.randomUUID().toString();
 			vo.setUuid(uuid);
+			
+			
 			
 			uploadFileName = uuid + "_" + uploadFileName;
 			
@@ -222,11 +272,16 @@ public class ProductController {
 			}
 			
 			list.add(vo);
+			
+			productImgPathName = uploadFileName;
+			
 		}
 		
 		// ResponseEntity 참조 변수를 선언하고 생성자로 초기화
 		// 이 생성자를 통해서 Http의 바디에 추가될 데이터는 List <AttachImageVO>이고 상태 코드가 OK(200)인 ReseponseEntity 객체가 생성. 
 		ResponseEntity<List<AttachImageVO>> result = new ResponseEntity<List<AttachImageVO>>(list, HttpStatus.OK);
+		
+		
 		return result;
 		
 		//해당 메서드의 전체적인 과정을 요약하면 다음과 같다.
@@ -238,54 +293,11 @@ public class ProductController {
 		// 	 추가적으로 설명하면 뷰(view)에서 ajax를 통해 요청할 때 JSON타입의 데이터를 요청을 하였습니다. 
 		// 	 따라서 뷰로 List객체를 반환하는 과정에서 List객체를 JSON 형식의 문자열로 변환을 해주어야 합니다. 
 		//   이때 클래스 패스(classpath)에 Jackson이 존재해야만 JSON형식으로 스프링이 변환을 시켜줍니다.(이미 존재함) 
-	
+		
+		
 		
 	} // end registerPOST()
 	
-	
-
-//	@PostMapping("/register")
-//	public String registerPOST(@ModelAttribute ProductVO vo, RedirectAttributes reAttr, MultipartFile uploadImgFile) {
-//		logger.info("registerPOST() 호출");
-//		logger.info(vo.toString());
-//		logger.info("파일명 " + uploadImgFile.getOriginalFilename());
-//		logger.info("파일 타입 : " + uploadImgFile.getContentType());
-//		logger.info("파일 사이즈 " + uploadImgFile.getSize());
-//		
-//		if (!uploadImgFile.isEmpty()) {
-//			try {
-//				String savedFileName = saveUploadFile(uploadImgFile);
-//				vo.setProductImgPath(savedFileName);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//		int result = productService.create(vo);
-//
-//		logger.info(result + "result");
-//		if (result == 1) {
-//			reAttr.addFlashAttribute("insert_result", "success");
-//			return "redirect:/product/list";
-//		} else {
-//			return "redirect:/product/register";
-//		}
-//	} // end registerPOST()
-//	
-//	private String saveUploadFile(MultipartFile uploadImgFile) {
-//		String uploadPath = new String("C:\\upload\\temp");
-//		UUID uuid = UUID.randomUUID();
-//		String savedName = uuid + "_" + uploadImgFile.getOriginalFilename();
-//		File target = new File(uploadPath, savedName);
-//		
-//		try {
-//			FileCopyUtils.copy(uploadImgFile.getBytes(),target);
-//			return savedName;
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//	} // end saveUploadFile()
 	
 //======================================================================================================================================
 
@@ -310,6 +322,7 @@ public class ProductController {
 	@PostMapping("/register")
 	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
 		logger.info("registerPOST() 호출");
+		vo.setProductImgPath(productImgPathName);
 		logger.info(vo.toString());
 		int result = productService.create(vo);
 		logger.info(result + "result");
@@ -321,6 +334,7 @@ public class ProductController {
 		}
 	} // end registerPOST()
 
+	
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;

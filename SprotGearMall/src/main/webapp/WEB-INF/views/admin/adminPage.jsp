@@ -22,6 +22,7 @@
         <li class="nav-item">
           <a href="#" class="nav-link" onclick="loadContent('../product/register', 'contentDiv')">상품 등록</a>
         </li>
+        
       </ul>
       <hr>
       <h4 class="bg-secondary">멤버 관리</h4>
@@ -29,6 +30,7 @@
         <li class="nav-item">
           <a href="#" class="nav-link" onclick="loadContent('memberList', 'contentDiv')">멤버 목록</a>
         </li>
+        
         <li class="nav-item">
           <a href="#" class="nav-link" onclick="loadContent('orderManage', 'contentDiv')">주문 관리</a>
         </li>

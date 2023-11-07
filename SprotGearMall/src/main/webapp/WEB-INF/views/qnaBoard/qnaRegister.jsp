@@ -62,5 +62,4 @@
 	</form>
 	
 </body>
->>>>>>> refs/remotes/origin/develop
 </html>

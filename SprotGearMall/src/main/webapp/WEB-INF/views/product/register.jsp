@@ -6,6 +6,36 @@
 <meta charset="UTF-8">
 <title>상품 등록 페이지</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<style type="text/css">
+	#result_card img{
+		max-width: 100%;
+	    height: auto;
+	    display: block;
+	    padding: 5px;
+	    margin-top: 10px;
+	    margin: auto;	
+	}
+	#result_card {
+		position: relative;
+	}
+	.imgDeleteBtn{
+	    position: absolute;
+	    top: 0;
+	    right: 5%;
+	    background-color: #ef7d7d;
+	    color: wheat;
+	    font-weight: 900;
+	    width: 30px;
+	    height: 30px;
+	    border-radius: 50%;
+	    line-height: 26px;
+	    text-align: center;
+	    border: none;
+	    display: block;
+	    cursor: pointer;	
+	}
+	
+</style>
 </head>
 <body>
 	<h2>상품 등록 페이지</h2>
@@ -32,7 +62,10 @@
 		
 		<div>
 			<p>이미지 :</p>
-			<input type="file" id="fileItem" name="productImgPath">
+			<input type="file" id="fileItem" name="productImg">
+			<div id="uploadResult">
+				
+			</div>
 		</div>
 		
 		
@@ -53,7 +86,7 @@
 	    	
 	    	let formData = new FormData();
 	    	/* 파일에 접근하기 */
-	        let fileInput = $('input[name="productImgPath"]');
+	        let fileInput = $('input[name="productImg"]');
 			let fileList = fileInput[0].files;
 			let fileObj = fileList[0];
 			
@@ -63,11 +96,12 @@
 			console.log("fileSize : " + fileObj.size);
 			console.log("fileType(MimeType) : " + fileObj.type);
 			
-			if(!fileCheck(fileObj.name, fileObj.size)){
+			/* if(!fileCheck(fileObj.name, fileObj.size)){
 				return false;
-			}
+			} */
+			
 			/* FormData 객체에 데이터를 추가 */
-			formData.append("productImgPath", fileObj);
+			formData.append("productImg", fileObj);
 			
 			/*  AJAX를 사용하여 준비된 데이터를 서버로 전송하는 코드
 			
@@ -87,6 +121,10 @@
 		    	dataType : 'json',
 		    	success : function(result) {
 		    		console.log(result); // success 속성 값으로 콜백 함수를 부여한 뒤 전달받은 객체 데이터를 console에 출력
+		    		showUploadImage(result);
+		    	},
+		    	error : function(result){
+		    		alert("이미지 파일이 아닙니다.");
 		    	}
 			});
 			
@@ -115,7 +153,27 @@
 			
 		}
 	    
-
+		/* 이미지 출력 */
+		function showUploadImage(uploadResultArr){
+			
+			/* 전달받은 데이터 검증 */
+			if(!uploadResultArr || uploadResultArr.length == 0){return}
+			
+			let uploadResult = $("#uploadResult");
+			
+			let obj = uploadResultArr[0];
+			
+			let str = "";
+			
+			let fileCallPath = encodeURIComponent(obj.uploadPath.replace(/\\/g, '/') + "/s_" + obj.uuid + "_" + obj.fileName);
+			
+			str += "<div id='result_card'>";
+			str += "<img src='/mall/product/testdisplay?fileName=" + fileCallPath +"'>";
+			str += "<div class='imgDeleteBtn'>x</div>";
+			str += "</div>";		
+			
+	   		uploadResult.append(str); 
+		}
 	});
 	</script>
 	

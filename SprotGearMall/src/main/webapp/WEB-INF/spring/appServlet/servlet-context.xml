@@ -21,12 +21,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<!-- 문자열 리소스를 bean으로 추가 -->
-	<!-- String uploadPath = new String("경로"); -->
-	<beans:bean id="uploadFilePath" class="java.lang.String">
-		<beans:constructor-arg value="C:\\Study\\FileUploadTest">
-		</beans:constructor-arg>
-	</beans:bean>
+	
 	
 	<!-- 업로드 관련 빈 -->
 	<beans:bean id="multipartResolver" 

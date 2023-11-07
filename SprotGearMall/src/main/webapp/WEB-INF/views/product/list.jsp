@@ -33,7 +33,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 						<div class="card h-100" onclick="location.href='detail?productId=${vo.productId}'">
 							<!-- 상품 이미지-->
 							<img class="card-img-top"
-								src="<c:url value="/resources/img/product1.webp" />" alt="이미지" />
+								src="C:/upload/2023/11/06/${vo.productImgPath }"  alt="이미지" />
 							<div class="text-center">
 								<!-- 상품 이름-->
 								<span class="fw-bolder">${vo.productName}</span><br>
