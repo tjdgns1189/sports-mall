@@ -212,7 +212,115 @@
 			    });
 			});
 			
-		
+			
+			/*
+			$('#replies').on('click','.btnAddReplyReply', function () {
+				var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val();
+			    var memberId = $('#memberId').val();
+			    var replyReplyContent = $('#replyReplyContent').val();
+				var obj = {
+						'qnaReplyId' : qnaReplyId, 
+						'memberId' : memberId,
+						'replyReplyContent' : replyReplyContent
+				};
+				console.log(obj);
+				
+				$.ajax({
+					type : 'POST', 
+					url : 'replyReplies',
+					headers : {
+						'Content-Type' : 'application/json'
+					},
+					data : JSON.stringify(obj), // JSON으로 변환
+					success : function(result){
+						console.log(result);
+						if(result == 1) {
+							alert('댓글 입력 성공');
+						}
+					}
+				}); // end ajax()
+			});
+			*/
+			
+			
+			/*
+			$('#replies').on('click', '.reply_item button[class^="repliesbtn_"]', function () {
+			    // Get the qnaReplyId from the clicked button's class
+			    var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val();
+
+			    var replyRepliesContainer = $('#replies_' + qnaReplyId);
+			    var replyForm = '';
+			    
+			    console.log(qnaReplyId);
+
+			    // 대댓글 목록을 토글(보이기/숨기기)
+			    replyRepliesContainer.toggle();
+
+			    var replyForm = '<div id="replyRepliesContainer_' + qnaReplyId + '">'
+			        + '<input type="text" id="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">'
+			        + '<input type="text" id="replyReplyContent">'
+			        + '<button class="btnAddReplyReply">작성</button>'
+			        + '</div>'
+			        + '</br>'
+
+			    $('#replies_' + qnaReplyId).html(replyForm);
+			    
+			    // Now, call the function to get reply replies for this qnaReplyId
+			    getReplyReplies(qnaReplyId);
+			});
+			*/
+			/*
+			function getAllReplies() {
+				var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val();
+				
+				var url = 'replyReplies/all/' + qnaReplyId;
+				$.getJSON(
+					url, 
+					function(data) {
+						// data : 서버에서 전송받은 list 데이터가 저장되어 있음.
+						// getJSON()에서 json 데이터는
+						// javascript object로 자동 parsing됨.
+						console.log(data);
+					
+						var memberId = $('#memberId').val();
+						var list =''; // 댓글 데이터를 HTML에 표현할 문자열 변수	
+						
+						// $(컬렉션).each() : 컬렉션 데이터를 반복문으로 꺼내는 함수
+						$(data).each(function(){
+							// this : 컬렉션의 각 인덱스 데이터를 의미
+							console.log(this);
+							
+							var replyReplyCreatedDate = new Date(this.replyReplyCreatedDate);
+							var disabled = 'disabled';
+							var readonly = 'readonly';
+							
+							if(memberId == this.memberId) {
+								disabled = '';
+								readonly = '';
+							}
+							
+
+							list += '<div class="reply_item">'
+					            + '<pre>'
+					            + '<input type="hidden" id="qnaReplyId" value="' + this.qnaReplyId + '">'
+					            + '<button class="repliesbtn_' + this.qnaReplyId + '" >' + this.memberId + '</button>'
+					            + '&nbsp;&nbsp;' // 공백
+					            + '<input type="text" id="replyReplyContent" value="' + this.replyReplyContent + '">'
+					            + '&nbsp;&nbsp;' // 공백
+					            + replyReplyCreatedDate
+					            + '&nbsp;&nbsp;' // 공백
+					            + '<button class="btn_update">수정</button>'
+					            + '<button class="btn_delete">삭제</button>'
+					            + '</pre>'
+					            + '</div>';
+					            
+						}); // end each()
+
+						$('#replies_' + qnaReplyId).html(list);
+					}
+				); // end getJSON()
+			} // end getAllReplies()
+			*/
 		
 			$('#replies').on('click', '.reply_item button[class^="repliesbtn_"]', function () {
 				var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val();
@@ -287,7 +395,16 @@
 					}
 				); // end getJSON()
 			});
-
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			$('#replies').on('click', '.reply_item .btn_update', function(){
 				console.log(this);
 				

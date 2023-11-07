@@ -65,11 +65,8 @@
 		<input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<input type="submit" value="상품 삭제">
 	</form>
-	
-	<script type="text/javascript">
 
-	</script>
-	
+
 	
 </body>
 </html>
