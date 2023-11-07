@@ -37,7 +37,7 @@
 				
 				<hr>
 				<p class="price h4 my-2">판매가 : <fmt:formatNumber value="${product.productPrice}" type="number" pattern="#,###"/>원</p><hr>
-				
+				<p>별점 : ${avg }(${reviewCount })</p> 
 				<!-- 버튼 컨테이너 -->
 				<div class="d-flex justify-content-between align-items-center mt-4 gx-2">
 				<!-- 구매하기 버튼 -->
@@ -62,7 +62,10 @@
 			</div>
 			<!--리뷰 넣을곳-->
 			<div>
-				리뷰입니다
+				리뷰입니다<br>
+				<c:forEach var="reviewList" items="${review }">
+					${reviewList.reviewContent }<br>
+				</c:forEach>
 			</div>
 			<!---->
 		</div>

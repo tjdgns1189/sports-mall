@@ -9,7 +9,8 @@ import edu.spring.mall.pageutil.PageCriteria;
 public interface ProductService {
 	int create(ProductVO vo);
 	List<ProductVO> read(PageCriteria criteria);
-	Map<String, Object> read(int productId);
+	ProductVO read(int productId);
+	Map<String, Object> readProductById(int productId);
 	int update(ProductVO vo);
 	int delete(String productName);
 	int getTotalCounts();

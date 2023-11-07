@@ -54,6 +54,7 @@ $(() => {
         console.log(result);
         if (result === 'success') {
           alert('리뷰 등록에 성공했습니다');
+          window.opener.location.href = '/mall/orders/orderlist'; // 부모 창의 URL을 변경
           window.close(); 
         } else {
           alert('리뷰 등록에 실패했습니다 다시 등록해주세요');

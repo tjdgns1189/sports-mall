@@ -44,7 +44,13 @@ public class ProductServiceImple implements ProductService {
 	}
 	
 	@Override
-	public Map<String,Object> read(int productId) {
+	public ProductVO read(int productId) {
+		logger.info("read(productId) 호출 : productId = " + productId);
+		return dao.selectById(productId);
+	}
+
+	@Override
+	public Map<String,Object> readProductById(int productId) {
 		logger.info("read(productId) 호출 : productId = " + productId);
 		Map<String, Object> map = new HashMap<String, Object>();
 		ProductVO product = dao.selectById(productId);

@@ -2,6 +2,7 @@ package edu.spring.mall.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,8 @@ public class OrderServiceImple implements OrderService {
 		List<OrdersProductJoinVO> orderList = new ArrayList<>();
 		
 		for(OrdersVO order : orders) {
-			ProductVO pro = product.read(order.getProductId());
+			Map<String, Object> map = product.readProductById(order.getProductId());
+			ProductVO pro = (ProductVO) map.get("product");
             OrdersProductJoinVO join = new OrdersProductJoinVO();
             join.setOrder(order);
             join.setProduct(pro);

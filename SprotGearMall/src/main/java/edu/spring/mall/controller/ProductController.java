@@ -282,7 +282,7 @@ public class ProductController {
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
 		logger.info("detail() 호출  = " + productId);
-		Map<String,Object> map = productService.read(productId);
+		Map<String,Object> map = productService.readProductById(productId);
 		List<ReviewVO> review = (List<ReviewVO>) map.get("review");
 		ProductVO product = (ProductVO) map.get("product");
 
@@ -300,7 +300,20 @@ public class ProductController {
 				model.addAttribute("isLiked", isLiked);
 				return;
 			}
+			
 		}
+		//리뷰 별점 평균용
+		int sum = 0;
+		int count = review.size();
+		double avg = 0;
+		if(review!= null  && !review.isEmpty()) {
+			for(ReviewVO x : review) {
+				sum+=x.getReviewRating();
+			}
+			avg = (double) sum / count;
+		}
+		model.addAttribute("avg", avg);
+		model.addAttribute("reviewCount", count);
 		model.addAttribute("isLiked", isLiked);
 
 	} // end detail()
@@ -309,8 +322,7 @@ public class ProductController {
 	public void updateGET(Model model, int productId, Integer page) {
 
 		logger.info("updateGET() 호출 : productName = " + productId);
-		Map<String,Object> map = productService.read(productId);
-		ProductVO vo = (ProductVO) map.get("product");
+		ProductVO vo = productService.read(productId);
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
 
