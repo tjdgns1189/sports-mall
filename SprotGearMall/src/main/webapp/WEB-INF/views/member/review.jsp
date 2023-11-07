@@ -39,6 +39,10 @@
       padding: 0.5rem 0.5rem;
       margin: -0.5rem -0.5rem -0.5rem auto;
         }
+    .btn-custom {
+    width: 100%; /* 부모의 전체 너비를 차지하게 설정 */
+   	height: 50px;
+}
 </style>
 <meta charset="UTF-8">
 </head>
@@ -93,12 +97,11 @@
 	 
 	 <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<c:if test="${empty reviewVO}">
-	 <button type="submit" id="submit">리뷰 작성</button>
+	 <button type="submit" id="submit" class="btn btn-success btn-custom">리뷰 작성</button>
 	 </c:if>
 	 <c:if test="${not empty reviewVO }">
-	 	<button type="submit" id="updateSubmit">리뷰 수정</button>
+	 	<button type="submit" id="updateSubmit" class="btn btn-success btn-custom">리뷰 수정</button>
 	 </c:if>
-	 <button onclick="window.close()">취소</button>
 	</div>
 	</div>
 </body>

@@ -2,13 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <meta charset="UTF-8">
 <title>${product.productName }</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
@@ -33,8 +31,6 @@
 			<br>
 				<h1>${product.productName}</h1>
 				<p class="h6 my-2">제조사 : ${product.productMaker}</p>
-				
-				
 				<hr>
 				<p class="price h4 my-2">판매가 : <fmt:formatNumber value="${product.productPrice}" type="number" pattern="#,###"/>원</p><hr>
 				<p>별점 : ${avg }(${reviewCount })</p> 
@@ -57,17 +53,40 @@
 				</div>
 			</div>
 			<!--상품 상세 정보가 들어갈 곳-->
-			<div>
+		<ul class="nav nav-tabs">
+  			<li class="nav-item">
+   		 		<a class="nav-link active" data-bs-toggle="tab" href="#description">상품 상세설명</a>
+  			</li>
+  			<li class="nav-item">
+    			<a class="nav-link" data-bs-toggle="tab" href="#reviews">상품 리뷰</a>
+  			</li>
+  			<li class="nav-item">
+    			<a class="nav-link" data-bs-toggle="tab" href="#inquiry">상품 문의</a>
+  			</li>
+			</ul>
+			<div class="tab-content">
+ 			 <div class="tab-pane container active" id="description">
 				상품 설명입니다<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 			</div>
 			<!--리뷰 넣을곳-->
-			<div>
+  			<div class="tab-pane container fade" id="reviews">
 				리뷰입니다<br>
 				<c:forEach var="reviewList" items="${review }">
 					${reviewList.reviewContent }<br>
 				</c:forEach>
 			</div>
-			<!---->
+			<!--상품 문의-->
+			 <div class="tab-pane container fade" id="inquiry">
+			상품 문의 입니다<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			</div>
+		</div>
 		</div>
 	</div>
 	<a href="update?productId=${product.productId }&page=${page }"><input type="button" value="상품 수정"></a>
