@@ -32,11 +32,11 @@ public class CartController {
 		
 	}
 	
-	@PostMapping("/cartlist")
-	public String cartPost() {
-		return "redirect:/cart/cartlist";
-	}
-	
+//	@PostMapping("/cartlist")
+//	public String cartPost() {
+//		return "redirect:/cart/cartlist";
+//	}
+//	
 	
 	
 }

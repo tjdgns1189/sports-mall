@@ -104,5 +104,42 @@
         <input type="hidden" id="memberId" name="memberId" value="${pageContext.request.userPrincipal.name}">
         <input type="submit" value="상품 삭제">
     </form>
+    
+<script type="text/javascript">
+    document.getElementById('addToCart').addEventListener('click', function () {
+    // 필요한 데이터 가져오기
+    var memberId = "${pageContext.request.userPrincipal.name}";
+    var productId = "${product.productId}";
+    var productPrice = "${product.productPrice}";
+    var productQuantity = '1';
+
+    // 서버로 보낼 데이터 객체 생성
+    var obj = {
+      'memberId' : memberId,
+      'productId' : productId,
+      'productPrice' : productPrice,
+      'productQuantity' : productQuantity
+    };
+    console.log(obj);
+
+    // 제품을 장바구니에 추가하기 위해 서버로 AJAX 요청 보내기
+    $.ajax({
+      type: 'POST',
+      url: '../cart/cartlists', // 서버 엔드포인트와 일치하도록 URL 업데이트
+      headers : {
+			'Content-Type' : 'application/json'
+		},
+      data: JSON.stringify(obj),
+      contentType: 'application/json',
+      success: function (result) {
+    	console.log(result);
+    	if(result == 1) {
+        // 서버에서의 응답 처리 (예: 성공 메시지 표시)
+        alert('제품이 성공적으로 장바구니에 추가되었습니다.');
+    	}
+      }
+    });
+  });
+</script>
 </body>
 </html>
