@@ -44,8 +44,10 @@
             <a class="dropdown-item" href="#" onclick="targetURL()">로그인</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/member/register">회원가입</a>
         </sec:authorize>
-        <a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>
         <a class="dropdown-item" href="${pageContext.request.contextPath}/member/mypage">내 정보</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/member/likes">찜한 상품</a>
+        
         <a class="dropdown-item" href="#">고객센터</a>
 
         <sec:authorize access="hasRole('ROLE_ADMIN')">

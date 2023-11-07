@@ -8,8 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -31,9 +31,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+
 import edu.spring.mall.domain.AttachImageVO;
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.ProductVO;
+import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
 import edu.spring.mall.persistence.LikesDAO;
@@ -70,39 +72,18 @@ public class ProductController {
 			criteria.setNumsPerPage(numsPerPage);
 		}
 		List<ProductVO> list = productService.read(criteria);
-		model.addAttribute("list", list);
-
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(productService.getTotalCounts());
-		pageMaker.setPageData();
-		model.addAttribute("pageMaker", pageMaker);
-
-	} // end list()
-
-	@GetMapping("/productListTest")
-	public void listTestGET(Model model, Integer page, Integer numsPerPage) {
-		logger.info("listTest() 호출");
-		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
-
-		PageCriteria criteria = new PageCriteria();
-		if (page != null) {
-			criteria.setPage(page);
-		}
-		if (numsPerPage != null) {
-			criteria.setNumsPerPage(numsPerPage);
-		}
-		List<ProductVO> list = productService.read(criteria);
-		model.addAttribute("list", list);
-
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(productService.getTotalCounts());
-		pageMaker.setPageData();
-		model.addAttribute("pageMaker", pageMaker);
+		//매개변수를 criteria를 가지고 있는 list
 		
+		//내가 받아야하는건 reviewProductList
+		model.addAttribute("list", list);
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(productService.getTotalCounts());
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+
 	} // end list()
-	
 
 
 	@GetMapping("/payment")
@@ -297,24 +278,8 @@ public class ProductController {
 //		}
 //	} // end saveUploadFile()
 	
-//======================================================================================================================================
 
-//	@PostMapping("/register")
-//	public String registerPOST(ProductVO vo, RedirectAttributes reAttr) {
-//		logger.info("registerPOST() 호출");
 
-//		logger.info(vo.toString());
-//
-//		int result = productService.create(vo);
-//		logger.info(result + "result");
-//		if (result == 1) {
-//			reAttr.addFlashAttribute("insert_result", "success");
-//			return "redirect:/product/list";
-//		} else {
-//			return "redirect:/product/register";
-//		}
-//
-//	} // end registerPOST()
 
 	
 
@@ -322,20 +287,34 @@ public class ProductController {
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
 		logger.info("detail() 호출  = " + productId);
-		ProductVO vo = productService.read(productId);
-		model.addAttribute("vo", vo);
-	
+		Map<String,Object> map = productService.readProductById(productId);
+		List<ReviewVO> review = (List<ReviewVO>) map.get("review");
+		ProductVO product = (ProductVO) map.get("product");
+		model.addAttribute("review", review);
+		model.addAttribute("product", product);
+		
+		//리뷰 별점 평균용
+		int sum = 0;
+		int count = review.size();
+		double avg = 0;
+		if(review!= null  && !review.isEmpty()) {
+			for(ReviewVO x : review) {
+				sum+=x.getReviewRating();
+			}
+			avg = (double) sum / count;
+		}
+		model.addAttribute("avg", avg);
+		model.addAttribute("reviewCount", count);
+		//좋아요 확인용임
 		if (principal != null) {
-
 			logger.info("principal호출" + principal.getName());
 			String memberId = principal.getName();
 			LikesVO likesVO = new LikesVO(0, memberId, productId);
 			int result = likesDAO.select(likesVO);
 			if(result == 1) {
 				isLiked = true;
-				model.addAttribute("isLiked", isLiked);
-				return;
 			}
+			
 		}
 		model.addAttribute("isLiked", isLiked);
 

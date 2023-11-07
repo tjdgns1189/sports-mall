@@ -50,6 +50,12 @@ public class ReviewDAOImple implements ReviewDAO{
 		
 	}
 
+	@Override
+	public List<ReviewVO> selectProductReview(int productId) {
+		logger.info("selectProductReview 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_product_review", productId);
+	}
+
 
 
 
