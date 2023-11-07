@@ -17,6 +17,12 @@
 </head>
 <body>
 
+임시 이미지 업로드
+<form method="POST" action="upload" enctype="multipart/form-data">
+    <input type="file" name="file" />
+  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <button type="submit">Upload</button>
+</form>
 
 
 <h1>
