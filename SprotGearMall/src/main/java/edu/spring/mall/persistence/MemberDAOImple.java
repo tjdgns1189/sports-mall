@@ -22,49 +22,49 @@ public class MemberDAOImple implements MemberDAO {
 
 	@Override
 	public int insert(MemberVO vo) {
-		logger.info("dao insert »£√‚");
+		logger.info("dao insert Ìò∏Ï∂ú");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 
 	@Override
 	public List<MemberVO> select() {
-		logger.info("select»£√‚");
+		logger.info("selectÌò∏Ï∂ú");
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	}
 	
 	@Override
 	public int select(String memberId) {
-		logger.info("select æ∆¿Ãµ ¡ﬂ∫π∞ÀªÁ »£√‚");
+		logger.info("select ÏïÑÏù¥Îîî Ï§ëÎ≥µÍ≤ÄÏÇ¨ Ìò∏Ï∂ú");
 		return sqlSession.selectOne(NAMESPACE + ".select_checked_id", memberId);
 	}
 
 	@Override
 	public int update(MemberVO vo) {
-		logger.info("update »£√‚");
+		logger.info("update Ìò∏Ï∂ú");
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 	@Override
 	public int delete(String memberId) {
-		logger.info("delete »£√‚");
+		logger.info("delete Ìò∏Ï∂ú");
 		return sqlSession.delete(NAMESPACE + ".delete", memberId);
 	}
 
 	@Override
 	public CustomUserDetails login(String memberId) {
-		logger.info("login(»£√‚)");
+		logger.info("login(Ìò∏Ï∂ú)");
 		return sqlSession.selectOne(NAMESPACE + ".findByMemberId", memberId);
 	}
 
 	@Override
 	public int updateUserDetail(Map user) {
-		logger.info("updateUserDetail »£√‚");
+		logger.info("updateUserDetail Ìò∏Ï∂ú");
 		return sqlSession.update(NAMESPACE + ".updateUserDetails", user);
 	}
 
 	@Override
 	public int updateUserPassword(Map user) {
-		logger.info("updateUserPassword »£√‚");
+		logger.info("updateUserPassword Ìò∏Ï∂ú");
 		return sqlSession.update(NAMESPACE + ".updateUserPassword", user);
 	}
 

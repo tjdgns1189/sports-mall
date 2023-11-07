@@ -35,9 +35,9 @@ public class RestLoginController {
 
 	@PostMapping("member/checkid")
     public ResponseEntity<Integer> checkId(@RequestBody Map<String, String> request) {
-		logger.info("¾ÆÀÌµğ Áßº¹Ã¼Å© ¸Ş¼Òµå È£Ãâ");
+		logger.info("ì•„ì´ë”” ì¤‘ë³µí™•ì¸");
 		Integer result = dao.select(request.get("memberId"));
-		logger.info("Áßº¹ ¾ÆÀÌµğ °¹¼ö : " + result);
+		logger.info("ì•„ì´ë”” ì¡´ì¬ì—¬ë¶€ : " + result);
 
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 		

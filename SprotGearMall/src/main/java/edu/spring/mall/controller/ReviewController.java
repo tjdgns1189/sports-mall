@@ -36,11 +36,11 @@ public class ReviewController {
 	
 	@GetMapping("/member/review")
 	public void reviewGET(Model model, int productId, int orderId) {
-		logger.info("reviewGET »£√‚" + productId + " | " + orderId);
+		logger.info("reviewGET Ìò∏Ï∂ú" + productId + " | " + orderId);
 		ProductVO productvo = productService.read(productId);
-		logger.info("productvo »Æ¿Œ " + productvo);
+		logger.info("productvo Ìò∏Ï∂ú " + productvo);
 		OrdersVO ordervo = orderDAO.select(orderId);
-		logger.info("order»Æ¿Œ : " + productvo);
+		logger.info("orderÌò∏Ï∂ú : " + productvo);
 		model.addAttribute("productVO", productvo);
 		model.addAttribute("orderVO", ordervo);
 	}
@@ -48,11 +48,11 @@ public class ReviewController {
 	
 	@GetMapping("member/reviewList")
 	public void reviewGET(Model model, Principal principal) throws Exception {
-		logger.info("∏Æ∫‰ ∏ÆΩ∫∆Æ √‚∑¬");
+		logger.info("Î¶¨Î∑∞ Î¶¨Ïä§Ìä∏ Ï∂úÎ†•");
 		if(principal != null) {
 			String memberId = principal.getName();
 			List<ReviewProductJoinVO> list = reviewService.read(memberId);
-			logger.info("∏Æ∫‰«— ªÛ«∞ ∞°¡Æø»");
+			logger.info("Î¶¨Î∑∞Ìïú ÏÉÅÌíà Í∞ÄÏ†∏Ïò¥");
 			model.addAttribute("list", list);
 		}
 	}

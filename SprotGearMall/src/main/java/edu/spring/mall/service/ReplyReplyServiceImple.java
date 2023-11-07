@@ -20,28 +20,28 @@ public class ReplyReplyServiceImple implements ReplyReplyService {
 
 	@Override
 	public int create(ReplyReplyVO vo) throws Exception {
-		logger.info("create() È£Ãâ : vo = " + vo.toString());
+		logger.info("create() í˜¸ì¶œ : vo = " + vo.toString());
 		int resultInsert = replyReplyDAO.insert(vo);
-		logger.info(resultInsert + " Çà ´ñ±Û ÀÔ·Â ¼º°ø");
+		logger.info(resultInsert + " í–‰ ì‚½ìž…");
 		return 1;
 	}
 
 	@Override
 	public List<ReplyReplyVO> read(int qnaReplyId) {
-		logger.info("read() È£Ãâ : qnaReplyId = " + qnaReplyId);
+		logger.info("read() í˜¸ì¶œ : qnaReplyId = " + qnaReplyId);
 		return replyReplyDAO.select(qnaReplyId);
 	}
 
 	@Override
 	public int update(int replyReplyId, String replyReplyContent) {
-		logger.info("update() È£Ãâ");
+		logger.info("update() í˜¸ì¶œ");
 		logger.info("replyReplyId = " + replyReplyId + ", replyReplyContent = " + replyReplyContent);
 		return replyReplyDAO.update(replyReplyId, replyReplyContent);
 	}
 
 	@Override
 	public int delete(int replyReplyId) throws Exception {
-		logger.info("delete() È£Ãâ : replyReplyId = " + replyReplyId);
+		logger.info("delete() í˜¸ì¶œ : replyReplyId = " + replyReplyId);
 		return replyReplyDAO.delete(replyReplyId);
 	}
 

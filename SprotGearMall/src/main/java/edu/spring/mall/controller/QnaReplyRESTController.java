@@ -32,7 +32,7 @@ public class QnaReplyRESTController {
 	
 	@PostMapping
 	public ResponseEntity<Integer> createReply(@RequestBody QnaReplyVO vo) {
-		logger.info("createReply() È£Ãâ : vo = " + vo.toString());
+		logger.info("createReply() í˜¸ì¶œ : vo = " + vo.toString());
 
 		int result = 0;
 		try {
@@ -46,7 +46,7 @@ public class QnaReplyRESTController {
 	@GetMapping("/all/{qnaBoardId}")
 	public ResponseEntity<List<QnaReplyVO>> readReplies(
 			@PathVariable("qnaBoardId") int qnaBoardId) {
-		logger.info("readReplies() È£Ãâ : qnaBoardId = " + qnaBoardId);
+		logger.info("readReplies() í˜¸ì¶œ : qnaBoardId = " + qnaBoardId);
 		
 		List<QnaReplyVO> list = qnaReplyService.read(qnaBoardId);
 		return new ResponseEntity<List<QnaReplyVO>>(list, HttpStatus.OK);

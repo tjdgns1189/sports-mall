@@ -50,7 +50,7 @@ public class LoginController {
 	                     @RequestParam(name = "error", required = false) String error,
 	                     @RequestParam(name = "state", required = false) String state,
 	                     @CookieValue(name = "targeturl", required = false) String targeturl) {
-	    logger.info("loginGet È£Ãâ");
+	    logger.info("loginGet í˜¸ì¶œ");
 	    if (error != null) {
 	        model.addAttribute("error", "error");
 	    }
@@ -65,17 +65,19 @@ public class LoginController {
 	 
 	}
 
-	// ½ºÇÁ¸µ ³»Àå ·Î±×ÀÎ ±â´É »ç¿ëÀ¸·Î ÁÖ¼®Ã³¸®
+	// ìŠ¤í”„ë§ ë‚´ì¥ ë¡œê·¸ì¸ ê¸°ëŠ¥ ì‚¬ìš©ìœ¼ë¡œ ì£¼ì„ì²˜ë¦¬
+
 //	@PostMapping("/login")
 //	public String loginPost(String memberId, String password) {
-//		logger.info("loginPOST È£Ãâ");
+//		logger.info("loginPOST í˜¸ì¶œ");
 //	    
 //	    try {
 //		    UserDetails user = userService.loadUserByUsername(memberId);
 //
 //		    String encodedPassword= user.getPassword();
 //		    if(passwordEncoder.matches(password, encodedPassword)) {
-//		    	logger.info("·Î±×ÀÎ ¼º°ø");
+//		    	logger.info("ë¡œê·¸ì¸ ì„±ê³µ");
+
 //		    	SecurityContext context = SecurityContextHolder.createEmptyContext(); 
 //		    	Authentication auth =
 //		    			new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
@@ -84,10 +86,11 @@ public class LoginController {
 //
 //		    	return "redirect:/index";
 //		    }
-//		    logger.info("·Î±×ÀÎ ½ÇÆĞ");
+//		    logger.info("ë¡œê·¸ì¸ ì‹¤íŒ¨");
 //		    return "redirect:/member/loginForm?error";
 //		} catch (UsernameNotFoundException e) {
-//			logger.info("¾ÆÀÌµğ Á¶È¸ ½ÇÆĞ");
+//			logger.info("ì•„ì´ë”” ì¡°íšŒ ì‹¤íŒ¨");
+
 //			e.printStackTrace();
 //		    return "redirect:/member/loginForm?error";
 //
@@ -96,7 +99,7 @@ public class LoginController {
 //	
 	@GetMapping("/register")
 	public void registerGET() {
-		logger.info("loginGet È£Ãâ");
+		logger.info("loginGet í˜¸ì¶œ");
 	}
 
 	@PostMapping("/register")
@@ -110,7 +113,8 @@ public class LoginController {
 		try {
 			int result = service.create(vo);
 			if (result == 1) {
-				logger.info("È¸¿ø°¡ÀÔ ¼º°ø");
+				logger.info("íšŒì›ê°€ì… ì„±ê³µ");
+
 				return "redirect:/member/loginForm?state=success";
 			}
 		} catch (Exception e) {
@@ -127,7 +131,7 @@ public class LoginController {
 
 	@GetMapping("/update")
 	public void update(Model model) {
-		logger.info("updateGet È£Ãâ");
+		logger.info("updateGet í˜¸ì¶œ");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
 		String name = user.getName();
@@ -153,7 +157,7 @@ public class LoginController {
 			@RequestParam("address") String address,
 			@RequestParam("detailAddress") String detailAddress) {
 
-		logger.info("updatePOST È£Ãâ");
+		logger.info("updatePOST í˜¸ì¶œ");
 		String addressStr = postcode + "." + address + "." + detailAddress;
 		Map<String, String> userDetail = new HashMap<String, String>();
 		userDetail.put("memberId", memberId);
@@ -166,17 +170,19 @@ public class LoginController {
 		try {
 			result = service.update(userDetail);
 			if (result == 1) {
-				logger.info("update ¼º°ø");
+				logger.info("update ì„±ê³µ");
+
 				return "redirect:/member/mypage";
 			} 
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.info("¿¹¿Ü ¹ß»ı");
+			logger.info("ì˜ˆì™¸ ë°œìƒ");
 			return "redirect:/member/update?error";
 
 		}
-			logger.info("¾÷µ¥ÀÌÆ® ½ÇÆĞ");
+			logger.info("ì—…ë°ì´íŠ¸ ì‹¤íŒ¨");
+
 			return "redirect:/member/update?error";
 
 	}
@@ -185,7 +191,7 @@ public class LoginController {
 	public String updatePasswordPOST(
 			@RequestParam("memberId") String memberId,
 			@RequestParam("newPassword") String newPassword) {
-		logger.info("updatePasswordPOST È£Ãâ");
+		logger.info("updatePasswordPOST í˜¸ì¶œ");
 		
 		
 		Map<String, String> user = new HashMap<String, String>();
@@ -210,26 +216,29 @@ public class LoginController {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Model model) {
-			logger.info("deletePOSTÈ£Ãâ");
-			//ºñ¹Ğ¹øÈ£ °ËÁõÀ» À§ÇÑ º¯¼ö
+			logger.info("deletePOSTí˜¸ì¶œ");
+			//ë¹„ë°€ë²ˆí˜¸ ê²€ì¦ì„ ìœ„í•œ ë³€ìˆ˜
 		  	UserDetails user = userService.loadUserByUsername(memberId);
 		    String encodedPassword = user.getPassword();
-		    // ºñ¹Ğ¹øÈ£ °ËÁõ
+		    // ë¹„ë°€ë²ˆí˜¸ ê²€ì¦
 		    if (!passwordEncoder.matches(password, encodedPassword)) {
-		        logger.info("ºñ¹Ğ¹øÈ£ Æ²¸²");
+		        logger.info("ë¹„ë°€ë²ˆí˜¸ í‹€ë¦¼");
+
 		        return "redirect:/member/delete?error=password";
 		    }
 		    
 		    try {
 		        if (service.delete(memberId) != 1) {
-		            return "redirect:/member/delete?error"; // Å»Åğ Ã³¸® ½ÇÆĞ
+		            return "redirect:/member/delete?error"; // íƒˆí‡´ ì²˜ë¦¬ ì‹¤íŒ¨
 		        }
-		        // ·Î±×¾Æ¿ô Ã³¸®
+		     // ë¡œê·¸ì•„ì›ƒ ì²˜ë¦¬
+
 		        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		        if (auth != null) {
 		            new SecurityContextLogoutHandler().logout(request, response, auth);
 		        }
-		        return "redirect:/index"; // Å»Åğ ¹× ·Î±×¾Æ¿ô ¼º°ø
+		        return "redirect:/index"; // íƒˆí‡´ ë° ë¡œê·¸ì•„ì›ƒ ì„±ê³µ
+
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		        return "redirect:/member/delete?error"; 
