@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +13,6 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +22,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -103,8 +98,7 @@ public class ProductController {
 	
 	@PostMapping(value="/register" , produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AttachImageVO>> testregisterPOST(MultipartFile[] productImgPath) {
-		   // url 매핑 매서드의 리턴 타입을 void에서 ResponseEntity<List<AttachImageVO>>으로 변경. 
-		   // 의미는 반환 타입이 ResponseEntity객체이고 Http의 body에 추가될 데이터는 List<AttachImageVO>라는 의미
+		 
 		
 		logger.info("testregister()호출");
 		
@@ -234,50 +228,7 @@ public class ProductController {
 	
 	
 
-//	@PostMapping("/register")
-//	public String registerPOST(@ModelAttribute ProductVO vo, RedirectAttributes reAttr, MultipartFile uploadImgFile) {
-//		logger.info("registerPOST() 호출");
-//		logger.info(vo.toString());
-//		logger.info("파일명 " + uploadImgFile.getOriginalFilename());
-//		logger.info("파일 타입 : " + uploadImgFile.getContentType());
-//		logger.info("파일 사이즈 " + uploadImgFile.getSize());
 
-//		
-//		if (!uploadImgFile.isEmpty()) {
-//			try {
-//				String savedFileName = saveUploadFile(uploadImgFile);
-//				vo.setProductImgPath(savedFileName);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//		int result = productService.create(vo);
-//
-//		logger.info(result + "result");
-//		if (result == 1) {
-//			reAttr.addFlashAttribute("insert_result", "success");
-//			return "redirect:/product/list";
-//		} else {
-//			return "redirect:/product/register";
-//		}
-//	} // end registerPOST()
-//	
-//	private String saveUploadFile(MultipartFile uploadImgFile) {
-//		String uploadPath = new String("C:\\upload\\temp");
-//		UUID uuid = UUID.randomUUID();
-//		String savedName = uuid + "_" + uploadImgFile.getOriginalFilename();
-//		File target = new File(uploadPath, savedName);
-//		
-//		try {
-//			FileCopyUtils.copy(uploadImgFile.getBytes(),target);
-//			return savedName;
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//	} // end saveUploadFile()
-	
 
 
 
@@ -357,5 +308,10 @@ public class ProductController {
 		}
 	} // end delete()
 	
-	
+	@GetMapping("/cart")
+	public String cartGET() {
+
+	    return "product/cart";
+	}
+
 } // end ProductController
