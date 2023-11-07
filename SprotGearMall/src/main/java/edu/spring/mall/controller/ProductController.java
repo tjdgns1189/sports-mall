@@ -285,23 +285,9 @@ public class ProductController {
 		Map<String,Object> map = productService.readProductById(productId);
 		List<ReviewVO> review = (List<ReviewVO>) map.get("review");
 		ProductVO product = (ProductVO) map.get("product");
-
 		model.addAttribute("review", review);
 		model.addAttribute("product", product);
-		//좋아요 확인용임
-		if (principal != null) {
-			logger.info("principal호출" + principal.getName());
-			String memberId = principal.getName();
-			LikesVO likesVO = new LikesVO(0, memberId, productId);
-			int result = likesDAO.select(likesVO);
-			
-			if(result == 1) {
-				isLiked = true;
-				model.addAttribute("isLiked", isLiked);
-				return;
-			}
-			
-		}
+		
 		//리뷰 별점 평균용
 		int sum = 0;
 		int count = review.size();
@@ -314,6 +300,17 @@ public class ProductController {
 		}
 		model.addAttribute("avg", avg);
 		model.addAttribute("reviewCount", count);
+		//좋아요 확인용임
+		if (principal != null) {
+			logger.info("principal호출" + principal.getName());
+			String memberId = principal.getName();
+			LikesVO likesVO = new LikesVO(0, memberId, productId);
+			int result = likesDAO.select(likesVO);
+			if(result == 1) {
+				isLiked = true;
+			}
+			
+		}
 		model.addAttribute("isLiked", isLiked);
 
 	} // end detail()

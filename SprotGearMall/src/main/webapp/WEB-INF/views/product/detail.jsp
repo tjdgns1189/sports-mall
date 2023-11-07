@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 
 <!DOCTYPE html>
@@ -70,9 +72,18 @@
 			</div>
 			<!--리뷰 넣을곳-->
   			<div class="tab-pane container fade" id="reviews">
-				리뷰입니다<br>
+				별점 평균 :	${avg } <br>
+				전체 리뷰(${reviewCount }) <br>
+				<hr>
 				<c:forEach var="reviewList" items="${review }">
+					<div>
+					<fmt:formatDate value="${reviewList.reviewCreatedDate}" pattern="yy.MM.dd" var="formattedDate"/>
+					${reviewList.reviewRating} 점<br>
+        			${fn:substring(reviewList.memberId, 0, 3)}<c:forEach begin="1" end="${fn:length(reviewList.memberId) - 3}" var="i">*</c:forEach>
+					${formattedDate}<br>
 					${reviewList.reviewContent }<br>
+					</div>
+					<hr>
 				</c:forEach>
 			</div>
 			<!--상품 문의-->
