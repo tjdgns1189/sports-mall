@@ -33,7 +33,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 						<div class="card h-100" onclick="location.href='detail?productId=${vo.productId}'">
 							<!-- 상품 이미지-->
 							<img class="card-img-top"
-								src="C:/upload/2023/11/06/${vo.productImgPath }"  alt="이미지" />
+								src="/mall/product/list/${vo.productImgPath }"  alt="이미지" />
 							<div class="text-center">
 								<!-- 상품 이름-->
 								<span class="fw-bolder">${vo.productName}</span><br>
@@ -46,6 +46,8 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 				</div>
 			</div>
 		</section>
+		
+		
 	<input type="hidden" id="insertAlert" value="${insert_result }">
 	<script type="text/javascript">
 		var result = $('#insertAlert').val();

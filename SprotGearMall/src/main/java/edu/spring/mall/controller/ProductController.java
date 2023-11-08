@@ -8,11 +8,11 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 
 import org.slf4j.Logger;
@@ -28,6 +28,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -78,6 +79,9 @@ public class ProductController {
 		model.addAttribute("pageMaker", pageMaker);
 
 	} // end list()
+	
+	
+	
 
 	@GetMapping("/productListTest")
 	public void listTestGET(Model model, Integer page, Integer numsPerPage) {
@@ -179,7 +183,12 @@ public class ProductController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		String str = sdf.format(date);
-		String datePath = str.replace("-", File.separator);
+	 // String datePath = str.replace("-", File.separator); 원래는 이 코드를 살리고
+	 // String datePath = "C:/upload"; 얘를 주석처리해야 yyyy-MM-dd 폴더 하위에 이미지 파일이 들어가지만 
+	 // 그렇게 할 경우 홈페이지에서 외부폴더의 이미지를 불러올 때 Not allowed to load local resource 에러가 뜸.
+	 // 이를 해결하려면 tomcat server.xml에 <Context docBase="파일경로" path="호출할 URL" reloadable="true"/> 이 코드를 추가해야하지만
+	 // 파일경로를 유동적으로 설정해줘야함. 근데 유동적으로 설정하는 방법을 찾아도 안나와서 어쩔수없이 datePath안에 절대경로로 넣어줬음 ㅜㅜ
+		String datePath = "C:/upload"; 
 		
 		/* 폴더 생성 */
 		File uploadPath = new File(uploadFolder, datePath);
