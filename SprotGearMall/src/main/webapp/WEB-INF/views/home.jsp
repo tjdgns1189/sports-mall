@@ -37,7 +37,7 @@
 						
 							<!-- 상품 이미지-->
 							<img class="card-img-top"
-								src="<c:url value="/resources/img/product1.webp" />" alt="이미지" />
+								src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="이미지" />
 							<div class="text-center">
 								<!-- 상품 이름-->
 								<span class="fw-bolder">${vo.productName}</span><br>

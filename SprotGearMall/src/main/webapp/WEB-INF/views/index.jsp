@@ -23,7 +23,9 @@
   	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <button type="submit">Upload</button>
 </form>
+이미지 업로드 확인
 
+<img src="https://storage.googleapis.com/edu-mall-img/ea30cc4743c64fb1_231108.jpg" alt="Product Image">
 
 <h1>
 	실험용  예비 페이지

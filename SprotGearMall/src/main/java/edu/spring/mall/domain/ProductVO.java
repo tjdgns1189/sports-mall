@@ -29,6 +29,19 @@ public class ProductVO {
 	}
 
 
+	public ProductVO(String productName, int productPrice, int productStock, String productMaker, String productImgPath,
+			String productCategory, int productIsDeleted) {
+		super();
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.productStock = productStock;
+		this.productMaker = productMaker;
+		this.productImgPath = productImgPath;
+		this.productCategory = productCategory;
+		this.productIsDeleted = productIsDeleted;
+	}
+
+
 	public int getProductId() {
 		return productId;
 	}
