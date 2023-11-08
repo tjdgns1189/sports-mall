@@ -25,6 +25,8 @@
 	<http pattern="/qnaBoard/replyReplies" security="none"/>
 	<http pattern="/orders/delete" security="none"/>
 	<http pattern="/cart/cartlists" security="none"/>
+	<http pattern="/upload" security="none"/>
+
 	
 
 	
@@ -48,7 +50,7 @@
 	 <intercept-url pattern="/product/payment/**" access="isAuthenticated()"/>
 	 <intercept-url pattern="/orders/orderlist" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/likes" access="isAuthenticated()"/>
-
+	
 	 <!--  
 	 <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
 	 -->

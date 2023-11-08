@@ -43,6 +43,11 @@
     width: 100%; /* 부모의 전체 너비를 차지하게 설정 */
    	height: 50px;
 }
+
+.img{
+width: 24px;
+height:24px;
+}
 </style>
 <meta charset="UTF-8">
 </head>
@@ -54,13 +59,17 @@
     </div>
     <hr>
     <div>
+    <div class="img">
+    
+    <img alt="상품이미지" src="https://storage.googleapis.com/edu-mall-img/${productVO.productImgPath }">
+    </div>
         <p>주문번호: ${orderVO.orderId }</p>
         <input type="hidden" id="orderId" name="orderId" value="${orderVO.orderId}">
         <p>상품명: ${productVO.productName }</p>
         <p>상품번호: ${productVO.productId}</p>
         <p>구매 가격: ${orderVO.productPrice }</p>
         <p>구매 수량: ${orderVO.productQuantity }</p>
-        
+        <p>상품이미지 출력용 : ${productVO.productImgPath }</p>
     	<input type="hidden" id="productId" name="productId" value="${productVO.productId}">
     	<c:if test="${not empty reviewVO}">
     	
