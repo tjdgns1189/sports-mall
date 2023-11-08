@@ -45,38 +45,6 @@ li {
     width: 50%;
 }
 
-
-
-						<form action="../orders/orderlist" method="POST">
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-						
-							<div>
-								<p>접속중인 아이디 : </p>
-								<input type="text" name="memberId" value="${pageContext.request.userPrincipal.name}"
-									readonly="readonly">
-							</div>
-							<div>
-								<input type="hidden" name="productId" value="${vo.productId }" readonly="readonly">
-							</div>
-							<div>
-								<p>상품1개당 가격 : </p>
-								<input type="number" name="productPrice" value="${vo.productPrice }" id="productPrice"
-									readonly="readonly">
-							</div>
-							<div>
-								<p>상품갯수 : </p>
-								<input type="number" name="productQuantity" id="productQuantity"
-									oninput="calculateTotalPrice()" min="1"><br>
-							</div>
-							<div>
-								<input type="submit" value="구매">
-							</div>
-						</form>
-						<div>
-							<p>상품 총 가격 : </p>
-							<input type="number" name="totalPrice" id="totalPrice" readonly="readonly">
-						</div>
-
 #final {
 	border-bottom : 1px solid #ddd;
     width: 50%;
