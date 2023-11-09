@@ -34,8 +34,9 @@
 		</div>
 		<div>
 			<p>종류 :</p>
-			<input type="text" name="productCategory" required> 
+			<input type="text" name="productCategory" required><br>
 		</div>
+			상품 설명 : <input type="text" name="productContent">
 	      	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><br>
 		<div>
 			<input type="submit" value="등록">

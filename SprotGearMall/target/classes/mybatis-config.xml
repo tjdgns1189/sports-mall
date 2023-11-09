@@ -31,6 +31,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="productImgPath" value="product_img_path"/>
 	 	<property name="productCategory" value="product_category"/>
 	 	<property name="productIsDeleted" value="product_is_deleted"/>
+	 	<property name="productContent" value="product_content"/>
 	 	
 	    <property name="orders" value="orders"/>
 	 	<property name="orderId" value="order_id"/> 

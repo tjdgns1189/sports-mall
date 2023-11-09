@@ -57,7 +57,10 @@
         <!-- 상품 상세 정보 탭 -->
        <ul class="nav nav-tabs">
   			<li class="nav-item col-md-4 px-0">
-    			<a class="nav-link active text-dark" data-bs-toggle="tab" href="#description">상품 상세설명</a>
+    			<a class="nav-link active text-dark" data-bs-toggle="tab" href="#description">
+    			${product.productContent}
+    			
+    			</a>
   			</li>
   			<li class="nav-item col-md-4 px-0">
     			<a class="nav-link text-dark" data-bs-toggle="tab" href="#reviews">상품 리뷰</a>
