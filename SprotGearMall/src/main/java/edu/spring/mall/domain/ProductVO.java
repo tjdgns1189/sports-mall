@@ -10,6 +10,7 @@ public class ProductVO {
 	private String productImgPath;
 	private String productCategory;
 	private int productIsDeleted;
+	private String productContent;
 	
 	
 	public ProductVO() {}
@@ -39,6 +40,29 @@ public class ProductVO {
 		this.productImgPath = productImgPath;
 		this.productCategory = productCategory;
 		this.productIsDeleted = productIsDeleted;
+	}
+
+
+	public ProductVO(String productName, int productPrice, int productStock, String productMaker, String productImgPath,
+			String productCategory, String productContent) {
+		super();
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.productStock = productStock;
+		this.productMaker = productMaker;
+		this.productImgPath = productImgPath;
+		this.productCategory = productCategory;
+		this.productContent = productContent;
+	}
+
+
+	public String getProductContent() {
+		return productContent;
+	}
+
+
+	public void setProductContent(String productContent) {
+		this.productContent = productContent;
 	}
 
 

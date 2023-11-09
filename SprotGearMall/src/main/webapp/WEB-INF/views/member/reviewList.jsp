@@ -11,8 +11,8 @@
 <title>리뷰 리스트</title>
 <style type="text/css">
 .img{
-width: 36px;
-height: 36px;
+width: 60px;
+height: 60px;
 }
 </style>
 </head>
@@ -44,10 +44,12 @@ height: 36px;
                   <!-- 상품정보 -->
                   <div>
                     <h5 class="mb-0">
-                      상품명 : ${vo.product.productName} - ${vo.product.productPrice }원 - 별점 : ${vo.review.reviewRating }
+                      상품명 : ${vo.product.productName} - 별점 : ${vo.review.reviewRating }<br> 
+                     </h5>
+                      ${vo.product.productPrice }원
                       <button class="update_btn" data-id="${vo.review.reviewId}" onclick="openReviewWindow('reviewUpdate?reviewId=${vo.review.reviewId}');">리뷰 수정</button>
                       <button class="delete_btn" data-id="${vo.review.reviewId}">리뷰 삭제</button>
-                    </h5>
+                    
                   </div>
                 </div>
               </div>
@@ -65,6 +67,7 @@ height: 36px;
     
   </div>
 </div>
+
 <script type="text/javascript">
 function openReviewWindow(url) {
     window.open(url, 'reviewPopup', 'width=484,height=764');

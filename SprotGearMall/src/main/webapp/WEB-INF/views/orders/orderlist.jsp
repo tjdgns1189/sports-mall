@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <style type="text/css">
@@ -32,9 +33,8 @@ li {
 }
 
 review-btn{
-  width: 100%; /* 부모 요소의 전체 너비를 차지하도록 설정 */
-  height: 100%; /* 부모 요소의 전체 높이를 차지하도록 설정 */
-  box-sizing: border-box; /* padding과 border가 width와 height에 포함되도록 설정 */
+  width: 100%; /* 버튼을 셀의 너비에 맞춤 */
+  white-space: nowrap; /* 버튼 텍스트가 줄바꿈 되지 않도록 함 */
 }
 </style>
 <head>
@@ -74,7 +74,7 @@ review-btn{
                                 </td>
                                 <td>${vo.order.productQuantity}</td>
                                 <td>${vo.order.productQuantity * vo.order.productPrice}</td>
-                                <td>${vo.order.orderCreatedDate}</td>
+                                <td><fmt:formatDate value="${vo.order.orderCreatedDate}" pattern="yyyy-MM-dd HH:mm" /></td>
                                 <td>
                                     <c:if test="${!vo.hasReview}">
                                     <button type="button" class="btn btn-primary review-btn" 
@@ -91,6 +91,10 @@ review-btn{
                 </div>
             </div>
         </div>
+    </div>
+    <div>
+    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
+    
     </div>
 </body>
 
