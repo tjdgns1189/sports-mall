@@ -4,14 +4,15 @@
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset="UTF-8">
+<title>결제 창</title>
 <style type="text/css">
 table, th, td {
    border-style : solid;
    border-width : 0px;
    text-align : center;
 }
-
-
 th, td {
    border-top: 1px solid #ddd;
    border-bottom: 1px solid #ddd;
@@ -46,37 +47,6 @@ li {
 }
 
 
-
-						<form action="../orders/orderlist" method="POST">
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-						
-							<div>
-								<p>접속중인 아이디 : </p>
-								<input type="text" name="memberId" value="${pageContext.request.userPrincipal.name}"
-									readonly="readonly">
-							</div>
-							<div>
-								<input type="hidden" name="productId" value="${vo.productId }" readonly="readonly">
-							</div>
-							<div>
-								<p>상품1개당 가격 : </p>
-								<input type="number" name="productPrice" value="${vo.productPrice }" id="productPrice"
-									readonly="readonly">
-							</div>
-							<div>
-								<p>상품갯수 : </p>
-								<input type="number" name="productQuantity" id="productQuantity"
-									oninput="calculateTotalPrice()" min="1"><br>
-							</div>
-							<div>
-								<input type="submit" value="구매">
-							</div>
-						</form>
-						<div>
-							<p>상품 총 가격 : </p>
-							<input type="number" name="totalPrice" id="totalPrice" readonly="readonly">
-						</div>
-
 #final {
 	border-bottom : 1px solid #ddd;
     width: 50%;
@@ -84,70 +54,52 @@ li {
 }
 
 </style>
-<script src="https://code.jquery.com/jquery-3.7.1.js"
-integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
-</script>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 </head>
 
 <body>
 
-	<% ProductVO vo=(ProductVO) request.getAttribute("vo"); %>
+<div class="container text-center my-5">
+    <h4>${pageContext.request.userPrincipal.name}님의 결제창</h4>
+</div>
 
-<div align="center">
-	<br>
-	<h4>${pageContext.request.userPrincipal.name}님의 결제창</h4>
-	<br>
-	
-<div>
-    <table>
+<div class="container my-4">
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th style="width : 250px" colspan="2">상품정보</th>
-                <th style="width : 100px">상품금액</th>
-                <th style="width : 80px">구매갯수</th>
-                <th style="width : 100px">배송비</th>
-                <th style="width : 150px">상품 총 가격</th>
-            </tr>	
+                <th colspan="2">상품정보</th>
+                <th>상품금액</th>
+                <th>구매갯수</th>
+                <th>배송비</th>
+                <th>상품 총 가격</th>
+            </tr>    
         </thead>
         <tbody>
             <tr>
                 <td>
-                    <img class="card-img-top"
-                    src="<c:url value="/resources/img/product1.webp" />" alt="이미지"
-                    style="width: 150px; height: 100px;" />
+                    <img src="<c:url value='/resources/img/product1.webp' />" alt="이미지" class="img-fluid" style="width: 150px; height: auto;" />
                 </td>
                 <td>
-                    <input type="text" name="productName" value="${vo.productName }" readonly="readonly">
+                    <input type="text" class="form-control-plaintext" name="productName" value="${vo.productName}" readonly>
                 </td>
                 <td>
-                    <input type="number" name="productPrice" value="${vo.productPrice }" id="productPrice" readonly="readonly">
+                    <input type="text" class="form-control-plaintext" name="productPrice" value="${vo.productPrice}" id="productPrice" readonly>
                 </td>
                 <td>
-                    <input type="number" name="productQuantity" id="productQuantity" oninput="calculateTotalPrice()" min="1"><br>
+                    <input type="number" class="form-control" name="productQuantity" id="productQuantity" oninput="calculateTotalPrice()" min="1">
                 </td>
                 <td>
                     배송비 무료
                 </td>
                 <td>
-                    <input type="number" name="totalPrice" id="totalPrice" readonly="readonly">
+                    <input type="text" class="form-control-plaintext" name="totalPrice" id="totalPrice" readonly>
                 </td>
             </tr>
         </tbody>
     </table>
+
+    <h4 class="my-5">배송지정보</h4>
     
-    <br>
-    <br>
-    <br>
-    <br>
-    <h4>배송지정보</h4>
-    
-    
-    
-    <div>
-    <table id="addressTable">
+    <table class="table">
         <tbody>
             <tr>
                 <th scope="row">이름</th>
@@ -163,53 +115,53 @@ integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="ano
             </tr>
             <tr>
                 <th scope="row">배송 요청사항</th>
-                <td><input type="text" id="addressOpinion" style="width: 300px;"></td>
+                <td><input type="text" class="form-control" id="addressOpinion" style="width: 300px;"></td>
             </tr>
         </tbody>
     </table>
-    </div>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    
-    <h4>약관 동의</h4>
-    <table id="final">
-    	<tr>
-    		<th><input type="checkbox" id="checkAll" onclick="checkAll('checkAll', 'check')">전체 동의하기</th>
-    		<th rowspan="2">
-    		주문자이름 확인<br>
-    		주소확인<br>
-			배송비확인
-			</th>    		
-    	</tr>
-    	<tr>
-    		<th rowspan="2">
-    		<input type="checkbox" class="check">환불절대 안됨에 동의합니다. 상세보기<br>
-    		<input type="checkbox" class="check">리뷰 별5개에 동의합니다. 상세보기<br>
-    		<input type="checkbox" class="check">물건에 하자가 있을시 구매자책임에 동의합니다. 상세보기
-    		</th> 		
-    	</tr>
-    	<tr>
-    		<th>
-    			총 상품금액<br>
-    			<input type="number" name="totalPrice" id="totalPrice1" readonly="readonly"> 원 
-    		</th>    		
-    	</tr>
+    <h4 class="my-5">약관 동의</h4>
+    <table class="table">
+        <tr>
+            <th>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="checkAll" onclick="selectAllCheckboxes('checkAll', 'check')">
+                    <label class="form-check-label" for="checkAll">전체 동의하기</label>
+                </div>
+            </th>
+            <td>
+                주문자이름 확인<br>
+                주소확인<br>
+                배송비확인
+            </td>            
+        </tr>
+        <tr>
+            <th>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="check1">
+                    <label class="form-check-label" for="check1">환불절대 안됨에 동의합니다. 상세보기</label><br>
+                    <input type="checkbox" class="form-check-input" id="check2">
+                    <label class="form-check-label" for="check2">리뷰 별5개에 동의합니다. 상세보기</label><br>
+                    <input type="checkbox" class="form-check-input" id="check3">
+                    <label class="form-check-label" for="check3">물건에 하자가 있을시 구매자책임에 동의합니다. 상세보기</label>
+                </div>
+            </th> 
+            <td>
+                총 상품금액<br>
+                <input type="text" class="form-control-plaintext" name="totalPrice" id="totalPrice1" readonly> 원 
+            </td>          
+        </tr>
     </table>
-    
-    <br>
 
-    <form action="../orders/orderlist" method="POST">
+    <form action="../orders/orderlist" method="POST" class="my-5">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-        <input type="hidden" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">
-        <input type="hidden" name="productId" value="${vo.productId }" readonly="readonly">
-        <input type="hidden" name="productQuantity" id="productQuantity1" readonly="readonly">
-        <input type="hidden" name="productPrice" id="productPrice1" readonly="readonly">
-        <div style="text-align: center;">
-        	<input type="submit" value="결제하기" style="background-color: white; font-size: 24px;">
-    		<button style="background-color: white; width: 110px; font-size: 24px;">취소</button>  
+        <input type="hidden" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly>
+        <input type="hidden" name="productId" value="${vo.productId}" readonly>
+        <input type="hidden" name="productQuantity" id="productQuantity1" readonly>
+        <input type="hidden" name="productPrice" id="productPrice1" readonly>
+        <div class="text-center">
+            <input type="submit" class="btn btn-primary btn-lg" value="결제하기">
+            <button type="button" class="btn btn-secondary btn-lg">취소</button>  
         </div>
     </form>
 </div>

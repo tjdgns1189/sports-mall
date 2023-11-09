@@ -128,6 +128,8 @@ public class ProductController {
 				sum+=x.getReviewRating();
 			}
 			avg = (double) sum / count;
+		    avg = Math.floor(avg * 10) / 10;
+
 		}
 		model.addAttribute("avg", avg);
 		model.addAttribute("reviewCount", count);

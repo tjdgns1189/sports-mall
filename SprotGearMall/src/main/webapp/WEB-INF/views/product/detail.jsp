@@ -75,7 +75,7 @@
             </div>
             <!-- 리뷰 -->
             <div class="tab-pane container fade" id="reviews">
-                별점 평균 : ${avg} <br>
+				별점 평균 : ${avg} <br>
                 전체 리뷰(${reviewCount}) <br>
                 <hr>
                 <c:forEach var="reviewList" items="${review}">
