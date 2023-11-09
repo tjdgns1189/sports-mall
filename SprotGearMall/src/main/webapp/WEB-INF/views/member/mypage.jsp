@@ -33,7 +33,7 @@
             <div class="list-group">
                 <a href="${pageContext.request.contextPath}/orders/orderlist" class="list-group-item list-group-item-action">구매 목록</a>
                 <a href="reviewList" class="list-group-item list-group-item-action">리뷰 관리</a>
-	</div>
+		</div>
         </div> 
         <!-- 메인 콘텐츠 -->
         <div class="col-md-10">

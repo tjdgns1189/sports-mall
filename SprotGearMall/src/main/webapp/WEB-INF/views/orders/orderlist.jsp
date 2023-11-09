@@ -45,50 +45,57 @@ review-btn{
 <title>Insert title here</title>
 </head>
 <body>
-<!-- ${vo.getOrderProductName() } -->
-<!--  ${vo.product.productName }-->
-	<h1>${memberId }의 구입내역출력</h1>
-	
-		<table class="table">
-    	<thead>
-    		<tr>
-    			<th>삭제</th>
-    			<th>주문번호</th>
-    			<th>상품이름</th>
-    			<th>상품구매수량</th>
-    			<th>상품 총 가격</th>
-    			<th>구매 날짜</th>
-    			<th>버튼 들어갈곳</th>
-    		</tr>
-    	</thead>
-    	<tbody>
-    		<c:forEach var="vo" items="${list }"> 
-    			<tr>
-    				<td><input id="${vo.order.orderId }" type="checkbox"></td> 
-    				<td>${vo.order.orderId }</td> 				
-    				<td><a href="../product/detail?productId=${vo.product.productId}">
-						${vo.product.productName }</a>
-    				</td>
-    				<td>${vo.order.productQuantity }</td>
-    				<td>${vo.order.productQuantity * vo.order.productPrice }</td>
-    				<td>${vo.order.orderCreatedDate }</td>
-				<td>
-				 <c:if test="${!vo.hasReview}">
-				<button type="button" class="btn btn-primary review-btn" 
-				onclick="openReviewWindow('../member/review?orderId=${vo.order.orderId}&productId=${vo.product.productId}');">리뷰하기</button>
-				</c:if>
-				</td>
-    			</tr>
-    		</c:forEach>
-    	</tbody>
-    </table>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 사이드바 -->
+                <jsp:include page="../includes/mypage-sidebar.jsp" />
+            <!-- 메인 콘텐츠 -->
+            <div class="col-md-10">
+                <h1>${memberId}의 구입내역출력</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>삭제</th>
+                            <th>주문번호</th>
+                            <th>상품이름</th>
+                            <th>상품구매수량</th>
+                            <th>상품 총 가격</th>
+                            <th>구매 날짜</th>
+                            <th>버튼 들어갈곳</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="vo" items="${list}"> 
+                            <tr>
+                                <td><input id="${vo.order.orderId}" type="checkbox"></td> 
+                                <td>${vo.order.orderId}</td>             
+                                <td><a href="../product/detail?productId=${vo.product.productId}">
+                                    ${vo.product.productName}</a>
+                                </td>
+                                <td>${vo.order.productQuantity}</td>
+                                <td>${vo.order.productQuantity * vo.order.productPrice}</td>
+                                <td>${vo.order.orderCreatedDate}</td>
+                                <td>
+                                    <c:if test="${!vo.hasReview}">
+                                    <button type="button" class="btn btn-primary review-btn" 
+                                    onclick="openReviewWindow('../member/review?orderId=${vo.order.orderId}&productId=${vo.product.productId}');">리뷰하기</button>
+                                    </c:if>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <button id="btnDeleteCheck">선택목록삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
-<br>
 
-	<div>
-		<button id="btnDeleteCheck">선택목록삭제</button>
-	</div>
+
 
 	<script>
     $(document).ready(function() {
