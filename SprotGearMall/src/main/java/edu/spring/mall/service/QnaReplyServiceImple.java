@@ -25,7 +25,7 @@ public class QnaReplyServiceImple implements QnaReplyService {
 	public int create(QnaReplyVO vo) throws Exception {
 		logger.info("create() 호출 : vo = " + vo.toString());
 		int resultInsert = qnaReplyDAO.insert(vo);
-		logger.info(resultInsert + "행 삽입");
+		logger.info(resultInsert + " 행 댓글 입력 성공");
 		return 1;
 	}
 
@@ -47,5 +47,8 @@ public class QnaReplyServiceImple implements QnaReplyService {
 		logger.info("delete() 호출 : qnaReplyId = " + qnaReplyId);
 		return qnaReplyDAO.delete(qnaReplyId);
 	}
-
+	
+	
+	
+	
 }

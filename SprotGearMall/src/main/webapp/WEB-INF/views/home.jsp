@@ -7,10 +7,9 @@
 
 <html>
 <head>
-<link href="<c:url value="/resources/css/products.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/product.css" />" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
+
 <meta charset="UTF-8">
 
 	<title>Home</title>
@@ -38,7 +37,7 @@
 						
 							<!-- 상품 이미지-->
 							<img class="card-img-top"
-								src="<c:url value="/resources/img/product1.webp" />" alt="이미지" />
+								src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="이미지" />
 							<div class="text-center">
 								<!-- 상품 이름-->
 								<span class="fw-bolder">${vo.productName}</span><br>

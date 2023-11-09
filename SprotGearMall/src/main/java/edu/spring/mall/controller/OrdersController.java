@@ -22,6 +22,7 @@ import edu.spring.mall.domain.OrdersVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.persistence.OrdersDAO;
 import edu.spring.mall.persistence.ProductDAO;
+import edu.spring.mall.service.OrderService;
 import edu.spring.mall.service.ProductService;
 
 @Controller
@@ -35,6 +36,9 @@ public class OrdersController {
 	
 	@Autowired
 	private ProductService service;
+	
+	@Autowired
+	private OrderService orderService;
 	
 	@PostMapping("/orderlist")
 
@@ -51,17 +55,10 @@ public class OrdersController {
 	}
 	
 	@GetMapping("/orderlist")
-	public void orderlistGET(Model model, Principal principal) {
+	public void orderlistGET(Model model, Principal principal) throws Exception {
 		String memberId = principal.getName();
-		logger.info("paymentGET() 호출 : memberId = " + memberId);
-		List<OrdersVO> orders = dao.select(memberId);
-		List<OrdersProductJoinVO> list = new ArrayList<OrdersProductJoinVO>();
-		for(OrdersVO order : orders) {
-			ProductVO product = service.read(order.getProductId());
-			OrdersProductJoinVO join = new OrdersProductJoinVO(order, product);
-			list.add(join);
-		}
-		model.addAttribute("memberId", memberId);
+		logger.info("orderlistGET 호출 : memberId = " + memberId);	
+		List<OrdersProductJoinVO> list = orderService.read(memberId);		
 		model.addAttribute("list", list);
 	}
 	

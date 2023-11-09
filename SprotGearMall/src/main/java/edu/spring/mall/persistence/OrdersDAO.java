@@ -10,4 +10,6 @@ public interface OrdersDAO {
 	OrdersVO select(int orderId);
 	int delete(String memberId, int productId);
 	int delete(int orderId);
+    boolean hasReview(int orderId);
+
 }

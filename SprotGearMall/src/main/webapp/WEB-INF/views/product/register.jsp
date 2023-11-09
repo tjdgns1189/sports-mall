@@ -58,8 +58,6 @@
 			<p>제조사 : </p>
 			<input type="text" name="productMaker" required>
 		</div>
-		
-		
 		<div>
 			<p>이미지 :</p>
 			<input type="file" id="fileItem" name="productImg">
@@ -67,8 +65,6 @@
 				
 			</div>
 		</div>
-		
-		
 		<div>
 			<p>종류 :</p>
 			<input type="text" name="productCategory" required> 
@@ -79,6 +75,7 @@
 		</div>
 	</form>
 	
+
 	<script>
 	$(document).ready(function() {
 	    /* 이미지 업로드 */
@@ -177,6 +174,7 @@
 	});
 	</script>
 	
+
 </body>
 </html>
 

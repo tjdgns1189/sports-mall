@@ -56,6 +56,13 @@ public class OrdersDAOImple implements OrdersDAO {
 		logger.info("select(orderId) 호출");
 		return sqlSession.selectOne(NAMESPACE + ".select_by_order_Id", + orderId);
 	}
+	
+
+	@Override
+	public boolean hasReview(int orderId) {
+        Integer count = sqlSession.selectOne("edu.spring.mall.ReviewMapper.count_Review", orderId);
+        return count != null && count > 0;
+	}
 
 
 }

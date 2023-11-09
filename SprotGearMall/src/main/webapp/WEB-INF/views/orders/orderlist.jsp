@@ -30,6 +30,12 @@ li {
 .star-rating .fa-star {
   color: #f0ad4e; /* 호버하거나 선택된 별 색상 */
 }
+
+review-btn{
+  width: 100%; /* 부모 요소의 전체 너비를 차지하도록 설정 */
+  height: 100%; /* 부모 요소의 전체 높이를 차지하도록 설정 */
+  box-sizing: border-box; /* padding과 border가 width와 height에 포함되도록 설정 */
+}
 </style>
 <head>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
@@ -67,8 +73,10 @@ li {
     				<td>${vo.order.productQuantity * vo.order.productPrice }</td>
     				<td>${vo.order.orderCreatedDate }</td>
 				<td>
+				 <c:if test="${!vo.hasReview}">
 				<button type="button" class="btn btn-primary review-btn" 
 				onclick="openReviewWindow('../member/review?orderId=${vo.order.orderId}&productId=${vo.product.productId}');">리뷰하기</button>
+				</c:if>
 				</td>
     			</tr>
     		</c:forEach>

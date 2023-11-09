@@ -39,8 +39,24 @@ public class ReviewDAOImple implements ReviewDAO{
 
 	@Override
 	public int delete(int reviewId) {
-		logger.info("delete 호출");
+		logger.info("delete 호출 revuewId ");
 		return sqlSession.delete(NAMESPACE + ".delete" , reviewId);
 	}
+
+	@Override
+	public ReviewVO select(int reviewId) {
+		logger.info("select 호출 update용 ");
+		return sqlSession.selectOne(NAMESPACE + ".select_by_reviewId", reviewId);
+		
+	}
+
+	@Override
+	public List<ReviewVO> selectProductReview(int productId) {
+		logger.info("selectProductReview 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_product_review", productId);
+	}
+
+
+
 
 }

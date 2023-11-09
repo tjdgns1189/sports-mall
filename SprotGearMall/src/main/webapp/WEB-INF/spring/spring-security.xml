@@ -24,6 +24,7 @@
 	<http pattern="/qnaBoard/qnaUpdate" security="none"/>
 	<http pattern="/qnaBoard/replyReplies" security="none"/>
 	<http pattern="/orders/delete" security="none"/>
+	<http pattern="/upload" security="none"/>
 	
 
 	
@@ -39,15 +40,15 @@
 	 <intercept-url pattern="/member/mypage" access="isAuthenticated()"/>
 	 <intercept-url pattern="/member/likes" access="isAuthenticated()"/>
 	 <intercept-url pattern="/member/passwordCheck" access="isAuthenticated()"/>
-	 <intercept-url pattern="/ member/review" access="isAuthenticated()"/>
-
+	 <intercept-url pattern="/member/review" access="isAuthenticated()"/>
+	 <intercept-url pattern="/member/reviewDelete" access="isAuthenticated()"/>
 	 <intercept-url pattern="/info" access="isAuthenticated()"/>
 	 <intercept-url pattern="/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/payment/**" access="isAuthenticated()"/>
 	 <intercept-url pattern="/orders/orderlist" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/likes" access="isAuthenticated()"/>
-
+	
 	 <!--  
 	 <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
 	 -->

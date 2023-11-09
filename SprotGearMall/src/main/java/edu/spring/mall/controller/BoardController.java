@@ -68,15 +68,12 @@ public class BoardController {
 		logger.info("qnaRegisterGET()");
 	} // end registerGET()
 	
-
 	@PostMapping("/register")
 	public String registerPOST(QnaBoardVO vo, RedirectAttributes reAttr, String memberId, Model model) {
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
 		int result = qnaBoardService.create(vo);
-
 		logger.info(result + "행 추가");
-
 		model.addAttribute("memberId", memberId);		
 		if(result == 1) {
 			reAttr.addFlashAttribute("insert_result", "success");

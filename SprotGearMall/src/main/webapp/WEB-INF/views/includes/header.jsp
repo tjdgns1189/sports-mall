@@ -23,13 +23,13 @@
 	<ul class="nav-list">
 		<li><a href="${pageContext.request.contextPath}/product/list">메뉴</a></li>
 		<li><a href="#">들어</a></li>
-		<li><a href="${pageContext.request.contextPath}/product/cart">장바구니</a></li>
+		<li><a href="${pageContext.request.contextPath}/cart/cartlist">장바구니</a></li>
 		<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard?page=1">QNA</a></li>
 	</ul>
 	<div class="search-bar">
-		<form action="#" method="get">
-        <input type="text" placeholder="검색창">
-        <button id="searchBtn" class="menu-button">
+		<form action="/${pageContext.request.contextPath}/product/search" method="get">
+        <input type="text" name="searchtext" placeholder="검색창">
+        <button type="submit" id="searchBtn" class="menu-button">
         	<img src="<c:url value="/resources/img/search_icon.png" />" alt="검색" >
         </button>
 	</form>
@@ -44,19 +44,21 @@
             <a class="dropdown-item" href="#" onclick="targetURL()">로그인</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/member/register">회원가입</a>
         </sec:authorize>
-        <a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>
         <a class="dropdown-item" href="${pageContext.request.contextPath}/member/mypage">내 정보</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/member/likes">찜한 상품</a>
+        
         <a class="dropdown-item" href="#">고객센터</a>
 
         <sec:authorize access="hasRole('ROLE_ADMIN')">
-       <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/adminPage">관리자 페이지</a>
+       <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/adminPage">관리자페이지</a>
         </sec:authorize>
 
         <sec:authorize access="isAuthenticated()">
             <div class="dropdown-divider"></div>
             <form action="${pageContext.request.contextPath}/logout" method="post">
                 &nbsp;&nbsp;<input type="submit" class="btn btn-danger btn-block" value="로그아웃" />
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="hidden" id="csrfToken"name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </sec:authorize>
     </div>

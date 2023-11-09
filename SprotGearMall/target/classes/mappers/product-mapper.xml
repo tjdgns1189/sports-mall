@@ -56,6 +56,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	select * from ${product}
 	 	where ${productName} like #{productName}
 	 </select>
+	 
+	<select id="select_by_search_text" resultType="ProductVO">
+	 	 select * from ${product}
+        where ${productName} like #{searchText}
+        or ${productCategory} like #{searchText}
+        order by ${productId} desc
+	 </select>
 </mapper>
 
 

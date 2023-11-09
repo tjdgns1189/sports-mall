@@ -1,10 +1,7 @@
 package edu.spring.mall.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,5 +52,20 @@ public class ReviewController {
 			logger.info("리뷰한 상품 가져옴");
 			model.addAttribute("list", list);
 		}
+	}
+	
+	@GetMapping("/member/reviewUpdate")
+	public String reviewUpdateGET(Model model, int reviewId) throws Exception {
+		logger.info("reviewUpdateGET 호출");
+		ReviewVO review = reviewService.read(reviewId);
+		OrdersVO order = orderDAO.select(review.getOrderId());
+		logger.info("order"  +order.getProductPrice()); 
+		logger.info("order"  +order.getOrderId()); 
+		ProductVO product = productService.read(review.getProductId());
+		model.addAttribute("reviewVO" , review);
+		model.addAttribute("orderVO" ,order);
+		model.addAttribute("productVO", product);
+		
+		return "/member/review";
 	}
 }

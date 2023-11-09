@@ -22,7 +22,7 @@ public class ReplyReplyServiceImple implements ReplyReplyService {
 	public int create(ReplyReplyVO vo) throws Exception {
 		logger.info("create() 호출 : vo = " + vo.toString());
 		int resultInsert = replyReplyDAO.insert(vo);
-		logger.info(resultInsert + " 행 삽입");
+		logger.info(resultInsert + " 행 댓글 입력 성공");
 		return 1;
 	}
 
