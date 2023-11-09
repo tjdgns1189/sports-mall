@@ -45,8 +45,8 @@
 }
 
 .img{
-width: 24px;
-height:24px;
+width: 40%;
+height:40%;
 }
 </style>
 <meta charset="UTF-8">
@@ -57,29 +57,32 @@ height:24px;
         <h5 class="modal-title" id="reviewModalLabel">리뷰 작성</h5>
         <button type="button" class="btn-close" onclick="window.close();"></button>
     </div>
-    <hr>
-    <div>
+    <div class="d-flex">
+    <!-- 이미지 -->
     <div class="img">
-    
-    <img alt="상품이미지" src="https://storage.googleapis.com/edu-mall-img/${productVO.productImgPath }">
+        <img alt="상품이미지" src="https://storage.googleapis.com/edu-mall-img/${productVO.productImgPath }" class="img-fluid">
     </div>
+    
+    <!-- 상품 정보 -->
+    <div class="flex-grow-1 ms-3">
         <p>주문번호: ${orderVO.orderId }</p>
         <input type="hidden" id="orderId" name="orderId" value="${orderVO.orderId}">
         <p>상품명: ${productVO.productName }</p>
         <p>상품번호: ${productVO.productId}</p>
         <p>구매 가격: ${orderVO.productPrice }</p>
         <p>구매 수량: ${orderVO.productQuantity }</p>
-        <p>상품이미지 출력용 : ${productVO.productImgPath }</p>
-    	<input type="hidden" id="productId" name="productId" value="${productVO.productId}">
-    	<c:if test="${not empty reviewVO}">
-    	
-      	<input type="hidden" id="reviewRating" name="orderRating" value="${reviewVO.reviewRating}">
-      	<input type="hidden" id="reviewId" name="reviewId" value="${reviewVO.reviewId}">
-    	</c:if>
-    	<c:if test="${empty reviewVO}">
-      <input type="hidden" id="reviewRating" value="0">
-    </c:if>
-  </div>
+        <input type="hidden" id="productId" name="productId" value="${productVO.productId}">
+        
+        <c:if test="${not empty reviewVO}">
+            <input type="hidden" id="reviewRating" name="orderRating" value="${reviewVO.reviewRating}">
+            <input type="hidden" id="reviewId" name="reviewId" value="${reviewVO.reviewId}">
+        </c:if>
+        
+        <c:if test="${empty reviewVO}">
+            <input type="hidden" id="reviewRating" value="0">
+        </c:if>
+    </div>
+</div>
 <hr>
 <!-- 별점 넣기 -->
  <div id="currentRating">

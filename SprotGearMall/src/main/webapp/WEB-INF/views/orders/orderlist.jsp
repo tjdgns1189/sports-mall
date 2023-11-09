@@ -47,7 +47,7 @@ review-btn{
 <body>
 <!-- ${vo.getOrderProductName() } -->
 <!--  ${vo.product.productName }-->
-	<h1>${memberId }의 구입내역출력</h1>
+	<h1>${memberId } 구입내역출력</h1>
 	
 		<table class="table">
     	<thead>

@@ -23,7 +23,8 @@
             <!-- 이미지 들어가는곳 -->
             <div class="col-md-6">
                 <div style="height: 400px;">
-                    <img src="<c:url value='/resources/img/product1.webp' />" alt="Product Image" class="img-fluid h-100">
+               
+                    <img src="https://storage.googleapis.com/edu-mall-img/${product.productImgPath }" alt="Product Image" class="img-fluid h-100">
                 </div>
             </div>
             <!-- 물건 정보 -->

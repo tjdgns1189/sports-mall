@@ -26,7 +26,7 @@ public class ImageRestController {
 	@PostMapping("upload")
 	  public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
-            String fileName = file.getOriginalFilename();
+        	String fileName = file.getOriginalFilename();
             String response = service.uploadFile(file, fileName);
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (Exception e) {
