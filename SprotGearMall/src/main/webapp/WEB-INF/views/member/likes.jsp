@@ -17,7 +17,7 @@
 		<c:forEach var="vo" items="${list }">
 			<div class="row mb-3">
 				<div class="col-md-2">
-					<img src="<c:url value='/resources/img/product1.webp' />"
+					<img src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }"
 						class="img-fluid" alt="Product Image">
 				</div>
 				<div class="col-md-7">
