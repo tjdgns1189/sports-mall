@@ -91,13 +91,14 @@ public class ProductController {
             @RequestParam("productStock") int productStock,
             @RequestParam("productMaker") String productMaker,
             @RequestParam("productImgPath") MultipartFile file,
-            @RequestParam("productCategory") String productCategory) throws IOException {
+            @RequestParam("productCategory") String productCategory,
+            @RequestParam("productContent") String productContent) throws IOException {
 			
 		logger.info("registerPOST 호출");
 			String productImgPath = file.getOriginalFilename();
 			ProductVO vo = 
 					new ProductVO(productName, productPrice, productStock,
-							productMaker, productImgPath, productCategory, productStock);
+							productMaker, productImgPath, productCategory, productContent);
 			logger.info("productService 호출전");
 			int result = productService.create(vo, file);
 			logger.info("productService 호출후");
@@ -127,6 +128,8 @@ public class ProductController {
 				sum+=x.getReviewRating();
 			}
 			avg = (double) sum / count;
+		    avg = Math.floor(avg * 10) / 10;
+
 		}
 		model.addAttribute("avg", avg);
 		model.addAttribute("reviewCount", count);

@@ -56,10 +56,9 @@
 <h1>
     <p>총 상품금액</p>
     <input type="number" name="allTotalPrice" id="allTotalPrice" readonly="readonly"> 원&nbsp;&nbsp;&nbsp;&nbsp;
-    <!-- <a href="../product/payment">
+    <a href="../product/payment?productId=1">
     	<input type="submit" value="결제하기" style="background-color: white; font-size: 40px;">
     </a>
-     -->
 </h1>
 </div>
 

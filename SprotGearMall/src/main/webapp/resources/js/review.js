@@ -120,4 +120,35 @@
   }//end setRating()
   setRating(currentRating);
 
+  
+  $('.delete_btn').click(function() {
+    var reviewId = $(this).data('id');
+    var csrfToken = $("#csrfToken").val();
+    var $reviewDiv = $("#review-" + reviewId);
+    var headers = {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': csrfToken
+    };
+
+    $.ajax({
+      type: 'delete',
+      url: '/mall/member/reviewDelete',
+      headers: headers,
+      data: JSON.stringify({
+        'reviewId': reviewId
+      }),
+      success: (success) => {
+        console.log(success);
+        if (success === 'success') {
+          alert('리뷰 삭제를 성공했습니다');
+          $reviewDiv.remove();
+        } else {
+          alert('삭제 실패');
+        }
+      } // end success function
+    }); // end ajax 
+  }); // end delete_btn.click
+
+
+
   }); // end document.ready

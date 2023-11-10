@@ -24,8 +24,8 @@
 	<http pattern="/qnaBoard/qnaUpdate" security="none"/>
 	<http pattern="/qnaBoard/replyReplies" security="none"/>
 	<http pattern="/orders/delete" security="none"/>
-	<http pattern="/cart/cartlists" security="none"/>
 	<http pattern="/upload" security="none"/>
+	<http pattern="/notice/uploadImg**" security="none"/>
 
 	
 

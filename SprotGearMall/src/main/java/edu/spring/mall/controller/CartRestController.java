@@ -14,7 +14,7 @@ import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.persistence.CartDAO;
 
 @RestController
-@RequestMapping(value="/cart/cartlists")
+@RequestMapping(value="/cart")
 public class CartRestController {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(CartRestController.class);
@@ -22,7 +22,7 @@ public class CartRestController {
 	@Autowired
 	private CartDAO cartdao;
 	
-	@PostMapping
+	@PostMapping(value="/cartlists", produces = "application/json")
 	public ResponseEntity<Integer> createCart(@RequestBody CartVO vo) {
 		logger.info("createCart() 호출 : vo = " + vo.toString());
 		

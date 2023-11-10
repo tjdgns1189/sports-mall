@@ -2,20 +2,23 @@ package edu.spring.mall.domain;
 
 import java.util.Date;
 
-public class NoticeBoardVO {
+public class NoticeVO {
 	private int noticeId;
 	private String noticeTitle;
 	private String noticeContent;
 	private Date noticeCreatedDate;
 	
-	public NoticeBoardVO() {}
+	public NoticeVO() {}
 
-	public NoticeBoardVO(int noticeId, String noticeTitle, String noticeContent, Date noticeCreatedDate) {
-		super();
+	public NoticeVO(String noticeTitle, String noticeContent) {
+		this.noticeTitle = noticeTitle;
+		this.noticeContent = noticeContent;
+	}
+
+	public NoticeVO(int noticeId, String noticeTitle, String noticeContent) {
 		this.noticeId = noticeId;
 		this.noticeTitle = noticeTitle;
 		this.noticeContent = noticeContent;
-		this.noticeCreatedDate = noticeCreatedDate;
 	}
 
 	public int getNoticeId() {
@@ -55,6 +58,8 @@ public class NoticeBoardVO {
 		return "NoticeBoardVO [noticeId=" + noticeId + ", noticeTitle=" + noticeTitle + ", noticeContent="
 				+ noticeContent + ", noticeCreatedDate=" + noticeCreatedDate + "]";
 	}
+	
+	
 	
 	
 	

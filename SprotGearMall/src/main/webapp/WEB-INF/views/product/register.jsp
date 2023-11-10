@@ -8,40 +8,43 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
-	<h2>상품 등록 페이지</h2>
-	
-	
-	<form action="${pageContext.request.contextPath}/product/register" method="POST" enctype="multipart/form-data">
-		<div>
-			<p>이름 : </p>
-			<input type="text" name="productName" placeholder="상품 이름 입력" required>  
-		</div>
-		<div>
-			<p>가격 : </p>
-			<input type="text" name="productPrice" required>
-		</div>
-		<div>
-			<p>재고 : </p>
-			<input type="text" name="productStock" required>
-		</div>
-		<div>
-			<p>제조사 : </p>
-			<input type="text" name="productMaker" required>
-		</div>
-		<div>
-			<p>이미지 :</p>
-			<input type="file" id="fileItem" name="productImgPath">
-		</div>
-		<div>
-			<p>종류 :</p>
-			<input type="text" name="productCategory" required> 
-		</div>
-	      	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><br>
-		<div>
-			<input type="submit" value="등록">
-		</div>
-	</form>
-	
+  <div class="container mt-5">
+    <h2 class="mb-4">상품 등록 페이지</h2>
+    
+    <form action="${pageContext.request.contextPath}/product/register" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="productName">이름:</label>
+        <input type="text" class="form-control" id="productName" name="productName" placeholder="상품 이름 입력" required>
+      </div>
+      <div class="form-group">
+        <label for="productPrice">가격:</label>
+        <input type="text" class="form-control" id="productPrice" name="productPrice" required>
+      </div>
+      <div class="form-group">
+        <label for="productStock">재고:</label>
+        <input type="text" class="form-control" id="productStock" name="productStock" required>
+      </div>
+      <div class="form-group">
+        <label for="productMaker">제조사:</label>
+        <input type="text" class="form-control" id="productMaker" name="productMaker" required>
+      </div>
+      <div class="form-group mb-3">
+        <label for="fileItem" class="form-label">이미지:</label>
+        <input type="file" class="form-control" id="fileItem" name="productImgPath">
+      </div>
+      
+      <div class="form-group">
+        <label for="productCategory">종류:</label>
+        <input type="text" class="form-control" id="productCategory" name="productCategory" required>
+      </div>
+      <div class="form-group">
+        <label for="productContent">상품 설명:</label>
+        <textarea class="form-control" id="productContent" name="productContent"></textarea>
+      </div>
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+      <button type="submit" class="btn btn-primary">등록</button>
+    </form>
+  </div>
 </body>
 </html>
 
