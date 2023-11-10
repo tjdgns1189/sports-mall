@@ -85,6 +85,9 @@
 						if(result == 1) {
 							alert('댓글 입력 성공');
 							getAllReplies();
+						}else{
+							alert('에러');
+							getAllReplies();
 						}
 					}
 				}); // end ajax()
@@ -172,6 +175,7 @@
 			    var memberId = $('#memberId').val();
 			    var replyReplyContent = $('#replyReplyContent').val();
 			    
+			    
 			    var obj = {
 			        'qnaReplyId': qnaReplyId,
 			        'memberId': memberId,
@@ -187,7 +191,7 @@
 			        },
 			        data: JSON.stringify(obj),
 			        success: function (result) {
-			            console.log(result);
+			        	console.log(result);
 			            if (result == 1) {
 			                alert('댓글 입력 성공');
 
@@ -207,6 +211,23 @@
 
 			                // 대댓글을 화면에 추가
 			                $('#replies_' + qnaReplyId).append(replyItem);
+			                // 알람안떠서 에러로 대체
+			            }else{
+			            	alert('에러');
+			            	
+			            	var replyItem = '<div class="reply_item" style="margin-right: 1.3cm;">' +
+		                    '<pre>' +
+		                    '<input type="hidden" id="qnaReplyId" value="' + qnaReplyId + '">' +
+		                    '<button class="repliesbtn_' + qnaReplyId + '" >' + memberId + '</button>' +
+		                    '&nbsp;&nbsp;' +
+		                    '<input type="text" id="replyReplyContent" value="' + replyReplyContent + '">' +
+		                    '&nbsp;&nbsp;' +
+		                    '<button class="btn_update">수정</button>' +
+		                    '<button class="btn_delete">삭제</button>' +
+		                    '</pre>' +
+		                    '</div>';
+		                    
+			            	$('#replies_' + qnaReplyId).append(replyItem);
 			            }
 			        }
 			    });

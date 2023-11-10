@@ -56,13 +56,12 @@ li {
 </style>
 </head>
 
-<<body>
+<body>
 
 <div class="container my-4">
     <div class="text-center mb-4">
         <h4>${pageContext.request.userPrincipal.name}님의 결제창</h4>
     </div>
-    
     <div class="row justify-content-center">
         <div class="col-md-8">
             <table class="table">
@@ -99,6 +98,7 @@ li {
                 </tbody>
             </table>
         </div>
+
     </div>
 
     <div class="row justify-content-center my-5">

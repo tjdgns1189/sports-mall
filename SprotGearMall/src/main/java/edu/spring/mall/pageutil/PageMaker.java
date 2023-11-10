@@ -1,13 +1,20 @@
 package edu.spring.mall.pageutil;
 
 public class PageMaker {
+	@Override
+	public String toString() {
+		return "PageMaker [criteria=" + criteria + ", 전체 게시글=" + totalCount + ", numsOfPageLinks=" + numsOfPageLinks
+				+ ", startPageNo=" + startPageNo + ", endPageNo=" + endPageNo + ", hasPrev=" + hasPrev + ", hasNext="
+				+ hasNext + "]";
+	}
+
 	private PageCriteria criteria;
-	private int totalCount; 
-	private int numsOfPageLinks; 
-	private int startPageNo; 
-	private int endPageNo; 
-	private boolean hasPrev; 
-	private boolean hasNext; 
+	private int totalCount; //전체 게시글 갯수
+	private int numsOfPageLinks;  // 페이지 번호 링크의 개수
+	private int startPageNo; //시작 페이지 링크 번호
+	private int endPageNo; //끝 페이지 링크 번호
+	private boolean hasPrev;  //화면에 보이는 시작 페이지 번호보다 작은숫자의 페이지 확인
+	private boolean hasNext; //화면에 보이는 끝페이지 번호보다 큰 숫자 페이지가 있는지
 	
 	public PageMaker() {
 		this.numsOfPageLinks = 3;

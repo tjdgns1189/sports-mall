@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.spring.mall.domain.NoticeVO;
+import edu.spring.mall.pageutil.PageCriteria;
 @Repository
 public class NoticeDAOImple implements NoticeDAO {
 	
@@ -52,6 +53,18 @@ public class NoticeDAOImple implements NoticeDAO {
 	public NoticeVO select(int noitceId) {
 		logger.info("select(boardId");
 		return sqlSession.selectOne(NAMESPACE + ".select_detail", noitceId);
+	}
+
+	@Override
+	public List<NoticeVO> select(PageCriteria criteria) {
+		logger.info("select 호출");
+		return sqlSession.selectList(NAMESPACE + ".paging", criteria);
+	}
+
+	@Override
+	public int count() {
+		logger.info("count호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_count");
 	}
 
 }
