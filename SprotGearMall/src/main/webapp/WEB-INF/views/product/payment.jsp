@@ -82,7 +82,7 @@ li {
                     </tr>    
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr class="align-middle">
                         <td>
                             <img class="img-thumbnail" src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="Product Image" style="width: 150px; height: auto;" />
                         </td>
@@ -93,13 +93,13 @@ li {
                             <input type="text" class="form-control-plaintext text-center" name="productPrice" value="${vo.productPrice}" id="productPrice" readonly>
                         </td>
                         <td>
-                            <input type="number" class="form-control" name="productQuantity" id="productQuantity" oninput="calculateTotalPrice()" min="1">
+                            <input type="number" class="form-control" name="productQuantity" id="productQuantity" value="1" oninput="calculateTotalPrice()" min="1">
                         </td>
                         <td>
                             배송비 무료
                         </td>
                         <td>
-                            <input type="text" class="form-control-plaintext text-center" name="totalPrice" id="totalPrice" readonly>
+                            <input type="text" class="form-control-plaintext text-center" name="totalPrice" id="totalPrice" value="${vo.productPrice}" readonly>
                         </td>
                     </tr>
                 </tbody>
