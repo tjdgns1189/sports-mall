@@ -16,16 +16,6 @@ tr th td{
 </head>
 <body>
 
-<c:if test="${not empty pageMaker }">
-
-게시글 총 숫자 :${pageMaker.totalCount }
-:${pageMaker.startPageNo}
-:${pageMaker.endPageNo}
-:${pageMaker.hasPrev }
-:${pageMaker.hasNext}
-:${pageMaker.criteria.page}
-:${pageMaker.criteria.numsPerPage}
-</c:if>
 <div class="container" style="max-width: 1000px;">
   <table class="table">
     <thead>

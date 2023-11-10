@@ -31,7 +31,7 @@
             </div>
             <div class="card-footer bg-transparent border-top-0">
                 <!-- 수정 버튼 -->
-                <a href="update?noticeId=${vo.noticeId }" class="btn  btn-outline-danger">수정</a>
+                <a href="update?noticeId=${vo.noticeId }" class="btn btn-outline-info">수정</a>
                 <!-- 삭제 버튼 -->
                 <form action="delete" method="POST" style="display: inline;">
                     <input type="hidden" name="noticeId" value="${vo.noticeId }">
