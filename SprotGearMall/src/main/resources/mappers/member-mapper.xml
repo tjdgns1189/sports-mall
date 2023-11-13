@@ -5,11 +5,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="edu.spring.mall.MemberMapper">
 
 	<insert id="insert">
-		insert into ${member}
-		(${memberId}, ${password}, ${name}, ${phone}, ${email},${address}, ${userGrade})
-		values (#{memberId}, #{password}, #{name}, #{phone}, #{email},
-		#{address}, #{userGrade})
-	</insert>
+  INSERT INTO ${member} (
+    ${memberId},${password},${name},${phone},
+    <choose>
+      <when test="email != null">
+        ${email},
+      </when>
+      <when test="address != null">
+        ${address},
+      </when>
+    </choose>
+    ${userGrade}
+  ) VALUES (
+    #{memberId},#{password},#{name},#{phone},
+    <choose>
+      <when test="email != null">
+        #{email},
+      </when>
+      <when test="address != null">
+        #{address},
+      </when>
+    </choose>
+    #{userGrade}
+  )
+</insert>
 
 	<select id="select_all" resultType="MemberVO">
 		select * from ${member}

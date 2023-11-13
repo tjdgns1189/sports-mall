@@ -9,6 +9,7 @@
 <title>로그인</title>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" 
  rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">
 
 <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
 </head>
@@ -38,6 +39,14 @@
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
       </form>
+          <!--소셜 로그인 넣을거임-->
+    <div>
+        <a href="/mall/oauth/naverOAuth" >
+            <button class="socal-login-btn">
+                <img src="<c:url value='/resources/img/naver-btn.png' />" alt="네이버로그인" />
+            </button>
+        </a>
+    </div>
       <div class="container" style="text-align : center;">
       		<a href="register" >회원가입</a>
       </div>
