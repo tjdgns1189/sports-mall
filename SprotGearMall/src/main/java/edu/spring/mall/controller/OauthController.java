@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -66,7 +68,6 @@ public class OauthController {
         if (error != null) {
             // 에러 처리 로직
             logger.info("error발생" + error);
-            model.addAttribute("error", "error");
             return "redirect:/member/loginForm?error=error";
         }
         String storedState = (String) request.getSession().getAttribute("naverOAuthState");
@@ -139,5 +140,73 @@ public class OauthController {
         String path = OAuth.createUrl(request, "google");
     	return "redirect:" + path;
     }
+    
+    
+    @GetMapping("google")
+    public String googleGET(HttpServletRequest request, Model model,
+            @RequestParam(required = false) String code,
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) String error,
+            @RequestParam(required = false) String error_description) throws Exception {
+    	logger.info("google 로그인 콜백");
+    	
+    	if(error != null) {
+    		logger.info("인증 에러");
+    		return "redirect:/member/loginForm?error=error";
+    	}
+    	
+    	if(error_description != null) {
+    		logger.info("에러 발생");
+    		return "redirect:/member/loginForm?error=error";
+
+    	}
+        String storedState = (String) request.getSession().getAttribute("googleOAuthState");
+
+    	if(storedState == null || !storedState.equals(state)) {
+            throw new IllegalStateException("state값 불일치");
+    	}
+    	
+    	String tokenResponse = OAuth.getToken("google", code, state);
+    	
+        logger.info("tokenInfo" + tokenResponse);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(tokenResponse);
+        String accessToken = rootNode.path("access_token").asText(); 
+        
+        JsonNode userNode = OAuth.getUserInfo("google",accessToken);
+        if(userNode == null) {
+    		return "redirect:/member/loginForm?error=error";
+    	}
+        String memberId = userNode.path("sub").asText();
+        String name = userNode.path("name").asText();
+        String email = userNode.path("email").asText();
+    	logger.info("memberId" + memberId);
+    	logger.info("name : " + name);
+    	logger.info("email : " + email );
+    	
+    	
+    	
+    	try {
+			CustomUserDetails user = 
+					(CustomUserDetails) userDetailsService.loadUserByUsername(memberId);
+			OAuth.securityLogin(user);
+			logger.info("로그인 성공");
+		} catch (UsernameNotFoundException e) {
+			logger.info("회원가입 진행");
+			String password = OAuth.generateRandomState();
+			MemberVO vo = new MemberVO(memberId, password, name, null, email, null, null);
+			int result = memberService.create(vo);
+			if(result == 1) {
+				CustomUserDetails user = 
+						(CustomUserDetails) userDetailsService.loadUserByUsername(memberId);
+				OAuth.securityLogin(user);
+				logger.info("로그인 성공");
+			}
+		}
+    	
+    	return "redirect:/";
+    }//end googleGET
+    
+    
 
 }

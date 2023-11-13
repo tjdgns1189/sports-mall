@@ -55,7 +55,11 @@
       <div class="container" style="text-align : center;">
       		<a href="register" >회원가입</a>
       </div>
-</div>
+      
+      <hr>
+
+      </div>
+
 <footer>
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 </footer>

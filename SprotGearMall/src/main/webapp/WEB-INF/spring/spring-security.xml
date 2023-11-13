@@ -33,6 +33,7 @@
 	
 	<http auto-config="true" use-expressions="true">
 	 <access-denied-handler ref="accessDeniedHandler"/>
+	 <intercept-url pattern="/gsi/**" access="permitAll"/>
 	 <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 	 <intercept-url pattern="/index" access="permitAll"/>
 	 <intercept-url pattern="/member/loginForm" access="isAnonymous()"/>
@@ -56,13 +57,6 @@
 	 <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
 	 -->
 
-	 
-
-	 
-	 
-
-	 
-	 
     <http-basic entry-point-ref="ajaxAwareAuthenticationEntryPoint" />
 
 		<form-login login-page="/member/loginForm"
@@ -79,7 +73,9 @@
 				logout-url="/logout"
 				logout-success-url="/index"
 				delete-cookies="JSESSIONID, remember-me"/>
-	
+		
+		   <oauth2-login/>
+		
 	</http>
 	
 <!-- 비밀번호 암호화 -->

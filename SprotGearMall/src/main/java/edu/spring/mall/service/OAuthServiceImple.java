@@ -2,6 +2,7 @@ package edu.spring.mall.service;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,7 +49,7 @@ public class OAuthServiceImple implements OAuthService {
         
         String state = generateRandomState();
         request.getSession().setAttribute(RegistrationId + "OAuthState", state);  
-        
+        logger.info("세션 등록 키값 확인 :" + RegistrationId + "OAuthState");
 		return buildUrl(registration, state);
 	}
 
@@ -66,6 +67,10 @@ public class OAuthServiceImple implements OAuthService {
 		    params.add("client_secret", registration.getClientSecret());
 		    params.add("code", code);
 		    params.add("state", state);
+		    
+			if("google".equals(registration.getRegistrationId())) {
+				params.add("redirect_uri", registration.getRedirectUri());
+			}
 
 		    ResponseEntity<String> response = restTemplate.postForEntity(tokenEndpoint, params, String.class);
 		    return response.getBody();
@@ -119,7 +124,9 @@ public class OAuthServiceImple implements OAuthService {
 		        .queryParam("state", state);
 		
 		if("google".equals(registration.getRegistrationId())) {
-			 builder.queryParam("scope", registration.getScopes());
+			 String scopes = registration.getScopes().stream()
+                     .collect(Collectors.joining(" "));
+			 builder.queryParam("scope", scopes);
 		}
 		logger.info("호출 uri " + builder.toUriString());
 		return  builder.toUriString();
