@@ -30,7 +30,7 @@ public class QnaReplyRESTController {
 	@Autowired
 	private QnaReplyService qnaReplyService;
 	
-	@PostMapping
+	@PostMapping(produces = "application/json")
 	public ResponseEntity<Integer> createReply(@RequestBody QnaReplyVO vo) {
 		logger.info("createReply() 호출 : vo = " + vo.toString());
 

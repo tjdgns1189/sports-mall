@@ -30,6 +30,8 @@
                 <p class="card-text notice-content">${vo.noticeContent }</p>
             </div>
             <div class="card-footer bg-transparent border-top-0">
+                
+      		  <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <!-- 수정 버튼 -->
                 <a href="update?noticeId=${vo.noticeId }" class="btn btn-outline-info">수정</a>
                 <!-- 삭제 버튼 -->
@@ -38,6 +40,7 @@
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                     <input type="submit" class="btn btn-danger" value="삭제">
                 </form>
+                </sec:authorize>
             </div>
         </div>
     </div>

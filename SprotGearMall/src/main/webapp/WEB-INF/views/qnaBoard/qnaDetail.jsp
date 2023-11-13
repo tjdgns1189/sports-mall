@@ -66,6 +66,7 @@
 				var qnaBoardId = $('#qnaBoardId').val(); // 게시판 번호 데이터
 				var memberId = $('#memberId').val(); // 작성자 데이터
 				var qnaReplyContent = $('#qnaReplyContent').val(); // 댓글 내용
+				var csrfToken = $("#csrfToken").val();
 				var obj = {
 						'qnaBoardId' : qnaBoardId, 
 						'memberId' : memberId,
@@ -77,7 +78,8 @@
 					type : 'POST', 
 					url : 'replies',
 					headers : {
-						'Content-Type' : 'application/json'
+						'Content-Type' : 'application/json',
+						'X-CSRF-TOKEN': csrfToken
 					},
 					data : JSON.stringify(obj), // JSON으로 변환
 					success : function(result){
@@ -174,6 +176,7 @@
 			    var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val();
 			    var memberId = $('#memberId').val();
 			    var replyReplyContent = $('#replyReplyContent').val();
+			    var csrfToken = $("#csrfToken").val();
 			    
 			    
 			    var obj = {
@@ -187,7 +190,8 @@
 			        type: 'POST',
 			        url: 'replyReplies',
 			        headers: {
-			            'Content-Type': 'application/json'
+			            'Content-Type': 'application/json',
+			            'X-CSRF-TOKEN': csrfToken
 			        },
 			        data: JSON.stringify(obj),
 			        success: function (result) {

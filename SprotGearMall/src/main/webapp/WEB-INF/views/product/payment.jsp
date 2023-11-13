@@ -53,6 +53,11 @@ li {
     height: 400px;
 }
 
+#totalPrice1 {
+	font-size: 30px; 
+    text-align: center; 
+}
+
 </style>
 </head>
 
@@ -62,6 +67,7 @@ li {
     <div class="text-center mb-4">
         <h4>${pageContext.request.userPrincipal.name}님의 결제창</h4>
     </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <table class="table">
@@ -75,7 +81,7 @@ li {
                     </tr>    
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr class="align-middle">
                         <td>
                             <img class="img-thumbnail" src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="Product Image" style="width: 150px; height: auto;" />
                         </td>
@@ -83,16 +89,16 @@ li {
                             <input type="text" class="form-control-plaintext" name="productName" value="${vo.productName}" readonly>
                         </td>
                         <td>
-                            <input type="text" class="form-control-plaintext" name="productPrice" value="${vo.productPrice}" id="productPrice" readonly>
+                            <input type="text" class="form-control-plaintext text-center" name="productPrice" value="${vo.productPrice}" id="productPrice" readonly>
                         </td>
                         <td>
-                            <input type="number" class="form-control" name="productQuantity" id="productQuantity" oninput="calculateTotalPrice()" min="1">
+                            <input type="number" class="form-control" name="productQuantity" id="productQuantity" value="1" oninput="calculateTotalPrice()" min="1">
                         </td>
                         <td>
                             배송비 무료
                         </td>
                         <td>
-                            <input type="text" class="form-control-plaintext" name="totalPrice" id="totalPrice" readonly>
+                            <input type="text" class="form-control-plaintext text-center" name="totalPrice" id="totalPrice" value="${vo.productPrice}" readonly>
                         </td>
                     </tr>
                 </tbody>
@@ -135,7 +141,7 @@ li {
                 <tr>
                     <th>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="checkAll" onclick="selectAllCheckboxes('checkAll', 'check')">
+                            <input type="checkbox" class="form-check-input" id="checkAll" onclick="checkAll('checkAll', 'form-check-input')">
                             <label class="form-check-label" for="checkAll">전체 동의하기</label>
                         </div>
                     </th>

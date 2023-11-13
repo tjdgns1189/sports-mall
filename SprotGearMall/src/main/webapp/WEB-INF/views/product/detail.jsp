@@ -113,6 +113,7 @@
     var productId = "${product.productId}";
     var productPrice = "${product.productPrice}";
     var productQuantity = '1';
+    var csrfToken = $("#csrfToken").val();
 
     // 서버로 보낼 데이터 객체 생성
     var obj = {
@@ -128,7 +129,8 @@
       type: 'POST',
       url: '../cart/cartlists', // 서버 엔드포인트와 일치하도록 URL 업데이트
       headers : {
-			'Content-Type' : 'application/json'
+			'Content-Type' : 'application/json',
+			'X-CSRF-TOKEN': csrfToken
 		},
       data: JSON.stringify(obj),
       contentType: 'application/json',

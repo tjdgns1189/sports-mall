@@ -9,8 +9,18 @@
 <style type="text/css">
 table, th, td {
    border-style : solid;
-   border-width : 1px;
+   border-width : 0px;
    text-align : center;
+   vertical-align: middle;
+   font-size: 18px;
+}
+
+.table {
+	width : 70%;
+}
+
+td input[type="checkbox"]{
+	transform: scale(1.5);
 }
 
 ul {
@@ -45,18 +55,19 @@ review-btn{
 <title>Insert title here</title>
 </head>
 <body>
+
     <div class="container-fluid">
         <div class="row">
             <!-- 사이드바 -->
                 <jsp:include page="../includes/mypage-sidebar.jsp" />
             <!-- 메인 콘텐츠 -->
             <div class="col-md-10">
-                <h1>${memberId}의 구입내역출력</h1>
+                <h1>${pageContext.request.userPrincipal.name}의 구입내역출력</h1>
                 <table class="table">
                     <thead>
                         <tr>
                             <th>삭제</th>
-                            <th>주문번호</th>
+                            <th width="150">이미지</th>
                             <th>상품이름</th>
                             <th>상품구매수량</th>
                             <th>상품 총 가격</th>
@@ -68,7 +79,12 @@ review-btn{
                         <c:forEach var="vo" items="${list}"> 
                             <tr>
                                 <td><input id="${vo.order.orderId}" type="checkbox"></td> 
-                                <td>${vo.order.orderId}</td>             
+                                <td>
+                                <div>
+                                	<img class="card-img-top"
+                    				src="https://storage.googleapis.com/edu-mall-img/${vo.product.productImgPath }" alt="이미지" />
+                    			</div>	
+                                </td>         
                                 <td><a href="../product/detail?productId=${vo.product.productId}">
                                     ${vo.product.productName}</a>
                                 </td>

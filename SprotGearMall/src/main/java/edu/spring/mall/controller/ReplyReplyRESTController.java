@@ -28,7 +28,7 @@ public class ReplyReplyRESTController {
 	@Autowired
 	private ReplyReplyService replyReplyService;
 	
-	@PostMapping
+	@PostMapping(produces = "application/json")
 	public ResponseEntity<Integer> createReply(@RequestBody ReplyReplyVO vo) {
 		logger.info("createReply() 호출 : vo = " + vo.toString());
 
