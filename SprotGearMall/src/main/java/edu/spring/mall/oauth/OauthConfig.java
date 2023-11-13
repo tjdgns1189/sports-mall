@@ -23,11 +23,11 @@ public class OauthConfig {
     private ClientRegistration googleClientRegistration() {
         // Google OAuth2 설정
         return ClientRegistration.withRegistrationId("google")
-                .clientId("google-client-id")
-                .clientSecret("google-client-secret")
+                .clientId("259608606224-ubjj97th9chjcjvvmugd0vkssi8t0oa8.apps.googleusercontent.com")
+                .clientSecret("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")
                 .scope(new String[]{"openid", "profile", "email"})
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri("{baseUrl}/login/oauth2/code/google")
+                .redirectUri("http://localhost:8080/mall/oauth/google")
                 .authorizationUri("https://accounts.google.com/o/oauth2/auth")
                 .tokenUri("https://www.googleapis.com/oauth2/v4/token")
                 .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")

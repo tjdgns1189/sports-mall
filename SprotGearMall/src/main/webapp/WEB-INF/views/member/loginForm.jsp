@@ -46,6 +46,11 @@
                 <img src="<c:url value='/resources/img/naver-btn.png' />" alt="네이버로그인" />
             </button>
         </a>
+         <a href="/mall/oauth/googleOAuth" >
+            <button class="socal-login-btn">
+                <img src="<c:url value='/resources/img/google-btn.png' />" alt="구글로그인" />
+            </button>
+        </a>
     </div>
       <div class="container" style="text-align : center;">
       		<a href="register" >회원가입</a>
