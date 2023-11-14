@@ -1,10 +1,17 @@
 package edu.spring.mall.service;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +24,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -26,6 +37,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -38,11 +50,16 @@ public class OAuthServiceImple implements OAuthService {
 	@Autowired
     private ClientRegistrationRepository social;
 	
+	@Autowired
+	private OAuth2AuthorizedClientService authService;
+	
+	@Autowired
+	private AuthenticationSuccessHandler successHandler;
+	
 	@Override
 	public String createUrl(HttpServletRequest request, String RegistrationId) {
 		logger.info("url 생성 : " + RegistrationId);
         ClientRegistration registration= social.findByRegistrationId(RegistrationId);
-        
         if(registration ==null) {
         	return  "false";
         }
@@ -54,13 +71,11 @@ public class OAuthServiceImple implements OAuthService {
 	}
 
 	@Override
-	public String getToken(String registrationId, String code, String state) {
+	public OAuth2AccessToken  getToken(String registrationId, String code, String state) throws JsonMappingException, JsonProcessingException {
 		logger.info("getToken 호출");
 		 ClientRegistration registration = social.findByRegistrationId(registrationId);
-
 		    RestTemplate restTemplate = new RestTemplate();
 		    String tokenEndpoint = registration.getProviderDetails().getTokenUri();
-
 		    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		    params.add("grant_type", "authorization_code");
 		    params.add("client_id", registration.getClientId());
@@ -71,26 +86,48 @@ public class OAuthServiceImple implements OAuthService {
 			if("google".equals(registration.getRegistrationId())) {
 				params.add("redirect_uri", registration.getRedirectUri());
 			}
-
+			
 		    ResponseEntity<String> response = restTemplate.postForEntity(tokenEndpoint, params, String.class);
-		    return response.getBody();
+		    String tokenJson = response.getBody();
+		    logger.info("token값 : " + tokenJson);
+		    ObjectMapper objectMapper = new ObjectMapper();
+		    JsonNode jsonNode = objectMapper.readTree(tokenJson);
+		    String accessTokenValue = jsonNode.get("access_token").asText();
+		    long expiresIn = jsonNode.get("expires_in").asLong();
+
+		    OAuth2AccessToken accessToken;
+		    
+		    if("google".equals(registrationId)) {
+		        String scopeString = jsonNode.get("scope").asText();
+		        Set<String> scopes = Arrays.stream(scopeString.split(" ")).collect(Collectors.toSet());
+		        accessToken = new OAuth2AccessToken(
+		            OAuth2AccessToken.TokenType.BEARER, accessTokenValue, Instant.now(),
+		            Instant.now().plusSeconds(expiresIn), scopes
+		        );
+		    } else {
+		        accessToken = new OAuth2AccessToken(
+		            OAuth2AccessToken.TokenType.BEARER, accessTokenValue, Instant.now(),
+		            Instant.now().plusSeconds(expiresIn)
+		        );
+		    }
+
+		    return accessToken;
 		
 	}
 
 	@Override
-	public JsonNode getUserInfo(String registrationId, String accessToken) {
+	public JsonNode getUserInfo(String registrationId, OAuth2AccessToken accessToken) {
 		logger.info("getUserInfo 호출");
+		String access = accessToken.getTokenValue();
 		 ClientRegistration registration = social.findByRegistrationId(registrationId);
 		 String userInfoEndpoint = registration.getProviderDetails().getUserInfoEndpoint().getUri();
          HttpHeaders headers = new HttpHeaders();
          headers.setContentType(MediaType.APPLICATION_JSON);
-         headers.set("Authorization", "Bearer " + accessToken);
+         headers.set("Authorization", "Bearer " + access);
          HttpEntity<String> entity = new HttpEntity<>(headers);
          RestTemplate template = new RestTemplate();
          ResponseEntity<String> response = template.exchange(userInfoEndpoint, HttpMethod.POST, entity, String.class);
-
          String userInfo = response.getBody();
-         logger.info("유저 정보 확인" + userInfo);
          ObjectMapper mapper = new ObjectMapper();
          try {
              return mapper.readTree(userInfo);
@@ -131,5 +168,24 @@ public class OAuthServiceImple implements OAuthService {
 		logger.info("호출 uri " + builder.toUriString());
 		return  builder.toUriString();
 	}
+
+	@Override
+    public void saveToken(HttpServletRequest request, HttpServletResponse response, 
+    		String registaionId, OAuth2AccessToken accessToken) throws IOException, ServletException {
+		logger.info("saveToken 호출");
+		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
+		
+		  ClientRegistration registration = social.findByRegistrationId(registaionId);
+		    OAuth2AuthorizedClient authorizedClient 
+		    = new OAuth2AuthorizedClient(registration, principal.getName(), accessToken);
+		    authService.saveAuthorizedClient(authorizedClient, principal);
+		    
+		    HttpSession session = request.getSession();
+            session.setAttribute("clientRegistrationId", registaionId);
+		    successHandler.onAuthenticationSuccess(request, response, principal);
+		    
+	}
+
+
 
 }
