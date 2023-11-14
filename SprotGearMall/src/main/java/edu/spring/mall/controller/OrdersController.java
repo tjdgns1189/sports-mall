@@ -60,6 +60,7 @@ public class OrdersController {
 		logger.info("orderlistGET 호출 : memberId = " + memberId);	
 		List<OrdersProductJoinVO> list = orderService.read(memberId);		
 		model.addAttribute("list", list);
+		model.addAttribute("memberId", memberId);
 	}
 	
 	@PostMapping("/delete")

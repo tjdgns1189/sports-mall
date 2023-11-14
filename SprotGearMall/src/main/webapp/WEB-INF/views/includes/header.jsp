@@ -22,7 +22,7 @@
 	<div class="header-container bg-secondary ">
 	<ul class="nav-list">
 		<li><a href="${pageContext.request.contextPath}/product/list">메뉴</a></li>
-		<li><a href="#">들어</a></li>
+		<li><a href="${pageContext.request.contextPath}/notice/noticeboard?page=1">임시 공지사항</a></li>
 		<li><a href="${pageContext.request.contextPath}/cart/cartlist">장바구니</a></li>
 		<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard?page=1">QNA</a></li>
 		<li>

@@ -29,12 +29,7 @@
 <div class="container-fluid">
     <div class="row">
         <!-- 사이드바 메뉴 -->
-        <div class="col-md-2">
-            <div class="list-group">
-                <a href="${pageContext.request.contextPath}/orders/orderlist" class="list-group-item list-group-item-action">구매 목록</a>
-                <a href="reviewList" class="list-group-item list-group-item-action">리뷰 관리</a>
-	</div>
-        </div> 
+       <jsp:include page="../includes/mypage-sidebar.jsp" />
         <!-- 메인 콘텐츠 -->
         <div class="col-md-10">
             <h2>마이 페이지</h2>

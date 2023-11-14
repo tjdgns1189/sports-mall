@@ -3,21 +3,21 @@ package edu.spring.mall.controller;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.nio.file.Files;
 import javax.imageio.ImageIO;
 import org.springframework.http.HttpStatus;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.MediaType;
 
 
-import edu.spring.mall.domain.AttachImageVO;
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
@@ -37,7 +36,6 @@ import edu.spring.mall.pageutil.PageMaker;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
 import edu.spring.mall.service.ProductService;
-import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 @RequestMapping(value = "product")
@@ -103,13 +101,14 @@ public class ProductController {
             @RequestParam("productStock") int productStock,
             @RequestParam("productMaker") String productMaker,
             @RequestParam("productImgPath") MultipartFile file,
-            @RequestParam("productCategory") String productCategory) throws IOException {
+            @RequestParam("productCategory") String productCategory,
+            @RequestParam("productContent") String productContent) throws IOException {
 			
 		logger.info("registerPOST 호출");
 			String productImgPath = file.getOriginalFilename();
 			ProductVO vo = 
 					new ProductVO(productName, productPrice, productStock,
-							productMaker, productImgPath, productCategory, productStock);
+							productMaker, productImgPath, productCategory, productContent);
 			logger.info("productService 호출전");
 			int result = productService.create(vo, file);
 			logger.info("productService 호출후");
@@ -146,6 +145,8 @@ public class ProductController {
 				sum+=x.getReviewRating();
 			}
 			avg = (double) sum / count;
+		    avg = Math.floor(avg * 10) / 10;
+
 		}
 		model.addAttribute("avg", avg);
 		model.addAttribute("reviewCount", count);

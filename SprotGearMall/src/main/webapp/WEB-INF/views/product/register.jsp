@@ -38,143 +38,46 @@
 </style>
 </head>
 <body>
-	<h2>상품 등록 페이지</h2>
-	
-	
-	<form action="${pageContext.request.contextPath}/product/register" method="POST" enctype="multipart/form-data">
-		<div>
-			<p>이름 : </p>
-			<input type="text" name="productName" placeholder="상품 이름 입력" required>  
-		</div>
-		<div>
-			<p>가격 : </p>
-			<input type="text" name="productPrice" required>
-		</div>
-		<div>
-			<p>재고 : </p>
-			<input type="text" name="productStock" required>
-		</div>
-		<div>
-			<p>제조사 : </p>
-			<input type="text" name="productMaker" required>
-		</div>
-		<div>
-			<p>이미지 :</p>
-			<input type="file" id="fileItem" name="productImg">
-			<div id="uploadResult">
-				
-			</div>
-		</div>
-		<div>
-			<p>종류 :</p>
-			<input type="text" name="productCategory" required> 
-		</div>
-	      	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"><br>
-		<div>
-			<input type="submit" value="등록">
-		</div>
-	</form>
-	
 
-	<script>
-	$(document).ready(function() {
-	    /* 이미지 업로드 */
-	    $("input[type='file']").on("change", function(e){
-	    	
-	    	let formData = new FormData();
-	    	/* 파일에 접근하기 */
-	        let fileInput = $('input[name="productImg"]');
-			let fileList = fileInput[0].files;
-			let fileObj = fileList[0];
-			
-			console.log("fileList : " + fileList);
-			console.log("fileObj : " + fileObj);
-			console.log("fileName : " + fileObj.name);
-			console.log("fileSize : " + fileObj.size);
-			console.log("fileType(MimeType) : " + fileObj.type);
-			
-			/* if(!fileCheck(fileObj.name, fileObj.size)){
-				return false;
-			} */
-			
-			/* FormData 객체에 데이터를 추가 */
-			formData.append("productImg", fileObj);
-			
-			/*  AJAX를 사용하여 준비된 데이터를 서버로 전송하는 코드
-			
-				 url : 서버로 요청을 보낼 url
-				 processData : 서버로 전송할 데이터를 queryStirng 형태로 변환할지 여부
-				 contentType : 서버로 전송되는 데이터의 content-type
-				 data : 서버로 전송할 데이터
-				 type : 서보 요청 타입(GET, POST)
-				 dataType : 서버로부터 반환받을 데이터 타입
-			*/
-			$.ajax({
-				url: '/mall/product/register',
-		    	processData : false,
-		    	contentType : false,
-		    	data : formData,
-		    	type : 'POST',
-		    	dataType : 'json',
-		    	success : function(result) {
-		    		console.log(result); // success 속성 값으로 콜백 함수를 부여한 뒤 전달받은 객체 데이터를 console에 출력
-		    		showUploadImage(result);
-		    	},
-		    	error : function(result){
-		    		alert("이미지 파일이 아닙니다.");
-		    	}
-			});
-			
-	    });
-	    
-	    /*뷰(View) 단계에서 사용자가 선택 한 파일이 개발자가 허용하는 파일이 아닐 시에 
-	    경고창과 함께 <input> change 이벤트 메서드에서 벗어나도록 구현
-	    jpg, png 파일만 허용 & 파일의 크기는 1048576byte(1MB)의 크기만 허용 */
-	    
-	    let regex = new RegExp("(.*?)\.(jpg|png)$");
-		let maxSize = 1048576; //1MB	
-		
-		function fileCheck(fileName, fileSize){
 
-			if(fileSize >= maxSize){
-				alert("파일 사이즈 초과");
-				return false;
-			}
-				  
-			if(!regex.test(fileName)){
-				alert("해당 종류의 파일은 업로드할 수 없습니다.");
-				return false;
-			}
-			
-			return true;		
-			
-		}
-	    
-		/* 이미지 출력 */
-		function showUploadImage(uploadResultArr){
-			
-			/* 전달받은 데이터 검증 */
-			if(!uploadResultArr || uploadResultArr.length == 0){return}
-			
-			let uploadResult = $("#uploadResult");
-			
-			let obj = uploadResultArr[0];
-			
-			let str = "";
-			
-			let fileCallPath = encodeURIComponent(obj.uploadPath.replace(/\\/g, '/') + "/s_" + obj.uuid + "_" + obj.fileName);
-			
-			str += "<div id='result_card'>";
-			str += "<img src='/mall/product/testdisplay?fileName=" + fileCallPath +"'>";
-			str += "<div class='imgDeleteBtn'>x</div>";
-			str += "</div>";		
-			
-	   		uploadResult.append(str); 
-		}
-	});
-	</script>
-	
-
+  <div class="container mt-5">
+    <h2 class="mb-4">상품 등록 페이지</h2>
+    
+    <form action="${pageContext.request.contextPath}/product/register" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="productName">이름:</label>
+        <input type="text" class="form-control" id="productName" name="productName" placeholder="상품 이름 입력" required>
+      </div>
+      <div class="form-group">
+        <label for="productPrice">가격:</label>
+        <input type="text" class="form-control" id="productPrice" name="productPrice" required>
+      </div>
+      <div class="form-group">
+        <label for="productStock">재고:</label>
+        <input type="text" class="form-control" id="productStock" name="productStock" required>
+      </div>
+      <div class="form-group">
+        <label for="productMaker">제조사:</label>
+        <input type="text" class="form-control" id="productMaker" name="productMaker" required>
+      </div>
+      <div class="form-group mb-3">
+        <label for="fileItem" class="form-label">이미지:</label>
+        <input type="file" class="form-control" id="fileItem" name="productImgPath">
+      </div>
+      
+      <div class="form-group">
+        <label for="productCategory">종류:</label>
+        <input type="text" class="form-control" id="productCategory" name="productCategory" required>
+      </div>
+      <div class="form-group">
+        <label for="productContent">상품 설명:</label>
+        <textarea class="form-control" id="productContent" name="productContent"></textarea>
+      </div>
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+      <button type="submit" class="btn btn-primary">등록</button>
+    </form>
+  </div>
+>>>>>>> refs/remotes/origin/feature/click-product
 </body>
 </html>
 

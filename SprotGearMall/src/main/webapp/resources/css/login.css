@@ -1,0 +1,10 @@
+.socal-login-btn {
+    border: none;
+    background: none;
+    padding: 5px;
+}
+
+.socal-login-btn img {
+    width: 32px;
+    height: 32px;
+}

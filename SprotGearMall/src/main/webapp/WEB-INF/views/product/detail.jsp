@@ -23,7 +23,8 @@
             <!-- 이미지 들어가는곳 -->
             <div class="col-md-6">
                 <div style="height: 400px;">
-                    <img src="<c:url value='/resources/img/product1.webp' />" alt="Product Image" class="img-fluid h-100">
+               
+                    <img src="https://storage.googleapis.com/edu-mall-img/${product.productImgPath }" alt="Product Image" class="img-fluid h-100">
                 </div>
             </div>
             <!-- 물건 정보 -->
@@ -70,11 +71,11 @@
         <div class="tab-content">
             <!-- 상품 설명 -->
             <div class="tab-pane container active" id="description">
-                상품 설명입니다
+                ${product.productContent }
             </div>
             <!-- 리뷰 -->
             <div class="tab-pane container fade" id="reviews">
-                별점 평균 : ${avg} <br>
+				별점 평균 : ${avg} <br>
                 전체 리뷰(${reviewCount}) <br>
                 <hr>
                 <c:forEach var="reviewList" items="${review}">
@@ -104,5 +105,46 @@
         <input type="hidden" id="memberId" name="memberId" value="${pageContext.request.userPrincipal.name}">
         <input type="submit" value="상품 삭제">
     </form>
+    
+<script type="text/javascript">
+    document.getElementById('addToCart').addEventListener('click', function () {
+    // 필요한 데이터 가져오기
+    var memberId = "${pageContext.request.userPrincipal.name}";
+    var productId = "${product.productId}";
+    var productPrice = "${product.productPrice}";
+    var productQuantity = '1';
+    var csrfToken = $("#csrfToken").val();
+
+    // 서버로 보낼 데이터 객체 생성
+    var obj = {
+      'memberId' : memberId,
+      'productId' : productId,
+      'productPrice' : productPrice,
+      'productQuantity' : productQuantity
+    };
+    console.log(obj);
+
+    // 제품을 장바구니에 추가하기 위해 서버로 AJAX 요청 보내기
+    $.ajax({
+      type: 'POST',
+      url: '../cart/cartlists', // 서버 엔드포인트와 일치하도록 URL 업데이트
+      headers : {
+			'Content-Type' : 'application/json',
+			'X-CSRF-TOKEN': csrfToken
+		},
+      data: JSON.stringify(obj),
+      contentType: 'application/json',
+      success: function (result) {
+    	console.log(result);
+    	if(result == 1) {
+        // 서버에서의 응답 처리 (예: 성공 메시지 표시)
+        alert('제품이 성공적으로 장바구니에 추가되었습니다.');
+    	} else {
+    	alert('에러');
+    	}
+      }
+    });
+  });
+</script>
 </body>
 </html>

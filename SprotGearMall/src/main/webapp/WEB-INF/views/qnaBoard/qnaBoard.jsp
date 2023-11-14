@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -14,6 +13,10 @@ table, th, td {
 	border-width : 1px;
 	text-align : center;
 }
+#hi{
+	width: 50%;
+
+}	
 
 ul {
 	list-style-type : none;
@@ -28,15 +31,15 @@ li {
 <title>Insert title here</title>
 </head>
 <body>
-
+<div align="left">
 	<h1>QNA 게시판입니다</h1>
 	
 	<input type="hidden" id="memberId" name="memberId" value="${memberId }">
 
 
-	<a href="qnaRegister"><input type="button" value="글 작성"></a>
+	<a align="left" href="qnaRegister"><input type="button" value="글 작성"></a>
 	<hr>
-	<table class="table table-striped table-hover">
+	<table id="hi" class="table table-striped table-hover" width="110">
 		<thead>
 			<tr>
 				<th>게시글번호</th>
@@ -59,7 +62,7 @@ li {
 			</c:forEach>
 		</tbody>
 	</table>
-	<nav aria-label="Page navigation example">
+	<nav id="nav" aria-label="Page navigation example">
 	<ul class="pagination">
 		<c:if test="${pageMaker.hasPrev }">
 			<li  class="page-item"><a  class="page-link" href="qnaBoard?page=${pageMaker.startPageNo - 1 }">이전</a></li>
@@ -71,9 +74,8 @@ li {
 		<c:if test="${pageMaker.hasNext }">
 			<li class="page-item"><a class="page-link" href="qnaBoard?page=${pageMaker.endPageNo + 1 }">다음</a></li>
 		</c:if>
-
 	</ul>
 	</nav>
-
+</div>
 </body>
 </html>
