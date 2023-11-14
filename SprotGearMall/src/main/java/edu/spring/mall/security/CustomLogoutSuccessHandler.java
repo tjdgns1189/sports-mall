@@ -15,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -61,9 +60,8 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 			
 		}
 		
-		
+		String accessToken;
 		if(registrationId.equals("naver")) {
-			String accessToken;
 			try {
 				accessToken = CookieUtil.getDecryptedCookieValue(request, "Token");
 				logger.info("Token" + accessToken);
@@ -81,7 +79,18 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 			return;
 		}
 		if(registrationId.equals("google")) {
-			
+			try {
+				accessToken = CookieUtil.getDecryptedCookieValue(request, "Token");
+				logger.info("Token" + accessToken);
+				JsonNode resultNode = deleteGoogleToken(accessToken, registrationId);
+				CookieUtil.deleteCookie(request, response, "Token");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+
+
 		}
 		
 
@@ -125,6 +134,25 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readTree(responseBody);
 
+	}
+	
+	private JsonNode deleteGoogleToken(String accessToken, String registrationId) 
+			throws JsonMappingException, JsonProcessingException {
+		logger.info("구글 토큰 삭제 요청");
+		logger.info("accessToken : " + accessToken);
+		ClientRegistration registration = social.findByRegistrationId(registrationId);
+		String clientId = registration.getClientId();
+		String clientSecret = registration.getClientSecret();
+		String baseurl = registration.getProviderDetails().getTokenUri();
+		String url = "https://accounts.google.com/o/oauth2/revoke?token=" + accessToken;
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+		
+		String responseBody =response.getBody();
+		logger.info("response : " + response);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readTree(responseBody);
 	}
 
 }
