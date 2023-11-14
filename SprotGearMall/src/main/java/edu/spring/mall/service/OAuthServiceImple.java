@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,6 +31,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -42,6 +44,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.spring.mall.security.CustomUserDetails;
+import edu.spring.mall.util.CookieUtil;
 @Service
 public class OAuthServiceImple implements OAuthService {
 	private final Logger logger = LoggerFactory.getLogger(OAuthServiceImple.class);
@@ -148,6 +151,8 @@ public class OAuthServiceImple implements OAuthService {
 		logger.info("시큐리티 로그인 수동으로 설정");
 		 Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 	        SecurityContextHolder.getContext().setAuthentication(authentication);
+	       
+
 
 	}
 
@@ -173,15 +178,29 @@ public class OAuthServiceImple implements OAuthService {
     public void saveToken(HttpServletRequest request, HttpServletResponse response, 
     		String registaionId, OAuth2AccessToken accessToken) throws IOException, ServletException {
 		logger.info("saveToken 호출");
-		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
 		
+		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
+		logger.info("principal.getName() : " + principal.getName());
 		  ClientRegistration registration = social.findByRegistrationId(registaionId);
 		    OAuth2AuthorizedClient authorizedClient 
 		    = new OAuth2AuthorizedClient(registration, principal.getName(), accessToken);
+		    
 		    authService.saveAuthorizedClient(authorizedClient, principal);
 		    
+	
+		    logger.info("현재 로그인중인 계정" + principal.getName());
 		    HttpSession session = request.getSession();
-            session.setAttribute("clientRegistrationId", registaionId);
+	        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+            
+	        Cookie cookie = new Cookie("registrationId", registaionId);
+            cookie.setPath("/");
+            cookie.setMaxAge(60*60*24);
+            response.addCookie(cookie);
+            try {
+				CookieUtil.createEncryptedCookie(response, "Token", accessToken.getTokenValue(), 60*60*24);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		    successHandler.onAuthenticationSuccess(request, response, principal);
 		    
 	}

@@ -84,6 +84,8 @@ public class OauthController {
         	//여기에 인증토큰 들어있음
         	OAuth2AccessToken tokenResponse = OAuth.getToken(COL_NAVER, code, state);
         	logger.info("tokenInfo: " + tokenResponse.getTokenValue());
+        	String accessToken = tokenResponse.getTokenValue();
+        	//여기에 유저정보 들어있음
         	JsonNode userNode = OAuth.getUserInfo("naver", tokenResponse);
             String resultcode = userNode.path("resultcode").asText();
             String message = userNode.path("message").asText();
