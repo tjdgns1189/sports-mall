@@ -1,13 +1,23 @@
 package edu.spring.mall.controller;
 
+import java.awt.image.BufferedImage;
+
+import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+import java.util.UUID;
+import java.nio.file.Files;
+import javax.imageio.ImageIO;
+import org.springframework.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +25,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.http.MediaType;
 
+
+import edu.spring.mall.domain.AttachImageVO;
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
@@ -25,6 +37,7 @@ import edu.spring.mall.pageutil.PageMaker;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
 import edu.spring.mall.service.ProductService;
+import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 @RequestMapping(value = "product")
@@ -38,8 +51,6 @@ public class ProductController {
 
 	@Autowired
 	private ProductDAO dao;
-	
-
 	
 	@Autowired
 	private LikesDAO likesDAO;
@@ -111,6 +122,10 @@ public class ProductController {
 	
 
 	}
+	
+
+	
+	
 	
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {

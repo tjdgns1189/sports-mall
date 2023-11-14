@@ -110,8 +110,8 @@ public class ProductServiceImple implements ProductService {
 	@Override
 	public List<ProductVO> readBySearchText(String searchText ,PageCriteria criteria) {
 		logger.info("serach() 호출");
-	 // return dao.select(String searchText ,PageCriteria criteria);
-		return null;
+		return dao.select(searchText , criteria);
+		
 	}
 	
 	

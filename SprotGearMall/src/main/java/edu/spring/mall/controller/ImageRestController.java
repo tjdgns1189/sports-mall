@@ -23,14 +23,14 @@ public class ImageRestController {
 	@Autowired
 	private ImageService service;
 	
-//	@PostMapping("upload")
-//	  public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-//        try {
-////            업로드기능 잠시 비활성화
-////            String response = service.uploadFile(file, bucketName);
-////            return ResponseEntity.status(HttpStatus.OK).body(response);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed: " + e.getMessage());
-//        }
-//    }
+	@PostMapping("upload")
+	  public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+        	String filename = file.getOriginalFilename();
+            String response = service.uploadFile(file, filename);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed: " + e.getMessage());
+        }
+    }
 }

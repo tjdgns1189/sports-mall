@@ -96,6 +96,9 @@ public class ProductDAOImple implements ProductDAO{
 	    paramMap.put("searchText", searchText);
 	    paramMap.put("criteria", criteria);
 	    return sqlSession.selectList(NAMESPACE + ".select_by_search_text", paramMap);
+	    
+	    
+	    
 	}
 
 

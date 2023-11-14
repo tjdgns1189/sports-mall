@@ -34,7 +34,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 						<div class="card h-100" onclick="location.href='detail?productId=${vo.productId}'">
 							<!-- 상품 이미지-->
 							<img class="card-img-top"
-								src="/mall/product/list/${vo.productImgPath }"  alt="이미지" />
+								src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }"  alt="이미지" />
 							<div class="text-center">
 								<!-- 상품 이름-->
 								<span class="fw-bolder">${vo.productName}</span><br>
