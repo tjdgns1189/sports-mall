@@ -9,10 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.spring.mall.domain.CartFormVO;
 import edu.spring.mall.domain.CartProductJoinVO;
+import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.persistence.CartDAO;
 import edu.spring.mall.service.CartService;
 import edu.spring.mall.service.ProductService;
@@ -32,6 +37,7 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
+	
 	@GetMapping("/cartlist")
 	public void cartlistGET(Model model, Principal principal) throws Exception {
 		String memberId = principal.getName();
@@ -40,11 +46,21 @@ public class CartController {
 		model.addAttribute("list", list);
 	}
 	
-//	@PostMapping("/cartlist")
-//	public String cartPost() {
-//		return "redirect:/cart/cartlist";
+//	@GetMapping("/payment")
+//	public String cartPayment(Model model, Principal principal) throws Exception {
+//		logger.info("cartPayment호출");
+//		String memberId = principal.getName();
+//		List<CartProductJoinVO> list = cartService.read(memberId);
+//		model.addAttribute("list", list);
+//		return "redirect:/product/payment";
 //	}
-//	
 	
+	@PostMapping("/update")
+	public String cartPost(CartVO cartVO) {
+	    logger.info("전송된 데이터@@@@@@@@@@@@: " + cartVO.toString());
+	    // 필요한 로직을 수행하세요.
+	    return "redirect:/product/payment?productId=1";
+	}
+
 	
 }

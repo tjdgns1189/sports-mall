@@ -10,10 +10,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row">
+	 <jsp:include page="../includes/mypage-sidebar.jsp" />
+
 	<input type="hidden" id="memberId" value="${pageContext.request.userPrincipal.name}">
 	<input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	 <c:if test="${not empty list}">
-	<div class="container mt-5">
+	 	<div class="col-md-9">
 		<c:forEach var="vo" items="${list }">
 			<div class="row mb-3">
 				<div class="col-md-2">
@@ -37,11 +41,14 @@
 		</c:forEach>
 	</div>
 	</c:if>
+	</div>
 	<c:if test="${empty list}">
 	<div class="container mt-5">
         <h2>찜 한 상품이 없어요</h2>
 	</div>
 	</c:if>
+	</div>
+	
 
 	<script type="text/javascript">
 	$(() => {

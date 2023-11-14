@@ -46,4 +46,10 @@ public class CartDAOImple implements CartDAO {
 		return sqlSession.delete(NAMESPACE + ".delete_by_cart_id", cartId);
 	}
 
+	@Override
+	public int update(CartVO vo) {
+		logger.info("update() 호출 : vo " + vo.toString());
+		return sqlSession.update(NAMESPACE + ".update", vo);
+	}
+
 }

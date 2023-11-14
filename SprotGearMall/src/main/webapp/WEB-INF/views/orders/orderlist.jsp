@@ -112,9 +112,8 @@ review-btn{
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
     
     </div>
+
 </body>
-
-
 
 
 	<script>

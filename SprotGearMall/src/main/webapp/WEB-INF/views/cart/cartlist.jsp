@@ -21,8 +21,11 @@
 
 <input type="hidden" id="memberId" value="${pageContext.request.userPrincipal.name}">
 <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
 <c:if test="${not empty list}">
 <div class="container mt-5">
+
+	<form action="update" method="POST">
     <c:forEach var="vo" items="${list }">
         <div class="row mb-3" id="cartmenu_${vo.cart.cartId}">
             <div class="col-md-2">
@@ -32,15 +35,20 @@
             <div class="col-md-7">
                 <h5>상품 명 : ${vo.product.productName}</h5>
                 <p>카테고리 : ${vo.product.productCategory }</p>
+                
+                <input type="hidden" name="cartId" value="${vo.cart.cartId}" readonly>
+                <input type="hidden" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly>
+                <input type="hidden" name="productId" value="${vo.product.productId}" readonly>
+                
                 <p>
-                   가격 : <input type="number" name="productPrice" value="${vo.product.productPrice }" id="productPrice_${vo.cart.cartId}" readonly="readonly">
+                   가격 : <input type="number" name="productPriceOne" value="${vo.product.productPrice }" id="productPrice_${vo.cart.cartId}" readonly="readonly">
                 </p>
                 <p>재고 : ${vo.product.productStock }</p>
                 <p>갯수 : 
-                    <input type="number" name="productQuantity" id="productQuantity_${vo.cart.cartId}" oninput="calculateTotalPrice('${vo.cart.cartId}')" min="1"><br>             
+                    <input type="number" name="productQuantity" id="productQuantity_${vo.cart.cartId}"value=${vo.cart.productQuantity } oninput="calculateTotalPrice('${vo.cart.cartId}')" min="1"><br>             
                 </p>
                 <p>총 가격 : 
-                    <input type="number" name="totalPrice" id="totalPrice_${vo.cart.cartId}" readonly="readonly">
+                    <input type="number" name="productPrice" id="totalPrice_${vo.cart.cartId}" value=${vo.cart.productPrice } readonly="readonly">
                 </p>                   
             </div>
             <div class="col-md-3">
@@ -49,6 +57,10 @@
             <hr>
         </div>
     </c:forEach>
+    <button type="submit" class="btn btn-primary btn-lg">결제하기</button>
+    </form>
+    
+    
 </div>
 </c:if>
 
@@ -56,9 +68,6 @@
 <h1>
     <p>총 상품금액</p>
     <input type="number" name="allTotalPrice" id="allTotalPrice" readonly="readonly"> 원&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="../product/payment?productId=1">
-    	<input type="submit" value="결제하기" style="background-color: white; font-size: 40px;">
-    </a>
 </h1>
 </div>
 
@@ -86,6 +95,11 @@ function updateAllTotalPrice() {
     // 결과를 allTotalPrice에 반영
     document.getElementById('allTotalPrice').value = total;
 }
+
+
+
+
+
 
 </script>
 

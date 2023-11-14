@@ -30,4 +30,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	where ${cartId} = #{cartId} 
 	 </delete>
 	 
+	 <update id="update">
+	 	update ${cart}
+	 	set ${productPrice} = #{productPrice}, ${productQuantity} = #{productQuantity}
+	 	where ${cartId} = #{cartId} 
+	 </update>
+	 
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.spring.mall.domain.NoticeVO;
+import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.persistence.NoticeDAO;
 @Service
 public class NoticeServiceImple implements NoticeService {
@@ -24,9 +25,9 @@ public class NoticeServiceImple implements NoticeService {
 	}
 
 	@Override
-	public List<NoticeVO> read() {
+	public List<NoticeVO> read(PageCriteria criteria) {
 		logger.info("read() 호출");
-		return dao.select();
+		return dao.select(criteria);
 	}
 
 	@Override
@@ -52,6 +53,13 @@ public class NoticeServiceImple implements NoticeService {
 		logger.info("read(noticeId)");
 		return dao.select(noticeId);
 		
+	}
+
+
+	@Override
+	public int getTotalCount() {
+		logger.info("getTotalCount호출");
+		return dao.count();
 	}
 
 }

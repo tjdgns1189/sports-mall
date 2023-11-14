@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.spring.mall.domain.NoticeVO;
+import edu.spring.mall.pageutil.PageCriteria;
+import edu.spring.mall.pageutil.PageMaker;
 import edu.spring.mall.service.NoticeService;
 
 @Controller
@@ -25,10 +27,24 @@ public class NoticeController {
 	
 	
 	@GetMapping("/noticeboard")
-	public void noticeGet(Model model) {
+	public void noticeGet(Model model,Integer page, Integer numsPerPage) {
 		logger.info("noticeGet호출");
-		List<NoticeVO> list = service.read();
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
+		List<NoticeVO> list = service.read(criteria);
 		model.addAttribute("list",list);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(service.getTotalCount());
+		pageMaker.setPageData();
+		logger.info("");
+		
+		model.addAttribute("pageMaker", pageMaker);
 	}
 	
 	@GetMapping("/register")

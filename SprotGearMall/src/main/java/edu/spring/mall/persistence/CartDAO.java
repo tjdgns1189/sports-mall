@@ -9,4 +9,5 @@ public interface CartDAO {
 	List<CartVO> select(String memberId);
 	CartVO select(int cartId);
 	int delete(int cartId);
+	int update(CartVO vo);
 }

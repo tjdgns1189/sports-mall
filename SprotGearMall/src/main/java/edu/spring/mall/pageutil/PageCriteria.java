@@ -1,12 +1,12 @@
 package edu.spring.mall.pageutil;
 
 public class PageCriteria {
-	private int page; 
-	private int numsPerPage; 
+	private int page;  //현재 페이지 번호
+	private int numsPerPage; // 한페이지의 게시글 수
 	
 	public PageCriteria() {
 		this.page = 1;
-		this.numsPerPage = 3;
+		this.numsPerPage = 5;
 	}
 	
 	public PageCriteria(int page, int numsPerPage) {

@@ -46,6 +46,7 @@ li {
     width: 50%;
 }
 
+
 #final {
 	border-bottom : 1px solid #ddd;
     width: 50%;
@@ -62,13 +63,10 @@ li {
 
 <body>
 
-
 <div class="container my-4">
     <div class="text-center mb-4">
         <h4>${pageContext.request.userPrincipal.name}님의 결제창</h4>
     </div>
-    
-
     <div class="row justify-content-center">
         <div class="col-md-8">
             <table class="table">
@@ -105,6 +103,7 @@ li {
                 </tbody>
             </table>
         </div>
+
     </div>
 
     <div class="row justify-content-center my-5">
@@ -180,7 +179,9 @@ li {
                 <input type="hidden" name="productQuantity" id="productQuantity1" readonly>
                 <input type="hidden" name="productPrice" id="productPrice1" readonly>
                 <button type="submit" class="btn btn-primary btn-lg">결제하기</button>
-                <button type="button" class="btn btn-secondary btn-lg">취소</button>  
+                <a href="/mall">
+                	<button type="button" class="btn btn-secondary btn-lg">취소</button>  
+                </a>
             </form>
         </div>
     </div>

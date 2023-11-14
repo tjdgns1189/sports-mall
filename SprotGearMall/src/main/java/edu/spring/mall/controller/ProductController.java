@@ -185,10 +185,5 @@ public class ProductController {
 		}
 	} // end delete()
 	
-	@GetMapping("/cart")
-	public String cartGET() {
-
-	    return "product/cart";
-	}
 
 } // end ProductController

@@ -26,6 +26,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	where ${noticeId} = #{noticeId}
 	 </select>
 	 
+	  <select id="paging" resultType="NoticeVO">
+	 select *
+	 from(
+	 	select rownum rn, a.* from(
+	 		select * from ${notice} order by ${noticeId} desc
+	 	)a
+	 ) where rn between #{start} and #{end}
+	 </select>
+	 
+	 
+	 <select id="select_count" resultType="Integer">
+	 	select count(*) from ${notice}
+	 </select>
+	 
 	 <update id="update">
 	 	update ${notice}
 	 	set ${noticeTitle} = #{noticeTitle},
