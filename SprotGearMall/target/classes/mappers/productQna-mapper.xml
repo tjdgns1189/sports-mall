@@ -9,6 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{prdQnaContent}, #{prdQnaCategory},#{prdQnaSecret},#{memberId},#{productId})
 	</insert>
 	
+	<select id="selectDetail" resultType="ProductQnaVO">
+		select * from ${prdQna_table}
+		where ${productId} = #{productid}
+		order by ${prdQnaCreatedDate} desc
+	</select>
 	
 
 

@@ -120,6 +120,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="memberId" value="member_id"/>
 		<property name="productId" value="product_id"/>
 		<property name="prdQnaCreatedDate" value="prd_qna_created_date"/>
+		<property name="prdQnaState" value="prd_qna_state"/>
 
 		
  	 </properties>

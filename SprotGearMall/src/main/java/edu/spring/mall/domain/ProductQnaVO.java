@@ -6,10 +6,13 @@ public class ProductQnaVO {
 	private int prdQnaId;
 	private String prdQnaContent;
 	private String prdQnaCategory;
-	private int prdQnaSeret;
+	private int prdQnaSecret;
 	private String memberId;
 	private int productId;
 	private Date prdQnaCreatedDate;
+	private String prdQnaState;
+	
+
 	public int getPrdQnaId() {
 		return prdQnaId;
 	}
@@ -28,12 +31,7 @@ public class ProductQnaVO {
 	public void setPrdQnaCategory(String prdQnaCategory) {
 		this.prdQnaCategory = prdQnaCategory;
 	}
-	public int getPrdQnaSeret() {
-		return prdQnaSeret;
-	}
-	public void setPrdQnaSeret(int prdQnaSeret) {
-		this.prdQnaSeret = prdQnaSeret;
-	}
+
 	public String getMemberId() {
 		return memberId;
 	}
@@ -52,23 +50,41 @@ public class ProductQnaVO {
 	public void setPrdQnaCreatedDate(Date prdQnaCreatedDate) {
 		this.prdQnaCreatedDate = prdQnaCreatedDate;
 	}
-	public ProductQnaVO(int prdQnaId, String prdQnaContent, String prdQnaCategory, int prdQnaSeret, String memberId,
-			int productId, Date prdQnaCreatedDate) {
-		this.prdQnaId = prdQnaId;
-		this.prdQnaContent = prdQnaContent;
-		this.prdQnaCategory = prdQnaCategory;
-		this.prdQnaSeret = prdQnaSeret;
-		this.memberId = memberId;
-		this.productId = productId;
-		this.prdQnaCreatedDate = prdQnaCreatedDate;
-	}
+
 	public ProductQnaVO() {}
+	public String getPrdQnaState() {
+		return prdQnaState;
+	}
+	public void setPrdQnaState(String prdQnaState) {
+		this.prdQnaState = prdQnaState;
+	}
+	public int getPrdQnaSecret() {
+		return prdQnaSecret;
+	}
+	public void setPrdQnaSecret(int prdQnaSecret) {
+		this.prdQnaSecret = prdQnaSecret;
+	}
 	@Override
 	public String toString() {
 		return "ProductQnaVO [prdQnaId=" + prdQnaId + ", prdQnaContent=" + prdQnaContent + ", prdQnaCategory="
-				+ prdQnaCategory + ", prdQnaSeret=" + prdQnaSeret + ", memberId=" + memberId + ", productId="
-				+ productId + ", prdQnaCreatedDate=" + prdQnaCreatedDate + "]";
+				+ prdQnaCategory + ", prdQnaSecret=" + prdQnaSecret + ", memberId=" + memberId + ", productId="
+				+ productId + ", prdQnaCreatedDate=" + prdQnaCreatedDate + ", prdQnaState=" + prdQnaState + "]";
 	}
+	public ProductQnaVO(int prdQnaId, String prdQnaContent, String prdQnaCategory, int prdQnaSecret, String memberId,
+			int productId, Date prdQnaCreatedDate, String prdQnaState) {
+		this.prdQnaId = prdQnaId;
+		this.prdQnaContent = prdQnaContent;
+		this.prdQnaCategory = prdQnaCategory;
+		this.prdQnaSecret = prdQnaSecret;
+		this.memberId = memberId;
+		this.productId = productId;
+		this.prdQnaCreatedDate = prdQnaCreatedDate;
+		this.prdQnaState = prdQnaState;
+	}
+
+
+
+
 	
 	
 	

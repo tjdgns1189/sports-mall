@@ -33,11 +33,12 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 	public List<ProductQnaVO> select() {
 		return null;
 	}
-
+	//디테일창에 보여줄거
 	@Override
 	public List<ProductQnaVO> select(int productId) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("select 호출(디테일)");
+		
+		return sqlSession.selectList(NAMESPACE + ".selectDetail", productId);
 	}
 
 	@Override

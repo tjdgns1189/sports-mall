@@ -29,11 +29,11 @@ public class ProductQnaServiceImple implements ProductQnaService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	//디테일 접근시
 	@Override
 	public List<ProductQnaVO> read(int productId) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("read(productId) 호출");
+		return dao.select(productId);
 	}
 
 	@Override

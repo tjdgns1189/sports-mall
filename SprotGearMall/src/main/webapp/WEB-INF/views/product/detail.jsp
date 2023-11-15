@@ -14,6 +14,15 @@
     <script>
         var isLiked = ${isLiked}; 
     </script>
+    <style type="text/css">
+   .small-column {
+    width: 10%; 
+}
+
+.large-column {
+    width: 60%;
+}
+    </style>
 </head>
 <body>
 
@@ -94,7 +103,34 @@
             </div>
             <!-- 상품 문의 -->
             <div class="tab-pane container fade" id="inquiry">
-                상품 문의 입니다
+            <table class="table">
+            	<thead>
+            	<tr>
+            	<th class="small-column">문의유형</th>
+            	<th class="small-column">답변상태</th>
+            	<th class="large-column">문의/답변</th>
+            	<th class="small-column">작성자</th>
+            	<th class="small-column">작성일</th>
+            	</tr>
+            	</thead>
+            	<tbody>
+            	<c:forEach var="qna" items="${qnaList }">
+            		<tr>
+            			<td>${qna.prdQnaCategory }</td>
+            			<c:if test="${qna.prdQnaState == 'Y'}" >
+            			<td><span class="state">완료</span></td>
+            			</c:if>
+            			<td><a href="#">${qna.prdQnaContent }</a></td>
+            			<td>${qna.memberId }</td>
+            			<td>${qna.prdQnaCreatedDate }</td>
+            		</tr>
+            		</c:forEach>
+            	</tbody>
+            </table>
+            <div style="text-align : right;">
+           		<button class="btn btn-outline-secondary">고객센터 문의하기</button>
+           		<button class="btn btn-secondary" onclick="openPrdQnaPopup()">상품 문의하기</button>
+           	</div>
             </div>
         </div>
     </div>
@@ -145,6 +181,18 @@
       }
     });
   });
+    
+
+   
+    function openPrdQnaPopup() {
+    	var productId = $('#productId').val();
+        var url = "/mall/product/prdQna?productId="+ productId;
+        var windowName = "상품 문의하기";
+        var windowSize = "width=800, height=600";
+        console.log("productId :", productId );
+
+        window.open(url, windowName, windowSize);
+    }
 </script>
 </body>
 </html>

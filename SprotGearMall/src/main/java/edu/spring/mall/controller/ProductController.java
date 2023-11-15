@@ -13,18 +13,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.spring.mall.domain.LikesVO;
+import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
+import edu.spring.mall.service.ProductQnaService;
 import edu.spring.mall.service.ProductService;
 
 @Controller
@@ -41,7 +44,8 @@ public class ProductController {
 	@Autowired
 	private ProductDAO dao;
 	
-
+	@Autowired
+	private ProductQnaService qnaService;
 	
 	@Autowired
 	private LikesDAO likesDAO;
@@ -145,7 +149,9 @@ public class ProductController {
 			
 		}
 		model.addAttribute("isLiked", isLiked);
-
+		List<ProductQnaVO> qnaList = qnaService.read(productId);
+		model.addAttribute("qnaList",qnaList);
+	
 	} // end detail()
 
 	@GetMapping("/update")
@@ -189,6 +195,13 @@ public class ProductController {
 	public String cartGET() {
 
 	    return "product/cart";
+	}
+	
+	
+	@GetMapping("/prdQna")
+	public void prdQnaGET(Model model, int productId) {
+		logger.info("prdQnaGET 호출");
+		model.addAttribute("productId", productId);
 	}
 
 } // end ProductController
