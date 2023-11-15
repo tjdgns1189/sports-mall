@@ -40,7 +40,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
       </form>
           <!--소셜 로그인 넣을거임-->
-    <div>
+    <div class="container" style="text-align : center;">
         <a href="/mall/oauth/naverOAuth" >
             <button class="socal-login-btn">
                 <img src="<c:url value='/resources/img/naver-btn.png' />" alt="네이버로그인" />
