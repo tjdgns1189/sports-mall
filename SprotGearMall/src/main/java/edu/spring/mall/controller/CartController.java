@@ -46,7 +46,7 @@ public class CartController {
 		model.addAttribute("list", list);
 	}
 	
-//	@GetMapping("/payment")
+//	@GetMapping("/update")
 //	public String cartPayment(Model model, Principal principal) throws Exception {
 //		logger.info("cartPayment호출");
 //		String memberId = principal.getName();
@@ -55,11 +55,14 @@ public class CartController {
 //		return "redirect:/product/payment";
 //	}
 	
-	@PostMapping("/update")
-	public String cartPost(CartVO cartVO) {
+	@PostMapping("/payment")
+	public String cartPost(Model model, CartVO cartVO) throws Exception {
 	    logger.info("전송된 데이터@@@@@@@@@@@@: " + cartVO.toString());
 	    // 필요한 로직을 수행하세요.
-	    return "redirect:/product/payment?productId=1";
+	    String memberId = cartVO.getMemberId();
+		List<CartProductJoinVO> list = cartService.read(memberId);
+		model.addAttribute("list", list);
+	    return "redirect:/product/payment";
 	}
 
 	

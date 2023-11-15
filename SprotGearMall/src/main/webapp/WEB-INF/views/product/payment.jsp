@@ -67,6 +67,8 @@ li {
     <div class="text-center mb-4">
         <h4>${pageContext.request.userPrincipal.name}님의 결제창</h4>
     </div>
+    
+    <c:if test="${not empty vo}">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <table class="table">
@@ -103,8 +105,55 @@ li {
                 </tbody>
             </table>
         </div>
-
     </div>
+    </c:if>
+    
+    
+    
+    
+    <c:if test="${not empty list}">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2">상품정보</th>
+                        <th>상품금액</th>
+                        <th>구매갯수</th>
+                        <th>배송비</th>
+                        <th>상품 총 가격</th>
+                    </tr>    
+                </thead>
+                <tbody>
+                <c:forEach var="vo" items="${list }">
+                    <tr class="align-middle">
+                        <td>
+                            <img class="img-thumbnail" src="https://storage.googleapis.com/edu-mall-img/${vo.product.productImgPath }" alt="Product Image" style="width: 150px; height: auto;" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control-plaintext" name="productName" value="${vo.product.productName}" readonly>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control-plaintext text-center" name="productPrice" value="${vo.product.productPrice}" id="productPrice" readonly>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="productQuantity" id="productQuantity" value="1" oninput="calculateTotalPrice()" min="1">
+                        </td>
+                        <td>
+                            배송비 무료
+                        </td>
+                        <td>
+                            <input type="text" class="form-control-plaintext text-center" name="totalPrice" id="totalPrice" value="${vo.product.productPrice}" readonly>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </c:if>
+    
+    
 
     <div class="row justify-content-center my-5">
         <div class="col-md-8">
