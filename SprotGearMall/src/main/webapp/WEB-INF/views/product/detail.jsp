@@ -16,11 +16,15 @@
     </script>
     <style type="text/css">
    .small-column {
-    width: 10%; 
+    width: 12%; 
 }
 
 .large-column {
-    width: 60%;
+    width: 52%;
+}
+
+.hidden-row {
+    display: none;
 }
     </style>
 </head>
@@ -115,20 +119,43 @@
             	</thead>
             	<tbody>
             	<c:forEach var="qna" items="${qnaList }">
-            		<tr>
+   				 <tr data-target="#accordion${qna.prdQnaId}" class="accordion-toggle">
             			<td>${qna.prdQnaCategory }</td>
             			<c:if test="${qna.prdQnaState == 'Y'}" >
-            			<td><span class="state">완료</span></td>
+            			<td><span class="state">답변완료</span></td>
             			</c:if>
-            			<td><a href="#">${qna.prdQnaContent }</a></td>
-            			<td>${qna.memberId }</td>
-            			<td>${qna.prdQnaCreatedDate }</td>
+            			<c:if test="${qna.prdQnaState == 'N'}" >
+            			<td><span class="state">미답변</span></td>
+            			</c:if>
+            			<c:if test="${qna.prdQnaSecret == 0 }">
+            			<td>${qna.prdQnaContent }</td>
+            			</c:if>
+            			<c:if test="${qna.prdQnaSecret == 1 }">
+            			<td>비밀 글 입니다</td>
+            			</c:if>
+            			<td>${fn:substring(qna.memberId, 0, 3)} 
+            			<c:forEach begin="1" end="${fn:length(qna.memberId) - 3}" var="i">*</c:forEach></td>
+            			<fmt:formatDate value="${qna.prdQnaCreatedDate }" pattern="yy.MM.dd" var="qnaDate"/>
+            			<td>${qnaDate }</td>
             		</tr>
+            		   <tr class="hidden-row">
+        <td colspan="5">
+            <div id="accordion${qna.prdQnaId}" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <!-- Q&A 상세 내용 -->
+                    ${qna.prdQnaContent}<br><br>
+                   <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    	<button class="btn btn-danger reviewDelete" style="text-align : center;" data-review-id="${reviewList.reviewId }">삭제</button>
+					</sec:authorize>    
+                </div>
+            </div>
+        </td>
+    </tr>
             		</c:forEach>
             	</tbody>
             </table>
             <div style="text-align : right;">
-           		<button class="btn btn-outline-secondary">고객센터 문의하기</button>
+           		<button class="btn btn-outline-secondary" onclick="location.href='/mall/qnaBoard/qnaBoard'">고객센터 문의하기</button>
            		<button class="btn btn-secondary" onclick="openPrdQnaPopup()">상품 문의하기</button>
            	</div>
             </div>
@@ -193,6 +220,23 @@
 
         window.open(url, windowName, windowSize);
     }
+    
+    document.querySelectorAll('.accordion-toggle').forEach(function(row) {
+        row.addEventListener('click', function() {
+            var targetId = this.getAttribute('data-target');
+            var accordion = document.querySelector(targetId);
+            var accordionRow = accordion.closest('tr'); // 아코디언 컨텐츠를 담고 있는 <tr> 요소 찾기
+            accordion.classList.toggle('show');
+
+            // 아코디언이 열리거나 닫힐 때 hidden-row 클래스를 토글
+            if (accordion.classList.contains('show')) {
+                accordionRow.classList.remove('hidden-row');
+            } else {
+                accordionRow.classList.add('hidden-row');
+            }
+        });
+    });
+
 </script>
 </body>
 </html>
