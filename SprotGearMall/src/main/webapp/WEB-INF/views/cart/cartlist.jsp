@@ -25,7 +25,7 @@
 <c:if test="${not empty list}">
 <div class="container mt-5">
 
-	<form action="payment" method="POST">
+	<form action="../product/payment" method="POST">
     <c:forEach var="vo" items="${list }">
         <div class="row mb-3" id="cartmenu_${vo.cart.cartId}">
             <div class="col-md-2">

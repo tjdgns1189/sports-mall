@@ -55,15 +55,7 @@ public class CartController {
 //		return "redirect:/product/payment";
 //	}
 	
-	@PostMapping("/payment")
-	public String cartPost(Model model, CartVO cartVO) throws Exception {
-	    logger.info("전송된 데이터@@@@@@@@@@@@: " + cartVO.toString());
-	    // 필요한 로직을 수행하세요.
-	    String memberId = cartVO.getMemberId();
-		List<CartProductJoinVO> list = cartService.read(memberId);
-		model.addAttribute("list", list);
-	    return "redirect:/product/payment";
-	}
+
 
 	
 }

@@ -64,11 +64,12 @@ li {
 <body>
 
 <div class="container my-4">
+    
+    
+    <c:if test="${not empty vo}">
     <div class="text-center mb-4">
         <h4>${pageContext.request.userPrincipal.name}님의 결제창</h4>
     </div>
-    
-    <c:if test="${not empty vo}">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <table class="table">
@@ -112,6 +113,9 @@ li {
     
     
     <c:if test="${not empty list}">
+    <div class="text-center mb-4">
+        <h4>${vo.cart.memberId}님의 결제창</h4>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <table class="table">

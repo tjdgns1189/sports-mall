@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.spring.mall.domain.CartProductJoinVO;
+import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
@@ -25,6 +27,7 @@ import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
+import edu.spring.mall.service.CartService;
 import edu.spring.mall.service.ProductService;
 
 @Controller
@@ -41,7 +44,8 @@ public class ProductController {
 	@Autowired
 	private ProductDAO dao;
 	
-
+	@Autowired
+	private CartService cartService;
 	
 	@Autowired
 	private LikesDAO likesDAO;
@@ -77,6 +81,20 @@ public class ProductController {
 		logger.info("paymentGET() 호출");
 		ProductVO vo = dao.selectById(productId);
 		model.addAttribute("vo", vo);
+		
+//		if(cart)
+//			
+//		if(direct)
+	}
+	
+	@PostMapping("/payment")
+	public void cartPost(Model model, CartVO cartVO) throws Exception {
+	    logger.info("Cart에서 전송된 데이터: " + cartVO.toString());
+	    // 필요한 로직을 수행하세요.
+	    String memberId = cartVO.getMemberId();
+	    logger.info("paymnet에서 memberId는 : " + memberId);
+		List<CartProductJoinVO> list = cartService.read(memberId);
+		model.addAttribute("list", list);
 	}
 
 	@GetMapping("/register")

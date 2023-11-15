@@ -26,8 +26,8 @@
 	<http pattern="/orders/delete" security="none"/>
 	<http pattern="/upload" security="none"/>
 	<http pattern="/notice/uploadImg**" security="none"/>
-	<http pattern="/cart/update" security="none"/>
-	<http pattern="/cart/payment" security="none"/>
+	<http pattern="/product/payment" security="none"/>
+	
 
 	
 
