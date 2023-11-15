@@ -8,6 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <title>${product.productName}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="<c:url value='/resources/css/detail.css' />" rel="stylesheet">
     <script src="<c:url value='/resources/js/detail.js' />"></script>
@@ -127,11 +128,11 @@
             			<c:if test="${qna.prdQnaState == 'N'}" >
             			<td><span class="state">미답변</span></td>
             			</c:if>
-            			<c:if test="${qna.prdQnaSecret == 0 }">
+            			<c:if test="${qna.prdQnaSecret == 0 ||(${authorities.}) ">
             			<td>${qna.prdQnaContent }</td>
             			</c:if>
             			<c:if test="${qna.prdQnaSecret == 1 }">
-            			<td>비밀 글 입니다</td>
+            			<td class="no-click"><i class="fa-solid fa-lock"></i>비밀글입니다</td>
             			</c:if>
             			<td>${fn:substring(qna.memberId, 0, 3)} 
             			<c:forEach begin="1" end="${fn:length(qna.memberId) - 3}" var="i">*</c:forEach></td>
@@ -145,7 +146,8 @@
                     <!-- Q&A 상세 내용 -->
                     ${qna.prdQnaContent}<br><br>
                    <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    	<button class="btn btn-danger reviewDelete" style="text-align : center;" data-review-id="${reviewList.reviewId }">삭제</button>
+                        <button class="btn btn-secondary "   data-review-id="${qna.prdQnaId }">삭제</button>
+                    	<button class="btn btn-danger reviewDelete"  data-review-id="${qna.prdQnaId }">삭제</button>
 					</sec:authorize>    
                 </div>
             </div>
@@ -223,12 +225,16 @@
     
     document.querySelectorAll('.accordion-toggle').forEach(function(row) {
         row.addEventListener('click', function() {
+            // .no-click 클래스를 가진 요소의 경우 이벤트 실행 안 함
+            if (this.classList.contains('no-click')) {
+                return; // 이벤트 실행 중단
+            }
+
             var targetId = this.getAttribute('data-target');
             var accordion = document.querySelector(targetId);
-            var accordionRow = accordion.closest('tr'); // 아코디언 컨텐츠를 담고 있는 <tr> 요소 찾기
+            var accordionRow = accordion.closest('tr');
             accordion.classList.toggle('show');
 
-            // 아코디언이 열리거나 닫힐 때 hidden-row 클래스를 토글
             if (accordion.classList.contains('show')) {
                 accordionRow.classList.remove('hidden-row');
             } else {

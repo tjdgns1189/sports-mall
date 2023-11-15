@@ -2,6 +2,7 @@ package edu.spring.mall.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -10,10 +11,12 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +30,7 @@ import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
+import edu.spring.mall.security.CustomUserDetails;
 import edu.spring.mall.service.ProductQnaService;
 import edu.spring.mall.service.ProductService;
 
@@ -151,6 +155,12 @@ public class ProductController {
 		model.addAttribute("isLiked", isLiked);
 		List<ProductQnaVO> qnaList = qnaService.read(productId);
 		model.addAttribute("qnaList",qnaList);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		CustomUserDetails user = (CustomUserDetails) auth.getDetails();
+		
+	    model.addAttribute("authorities", authorities);
+	    model.addAttribute("principal", user.getName());
 	
 	} // end detail()
 
