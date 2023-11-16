@@ -18,10 +18,30 @@
     <style type="text/css">
    .small-column {
     width: 12%; 
+   
+}
+
+.table-head tr th{
+text-align: center;
+
+}
+.my-column{
+ white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.accordion-content {
+
 }
 
 .large-column {
     width: 52%;
+
+}
+
+.pre-line {
+    white-space: pre-line;
 }
 
 .hidden-row {
@@ -107,9 +127,9 @@
                 </c:forEach>
             </div>
             <!-- 상품 문의 -->
-            <div class="tab-pane container fade" id="inquiry">
+            <div class="tab-pane container fade my-column" id="inquiry">
             <table class="table">
-            	<thead>
+            	<thead class= "table-head">
             	<tr>
             	<th class="small-column">문의유형</th>
             	<th class="small-column">답변상태</th>
@@ -121,32 +141,44 @@
             	<tbody>
             	<c:forEach var="qna" items="${qnaList }">
    				 <tr data-target="#accordion${qna.prdQnaId}" class="accordion-toggle">
-            			<td>${qna.prdQnaCategory }</td>
+            			<td style="text-align: center;">${qna.prdQnaCategory }</td>
             			<c:if test="${qna.prdQnaState == 'Y'}" >
-            			<td><span class="state">답변완료</span></td>
+            			<td style="text-align: center;"><span class="state">답변완료</span></td>
             			</c:if>
             			<c:if test="${qna.prdQnaState == 'N'}" >
-            			<td><span class="state">미답변</span></td>
+            			<td style="text-align: center;"><span class="state">미답변</span></td>
             			</c:if>
-            			<c:if test="${qna.prdQnaSecret == 0 ||(${authorities.}) ">
-            			<td>${qna.prdQnaContent }</td>
-            			</c:if>
-            			<c:if test="${qna.prdQnaSecret == 1 }">
-            			<td class="no-click"><i class="fa-solid fa-lock"></i>비밀글입니다</td>
-            			</c:if>
+            			 <c:choose>
+        					<c:when test="${qna.prdQnaSecret == 0}">
+           					 <td class="accordion-content">${qna.prdQnaContent}</td>
+        					</c:when>
+        					<c:when test="${qna.prdQnaSecret == 1 && (isAdmin || qna.memberId == principal)}">
+            				<td><i class="fa-solid fa-lock-open accordion-content"></i>${qna.prdQnaContent}</td>
+        					</c:when>
+       						 <c:otherwise>
+            				<td class="no-click accordion-content"><i class="fa-solid fa-lock"></i>비밀글입니다</td>
+        					</c:otherwise>
+    					</c:choose>
+    					<c:choose>
+    					<c:when test="${qna.memberId == principal }">
+    					<td>${qna.memberId }</td>
+    					</c:when>
+    					<c:otherwise>
             			<td>${fn:substring(qna.memberId, 0, 3)} 
             			<c:forEach begin="1" end="${fn:length(qna.memberId) - 3}" var="i">*</c:forEach></td>
+            			</c:otherwise>
+            			</c:choose>
             			<fmt:formatDate value="${qna.prdQnaCreatedDate }" pattern="yy.MM.dd" var="qnaDate"/>
-            			<td>${qnaDate }</td>
+            			<td style="text-align: center;">${qnaDate }</td>
             		</tr>
             		   <tr class="hidden-row">
         <td colspan="5">
             <div id="accordion${qna.prdQnaId}" class="accordion-collapse collapse">
-                <div class="accordion-body">
+                <div class="accordion-body pre-line">
                     <!-- Q&A 상세 내용 -->
                     ${qna.prdQnaContent}<br><br>
                    <sec:authorize access="hasRole('ROLE_ADMIN')">
-                        <button class="btn btn-secondary "   data-review-id="${qna.prdQnaId }">삭제</button>
+                        <button class="btn btn-secondary" data-review-id="${qna.prdQnaId }">답변</button>
                     	<button class="btn btn-danger reviewDelete"  data-review-id="${qna.prdQnaId }">삭제</button>
 					</sec:authorize>    
                 </div>
@@ -171,78 +203,6 @@
         <input type="submit" value="상품 삭제">
     </form>
     
-<script type="text/javascript">
-    document.getElementById('addToCart').addEventListener('click', function () {
-    // 필요한 데이터 가져오기
-    var memberId = "${pageContext.request.userPrincipal.name}";
-    var productId = "${product.productId}";
-    var productPrice = "${product.productPrice}";
-    var productQuantity = '1';
-    var csrfToken = $("#csrfToken").val();
 
-    // 서버로 보낼 데이터 객체 생성
-    var obj = {
-      'memberId' : memberId,
-      'productId' : productId,
-      'productPrice' : productPrice,
-      'productQuantity' : productQuantity
-    };
-    console.log(obj);
-
-    // 제품을 장바구니에 추가하기 위해 서버로 AJAX 요청 보내기
-    $.ajax({
-      type: 'POST',
-      url: '../cart/cartlists', // 서버 엔드포인트와 일치하도록 URL 업데이트
-      headers : {
-			'Content-Type' : 'application/json',
-			'X-CSRF-TOKEN': csrfToken
-		},
-      data: JSON.stringify(obj),
-      contentType: 'application/json',
-      success: function (result) {
-    	console.log(result);
-    	if(result == 1) {
-        // 서버에서의 응답 처리 (예: 성공 메시지 표시)
-        alert('제품이 성공적으로 장바구니에 추가되었습니다.');
-    	} else {
-    	alert('에러');
-    	}
-      }
-    });
-  });
-    
-
-   
-    function openPrdQnaPopup() {
-    	var productId = $('#productId').val();
-        var url = "/mall/product/prdQna?productId="+ productId;
-        var windowName = "상품 문의하기";
-        var windowSize = "width=800, height=600";
-        console.log("productId :", productId );
-
-        window.open(url, windowName, windowSize);
-    }
-    
-    document.querySelectorAll('.accordion-toggle').forEach(function(row) {
-        row.addEventListener('click', function() {
-            // .no-click 클래스를 가진 요소의 경우 이벤트 실행 안 함
-            if (this.classList.contains('no-click')) {
-                return; // 이벤트 실행 중단
-            }
-
-            var targetId = this.getAttribute('data-target');
-            var accordion = document.querySelector(targetId);
-            var accordionRow = accordion.closest('tr');
-            accordion.classList.toggle('show');
-
-            if (accordion.classList.contains('show')) {
-                accordionRow.classList.remove('hidden-row');
-            } else {
-                accordionRow.classList.add('hidden-row');
-            }
-        });
-    });
-
-</script>
 </body>
 </html>

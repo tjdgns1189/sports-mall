@@ -156,11 +156,18 @@ public class ProductController {
 		List<ProductQnaVO> qnaList = qnaService.read(productId);
 		model.addAttribute("qnaList",qnaList);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-		CustomUserDetails user = (CustomUserDetails) auth.getDetails();
+		String memberId =auth.getName();
+		boolean isAdmin = false;
+		for (GrantedAuthority authority : auth.getAuthorities()) {
+		    if ("ROLE_ADMIN".equals(authority.getAuthority())) {
+		        isAdmin = true;
+		        break;
+		    }
+		}
 		
-	    model.addAttribute("authorities", authorities);
-	    model.addAttribute("principal", user.getName());
+		
+	    model.addAttribute("isAdmin", isAdmin);
+	    model.addAttribute("principal", memberId);
 	
 	} // end detail()
 
@@ -205,13 +212,6 @@ public class ProductController {
 	public String cartGET() {
 
 	    return "product/cart";
-	}
-	
-	
-	@GetMapping("/prdQna")
-	public void prdQnaGET(Model model, int productId) {
-		logger.info("prdQnaGET 호출");
-		model.addAttribute("productId", productId);
 	}
 
 } // end ProductController

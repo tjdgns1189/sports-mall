@@ -23,22 +23,25 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 	@Override
 	public int insert(ProductQnaVO vo) {
 		logger.info("insert");
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String memberId = authentication.getName();
-		vo.setMemberId(memberId);
 		return sqlSession.insert(NAMESPACE + ".insert",vo);
 	}
 	//관리자페이지에 보여줄거
 	@Override
 	public List<ProductQnaVO> select() {
-		return null;
+		logger.info("select 관리자용");
+		return sqlSession.selectList(NAMESPACE + ".select");
 	}
 	//디테일창에 보여줄거
 	@Override
 	public List<ProductQnaVO> select(int productId) {
 		logger.info("select 호출(디테일)");
-		
 		return sqlSession.selectList(NAMESPACE + ".selectDetail", productId);
+	}
+	//유저 개인 문의
+	@Override
+	public List<ProductQnaVO> select(String memberId) {
+		logger.info("select호출(유저 문의)");
+		return sqlSession.selectList(NAMESPACE + ".select_by_memberId" , memberId);
 	}
 
 	@Override
@@ -48,15 +51,16 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 	}
 
 	@Override
-	public int update(int prdQnaId, ProductQnaVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int update(ProductQnaVO vo) {
+		logger.info("update 호출");
+		return sqlSession.update(NAMESPACE +".update", vo);
 	}
 
 	@Override
 	public int delete(int prdQnaId) {
-		// TODO Auto-generated method stub
-		return 0;
+		logger.info("delete 호출");
+		return sqlSession.delete(NAMESPACE + ".delete", prdQnaId);
 	}
+
 
 }

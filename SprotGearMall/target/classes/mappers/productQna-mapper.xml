@@ -15,6 +15,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by ${prdQnaCreatedDate} desc
 	</select>
 	
+	<select id="select_by_memberId" resultType="ProductQnaVO">
+		select * from ${prdQna_table}
+		where ${memberId} = #{memberId}
+		order by ${prdQnaCreatedDate} desc
+	</select>
+	
+	<select id="select" resultType="ProductQnaVO">
+		select * from ${prdQna_table}
+		order by ${prdQnaCreatedDate} desc
+	</select>
+	
+	<update id="update">
+	update ${prdQna_table}
+	set ${prdQnaCategory} = #{prdQnaCategory}.
+	${prdQnaContent} = #{prdQnaContent}
+	</update>
+	
+	<delete id="delete">
+	delete ${prdQna_table}
+	where ${prdQnaId} = #{prdQndId}
+	</delete>
+	
 
 
 </mapper>

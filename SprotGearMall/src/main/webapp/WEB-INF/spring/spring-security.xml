@@ -73,7 +73,7 @@
 				
 			<logout
 				logout-url="/logout"
-				success-handler-ref="logoutSuccessHandler"
+            	logout-success-url="/" 
 				delete-cookies="JSESSIONID, remember-me"/>
 				
 		   <oauth2-login authentication-success-handler-ref="accessSuccessHandler"/>

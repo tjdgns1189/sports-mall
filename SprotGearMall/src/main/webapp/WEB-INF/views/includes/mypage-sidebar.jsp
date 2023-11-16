@@ -6,5 +6,7 @@
         <a href="${pageContext.request.contextPath}/member/likes" class="list-group-item list-group-item-action">찜한 상품</a>
         <a href="${pageContext.request.contextPath}/member/reviewList" class="list-group-item list-group-item-action">리뷰 관리</a>
         <a href="${pageContext.request.contextPath}/member/mypage" class="list-group-item list-group-item-action">내 정보</a>
+        <a href="${pageContext.request.contextPath}/member/myqna" class="list-group-item list-group-item-action">문의 확인</a>
+        
     </div>
 </div>

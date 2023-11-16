@@ -28,10 +28,12 @@ public class ProductQnaRestController {
 		logger.info("prdQnaPost호출");
 		String result = "";
 	    String success = "{\"result\":\"success\"}";
+
 		if(vo == null) {
 			logger.info("vo가 null임");
 		    return new ResponseEntity<String>(result,HttpStatus.BAD_REQUEST);
 		}
+
 			int dbinsert = service.create(vo);
 			if(dbinsert == 1) {
 				result = success;
