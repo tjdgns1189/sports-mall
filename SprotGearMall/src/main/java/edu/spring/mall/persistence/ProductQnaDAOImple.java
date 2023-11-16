@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.domain.ProductVO;
+import edu.spring.mall.pageutil.PageCriteria;
 @Repository
 public class ProductQnaDAOImple implements ProductQnaDAO {
 	private final Logger logger = LoggerFactory.getLogger(ProductQnaDAOImple.class);
@@ -33,7 +34,7 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 	}
 	//디테일창에 보여줄거
 	@Override
-	public List<ProductQnaVO> select(int productId) {
+	public List<ProductQnaVO> select(int productId, PageCriteria criteria) {
 		logger.info("select 호출(디테일)");
 		return sqlSession.selectList(NAMESPACE + ".selectDetail", productId);
 	}
@@ -43,11 +44,12 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 		logger.info("select호출(유저 문의)");
 		return sqlSession.selectList(NAMESPACE + ".select_by_memberId" , memberId);
 	}
-
+	
+	//수정시 값 가져올거
 	@Override
-	public ProductVO selectDetail(int prdQnaId) {
-		// TODO Auto-generated method stub
-		return null;
+	public ProductQnaVO selectDetail(int prdQnaId) {
+		logger.info("select 호출(업데이트용)");
+		return sqlSession.selectOne(NAMESPACE + ".select_by_qnaId", prdQnaId);
 	}
 
 	@Override

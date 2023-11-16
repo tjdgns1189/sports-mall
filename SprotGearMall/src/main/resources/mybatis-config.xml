@@ -126,7 +126,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
  	 </properties>
 	 
 	 
-	 
+
 	 <!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->
 	 <settings>
 	 	<setting name="mapUnderscoreToCamelCase" value="true"></setting>

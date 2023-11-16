@@ -21,21 +21,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by ${prdQnaCreatedDate} desc
 	</select>
 	
+	<select id="select_by_qnaId" resultType="ProductQnaVO">
+		select * from ${prdQna_table}
+		where ${prdQnaId} = #{prdQnaId}
+		
+	</select>
+	
 	<select id="select" resultType="ProductQnaVO">
 		select * from ${prdQna_table}
 		order by ${prdQnaCreatedDate} desc
 	</select>
 	
 	<update id="update">
-	update ${prdQna_table}
-	set ${prdQnaCategory} = #{prdQnaCategory}.
-	${prdQnaContent} = #{prdQnaContent}
+    update ${prdQna_table}
+    	set ${prdQnaCategory} = #{prdQnaCategory},
+        ${prdQnaContent} = #{prdQnaContent},
+        ${prdQnaSecret} = #{prdQnaSecret}
+    	where ${prdQnaId} = #{prdQnaId}
 	</update>
 	
 	<delete id="delete">
 	delete ${prdQna_table}
 	where ${prdQnaId} = #{prdQndId}
 	</delete>
+	
+	<select id="paging" resultType="ProductQnaVO">
+	 select ${prdQnaId}, ${prdQnaCategory}, ${prdQnaContent}, ${prdQnaSecret}, ${memberId}, ${productId}, ${prdQnaCreatedDate}, ${prdQnaState}
+	 from(
+	 	select rownum rn, a.* from(
+	 		select * from ${prdQna_table} order by ${prdQnaCreatedDate} desc
+	 	)a
+	 ) where rn between #{start} and #{end}
+	 </select>
 	
 
 

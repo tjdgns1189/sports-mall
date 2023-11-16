@@ -47,6 +47,12 @@ text-align: center;
 .hidden-row {
     display: none;
 }
+
+.page-item.active .page-link {
+    background-color: #007bff; 
+    color: white; 
+    font-weight: bold;
+}
     </style>
 </head>
 <body>
@@ -178,6 +184,7 @@ text-align: center;
                     <!-- Q&A 상세 내용 -->
                     ${qna.prdQnaContent}<br><br>
                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                   <!-- 대댓글 기능 -->
                         <button class="btn btn-secondary" data-review-id="${qna.prdQnaId }">답변</button>
                     	<button class="btn btn-danger reviewDelete"  data-review-id="${qna.prdQnaId }">삭제</button>
 					</sec:authorize>    
@@ -192,6 +199,16 @@ text-align: center;
            		<button class="btn btn-outline-secondary" onclick="location.href='/mall/qnaBoard/qnaBoard'">고객센터 문의하기</button>
            		<button class="btn btn-secondary" onclick="openPrdQnaPopup()">상품 문의하기</button>
            	</div>
+           	<!-- 버튼 배치 -->
+           	<nav id="nav">
+				<ul class="pagination justify-content-center">
+					<li  class="page-item"><a class="page-link" href="#">이전</a></li>
+					<li class="page-item active"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>	
+					<li class="page-item"><a class="page-link" href="#">3</a></li>	
+					<li class="page-item"><a class="page-link" href="#">다음</a></li>
+				</ul>
+			</nav>
             </div>
         </div>
     </div>
@@ -203,6 +220,98 @@ text-align: center;
         <input type="submit" value="상품 삭제">
     </form>
     
+<script type="text/javascript">
+    document.getElementById('addToCart').addEventListener('click', function () {
+    // 필요한 데이터 가져오기
+    var memberId = "${pageContext.request.userPrincipal.name}";
+    var productId = "${product.productId}";
+    var productPrice = "${product.productPrice}";
+    var productQuantity = '1';
+    var csrfToken = $("#csrfToken").val();
 
+    // 서버로 보낼 데이터 객체 생성
+    var obj = {
+      'memberId' : memberId,
+      'productId' : productId,
+      'productPrice' : productPrice,
+      'productQuantity' : productQuantity
+    };
+    console.log(obj);
+
+    // 제품을 장바구니에 추가하기 위해 서버로 AJAX 요청 보내기
+    $.ajax({
+      type: 'POST',
+      url: '../cart/cartlists', // 서버 엔드포인트와 일치하도록 URL 업데이트
+      headers : {
+			'Content-Type' : 'application/json',
+			'X-CSRF-TOKEN': csrfToken
+		},
+      data: JSON.stringify(obj),
+      contentType: 'application/json',
+      success: function (result) {
+    	console.log(result);
+    	if(result == 1) {
+        // 서버에서의 응답 처리 (예: 성공 메시지 표시)
+        alert('제품이 성공적으로 장바구니에 추가되었습니다.');
+    	} else {
+    	alert('에러');
+    	}
+      }
+    });
+  });
+    
+
+   
+    function openPrdQnaPopup() {
+    	var productId = $('#productId').val();
+        var url = "/mall/product/prdQna?productId="+ productId;
+        var windowName = "상품 문의하기";
+        var windowSize = "width=800, height=600";
+        console.log("productId :", productId );
+
+        window.open(url, windowName, windowSize);
+    }
+    
+    document.querySelectorAll('.accordion-toggle').forEach(function(row) {
+        row.addEventListener('click', function(event) {
+            // event.target을 사용하여 실제 클릭된 요소 확인
+            if (event.target.classList.contains('no-click')) {
+                event.preventDefault(); // 기본 동작 중단
+                return; // 이벤트 실행 중단
+            }
+
+            var targetId = this.getAttribute('data-target');
+            var accordion = document.querySelector(targetId);
+            var accordionRow = accordion.closest('tr');
+            accordion.classList.toggle('show');
+
+            if (accordion.classList.contains('show')) {
+                accordionRow.classList.remove('hidden-row');
+            } else {
+                accordionRow.classList.add('hidden-row');
+            }
+        });
+    });
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        // 특정 클래스 또는 id가 있는 요소를 대상으로 선택합니다.
+        var elements = document.querySelectorAll('.accordion-content'); 
+
+        elements.forEach(function(element) {
+            var htmlContent = element.innerHTML;
+            var brIndex = htmlContent.indexOf('<br>');
+
+            if (brIndex !== -1) {
+                element.innerHTML = htmlContent.substring(0, brIndex);
+            }
+        });
+    });
+    
+    $('.pagination .page-link').on('click', function() {
+        $('.pagination .page-item').removeClass('active'); 
+        $(this).parent().addClass('active'); 
+    });
+
+</script>
 </body>
 </html>

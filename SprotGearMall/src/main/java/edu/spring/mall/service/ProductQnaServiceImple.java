@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import edu.spring.mall.domain.ProductQnaVO;
+import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.persistence.ProductQnaDAO;
 @Service
 public class ProductQnaServiceImple implements ProductQnaService {
@@ -34,9 +35,11 @@ public class ProductQnaServiceImple implements ProductQnaService {
 		logger.info("read 호출 전체출력");
 		return dao.select();
 	}
-	//디테일 접근시
+	/**
+	 * 디테일 접근
+	 */
 	@Override
-	public List<ProductQnaVO> read(int productId) {
+	public List<ProductQnaVO> read(int productId, PageCriteria criteria) {
 		logger.info("read(productId) 호출");
 		return dao.select(productId);
 	}
@@ -46,11 +49,14 @@ public class ProductQnaServiceImple implements ProductQnaService {
 		logger.info("read(유저 개인문의) 호출");
 		return dao.select(memberId);
 	}
-
+	
+	/**
+	 * 업데이트 밸류 호출
+	 */
 	@Override
 	public ProductQnaVO readDetail(int prdQnaId) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("readDetail 호출");
+		return dao.selectDetail(prdQnaId);
 	}
 
 	@Override
