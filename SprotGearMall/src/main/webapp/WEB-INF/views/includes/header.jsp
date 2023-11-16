@@ -77,7 +77,7 @@
         <button type="submit" id="searchBtn" class="menu-button">
         	<img src="<c:url value="/resources/img/search_icon.png" />" alt="검색" >
         </button>
-	</form>
+		</form>
     </div>
     
   	<div class="menu">

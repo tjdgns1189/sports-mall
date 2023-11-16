@@ -8,6 +8,7 @@
 	<name>SprotGearMall</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
+	
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.28</org.springframework-version>
@@ -15,6 +16,7 @@
 		<org.slf4j-version>1.7.25</org.slf4j-version>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+   		
 	</properties>
 	<dependencies>
 		<!-- Spring -->

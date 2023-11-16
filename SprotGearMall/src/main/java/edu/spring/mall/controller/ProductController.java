@@ -227,7 +227,7 @@ public class ProductController {
 		
 		//내가 받아야하는건 reviewProductList
 		model.addAttribute("list", list);
-
+		model.addAttribute("searchText",searchText);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(productService.getTotalCounts());
