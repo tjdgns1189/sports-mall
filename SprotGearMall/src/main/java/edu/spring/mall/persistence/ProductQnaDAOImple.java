@@ -1,17 +1,16 @@
 package edu.spring.mall.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import edu.spring.mall.domain.ProductQnaVO;
-import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.pageutil.PageCriteria;
 @Repository
 public class ProductQnaDAOImple implements ProductQnaDAO {
@@ -34,8 +33,11 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 	}
 	//디테일창에 보여줄거
 	@Override
-	public List<ProductQnaVO> select(int productId, PageCriteria criteria) {
+	public List<ProductQnaVO> select(int productId) {
 		logger.info("select 호출(디테일)");
+//		Map<String, Object> params = new HashMap<>();
+//		params.put("productId", productId);
+//		params.put("criteria", criteria);
 		return sqlSession.selectList(NAMESPACE + ".selectDetail", productId);
 	}
 	//유저 개인 문의
@@ -62,6 +64,11 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 	public int delete(int prdQnaId) {
 		logger.info("delete 호출");
 		return sqlSession.delete(NAMESPACE + ".delete", prdQnaId);
+	}
+	@Override
+	public int getTotalCount(int productId) {
+		logger.info("getTotalCount 호출");
+		return sqlSession.selectOne(NAMESPACE+ ".total_count", productId);
 	}
 
 

@@ -29,7 +29,7 @@ public class ProductQnaController {
 	@GetMapping("/product/prdQna")
 	public void prdQnaGET(Model model, int productId) {
 		logger.info("prdQnaGET 호출");
-			model.addAttribute("productId", productId);
+		model.addAttribute("productId", productId);
 			
 	}
 	

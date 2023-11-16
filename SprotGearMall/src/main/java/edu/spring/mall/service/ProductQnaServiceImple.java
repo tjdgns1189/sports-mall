@@ -39,7 +39,7 @@ public class ProductQnaServiceImple implements ProductQnaService {
 	 * 디테일 접근
 	 */
 	@Override
-	public List<ProductQnaVO> read(int productId, PageCriteria criteria) {
+	public List<ProductQnaVO> read(int productId) {
 		logger.info("read(productId) 호출");
 		return dao.select(productId);
 	}
@@ -69,6 +69,11 @@ public class ProductQnaServiceImple implements ProductQnaService {
 	public int delete(int prdQnaId) {
 		logger.info("delete 호출");
 		return dao.delete(prdQnaId);
+	}
+	@Override
+	public int getTotalCounts(int productId) {
+		logger.info("getTotalCounts 호출");
+		return 0;
 	}
 
 

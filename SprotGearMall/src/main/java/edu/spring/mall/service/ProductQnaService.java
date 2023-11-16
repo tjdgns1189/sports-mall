@@ -8,10 +8,12 @@ import edu.spring.mall.pageutil.PageCriteria;
 public interface ProductQnaService {
 	int create(ProductQnaVO vo);
 	List<ProductQnaVO> read();
-	List<ProductQnaVO> read(int productId,PageCriteria criteria);
+	List<ProductQnaVO> read(int productId);
 	List<ProductQnaVO> read(String memberId);
 	ProductQnaVO readDetail(int prdQnaId);
 	int update(ProductQnaVO vo);
 	int delete(int prdQnaId);
+	int getTotalCounts(int productId);
+
 
 }
