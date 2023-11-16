@@ -186,7 +186,7 @@ text-align: center;
                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                    <!-- 대댓글 기능 -->
                         <button class="btn btn-secondary" data-review-id="${qna.prdQnaId }">답변</button>
-                    	<button class="btn btn-danger reviewDelete"  data-review-id="${qna.prdQnaId }">삭제</button>
+                    	<button class="btn btn-danger" id="qnaDelete" onclick="qnaDelete()" data-qna-id="${qna.prdQnaId }">삭제</button>
 					</sec:authorize>    
                 </div>
             </div>
@@ -311,6 +311,42 @@ text-align: center;
         $('.pagination .page-item').removeClass('active'); 
         $(this).parent().addClass('active'); 
     });
+    
+    function qnaDelete() {
+        var reviewId = $(this).data('qna-id'); // data-review-id 속성 값 가져오기
+        var prdQnaId = $('#prdQnaId').val();
+        var csrfToken = $('#csrfToken').val();
+        var headers =  {
+			'Content-Type' : 'application/json',
+			'X-CSRF-TOKEN': csrfToken
+		}
+        confirm("문의를 삭제하겠습니까?");
+        if(!confirm){
+        	return;
+        }
+        $.ajax({
+            type: 'delete',
+            url: deleteQna,
+            headers: headers,
+            data: JSON.stringify({
+                "prdQnaId": prdQnaId
+            }),
+            statusCode:{
+                200: (result)=>{
+                    alert("삭제성공");
+                    $('#accordion' + reviewId).closest('tr').remove();
+                },
+                400: (result)=>{
+                    alert("삭제 실패")
+                }
+            },
+            error: function(xhr, status, error) {
+        console.error('오류 발생:', error);
+    }
+        })//end ajax
+
+    }//end qnaDelete
+    
 
 </script>
 </body>

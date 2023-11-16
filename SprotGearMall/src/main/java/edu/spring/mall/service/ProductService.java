@@ -17,4 +17,5 @@ public interface ProductService {
 	int update(ProductVO vo);
 	int delete(String productName);
 	int getTotalCounts();
+	List<ProductVO> readBySearchText(String serchText,PageCriteria criteria);
 }

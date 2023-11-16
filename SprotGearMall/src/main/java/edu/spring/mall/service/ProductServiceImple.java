@@ -107,4 +107,13 @@ public class ProductServiceImple implements ProductService {
 		return dao.getTotalCounts();
 	}
 
+	@Override
+	public List<ProductVO> readBySearchText(String searchText ,PageCriteria criteria) {
+		logger.info("serach() 호출");
+		return dao.select(searchText , criteria);
+		
+	}
+	
+	
+
 }

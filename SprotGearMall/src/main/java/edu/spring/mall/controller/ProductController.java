@@ -1,12 +1,18 @@
 package edu.spring.mall.controller;
 
+import java.awt.image.BufferedImage;
+
+import java.io.File;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Resource;
+import java.util.UUID;
+import java.nio.file.Files;
+import javax.imageio.ImageIO;
+import org.springframework.http.HttpStatus;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +28,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
+
 
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.ProductQnaVO;
@@ -39,8 +48,7 @@ import edu.spring.mall.service.ProductService;
 public class ProductController {
 	private final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-	 @Resource(name = "uploadFilePath")
-	 private String uploadFilePath;
+	String productImgPathName=null; 
 	
 	@Autowired
 	private ProductService productService;
@@ -66,6 +74,7 @@ public class ProductController {
 			criteria.setNumsPerPage(numsPerPage);
 		}
 		List<ProductVO> list = productService.read(criteria);
+
 		//매개변수를 criteria를 가지고 있는 list
 		
 		//내가 받아야하는건 reviewProductList
@@ -93,6 +102,8 @@ public class ProductController {
 		
 	} // end registerGET()
 
+
+
 	@PostMapping("/register")
 	public void registerPOST(@RequestParam("productName") String productName,
             @RequestParam("productPrice") int productPrice,
@@ -111,11 +122,18 @@ public class ProductController {
 			int result = productService.create(vo, file);
 			logger.info("productService 호출후");
 
+
 			if(result == 1) {
 				
 			}
 
+	
+
 	}
+	
+
+	
+	
 	
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
@@ -215,4 +233,32 @@ public class ProductController {
 	}
 	
 
+
+	@GetMapping("/search")
+	public void search(
+		@RequestParam(name = "searchtext")String searchText,
+		Model model, Integer page, Integer numsPerPage) {
+		logger.info("list() 호출");
+		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
+		List<ProductVO> list = productService.readBySearchText(searchText,criteria);
+
+		//매개변수를 criteria를 가지고 있는 list
+		
+		//내가 받아야하는건 reviewProductList
+		model.addAttribute("list", list);
+		model.addAttribute("searchText",searchText);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(productService.getTotalCounts());
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+	}
+	
 } // end ProductController

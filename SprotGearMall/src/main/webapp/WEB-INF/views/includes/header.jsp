@@ -25,14 +25,59 @@
 		<li><a href="${pageContext.request.contextPath}/notice/noticeboard?page=1">임시 공지사항</a></li>
 		<li><a href="${pageContext.request.contextPath}/cart/cartlist">장바구니</a></li>
 		<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard?page=1">QNA</a></li>
+		<li>
+			<div class="navi_bar_area">
+			
+				<div class="p-dropdown">
+				    <button class="dropbtn">축구 
+				      <i class="fa fa-caret-down"></i>
+				    </button>
+				    <div class="p-dropdown-content">
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=축구공">축구공</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=미니축구골대">미니축구골대</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=골키퍼장갑">골키퍼장갑</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=축구양말">축구양말</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=축구유니폼">축구유니폼</a>	      		      		      
+				    </div>			
+				</div>
+				
+				<div class="p-dropdown">
+				    <button class="dropbtn">농구 
+				      <i class="fa fa-caret-down"></i>
+				    </button>
+				    <div class="p-dropdown-content">
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=농구공">농구공</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=농구림">농구림</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=농구골망">농구골망</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=농구유니폼">농구유니폼</a>
+				    </div>			
+				</div>
+				
+				<div class="p-dropdown">
+				    <button class="dropbtn">야구 
+				      <i class="fa fa-caret-down"></i>
+				    </button>
+				    <div class="p-dropdown-content">
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=야구방망이">야구방망이</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=글러브">글러브</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=베이스">베이스</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=포수보호대">포수보호대</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=야구모자">야구모자</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=야구유니폼">야구유니폼</a>	      		      		      
+				    </div>			
+				</div>
+				
+			</div>
+		</li>
+		
 	</ul>
 	<div class="search-bar">
-		<form action="#" method="get">
-        <input type="text" placeholder="검색창">
-        <button id="searchBtn" class="menu-button">
+		<form action="${pageContext.request.contextPath}/product/search" method="get">
+        <input type="text" name="searchtext" placeholder="검색창">
+        <button type="submit" id="searchBtn" class="menu-button">
         	<img src="<c:url value="/resources/img/search_icon.png" />" alt="검색" >
         </button>
-	</form>
+		</form>
     </div>
     
   	<div class="menu">

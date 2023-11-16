@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -68,5 +69,20 @@ public class ProductQnaRestController {
 //		
 //		return new ResponseEntity<List<ProductQnaVO>>(HttpStatus.OK);
 //	}
+	
+	@DeleteMapping("/product/deleteQna")
+	public ResponseEntity<Void> deleteQna(int prdQnaId) {
+		logger.info("myqndaDeletePOST() 호출");
+		int result = 0;
+		result = service.delete(prdQnaId);
+		if(result == 1) {
+			logger.info("삭제성공");
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		}else {
+			logger.info("삭제 실패");
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
+
+	}
 
 }
