@@ -282,27 +282,9 @@ $(()=>{
         window.open(url, windowName, windowSize);
     }
     
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('accordion-toggle') || event.target.closest('.accordion-toggle')) {
-        var row = event.target.closest('.accordion-toggle');
-        if (!row) return; // row가 null이면 여기서 처리 중단
 
-        var targetId = row.getAttribute('data-target');
-        var accordion = document.querySelector(targetId);
-        if (!accordion) return; // accordion이 null이면 여기서 처리 중단
-
-        var accordionRow = accordion.closest('tr');
-        accordion.classList.toggle('show');
-
-        if (accordion.classList.contains('show')) {
-            accordionRow.classList.remove('hidden-row');
-        } else {
-            accordionRow.classList.add('hidden-row');
-        }
-    }
-});
     
-document.querySelectorAll('.accordion-toggle').forEach(function(row) {
+	document.querySelectorAll('.accordion-toggle').forEach(function(row) {
     row.addEventListener('click', function(event) {
         // event.target을 사용하여 실제 클릭된 요소 확인
         if (event.target.classList.contains('no-click')) {
