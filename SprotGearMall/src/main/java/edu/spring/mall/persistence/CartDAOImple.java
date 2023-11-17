@@ -1,6 +1,8 @@
 package edu.spring.mall.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -47,9 +49,12 @@ public class CartDAOImple implements CartDAO {
 	}
 
 	@Override
-	public int update(CartVO vo) {
+	public int update(int cartId, CartVO vo) {
 		logger.info("update() 호출 : vo " + vo.toString());
-		return sqlSession.update(NAMESPACE + ".update", vo);
+		Map<String, Object> args = new HashMap<String, Object>();
+		args.put("cartId", cartId);
+		args.put("vo", vo);
+		return sqlSession.update(NAMESPACE + ".update", args);
 	}
 
 	@Override

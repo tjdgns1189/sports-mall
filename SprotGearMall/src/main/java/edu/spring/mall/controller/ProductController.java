@@ -25,6 +25,7 @@ import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
+import edu.spring.mall.persistence.CartDAO;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
 import edu.spring.mall.service.CartService;
@@ -43,6 +44,9 @@ public class ProductController {
 
 	@Autowired
 	private ProductDAO dao;
+	
+	@Autowired
+	private CartDAO cartDAO;
 	
 	@Autowired
 	private CartService cartService;
@@ -97,6 +101,27 @@ public class ProductController {
 		List<CartProductJoinVO> list = cartService.read(memberId);
 		model.addAttribute("list", list);
 	}
+	
+//	@PostMapping("/payment")
+//	public int updateCartList(@RequestParam(value = "cartList") List<CartVO> cartList, 
+//							  Model model, Principal principal) throws Exception {
+//		logger.info("Cart에서 전송된 데이터: " + cartList.toString());
+//		String memberId = principal.getName();
+//		logger.info("paymnet에서 memberId는 : " + memberId);
+//		List<CartProductJoinVO> list = cartService.read(memberId);
+//		model.addAttribute("list", list);
+//		
+//        int result = 0;
+//        try {
+//            for (CartVO cartVO : cartList) {
+//                result += cartDAO.update(cartVO);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//        
+//    }
 
 	@GetMapping("/register")
 	public void registerGET(Model model) {

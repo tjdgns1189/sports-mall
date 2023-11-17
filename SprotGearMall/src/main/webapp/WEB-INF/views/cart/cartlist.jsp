@@ -25,7 +25,8 @@
 <c:if test="${not empty list}">
 <div class="container mt-5">
 
-	<form action="../product/payment" method="POST">
+
+    <form action="../product/payment" method="POST">
     <c:forEach var="vo" items="${list }">
         <div class="row mb-3" id="cartmenu_${vo.cart.cartId}">
             <div class="col-md-2">
@@ -59,6 +60,7 @@
     </c:forEach>
     <button type="submit" class="btn btn-primary btn-lg">결제하기</button>
     </form>
+
     
     
 </div>
@@ -73,6 +75,7 @@
 
 
 <script type="text/javascript">
+
 function calculateTotalPrice(cartId) {
     const productQuantity = document.getElementById('productQuantity_' + cartId).value;
     const productPrice = document.getElementById('productPrice_' + cartId).value;
@@ -98,7 +101,7 @@ function updateAllTotalPrice() {
 
 
 // 버튼 누를시 삭제
-$(document).ready(function () {
+
     $(".btn-delete").click(function () {
         var cartId = $(this).data("cart-id");
         var csrfToken = $("#csrfToken").val();
@@ -124,9 +127,105 @@ $(document).ready(function () {
             }
         });
     });
-});
+    
+    
+/*
+    $(".btn-lg").click(function () {
+        const cartList = [];
+        console.log('cartList초반' + cartList);
+        var csrfToken = $("#csrfToken").val();
+        // ${list}에서 각 cartVO의 정보를 추출하여 cartList에 추가
+        <c:forEach var="vo" items="${list }">
+            const cartVO = {
+                cartId: ${vo.cart.cartId},
+                memberId: "${pageContext.request.userPrincipal.name}",
+                productId: ${vo.product.productId},
+                productPrice: document.getElementById('totalPrice_${vo.cart.cartId}').value,
+                productQuantity: document.getElementById('productQuantity_${vo.cart.cartId}').value,
+                cartCreatedDate: null
+            };
+            cartList.push(cartVO);
+            console.log('cartList후반' + cartList);
+        </c:forEach>
+        var obj = {
+        		'cartList' : cartList
+        };
+
+        // Ajax를 사용하여 서버로 cartList 전송
+        $.ajax({
+            type: "PUT",
+            url: "cart/update",
+            headers : {
+				'Content-Type' : 'application/json',
+				'X-CSRF-TOKEN': csrfToken
+			},
+            contentType: "application/json",
+            data: JSON.stringify(obj),
+            success: function (result) {
+                // 성공 시 처리
+                if (result > 0) {
+                    alert('장바구니 수정 성공');
+                    location.reload();
+                } else {
+                    alert('장바구니 수정 실패');
+                }
+            },
+            error: function () {
+                alert('에러');
+            }
+        });
+
+    }
+*/
+
+/*
+$(".btn-lg").click(function () {
+    const cartList = [];
+    var csrfToken = $("#csrfToken").val();
+
+    // ${list}에서 각 cartVO의 정보를 추출하여 cartList에 추가
+    <c:forEach var="vo" items="${list}">
+        const cartVO = {
+            cartId: ${vo.cart.cartId},
+            memberId: "${pageContext.request.userPrincipal.name}",
+            productId: ${vo.product.productId},
+            productPrice: document.getElementById('totalPrice_${vo.cart.cartId}').value,
+            productQuantity: document.getElementById('productQuantity_${vo.cart.cartId}').value,
+            cartCreatedDate: null
+        };
+        cartList.push(cartVO);
+        </c:forEach>
+
+    // Ajax를 사용하여 서버로 cartList 전송
+    $.ajax({
+        type: "PUT",
+        url: "cart/update",
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        contentType: "application/json",
+        data: JSON.stringify(cartList),
+        success: function (result) {
+            // 성공 시 처리
+            if (result > 0) {
+                alert('장바구니 수정 성공');
+                location.reload();
+            } else {
+                alert('장바구니 수정 실패');
+            }
+        },
+        error: function () {
+            alert('에러');
+        }
+    });
+}
+*/ 
+    
 
 
+
+	
 
 
 </script>
