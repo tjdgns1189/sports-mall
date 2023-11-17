@@ -35,7 +35,7 @@
             <div class="col-md-7">
                 <h5>상품 명 : ${vo.product.productName}</h5>
                 <p>카테고리 : ${vo.product.productCategory }</p>
-                
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <input type="hidden" name="cartId" value="${vo.cart.cartId}" readonly>
                 <input type="hidden" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly>
                 <input type="hidden" name="productId" value="${vo.product.productId}" readonly>
@@ -45,14 +45,14 @@
                 </p>
                 <p>재고 : ${vo.product.productStock }</p>
                 <p>갯수 : 
-                    <input type="number" name="productQuantity" id="productQuantity_${vo.cart.cartId}"value=${vo.cart.productQuantity } oninput="calculateTotalPrice('${vo.cart.cartId}')" min="1"><br>             
+                    <input type="number" name="productQuantity" id="productQuantity_${vo.cart.cartId}" value="1" oninput="calculateTotalPrice('${vo.cart.cartId}')" min="1"><br>             
                 </p>
                 <p>총 가격 : 
                     <input type="number" name="productPrice" id="totalPrice_${vo.cart.cartId}" value=${vo.cart.productPrice } readonly="readonly">
                 </p>                   
             </div>
             <div class="col-md-3">
-                <button type="button" class="btn btn-danger btn-delete" data-product-id="${vo.product.productId}">삭제</button>
+                <button type="button" class="btn btn-danger btn-delete" data-cart-id="${vo.cart.cartId}">삭제</button>
             </div>
             <hr>
         </div>
@@ -97,6 +97,34 @@ function updateAllTotalPrice() {
 }
 
 
+// 버튼 누를시 삭제
+$(document).ready(function () {
+    $(".btn-delete").click(function () {
+        var cartId = $(this).data("cart-id");
+        var csrfToken = $("#csrfToken").val();
+        console.log(cartId);
+		
+        $.ajax({
+            type: "DELETE",
+            url: "delete/" + cartId,
+            headers : {
+				'Content-Type' : 'application/json',
+				'X-CSRF-TOKEN': csrfToken
+			},
+            data: { "cartId": cartId },
+            success: function (result) {
+            	if(result == 1){
+                // 성공 시 처리, 예를 들어 카트 뷰 업데이트
+                alert('장바구니삭제성공');
+                location.reload();  // 페이지를 새로 고침하여 업데이트된 카트를 반영
+            	}else{
+            		alert('에러');
+                    location.reload();
+            	}
+            }
+        });
+    });
+});
 
 
 

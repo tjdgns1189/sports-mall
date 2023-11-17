@@ -52,4 +52,11 @@ public class CartDAOImple implements CartDAO {
 		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
+	@Override
+	public List<CartVO> selectByProductId(int productId) {
+		logger.info("selectByProductId() 호출 : productId " + productId);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
+	}
+
+
 }

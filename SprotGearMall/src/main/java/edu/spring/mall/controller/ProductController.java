@@ -87,11 +87,12 @@ public class ProductController {
 //		if(direct)
 	}
 	
+	
 	@PostMapping("/payment")
-	public void cartPost(Model model, CartVO cartVO) throws Exception {
+	public void cartPost(Model model, CartVO cartVO, Principal principal) throws Exception {
 	    logger.info("Cart에서 전송된 데이터: " + cartVO.toString());
 	    // 필요한 로직을 수행하세요.
-	    String memberId = cartVO.getMemberId();
+	    String memberId = principal.getName();
 	    logger.info("paymnet에서 memberId는 : " + memberId);
 		List<CartProductJoinVO> list = cartService.read(memberId);
 		model.addAttribute("list", list);

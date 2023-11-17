@@ -20,6 +20,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	where ${cartId} = #{cartId}
 	 </select>
 	 
+	 <select id="select_by_product_Id" resultType="CartVO">
+	 	select * from ${cart} 
+	 	where ${productId} = #{productId}
+	 </select>
+	 
 	 <delete id="delete">
 	 	delete from ${cart}
 	 	where ${memberId} = #{memberId} and ${productId} = #{productId}

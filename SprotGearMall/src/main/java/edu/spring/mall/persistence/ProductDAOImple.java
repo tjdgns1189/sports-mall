@@ -87,6 +87,13 @@ public class ProductDAOImple implements ProductDAO{
 	}
 
 
+	@Override
+	public List<ProductVO> selectByIdList(int productId) {
+		logger.info("select(productId) 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
+	}
+
+
 
 
 

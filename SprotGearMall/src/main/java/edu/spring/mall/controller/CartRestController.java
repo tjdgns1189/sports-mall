@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.persistence.CartDAO;
+import edu.spring.mall.service.CartService;
 
 @RestController
 @RequestMapping(value="/cart")
@@ -21,6 +24,9 @@ public class CartRestController {
 	
 	@Autowired
 	private CartDAO cartdao;
+	
+	@Autowired
+	private CartService cartService;
 	
 	@PostMapping(value="/cartlists", produces = "application/json")
 	public ResponseEntity<Integer> createCart(@RequestBody CartVO vo) {
@@ -35,5 +41,19 @@ public class CartRestController {
         return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
+	@DeleteMapping(value="/delete/{id}", produces = "application/json")
+	public ResponseEntity<Integer> deleteCart(@PathVariable("id") int cartId){
+		logger.info("cartId = " + cartId);
+		
+		int result = 0;
+		try {
+			result = cartService.delete(cartId);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
 	
 }
