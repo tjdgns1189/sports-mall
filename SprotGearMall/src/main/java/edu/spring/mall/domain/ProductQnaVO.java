@@ -11,8 +11,22 @@ public class ProductQnaVO {
 	private int productId;
 	private Date prdQnaCreatedDate;
 	private String prdQnaState;
+	private boolean isAdmin;
+	private boolean isAuthor;
 
 	
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	public boolean isAuthor() {
+		return isAuthor;
+	}
+	public void setAuthor(boolean isAuthor) {
+		this.isAuthor = isAuthor;
+	}
 	public int getPrdQnaId() {
 		return prdQnaId;
 	}

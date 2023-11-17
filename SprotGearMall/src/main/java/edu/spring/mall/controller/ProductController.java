@@ -1,26 +1,15 @@
 package edu.spring.mall.controller;
 
-import java.awt.image.BufferedImage;
-
-import java.io.File;
-
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-import java.nio.file.Files;
-import javax.imageio.ImageIO;
-import org.springframework.http.HttpStatus;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.MediaType;
-
 
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.ProductQnaVO;
@@ -39,7 +26,6 @@ import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
-import edu.spring.mall.security.CustomUserDetails;
 import edu.spring.mall.service.ProductQnaService;
 import edu.spring.mall.service.ProductService;
 
@@ -183,24 +169,9 @@ public class ProductController {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String memberId =auth.getName();
-		boolean isAdmin = false;
-		for (GrantedAuthority authority : auth.getAuthorities()) {
-		    if ("ROLE_ADMIN".equals(authority.getAuthority())) {
-		    	isAdmin = true;
-		        break;
-		    }
-		}
-		
-		for(ProductQnaVO x : qnaList) {
-			if(!x.getMemberId().equals(memberId)) {
-				x.setMemberId(x.getMemberId().substring(0,3)+ "***");
-			}
-		
-			
-		}
-		
+	
+		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("pageMaker", pageMaker);
-		model.addAttribute("qnaList",qnaList);
 	    model.addAttribute("principal", memberId);
 	    
 	    //

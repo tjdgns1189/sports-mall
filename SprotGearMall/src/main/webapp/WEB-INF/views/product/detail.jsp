@@ -159,7 +159,7 @@ text-align: center;
         					<c:when test="${qna.prdQnaSecret == 0}">
            					 <td class="accordion-content">${qna.prdQnaContent}</td>
         					</c:when>
-        					<c:when test="${qna.prdQnaSecret == 1}">
+  							<c:when test="${qna.prdQnaSecret == 1 && (qna.admin || qna.author)}">
             				<td><i class="fa-solid fa-lock-open accordion-content"></i>${qna.prdQnaContent}</td>
         					</c:when>
        						 <c:otherwise>
@@ -197,14 +197,14 @@ text-align: center;
            	<nav id="nav">
 				<ul class="pagination justify-content-center">
 				 <c:if test="${pageMaker.hasPrev }">
-					<li class="page-item" id="prevBtn" data-href=""><a class="page-link" href="javascript:void(0);">이전</a></li>
+					<li class="page-item" id="prevBtn" data-page="${pageMaker.startPageNo - 1 }"><a class="page-link" href="javascript:void(0);">이전</a></li>
 					</c:if>
 					<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
 					<li class="page-item ${num == pageMaker.criteria.page ? 'active' : ''}">
 					<a class="page-link" href="javascript:void(0);" data-page="${num }">${num }</a></li>
 					</c:forEach>
 				<c:if test="${pageMaker.hasNext }">
-					<li class="page-item" id="nextBtn"><a class="page-link" href="javascript:void(0);">다음</a></li>
+					<li class="page-item" id="nextBtn" data-page="${pageMaker.endPageNo + 1 }"><a class="page-link" href="javascript:void(0);">다음</a></li>
 				</c:if>
 					
 				</ul>
@@ -302,24 +302,26 @@ document.addEventListener('click', function(event) {
     }
 });
     
-    document.addEventListener("DOMContentLoaded", function() {
-        // 특정 클래스 또는 id가 있는 요소를 대상으로 선택합니다.
-        var elements = document.querySelectorAll('.accordion-content'); 
+document.querySelectorAll('.accordion-toggle').forEach(function(row) {
+    row.addEventListener('click', function(event) {
+        // event.target을 사용하여 실제 클릭된 요소 확인
+        if (event.target.classList.contains('no-click')) {
+            event.preventDefault(); // 기본 동작 중단
+            return; // 이벤트 실행 중단
+        }
 
-        elements.forEach(function(element) {
-            var htmlContent = element.innerHTML;
-            var brIndex = htmlContent.indexOf('<br>');
+        var targetId = this.getAttribute('data-target');
+        var accordion = document.querySelector(targetId);
+        var accordionRow = accordion.closest('tr');
+        accordion.classList.toggle('show');
 
-            if (brIndex !== -1) {
-                element.innerHTML = htmlContent.substring(0, brIndex);
-            }
-        });
+        if (accordion.classList.contains('show')) {
+            accordionRow.classList.remove('hidden-row');
+        } else {
+            accordionRow.classList.add('hidden-row');
+        }
     });
-    
-    $('.pagination .page-link').on('click', function() {
-        $('.pagination .page-item').removeClass('active'); 
-        $(this).parent().addClass('active'); 
-    });
+});
     
 	   function qnaDelete(element) {
 	        var prdQnaId = parseInt($(element).data('qna-id'),10);
@@ -411,12 +413,11 @@ document.addEventListener('click', function(event) {
    				 }
 
 		        // 작성자 정보 처리
-		       	// 나중에 자기 자신인지 처리해야함
 		     	 newTbodyContent += '<td>' + qna.memberId +  '</td>';
 		       
 
 		        // 작성일 처리
-		        newTbodyContent += '<td style="text-align: center;">' + qna.prdQnaCreatedDate + '</td>';
+		        newTbodyContent += '<td style="text-align: center;">' + formatDate(qna.prdQnaCreatedDate) + '</td>';
 
 
 		        newTbodyContent += '</tr>';
@@ -431,6 +432,15 @@ document.addEventListener('click', function(event) {
 		    });
 		    $('#prdQnaBody').html(newTbodyContent);
 	      }
+	      
+	function formatDate(timestamp) {
+	    var date = new Date(timestamp);
+	    var year = date.getFullYear().toString().substr(-2); // 년도의 마지막 두 자리
+	    var month = ('0' + (date.getMonth() + 1)).slice(-2); // 월 (0부터 시작하므로 +1 필요)
+	    var day = ('0' + date.getDate()).slice(-2); // 일
+
+	    return year + '.' + month + '.' + day;
+	}
 
 </script>
 </body>

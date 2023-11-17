@@ -40,7 +40,22 @@ public class ProductQnaServiceImple implements ProductQnaService {
 	@Override
 	public List<ProductQnaVO> read(int productId, PageCriteria criteria) {
 		logger.info("read(productId) 호출");
-		return dao.select(productId,criteria);
+		List<ProductQnaVO> list = dao.select(productId,criteria);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String memberId = auth.getName();
+		boolean isAdmin = auth.getAuthorities().stream()
+		                      .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+		
+		
+		for(ProductQnaVO qna : list) {
+		    qna.setAdmin(isAdmin);;
+		    qna.setAuthor(memberId.equals(qna.getMemberId()));
+		    if(!qna.isAuthor()) {
+		        String maskedMemberId = qna.getMemberId().substring(0, 3) + "***";
+		        qna.setMemberId(maskedMemberId);
+		    }
+		}
+		return list;
 	}
 	
 	//유저 개인 문의
