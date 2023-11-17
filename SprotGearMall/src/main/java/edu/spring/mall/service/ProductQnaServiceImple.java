@@ -2,7 +2,6 @@ package edu.spring.mall.service;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +38,11 @@ public class ProductQnaServiceImple implements ProductQnaService {
 	 * 디테일 접근
 	 */
 	@Override
-	public List<ProductQnaVO> read(int productId) {
+	public List<ProductQnaVO> read(int productId, PageCriteria criteria) {
 		logger.info("read(productId) 호출");
-		return dao.select(productId);
+		return dao.select(productId,criteria);
 	}
+	
 	//유저 개인 문의
 	@Override
 	public List<ProductQnaVO> read(String memberId) {
@@ -73,7 +73,7 @@ public class ProductQnaServiceImple implements ProductQnaService {
 	@Override
 	public int getTotalCounts(int productId) {
 		logger.info("getTotalCounts 호출");
-		return 0;
+		return dao.getTotalCount(productId);
 	}
 
 

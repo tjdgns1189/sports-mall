@@ -54,6 +54,8 @@
 	 <intercept-url pattern="/product/likes" access="isAuthenticated()"/>
 	 <intercept-url pattern="/cart/cartlist" access="isAuthenticated()"/>
      <intercept-url pattern="/product/prdQna" access="isAuthenticated()"/>
+     <intercept-url pattern="/product/prdQnaPaging" access="permitAll"/>
+     
 	
 	 <!--  
 	 <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
@@ -71,13 +73,11 @@
 			password-parameter="password" />
 			 <remember-me token-repository-ref="rememberMeTokenRepository" key="athwartbriefly"/>
 				
-			<logout
-				logout-url="/logout"
-            	logout-success-url="/" 
-				delete-cookies="JSESSIONID, remember-me"/>
-				
-		   <oauth2-login authentication-success-handler-ref="accessSuccessHandler"/>
-		
+		<logout
+			logout-url="/logout"
+			success-handler-ref="logoutSuccessHandler"
+			delete-cookies="JSESSIONID, remember-me"/>
+						
 	</http>
 	
 <!-- 비밀번호 암호화 -->

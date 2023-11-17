@@ -86,6 +86,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 		
 		if(registrationId.equals("google")) {
 			try {
+				logger.info("구글 토큰 삭제");
 				accessToken = CookieUtil.getDecryptedCookieValue(request, "Token");
 				logger.info("Token" + accessToken);
 				JsonNode resultNode = deleteGoogleToken(accessToken, registrationId);

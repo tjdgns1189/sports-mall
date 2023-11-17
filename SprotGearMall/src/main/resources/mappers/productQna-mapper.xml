@@ -46,11 +46,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 
 	<select id="paging" resultType="ProductQnaVO">
-	 select ${prdQnaId}, ${prdQnaCategory}, ${prdQnaContent}, ${prdQnaSecret}, ${memberId}, ${productId}, ${prdQnaCreatedDate}, ${prdQnaState}
+	 select *
 	 from(
 	 	select rownum rn, a.* from(
 	 		select * from ${prdQna_table} 
-	 		where ${productId} = ${productId}
+	 		where ${productId} = #{productId}
 	 		order by ${prdQnaCreatedDate} desc
 	 	)a
 	 ) where rn between #{criteria.start}  and #{criteria.end} 

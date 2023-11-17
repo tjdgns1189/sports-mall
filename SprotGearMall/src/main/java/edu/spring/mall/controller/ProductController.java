@@ -159,6 +159,7 @@ public class ProductController {
 		}
 		model.addAttribute("avg", avg);
 		model.addAttribute("reviewCount", count);
+		
 		//좋아요 확인용임
 		if (principal != null) {
 			logger.info("principal호출" + principal.getName());
@@ -171,21 +172,38 @@ public class ProductController {
 			
 		}
 		model.addAttribute("isLiked", isLiked);
-		List<ProductQnaVO> qnaList = qnaService.read(productId);
-		model.addAttribute("qnaList",qnaList);
+		
+		//제품문의 
+		PageCriteria criteria = new PageCriteria();
+		List<ProductQnaVO> qnaList = qnaService.read(productId,criteria);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(qnaService.getTotalCounts(productId));
+		pageMaker.setPageData();
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String memberId =auth.getName();
 		boolean isAdmin = false;
 		for (GrantedAuthority authority : auth.getAuthorities()) {
 		    if ("ROLE_ADMIN".equals(authority.getAuthority())) {
-		        isAdmin = true;
+		    	isAdmin = true;
 		        break;
 		    }
 		}
 		
+		for(ProductQnaVO x : qnaList) {
+			if(!x.getMemberId().equals(memberId)) {
+				x.setMemberId(x.getMemberId().substring(0,3)+ "***");
+			}
 		
-	    model.addAttribute("isAdmin", isAdmin);
+			
+		}
+		
+		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("qnaList",qnaList);
 	    model.addAttribute("principal", memberId);
+	    
+	    //
 	
 	} // end detail()
 

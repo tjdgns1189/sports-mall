@@ -11,8 +11,8 @@ public class ProductQnaVO {
 	private int productId;
 	private Date prdQnaCreatedDate;
 	private String prdQnaState;
-	
 
+	
 	public int getPrdQnaId() {
 		return prdQnaId;
 	}
@@ -64,14 +64,12 @@ public class ProductQnaVO {
 	public void setPrdQnaSecret(int prdQnaSecret) {
 		this.prdQnaSecret = prdQnaSecret;
 	}
-	@Override
-	public String toString() {
-		return "ProductQnaVO [prdQnaId=" + prdQnaId + ", prdQnaContent=" + prdQnaContent + ", prdQnaCategory="
-				+ prdQnaCategory + ", prdQnaSecret=" + prdQnaSecret + ", memberId=" + memberId + ", productId="
-				+ productId + ", prdQnaCreatedDate=" + prdQnaCreatedDate + ", prdQnaState=" + prdQnaState + "]";
-	}
+	
+	
+
 	public ProductQnaVO(int prdQnaId, String prdQnaContent, String prdQnaCategory, int prdQnaSecret, String memberId,
 			int productId, Date prdQnaCreatedDate, String prdQnaState) {
+		super();
 		this.prdQnaId = prdQnaId;
 		this.prdQnaContent = prdQnaContent;
 		this.prdQnaCategory = prdQnaCategory;
@@ -83,11 +81,5 @@ public class ProductQnaVO {
 	}
 
 
-
-
-	
-	
-	
-	
 
 }

@@ -57,6 +57,7 @@ text-align: center;
 </head>
 <body>
 
+	
     <div class="container">
         <!-- 이미지와 물건 정보 -->
         <div class="row">
@@ -144,9 +145,9 @@ text-align: center;
             	<th class="small-column">작성일</th>
             	</tr>
             	</thead>
-            	<tbody>
+            	<tbody id="prdQnaBody">
             	<c:forEach var="qna" items="${qnaList }">
-   				 <tr data-target="#accordion${qna.prdQnaId}" class="accordion-toggle">
+   				 <tr id="accordion-${qna.prdQnaId}" data-target="#accordion${qna.prdQnaId}" class="accordion-toggle">
             			<td style="text-align: center;">${qna.prdQnaCategory }</td>
             			<c:if test="${qna.prdQnaState == 'Y'}" >
             			<td style="text-align: center;"><span class="state">답변완료</span></td>
@@ -158,26 +159,19 @@ text-align: center;
         					<c:when test="${qna.prdQnaSecret == 0}">
            					 <td class="accordion-content">${qna.prdQnaContent}</td>
         					</c:when>
-        					<c:when test="${qna.prdQnaSecret == 1 && (isAdmin || qna.memberId == principal)}">
+        					<c:when test="${qna.prdQnaSecret == 1}">
             				<td><i class="fa-solid fa-lock-open accordion-content"></i>${qna.prdQnaContent}</td>
         					</c:when>
        						 <c:otherwise>
             				<td class="no-click accordion-content"><i class="fa-solid fa-lock"></i>비밀글입니다</td>
         					</c:otherwise>
     					</c:choose>
-    					<c:choose>
-    					<c:when test="${qna.memberId == principal }">
     					<td>${qna.memberId }</td>
-    					</c:when>
-    					<c:otherwise>
-            			<td>${fn:substring(qna.memberId, 0, 3)} 
-            			<c:forEach begin="1" end="${fn:length(qna.memberId) - 3}" var="i">*</c:forEach></td>
-            			</c:otherwise>
-            			</c:choose>
             			<fmt:formatDate value="${qna.prdQnaCreatedDate }" pattern="yy.MM.dd" var="qnaDate"/>
             			<td style="text-align: center;">${qnaDate }</td>
             		</tr>
-            		   <tr class="hidden-row">
+            	
+            		   <tr id="accordionContent-${qna.prdQnaId }"class="hidden-row">
         <td colspan="5">
             <div id="accordion${qna.prdQnaId}" class="accordion-collapse collapse">
                 <div class="accordion-body pre-line">
@@ -185,8 +179,8 @@ text-align: center;
                     ${qna.prdQnaContent}<br><br>
                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                    <!-- 대댓글 기능 -->
-                        <button class="btn btn-secondary" data-review-id="${qna.prdQnaId }">답변</button>
-                    	<button class="btn btn-danger" id="qnaDelete" onclick="qnaDelete()" data-qna-id="${qna.prdQnaId }">삭제</button>
+                        <button class="btn btn-secondary" data-qna-id="${qna.prdQnaId }">답변</button>
+                    	<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="${qna.prdQnaId }">삭제</button>
 					</sec:authorize>    
                 </div>
             </div>
@@ -196,17 +190,23 @@ text-align: center;
             	</tbody>
             </table>
             <div style="text-align : right;">
-           		<button class="btn btn-outline-secondary" onclick="location.href='/mall/qnaBoard/qnaBoard'">고객센터 문의하기</button>
-           		<button class="btn btn-secondary" onclick="openPrdQnaPopup()">상품 문의하기</button>
+           		<button class="btn btn-outline-primary" onclick="location.href='/mall/qnaBoard/qnaBoard'">고객센터 문의하기</button>
+           		<button class="btn btn-primary" onclick="openPrdQnaPopup()">상품 문의하기</button>
            	</div>
            	<!-- 버튼 배치 -->
            	<nav id="nav">
 				<ul class="pagination justify-content-center">
-					<li  class="page-item"><a class="page-link" href="#">이전</a></li>
-					<li class="page-item active"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>	
-					<li class="page-item"><a class="page-link" href="#">3</a></li>	
-					<li class="page-item"><a class="page-link" href="#">다음</a></li>
+				 <c:if test="${pageMaker.hasPrev }">
+					<li class="page-item" id="prevBtn" data-href=""><a class="page-link" href="javascript:void(0);">이전</a></li>
+					</c:if>
+					<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
+					<li class="page-item ${num == pageMaker.criteria.page ? 'active' : ''}">
+					<a class="page-link" href="javascript:void(0);" data-page="${num }">${num }</a></li>
+					</c:forEach>
+				<c:if test="${pageMaker.hasNext }">
+					<li class="page-item" id="nextBtn"><a class="page-link" href="javascript:void(0);">다음</a></li>
+				</c:if>
+					
 				</ul>
 			</nav>
             </div>
@@ -221,44 +221,55 @@ text-align: center;
     </form>
     
 <script type="text/javascript">
-    document.getElementById('addToCart').addEventListener('click', function () {
-    // 필요한 데이터 가져오기
-    var memberId = "${pageContext.request.userPrincipal.name}";
-    var productId = "${product.productId}";
-    var productPrice = "${product.productPrice}";
-    var productQuantity = '1';
-    var csrfToken = $("#csrfToken").val();
 
-    // 서버로 보낼 데이터 객체 생성
-    var obj = {
-      'memberId' : memberId,
-      'productId' : productId,
-      'productPrice' : productPrice,
-      'productQuantity' : productQuantity
-    };
-    console.log(obj);
+$(()=>{
+	document.getElementById('addToCart').addEventListener('click', function () {
+	    // 필요한 데이터 가져오기
+	    var memberId = "${pageContext.request.userPrincipal.name}";
+	    var productId = "${product.productId}";
+	    var productPrice = "${product.productPrice}";
+	    var productQuantity = '1';
+	    var csrfToken = $("#csrfToken").val();
 
-    // 제품을 장바구니에 추가하기 위해 서버로 AJAX 요청 보내기
-    $.ajax({
-      type: 'POST',
-      url: '../cart/cartlists', // 서버 엔드포인트와 일치하도록 URL 업데이트
-      headers : {
-			'Content-Type' : 'application/json',
-			'X-CSRF-TOKEN': csrfToken
-		},
-      data: JSON.stringify(obj),
-      contentType: 'application/json',
-      success: function (result) {
-    	console.log(result);
-    	if(result == 1) {
-        // 서버에서의 응답 처리 (예: 성공 메시지 표시)
-        alert('제품이 성공적으로 장바구니에 추가되었습니다.');
-    	} else {
-    	alert('에러');
-    	}
-      }
+	    // 서버로 보낼 데이터 객체 생성
+	    var obj = {
+	      'memberId' : memberId,
+	      'productId' : productId,
+	      'productPrice' : productPrice,
+	      'productQuantity' : productQuantity
+	    };
+	    console.log(obj);
+
+	    // 제품을 장바구니에 추가하기 위해 서버로 AJAX 요청 보내기
+	    $.ajax({
+	      type: 'POST',
+	      url: '../cart/cartlists', // 서버 엔드포인트와 일치하도록 URL 업데이트
+	      headers : {
+				'Content-Type' : 'application/json',
+				'X-CSRF-TOKEN': csrfToken
+			},
+	      data: JSON.stringify(obj),
+	      contentType: 'application/json',
+	      success: function (result) {
+	    	console.log(result);
+	    	if(result == 1) {
+	        // 서버에서의 응답 처리 (예: 성공 메시지 표시)
+	        alert('제품이 성공적으로 장바구니에 추가되었습니다.');
+	    	} else {
+	    	alert('에러');
+	    	}
+	      }
+	    });
+	  });
+	
+    $('.page-link').click(function(e) {
+        e.preventDefault(); // 기본 동작(링크 이동) 방지
+        var pageNum = $(this).data('page');
+        var productId = $('#productId').val()
+        loadPageContent(productId,pageNum);
     });
-  });
+
+})//end document.ready
     
 
    
@@ -268,30 +279,28 @@ text-align: center;
         var windowName = "상품 문의하기";
         var windowSize = "width=800, height=600";
         console.log("productId :", productId );
-
         window.open(url, windowName, windowSize);
     }
     
-    document.querySelectorAll('.accordion-toggle').forEach(function(row) {
-        row.addEventListener('click', function(event) {
-            // event.target을 사용하여 실제 클릭된 요소 확인
-            if (event.target.classList.contains('no-click')) {
-                event.preventDefault(); // 기본 동작 중단
-                return; // 이벤트 실행 중단
-            }
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('accordion-toggle') || event.target.closest('.accordion-toggle')) {
+        var row = event.target.closest('.accordion-toggle');
+        if (!row) return; // row가 null이면 여기서 처리 중단
 
-            var targetId = this.getAttribute('data-target');
-            var accordion = document.querySelector(targetId);
-            var accordionRow = accordion.closest('tr');
-            accordion.classList.toggle('show');
+        var targetId = row.getAttribute('data-target');
+        var accordion = document.querySelector(targetId);
+        if (!accordion) return; // accordion이 null이면 여기서 처리 중단
 
-            if (accordion.classList.contains('show')) {
-                accordionRow.classList.remove('hidden-row');
-            } else {
-                accordionRow.classList.add('hidden-row');
-            }
-        });
-    });
+        var accordionRow = accordion.closest('tr');
+        accordion.classList.toggle('show');
+
+        if (accordion.classList.contains('show')) {
+            accordionRow.classList.remove('hidden-row');
+        } else {
+            accordionRow.classList.add('hidden-row');
+        }
+    }
+});
     
     document.addEventListener("DOMContentLoaded", function() {
         // 특정 클래스 또는 id가 있는 요소를 대상으로 선택합니다.
@@ -312,41 +321,116 @@ text-align: center;
         $(this).parent().addClass('active'); 
     });
     
-    function qnaDelete() {
-        var reviewId = $(this).data('qna-id'); // data-review-id 속성 값 가져오기
-        var prdQnaId = $('#prdQnaId').val();
-        var csrfToken = $('#csrfToken').val();
-        var headers =  {
-			'Content-Type' : 'application/json',
-			'X-CSRF-TOKEN': csrfToken
-		}
-        confirm("문의를 삭제하겠습니까?");
-        if(!confirm){
-        	return;
-        }
-        $.ajax({
-            type: 'delete',
-            url: deleteQna,
-            headers: headers,
-            data: JSON.stringify({
-                "prdQnaId": prdQnaId
-            }),
-            statusCode:{
-                200: (result)=>{
-                    alert("삭제성공");
-                    $('#accordion' + reviewId).closest('tr').remove();
-                },
-                400: (result)=>{
-                    alert("삭제 실패")
-                }
-            },
-            error: function(xhr, status, error) {
-        console.error('오류 발생:', error);
-    }
-        })//end ajax
+	   function qnaDelete(element) {
+	        var prdQnaId = parseInt($(element).data('qna-id'),10);
+	        var csrfToken = $('#csrfToken').val();
+	        
+	        var headers =  {
+				'Content-Type' : 'application/json',
+				'X-CSRF-TOKEN': csrfToken
+			}
+	        console.log('prdQnaId',prdQnaId);
+	        console.log(typeof(prdQnaId));
+	        confirm("문의를 삭제하겠습니까?");
+	        if(!confirm){
+	        	return;
+	        }
+	        $.ajax({
+	            type: 'delete',
+	            url: 'deleteQna',
+	            headers: headers,
+	            data: JSON.stringify({
+	                "prdQnaId": prdQnaId
+	            }),
+	            statusCode:{
+	                200: (result)=>{
+	                    alert("삭제성공");
+	                    $('#accordion-' + prdQnaId).closest('tr').remove();
+	                    $('#accordionContent-' + prdQnaId).remove()
+	                    },
+	                400: (result)=>{
+	                    alert("삭제 실패")
+	                }
+	            },
+	            error: function(xhr, status, error) {
+	            	
+	        console.error('오류 발생:', error);
+	    }
+	        })//end ajax
+	    }//end qnaDelete
+	    
+	    function loadPageContent(productId,pageNum){
+	        var csrfToken = $('#csrfToken').val();
+	        console.log("loadPageContent 호출");
+	        console.log("productId",productId);
+	        console.log("pageNum",pageNum);
+	        var url = 'prdQna?page=' + pageNum;
+	        var headers={
+	            'Content-Type' : 'application/json',
+	    		'X-CSRF-TOKEN': csrfToken
+	        }
+	        $.ajax({
+	            type: 'GET',
+	            url: 'prdQnaPaging?page=' + pageNum + '&productId=' + productId,
+	            headers : headers,
+	            success: (result) =>{
+	            	var qnaList = result.qnaList;
+	            	var pageMaker = result.pageMaker;
+	            	console.log("result",result)
+	                updateTableBody(qnaList);
+	            },
+	            error:(error) =>{
+	                alert("에러 발생")
+	            }
 
-    }//end qnaDelete
-    
+	        })//end ajax 
+	      }//end loadPagecOntent
+ 
+	function updateTableBody(qnaList){
+		 var newTbodyContent = '';
+		 qnaList.forEach(function(qna) {
+		        newTbodyContent += '<tr id="accordion-' + qna.prdQnaId + '" data-target="#accordion' + qna.prdQnaId + '" class="accordion-toggle">';
+		        newTbodyContent += '<td style="text-align: center;">' + qna.prdQnaCategory + '</td>';
+		        
+		        // 답변 상태에 따른 처리
+		        //여기 했음
+		        if (qna.prdQnaState == 'Y') {
+		            newTbodyContent += '<td style="text-align: center;"><span class="state">답변완료</span></td>';
+		        } else {
+		            newTbodyContent += '<td style="text-align: center;"><span class="state">미답변</span></td>';
+		        }
+
+		        // 비밀글 여부에 따른 처리
+		        // 관리자 여부 본인 작성글 여부 따로 처리해야함
+		         if (qna.prdQnaSecret == 0) {
+        				newTbodyContent += '<td class="accordion-content">' + qna.prdQnaContent + '</td>';
+    			} else if (qna.prdQnaSecret == 1) {
+        				newTbodyContent += '<td><i class="fa-solid fa-lock-open accordion-content"></i>' + qna.prdQnaContent + '</td>';
+    			} else {
+        			newTbodyContent += '<td class="no-click accordion-content"><i class="fa-solid fa-lock"></i>비밀글입니다</td>';
+   				 }
+
+		        // 작성자 정보 처리
+		       	// 나중에 자기 자신인지 처리해야함
+		     	 newTbodyContent += '<td>' + qna.memberId +  '</td>';
+		       
+
+		        // 작성일 처리
+		        newTbodyContent += '<td style="text-align: center;">' + qna.prdQnaCreatedDate + '</td>';
+
+
+		        newTbodyContent += '</tr>';
+		        // 아코디언 내용
+		        newTbodyContent += '<tr id="accordionContent-' + qna.prdQnaId + '" class="hidden-row">';
+		        newTbodyContent += '<td colspan="5">';
+		        newTbodyContent += '<div id="accordion-' + qna.prdQnaId + '" class="accordion-collapse collapse">';
+		        newTbodyContent += '<div class="accordion-body pre-line">';
+		        newTbodyContent += qna.prdQnaContent + '<br><br>';
+		        // 관리자 버튼 추가도 권한이 필요함
+		        newTbodyContent += '</div></div></td></tr>';
+		    });
+		    $('#prdQnaBody').html(newTbodyContent);
+	      }
 
 </script>
 </body>

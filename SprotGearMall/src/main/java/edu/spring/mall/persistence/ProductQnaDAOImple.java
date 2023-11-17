@@ -33,12 +33,12 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 	}
 	//디테일창에 보여줄거
 	@Override
-	public List<ProductQnaVO> select(int productId) {
+	public List<ProductQnaVO> select(int productId, PageCriteria criteria) {
 		logger.info("select 호출(디테일)");
-//		Map<String, Object> params = new HashMap<>();
-//		params.put("productId", productId);
-//		params.put("criteria", criteria);
-		return sqlSession.selectList(NAMESPACE + ".selectDetail", productId);
+		Map<String, Object> params = new HashMap<>();
+		params.put("productId", productId);
+		params.put("criteria", criteria);
+		return sqlSession.selectList(NAMESPACE + ".paging", params);
 	}
 	//유저 개인 문의
 	@Override
