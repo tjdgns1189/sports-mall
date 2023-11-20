@@ -1,6 +1,8 @@
 package edu.spring.mall.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -88,9 +90,12 @@ public class ProductDAOImple implements ProductDAO{
 
 
 	@Override
-	public List<ProductVO> selectByIdList(int productId) {
-		logger.info("select(productId) 호출");
-		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
+	public List<ProductVO> select(String searchText, PageCriteria criteria) {
+		logger.info("select() 호출 : " + searchText);
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("searchText", searchText);
+	    paramMap.put("criteria", criteria);
+	    return sqlSession.selectList(NAMESPACE + ".select_by_search_text", paramMap);
 	}
 
 

@@ -10,12 +10,11 @@ public interface ProductDAO {
 	List<ProductVO> select();
 	ProductVO selectByName(String productName);
 	ProductVO selectById(int productId);
-	List<ProductVO> selectByIdList(int productId);
 	List<ProductVO> select(PageCriteria criteria);
 	int update(ProductVO vo);
 	int delete(String productName);
 	int getTotalCounts();
 	List<ProductVO> selectPaging(String productName);
-	
-	
+	List<ProductVO> select(String searchText,PageCriteria criteria);
+
 }

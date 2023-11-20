@@ -112,10 +112,21 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="memberId" value="member_id"/>
 		<property name="orderId" value="order_id"/>
 		
+		<property name="prdQna_table" value="product_qna"/>
+		<property name="prdQnaId" value="prd_qna_id"/>
+		<property name="prdQnaContent" value="prd_qna_content"/>
+		<property name="prdQnaCategory" value="prd_qna_category"/>
+		<property name="prdQnaSecret" value="prd_qna_secret"/>
+		<property name="memberId" value="member_id"/>
+		<property name="productId" value="product_id"/>
+		<property name="prdQnaCreatedDate" value="prd_qna_created_date"/>
+		<property name="prdQnaState" value="prd_qna_state"/>
+
+		
  	 </properties>
 	 
 	 
-	 
+
 	 <!-- underscore 명명법을 camel 명명법으로 변환 가능하도록 세팅 -->
 	 <settings>
 	 	<setting name="mapUnderscoreToCamelCase" value="true"></setting>

@@ -14,6 +14,8 @@
 
 	<title>Home</title>
 
+
+
 </head>
 <body>
 <!-- Header-->
@@ -27,7 +29,10 @@
 	</header>
 	
 	<!-- Section-->
-	<section class="py-5"><h3>&nbsp;신상품</h3><hr>
+	<section class="py-5">
+			<h3>&nbsp;신상품</h3>
+			
+		<hr>
 			<div class="container px-4 px-lg-5 mt-5">
 				<div
 					class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -71,14 +76,24 @@
 	</ul>
 
 	<input type="hidden" id="insertAlert" value="${insert_result }">
-
+	
+	
+	
 	<script type="text/javascript">
 		var result = $('#insertAlert').val();
 		if(result == 'success') {
 			alert('새 상품 등록 성공!');
 		}
+		
+		
+		
 	</script>
-
+	
+	<script>
+		
+	</script>
+	
+	
 
 <footer>
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>

@@ -1,141 +1,95 @@
 package edu.spring.mall.controller;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
+import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.client.http.HttpRequest;
 
 import edu.spring.mall.domain.MemberVO;
 import edu.spring.mall.security.CustomUserDetails;
 import edu.spring.mall.service.MemberService;
+import edu.spring.mall.service.OAuthService;
 
 @Controller
 @RequestMapping(value = "oauth")
 public class OauthController {
     private final Logger logger = LoggerFactory.getLogger(OauthController.class);
+    private final String COL_GOOGLE = "google";
+    private final String COL_NAVER = "naver";
 
-    @Autowired
-    private ClientRegistrationRepository social;
 
     @Autowired
     private UserDetailsService userDetailsService;
     
     @Autowired
     private MemberService memberService;
+    
+    @Autowired
+    private OAuthService OAuth;
+    
+ 
 
     @GetMapping("/naverOAuth")
     public String naveroauthGET(HttpServletRequest request){
         logger.info("naveroauthGET호출");
-        ClientRegistration naverRegi= social.findByRegistrationId("naver");
-
-        String clientId = naverRegi.getClientId();
-        String redirectUri = naverRegi.getRedirectUriTemplate();
-        String state = generateRandomState();
-        request.getSession().setAttribute("naverOAuthState", state);
-
-
-        String path ="https://nid.naver.com/oauth2.0/authorize?response_type=code" +
-                "&client_id=" + clientId +
-                "&state=" + state +
-                "&redirect_uri=" + redirectUri;
-
+        String path = OAuth.createUrl(request, COL_NAVER);
         return "redirect:" + path;
-
-
     }
+    
 
     @GetMapping("/naver")
-    public String naverGET(HttpServletRequest request, Model model,
+    public void naverGET(HttpServletRequest request, Model model,
                          @RequestParam(required = false) String code,
                          @RequestParam(required = false) String state,
                          @RequestParam(required = false) String error,
-                         @RequestParam(required = false) String error_description ) throws Exception {
+                         @RequestParam(required = false) String error_description,
+                         HttpServletResponse response) throws Exception {
         logger.info("naverGET리디렉션");
 
         if(error_description != null){
             logger.info("로그인 실패");
-            return "redirect:/member/loginForm?error=error";
+    		response.sendRedirect("/member/loginForm?error=error");
+
         }
 
         if (error != null) {
             // 에러 처리 로직
             logger.info("error발생" + error);
-            model.addAttribute("error", "error");
-            return "redirect:/member/loginForm?error=error";
+    		response.sendRedirect("/member/loginForm?error=error");
+
         }
         String storedState = (String) request.getSession().getAttribute("naverOAuthState");
         if(storedState == null || !storedState.equals(state)) {
             // state 값 불일치 - 요청 위조 가능성
             throw new IllegalStateException("state값 불일치");
         }else{
-            ClientRegistration naverRegi= social.findByRegistrationId("naver");
-            RestTemplate restTemplate = new RestTemplate();
-            String tokenEndPoint = "https://nid.naver.com/oauth2.0/token";
-
-            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-            params.add("grant_type", "authorization_code");
-            params.add("client_id", "H7PD5nLOq1YXa7eImpSC");
-            params.add("client_secret", "8P2x1Hivt0");
-            params.add("code", code);
-            params.add("state", state);
-
-            ResponseEntity<String> response = restTemplate.postForEntity(tokenEndPoint, params, String.class);
-           //인증토큰 가져옴
-            String tokenResponse = response.getBody(); // JSON 형태의 응답
-
-            logger.info("tokenInfo" + tokenResponse);
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode rootNode = mapper.readTree(tokenResponse);
-            String accessToken = rootNode.path("access_token").asText();
-
-
-            String userInfoEndpoint = "https://openapi.naver.com/v1/nid/me";
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            headers.set("Authorization", "Bearer " + accessToken);
-
-            HttpEntity<String> entity = new HttpEntity<>(headers);
-            RestTemplate template = new RestTemplate();
-
-            ResponseEntity<String> rsp = template.exchange(userInfoEndpoint, HttpMethod.POST, entity, String.class);
-
-            //사용자 정보 가져옴
-            String userInfo = rsp.getBody();
-            logger.info("userInfo" + userInfo);
-
-            ObjectMapper userMapper = new ObjectMapper();
-            JsonNode userNode = userMapper.readTree(userInfo);
-
+        	//여기에 인증토큰 들어있음
+        	OAuth2AccessToken tokenResponse = OAuth.getToken(COL_NAVER, code, state);
+        	logger.info("tokenInfo: " + tokenResponse.getTokenValue());
+        	String accessToken = tokenResponse.getTokenValue();
+        	//여기에 유저정보 들어있음
+        	JsonNode userNode = OAuth.getUserInfo("naver", tokenResponse);
             String resultcode = userNode.path("resultcode").asText();
             String message = userNode.path("message").asText();
+            
             if(resultcode.equals("00") && message.equals("success")){
             	String memberId = userNode.path("response").path("id").asText();
             	String name = userNode.path("response").path("name").asText();
@@ -148,12 +102,12 @@ public class OauthController {
                     //로그인 수행 아이디 있다고 가졍하고 이동시키면되는데
                 	//아이디 없으면 catch로 넘어감
                 	CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(memberId);
-                	securityLogin(userDetails);
-                   return "redirect:/";
+                	OAuth.securityLogin(userDetails);
+                	OAuth.saveToken(request, response, COL_NAVER, tokenResponse);
 
                 }catch (UsernameNotFoundException e){
                 	logger.info("회원 계정 없어서 로그인 진행 해야함");
-                	String password = generateRandomState();
+                	String password = OAuth.generateRandomState();  
                 	String memberGrade = "ROLE_USER";
                 	MemberVO vo = new MemberVO(memberId, password, name, phone, null, null, memberGrade);
                 	int result = memberService.create(vo);
@@ -161,35 +115,95 @@ public class OauthController {
                 	if(result == 1) {
                 		logger.info("회원가입 성공");
                     	CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(memberId);
-                    	securityLogin(userDetails);
+                    	OAuth.securityLogin(userDetails);
+                    	OAuth.saveToken(request, response, COL_NAVER, tokenResponse);
                 	}else {
                 		logger.info("회원가입 실패");
-                        return "redirect:/member/loginForm?error=error";
-
-
+                		response.sendRedirect("/member/loginForm?error=error");
                 	}
+              
                 	
-                		
-                    return "redirect:/";
-
                 }//end catch
-
             }//end if(resultcode.equals("00") && message.equals("success"))
-
-            return "redirect:/";
         }//end else(state 인증 성공시)
-
-
     }//end naverGET
-
-    private String generateRandomState() {
-        SecureRandom random = new SecureRandom();
-        return new BigInteger(130, random).toString(32);
+    
+    //밑쪽으론 아직 config안됨
+    @GetMapping("/kakaoOAuth")
+    public String kakaooauthGET(HttpServletRequest request) {
+    	logger.info("카카오 로그인 api호출");
+        String path = OAuth.createUrl(request, "kakao");
+    	return "redirect:" + path;
     }
     
-    public void securityLogin(CustomUserDetails user) {
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+    @GetMapping("/googleOAuth")
+    public String googleoauthGET(HttpServletRequest request) {
+    	logger.info("구글 api호출");
+        String path = OAuth.createUrl(request, COL_GOOGLE);
+    	return "redirect:" + path;
     }
+    
+    
+    @GetMapping("google")
+    public void googleGET(HttpServletRequest request, Model model,
+            @RequestParam(required = false) String code,
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) String error,
+            @RequestParam(required = false) String error_description,
+            HttpServletResponse response) 
+            		throws Exception,IOException, ServletException{
+    	logger.info("google 로그인 콜백");
+    	
+    	if(error != null) {
+    		logger.info("인증 에러");
+    		response.sendRedirect("/member/loginForm?error=error");
+    	}
+    	
+    	if(error_description != null) {
+    		logger.info("에러 발생");
+    		response.sendRedirect("/member/loginForm?error=error");
+
+    	}
+    	
+        String storedState = (String) request.getSession().getAttribute("googleOAuthState");
+    	if(storedState == null || !storedState.equals(state)) {
+            throw new IllegalStateException("state값 불일치");
+    	}
+    	
+    	OAuth2AccessToken tokenResponse = OAuth.getToken(COL_GOOGLE, code, state);
+        logger.info("tokenInfo" + tokenResponse.getTokenValue());
+    	JsonNode userNode = OAuth.getUserInfo(COL_GOOGLE, tokenResponse);
+        
+        if(userNode == null) {
+    		response.sendRedirect("/member/loginForm?error=error");
+    	}
+        String memberId = userNode.path("sub").asText();
+        String name = userNode.path("name").asText();
+        String email = userNode.path("email").asText();
+    	logger.info("memberId" + memberId);
+    	logger.info("name : " + name);
+    	logger.info("email : " + email );
+    	
+    	try {
+			CustomUserDetails user = 
+					(CustomUserDetails) userDetailsService.loadUserByUsername(memberId);
+			OAuth.securityLogin(user);
+			logger.info("로그인 성공");
+        	OAuth.saveToken(request, response, COL_GOOGLE, tokenResponse);
+		} catch (UsernameNotFoundException e) {
+			logger.info("회원가입 진행");
+			String password = OAuth.generateRandomState();
+			MemberVO vo = new MemberVO(memberId, password, name, null, email, null, null);
+			int result = memberService.create(vo);
+			if(result == 1) {
+				CustomUserDetails user = 
+						(CustomUserDetails) userDetailsService.loadUserByUsername(memberId);
+				OAuth.securityLogin(user);
+				logger.info("로그인 성공");
+            	OAuth.saveToken(request, response, COL_GOOGLE, tokenResponse);
+
+			}
+		}
+    }//end googleGET
 
 }

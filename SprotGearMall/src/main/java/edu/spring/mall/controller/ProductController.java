@@ -5,11 +5,11 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import edu.spring.mall.domain.CartProductJoinVO;
 import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.domain.LikesVO;
+import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.pageutil.PageCriteria;
@@ -29,6 +30,7 @@ import edu.spring.mall.persistence.CartDAO;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
 import edu.spring.mall.service.CartService;
+import edu.spring.mall.service.ProductQnaService;
 import edu.spring.mall.service.ProductService;
 
 @Controller
@@ -36,8 +38,7 @@ import edu.spring.mall.service.ProductService;
 public class ProductController {
 	private final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-	 @Resource(name = "uploadFilePath")
-	 private String uploadFilePath;
+	String productImgPathName=null; 
 	
 	@Autowired
 	private ProductService productService;
@@ -50,6 +51,9 @@ public class ProductController {
 	
 	@Autowired
 	private CartService cartService;
+	
+	@Autowired
+	private ProductQnaService qnaService;
 	
 	@Autowired
 	private LikesDAO likesDAO;
@@ -66,6 +70,7 @@ public class ProductController {
 			criteria.setNumsPerPage(numsPerPage);
 		}
 		List<ProductVO> list = productService.read(criteria);
+
 		//매개변수를 criteria를 가지고 있는 list
 		
 		//내가 받아야하는건 reviewProductList
@@ -129,6 +134,8 @@ public class ProductController {
 		
 	} // end registerGET()
 
+
+
 	@PostMapping("/register")
 	public void registerPOST(@RequestParam("productName") String productName,
             @RequestParam("productPrice") int productPrice,
@@ -147,11 +154,18 @@ public class ProductController {
 			int result = productService.create(vo, file);
 			logger.info("productService 호출후");
 
+
 			if(result == 1) {
 				
 			}
 
+	
+
 	}
+	
+
+	
+	
 	
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
@@ -177,6 +191,7 @@ public class ProductController {
 		}
 		model.addAttribute("avg", avg);
 		model.addAttribute("reviewCount", count);
+		
 		//좋아요 확인용임
 		if (principal != null) {
 			logger.info("principal호출" + principal.getName());
@@ -189,7 +204,24 @@ public class ProductController {
 			
 		}
 		model.addAttribute("isLiked", isLiked);
-
+		
+		//제품문의 
+		PageCriteria criteria = new PageCriteria();
+		List<ProductQnaVO> qnaList = qnaService.read(productId,criteria);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(qnaService.getTotalCounts(productId));
+		pageMaker.setPageData();
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String memberId =auth.getName();
+	
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("pageMaker", pageMaker);
+	    model.addAttribute("principal", memberId);
+	    
+	    //
+	
 	} // end detail()
 
 	@GetMapping("/update")
@@ -228,6 +260,33 @@ public class ProductController {
 			return "redirect:/board/list";
 		}
 	} // end delete()
-	
 
+
+	@GetMapping("/search")
+	public void search(
+		@RequestParam(name = "searchtext")String searchText,
+		Model model, Integer page, Integer numsPerPage) {
+		logger.info("list() 호출");
+		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
+		List<ProductVO> list = productService.readBySearchText(searchText,criteria);
+
+		//매개변수를 criteria를 가지고 있는 list
+		
+		//내가 받아야하는건 reviewProductList
+		model.addAttribute("list", list);
+		model.addAttribute("searchText",searchText);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(productService.getTotalCounts());
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+	}
+	
 } // end ProductController

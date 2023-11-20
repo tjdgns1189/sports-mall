@@ -8,6 +8,7 @@
 	<name>SprotGearMall</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
+	
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.28</org.springframework-version>
@@ -15,6 +16,7 @@
 		<org.slf4j-version>1.7.25</org.slf4j-version>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+   		
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -142,6 +144,12 @@
 			<artifactId>spring-security-oauth2</artifactId>
 			<version>2.5.2.RELEASE</version>
 		</dependency>
+		
+		 <dependency>
+		 	<groupId>com.google.api-client</groupId>
+    		<artifactId>google-api-client</artifactId>
+     		<version>1.32.1</version>
+   		</dependency>
 
 		<!-- thumbnail -->
 		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
@@ -166,15 +174,7 @@
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.12.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
-		<dependency>
-		    <groupId>com.fasterxml.jackson.dataformat</groupId>
-		    <artifactId>jackson-dataformat-xml</artifactId>
-		    <version>2.12.1</version>
-		</dependency>
-		
-		
-		
+	
 		<dependency>
 			<groupId>com.fasterxml.jackson.jaxrs</groupId>
 			<artifactId>jackson-jaxrs-json-provider</artifactId>

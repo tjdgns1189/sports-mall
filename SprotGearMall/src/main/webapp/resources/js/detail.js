@@ -35,6 +35,8 @@ $(() => {
         })//end ajax
     }//end if 
     })//end reviewDelete.click
+    
+
 })// end document.ready
 
 function isLike() {
@@ -45,7 +47,8 @@ function isLike() {
         'Content-Type': 'application/json',
         'X-CSRF-TOKEN': csrfToken
       };
-
+	$('.heart').prop('disabled', true);
+	
     if ($('.heart').hasClass('heart-filled')) {
         $.ajax({
             type: "DELETE",
@@ -59,11 +62,15 @@ function isLike() {
                 console.log(result);
                 if (result === 'success') {
                     $('.heart').toggleClass('heart-filled');
+					$('.heart').prop('disabled', false);
+                    
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 if (jqXHR.status == 403) {
                     alert("로그인이 필요합니다");
+               $('.heart').prop('disabled', false);
+                    
                 }
             }
         });
@@ -80,15 +87,19 @@ function isLike() {
                 console.log(result);
                 if (result === 'success') {
                     $('.heart').toggleClass('heart-filled');
+                    $('.heart').prop('disabled', false);
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 if (jqXHR.status == 403) {
                     alert("로그인이 필요합니다");
+                    $('.heart').prop('disabled', false);
                 }
             }
         });
     }
 }//end isLike()
 
+  
+  
 
