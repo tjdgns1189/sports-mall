@@ -22,11 +22,11 @@
 <input type="hidden" id="memberId" value="${pageContext.request.userPrincipal.name}">
 <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
+
 <c:if test="${not empty list}">
 <div class="container mt-5">
 
 
-    <form action="../product/payment" method="POST">
     <c:forEach var="vo" items="${list }">
         <div class="row mb-3" id="cartmenu_${vo.cart.cartId}">
             <div class="col-md-2">
@@ -58,8 +58,8 @@
             <hr>
         </div>
     </c:forEach>
-    <button type="submit" class="btn btn-primary btn-lg">결제하기</button>
-    </form>
+    <button type="button" id="btn-paymnet">결제하기</button>
+
 
     
     
@@ -101,7 +101,6 @@ function updateAllTotalPrice() {
 
 
 // 버튼 누를시 삭제
-
     $(".btn-delete").click(function () {
         var cartId = $(this).data("cart-id");
         var csrfToken = $("#csrfToken").val();
@@ -129,99 +128,48 @@ function updateAllTotalPrice() {
     });
     
     
-/*
-    $(".btn-lg").click(function () {
-        const cartList = [];
-        console.log('cartList초반' + cartList);
-        var csrfToken = $("#csrfToken").val();
-        // ${list}에서 각 cartVO의 정보를 추출하여 cartList에 추가
-        <c:forEach var="vo" items="${list }">
-            const cartVO = {
-                cartId: ${vo.cart.cartId},
-                memberId: "${pageContext.request.userPrincipal.name}",
-                productId: ${vo.product.productId},
-                productPrice: document.getElementById('totalPrice_${vo.cart.cartId}').value,
-                productQuantity: document.getElementById('productQuantity_${vo.cart.cartId}').value,
-                cartCreatedDate: null
-            };
-            cartList.push(cartVO);
-            console.log('cartList후반' + cartList);
-        </c:forEach>
-        var obj = {
-        		'cartList' : cartList
-        };
 
-        // Ajax를 사용하여 서버로 cartList 전송
-        $.ajax({
-            type: "PUT",
-            url: "cart/update",
-            headers : {
-				'Content-Type' : 'application/json',
-				'X-CSRF-TOKEN': csrfToken
-			},
-            contentType: "application/json",
-            data: JSON.stringify(obj),
-            success: function (result) {
-                // 성공 시 처리
-                if (result > 0) {
-                    alert('장바구니 수정 성공');
-                    location.reload();
-                } else {
-                    alert('장바구니 수정 실패');
-                }
-            },
-            error: function () {
-                alert('에러');
-            }
-        });
 
-    }
-*/
 
-/*
-$(".btn-lg").click(function () {
-    const cartList = [];
-    var csrfToken = $("#csrfToken").val();
 
-    // ${list}에서 각 cartVO의 정보를 추출하여 cartList에 추가
-    <c:forEach var="vo" items="${list}">
+$("#btn-paymnet").click(function () {
+	const cartList = [];
+	var csrfToken = $("#csrfToken").val();
+  	
+	var bringList = ${jsonList};
+	$.each(bringList, function(index, vo) {
         const cartVO = {
-            cartId: ${vo.cart.cartId},
+            cartId: vo.cart.cartId,
             memberId: "${pageContext.request.userPrincipal.name}",
-            productId: ${vo.product.productId},
-            productPrice: document.getElementById('totalPrice_${vo.cart.cartId}').value,
-            productQuantity: document.getElementById('productQuantity_${vo.cart.cartId}').value,
-            cartCreatedDate: null
+            productId: vo.product.productId,
+            productPrice: $("#totalPrice_" + vo.cart.cartId).val(),
+            productQuantity: $("#productQuantity_" + vo.cart.cartId).val()
         };
+        console.log('cartVO 확인', cartVO);
         cartList.push(cartVO);
-        </c:forEach>
-
-    // Ajax를 사용하여 서버로 cartList 전송
+    });
+	console.log('cartList 확인', cartList);
+	
+	// Ajax를 사용하여 서버로 cartList 전송
     $.ajax({
-        type: "PUT",
-        url: "cart/update",
+        type: "POST",
+        url: "update/",
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken
         },
-        contentType: "application/json",
         data: JSON.stringify(cartList),
         success: function (result) {
             // 성공 시 처리
-            if (result > 0) {
-                alert('장바구니 수정 성공');
-                location.reload();
+            if (result >= 1) {
+                alert('결제창으로 이동');
+                window.location.href = '../product/payment';
             } else {
                 alert('장바구니 수정 실패');
             }
-        },
-        error: function () {
-            alert('에러');
         }
-    });
-}
-*/ 
-    
+    });	
+});
 
 
 

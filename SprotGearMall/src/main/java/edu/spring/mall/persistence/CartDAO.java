@@ -10,5 +10,5 @@ public interface CartDAO {
 	CartVO select(int cartId);
 	List<CartVO> selectByProductId(int productId);
 	int delete(int cartId);
-	int update(int cartId, CartVO vo);
+	int update(CartVO vo);
 }

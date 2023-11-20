@@ -76,13 +76,14 @@ public class CartRestController {
 //		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 //	}
 	
-	@PutMapping("/update")
+	@PostMapping(value="/update", produces = "application/json")
 	public ResponseEntity<Integer> updateCart(@RequestBody List<CartVO> cartList) {
+		logger.info("cartList = " + cartList.toString());
 	    int result = 0;
 
 	    try {
 	        for (CartVO cartVO : cartList) {
-	            result += cartdao.update(cartVO.getCartId(), cartVO);
+	            result += cartdao.update(cartVO);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

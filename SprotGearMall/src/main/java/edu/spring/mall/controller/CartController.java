@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.spring.mall.domain.CartFormVO;
 import edu.spring.mall.domain.CartProductJoinVO;
 import edu.spring.mall.domain.CartVO;
@@ -48,6 +50,10 @@ public class CartController {
 		logger.info("cartlistGET 호출 : memberId = " + memberId);
 		List<CartProductJoinVO> list = cartService.read(memberId);
 		model.addAttribute("list", list);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonList = objectMapper.writeValueAsString(list);
+		model.addAttribute("jsonList", jsonList);
 	}
 	
 	

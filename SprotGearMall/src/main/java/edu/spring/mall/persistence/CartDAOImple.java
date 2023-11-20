@@ -49,12 +49,9 @@ public class CartDAOImple implements CartDAO {
 	}
 
 	@Override
-	public int update(int cartId, CartVO vo) {
+	public int update(CartVO vo) {
 		logger.info("update() 호출 : vo " + vo.toString());
-		Map<String, Object> args = new HashMap<String, Object>();
-		args.put("cartId", cartId);
-		args.put("vo", vo);
-		return sqlSession.update(NAMESPACE + ".update", args);
+		return sqlSession.update(NAMESPACE + ".update", vo);
 	}
 
 	@Override

@@ -69,6 +69,7 @@ li {
     </div>
     
     
+    <!-- detail에서 올때 -->
     <c:if test="${not empty vo}">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -196,7 +197,7 @@ li {
     
     
     
-    
+    <!-- cartlist에서 올때 -->
     <c:if test="${not empty list}">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -220,16 +221,16 @@ li {
                             <input type="text" class="form-control-plaintext" name="productName" value="${vo.product.productName}" readonly>
                         </td>
                         <td>
-                            <input type="text" class="form-control-plaintext text-center" name="productPrice" value="${vo.product.productPrice}" id="productPrice" readonly>
+                            <input type="text" class="form-control-plaintext text-center" name="productPrice" value="${vo.product.productPrice}" id="productPrice_${vo.cart.cartId}" readonly>
                         </td>
                         <td>
-                            <input type="number" class="form-control" name="productQuantity" id="productQuantity" value="${vo.cart.productQuantity}" oninput="calculateTotalPrice()" min="1">
+                            <input type="number" class="form-control" name="productQuantity" id="productQuantity_${vo.cart.cartId}" value="${vo.cart.productQuantity}" oninput="calculateTotalPriceList('${vo.cart.cartId}')" min="1">
                         </td>
                         <td>
                             배송비 무료
                         </td>
                         <td>
-                            <input type="text" class="form-control-plaintext text-center" name="totalPrice" id="totalPrice" value="${vo.product.productPrice}" readonly>
+                            <input type="text" class="form-control-plaintext text-center" name="totalPrice" id="totalPrice_${vo.cart.cartId}" value="${vo.product.productPrice}" readonly>
                         </td>
                     </tr>
                 </c:forEach>
@@ -298,7 +299,7 @@ li {
                     </td> 
                     <td>
                         총 상품금액<br>
-                        <input type="text" class="form-control-plaintext" name="totalPrice" id="totalPrice1" readonly> 원 
+                        <input type="text" class="form-control-plaintext text-center" style="font-size: 40px;" name="totalPrice" id="allTotalPrice" readonly> 원 
                     </td>          
                 </tr>
             </table>
@@ -307,17 +308,15 @@ li {
 
     <div class="row justify-content-center mb-5">
         <div class="col-md-8 text-center">
-            <form action="../orders/orderlist" method="POST">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <input type="hidden" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly>
                 <input type="hidden" name="productId" value="${vo.productId}" readonly>
                 <input type="hidden" name="productQuantity" id="productQuantity1" value="1" readonly>
                 <input type="hidden" name="productPrice" id="productPrice1" value="${vo.productId}" readonly>
-                <button type="submit" class="btn btn-primary btn-lg">결제하기</button>
+                <button type="button" class="btn btn-secondary btn-lg" id="btn-order">결제하기</button>
                 <a href="/mall">
                 	<button type="button" class="btn btn-secondary btn-lg">취소</button>  
                 </a>
-            </form>
         </div>
     </div>
 </div>
@@ -328,7 +327,7 @@ li {
 
 
 	<script type="text/javascript">
-	
+		//가격계산 - vo올때
 		function calculateTotalPrice() {
 			const productQuantity = document.getElementById('productQuantity').value;
 			const productPrice = document.getElementById('productPrice').value;
@@ -346,8 +345,34 @@ li {
 	        
 	        
 		}
-
 		
+		//가격계산 - cartlist올때
+		function calculateTotalPriceList(cartId) {
+		    const productQuantity = document.getElementById('productQuantity_' + cartId).value;
+		    const productPrice = document.getElementById('productPrice_' + cartId).value;
+		    const totalPrice = productQuantity * productPrice;
+		    document.getElementById('totalPrice_' + cartId).value = totalPrice;
+		    
+		    // 전체 상품 가격 다시 계산
+		    updateAllTotalPrice();
+		}
+		
+		//cartlist올때 총가격계산
+		function updateAllTotalPrice() {
+		    let total = 0;
+
+		    // 각 상품의 총 가격을 더함
+		    const elements = document.querySelectorAll('[id^="totalPrice_"]');
+		    elements.forEach(element => {
+		        total += parseFloat(element.value) || 0;
+		    });
+
+		    // 결과를 allTotalPrice에 반영
+		    document.getElementById('allTotalPrice').value = total;
+		}
+		
+		
+		//체크박스
 		function checkAll(checkAllId, className) {
 	        var checkAllCheckbox = document.getElementById(checkAllId);
 	        var checkboxes = document.getElementsByClassName(className);
@@ -356,6 +381,47 @@ li {
 	            checkboxes[i].checked = checkAllCheckbox.checked;
 	        }
 	    }
+		
+		
+		//list로 올때 구매버튼클릭
+		$("#btn-order").click(function () {
+			const ordersList = [];
+			var csrfToken = $("#csrfToken").val();
+		  	
+			var bringList = ${jsonList};
+			$.each(bringList, function(index, vo) {
+		        const ordersVO = {		           
+		            memberId: "${pageContext.request.userPrincipal.name}",
+		            productId: vo.product.productId,
+		            productPrice: $("#totalPrice_" + vo.cart.cartId).val(),
+		            productQuantity: $("#productQuantity_" + vo.cart.cartId).val()
+		        };
+		        console.log('ordersVO 확인', ordersVO);
+		        ordersList.push(ordersVO);
+		    });
+			console.log('ordersList 확인', ordersList);
+			
+			// Ajax를 사용하여 서버로 cartList 전송
+		    $.ajax({
+		        type: "POST",
+		        url: "orderlists/",
+		        headers: {
+		            'Content-Type': 'application/json',
+		            'X-CSRF-TOKEN': csrfToken
+		        },
+		        data: JSON.stringify(ordersList),
+		        success: function (result) {
+		            // 성공 시 처리
+		            if (result >= 1) {
+		                alert('주문내역삽입 성공');
+		                window.location.href = '../orders/orderlist';
+		            } else {
+		                alert('주문내역삽입 실패');
+		            }
+		        }
+		    });	//end ajax
+		});//end btn-order click
+		
 	</script>
  
 
