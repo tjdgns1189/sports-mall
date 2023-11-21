@@ -21,6 +21,23 @@
    
 }
 
+
+.trsize {
+    min-height: 50px; /* 원하는 최소 높이 */
+    height: auto;
+    overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+    
+    
+}
+
+.trsize td {
+    padding: 10px; /* 원하는 패딩 값 */
+}
+.accordion-collapse {
+    height: auto;
+    overflow: hidden;
+}
+
 .table-head tr th{
 text-align: center;
 
@@ -31,9 +48,7 @@ text-align: center;
     text-overflow: ellipsis;
 }
 
-.accordion-content {
 
-}
 
 .large-column {
     width: 52%;
@@ -41,7 +56,10 @@ text-align: center;
 }
 
 .pre-line {
+	height: auto;
     white-space: pre-line;
+    overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+    
 }
 
 .hidden-row {
@@ -147,47 +165,57 @@ text-align: center;
             	</thead>
             	<tbody id="prdQnaBody">
             	<c:forEach var="qna" items="${qnaList }">
-   				 <tr id="accordion-${qna.prdQnaId}" data-target="#accordion${qna.prdQnaId}" class="accordion-toggle">
-            			<td style="text-align: center;">${qna.prdQnaCategory }</td>
-            			<c:if test="${qna.prdQnaState == 'Y'}" >
+   				 <tr id="accordion-${qna.qna.prdQnaId}" data-target="#accordion${qna.qna.prdQnaId}" class="accordion-toggle">
+            			<td style="text-align: center;">${qna.qna.prdQnaCategory }</td>
+            			<c:if test="${qna.qna.prdQnaState == 'Y'}" >
             			<td style="text-align: center;"><span class="state">답변완료</span></td>
             			</c:if>
-            			<c:if test="${qna.prdQnaState == 'N'}" >
+            			<c:if test="${qna.qna.prdQnaState == 'N'}" >
             			<td style="text-align: center;"><span class="state">미답변</span></td>
             			</c:if>
             			 <c:choose>
-        					<c:when test="${qna.prdQnaSecret == 0}">
-           					 <td class="accordion-content">${qna.prdQnaContent}</td>
+        					<c:when test="${qna.qna.prdQnaSecret == 0}">
+           					 <td class="accordion-content">${qna.qna.prdQnaContent}</td>
         					</c:when>
-  							<c:when test="${qna.prdQnaSecret == 1 && (qna.admin || qna.author)}">
-            				<td><i class="fa-solid fa-lock-open accordion-content"></i>${qna.prdQnaContent}</td>
+  							<c:when test="${qna.qna.prdQnaSecret == 1 && (qna.admin || qna.author)}">
+            				<td><i class="fa-solid fa-lock-open accordion-content"></i>${qna.qna.prdQnaContent}</td>
         					</c:when>
        						 <c:otherwise>
             				<td class="no-click accordion-content"><i class="fa-solid fa-lock"></i>비밀글입니다</td>
         					</c:otherwise>
     					</c:choose>
-    					<td>${qna.memberId }</td>
-            			<fmt:formatDate value="${qna.prdQnaCreatedDate }" pattern="yy.MM.dd" var="qnaDate"/>
+    					<td>${qna.qna.memberId }</td>
+            			<fmt:formatDate value="${qna.qna.prdQnaCreatedDate }" pattern="yy.MM.dd" var="qnaDate"/>
             			<td style="text-align: center;">${qnaDate }</td>
             		</tr>
             		<!-- 아코디언 -->
-            		   <tr id="accordionContent-${qna.prdQnaId }"class="hidden-row">
+    <tr id="accordionContent-${qna.qna.prdQnaId }"class="hidden-row trsize">
         <td colspan="5">
-            <div id="accordion${qna.prdQnaId}" class="accordion-collapse collapse">
+            <div id="accordion${qna.qna.prdQnaId}" class="accordion-collapse collapse">
                 <div class="accordion-body pre-line">
-                    <!-- Q&A 상세 내용 -->
-                    
-                   <c:if test="${qna.prdQnaSecret == 0 || qna.admin || qna.author}">
-                     ${qna.prdQnaContent}<br><br>
+                    <!-- Q&A 상세 내용 -->        
+                   <c:if test="${qna.qna.prdQnaSecret == 0 || qna.qna.admin || qna.qna.author}">
+                     ${qna.qna.prdQnaContent}
+                    </c:if>
+                    <!-- 대댓글 시작할거임 -->
+                    <c:if test="${qna.qna.prdQnaState == 'Y' }">
+                    <hr>
+                    <div class="pre-line">
+                    ${qna.reply.pqrContent }
+                    </div>
                     </c:if>
                     
                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                    <!-- 대댓글 기능 -->
-                        <button class="btn btn-secondary" data-qna-id="${qna.prdQnaId }">답변</button>
-                    	<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="${qna.prdQnaId }">삭제</button>
+                   <div class="d-flex justify-content-end">
+                        <button class="btn btn-secondary" onclick="answerArea(${qna.qna.prdQnaId })">답변</button>
+                    	<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="${qna.qna.prdQnaId }">삭제</button>
+                    	</div>
 					</sec:authorize>    
                 </div>
             </div>
+        <div id="answer-${qna.qna.prdQnaId}" class="answer">
+        </div>
         </td>
     </tr>
             		</c:forEach>
@@ -201,14 +229,14 @@ text-align: center;
            	<nav id="nav">
 				<ul class="pagination justify-content-center">
 				 <c:if test="${pageMaker.hasPrev }">
-					<li class="page-item" id="prevBtn"><a class="page-link" href="javascript:void(0);" data-page="${pageMaker.startPageNo - 1 }">이전</a></li>
+					<li class="page-item"><a class="page-link" href="javascript:void(0);" data-page="${pageMaker.startPageNo - 1 }">이전</a></li>
 					</c:if>
 					<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
 					<li class="page-item ${num == pageMaker.criteria.page ? 'active' : ''}">
 					<a class="page-link" href="javascript:void(0);" data-page="${num }">${num }</a></li>
 					</c:forEach>
 				<c:if test="${pageMaker.hasNext }">
-					<li class="page-item" id="nextBtn" ><a class="page-link" href="javascript:void(0);" data-page="${pageMaker.endPageNo + 1 }">다음</a></li>
+					<li class="page-item"><a class="page-link" href="javascript:void(0);" data-page="${pageMaker.endPageNo + 1 }">다음</a></li>
 				</c:if>
 					
 				</ul>
@@ -289,20 +317,27 @@ $(()=>{
     
 
 $(document).on('click', '.accordion-toggle', function(event) {
-    // event.target을 사용하여 실제 클릭된 요소 확인
     if ($(event.target).hasClass('no-click')) {
-        event.preventDefault(); // 기본 동작 중단
-        return; // 이벤트 실행 중단
+        event.preventDefault(); 
+        return; 
     }
 
     var targetId = $(this).attr('data-target');
     var accordion = $(targetId);
     var accordionRow = accordion.closest('tr');
-    accordion.toggleClass('show');
 
-    if (accordion.hasClass('show')) {
+    // 현재 클릭된 아코디언이 닫혀있는 경우에만 실행
+    if (!accordion.hasClass('show')) {
+        // 모든 아코디언 닫기
+        $('.accordion-collapse').removeClass('show');
+        $('.accordion-collapse').closest('tr').addClass('hidden-row');
+
+        // 클릭된 아코디언 열기
+        accordion.addClass('show');
         accordionRow.removeClass('hidden-row');
     } else {
+        // 클릭된 아코디언이 이미 열려있는 경우, 닫기
+        accordion.removeClass('show');
         accordionRow.addClass('hidden-row');
     }
 });
@@ -357,6 +392,7 @@ $(document).on('click', '.accordion-toggle', function(event) {
 	            url: 'prdQnaPaging?page=' + pageNum + '&productId=' + productId,
 	            headers : headers,
 	            success: (result) =>{
+	            	console.log("result", result)
 	            	var qnaList = result.qnaList;
 	            	var pageMaker = result.pageMaker;
 	            	var isAdmin = result.isAdmin;
@@ -372,46 +408,51 @@ $(document).on('click', '.accordion-toggle', function(event) {
  
 	function updateTableBody(qnaList, isAdmin){
 		 var newTbodyContent = '';
-		 qnaList.forEach(function(qna) {
-		        newTbodyContent += '<tr id="accordion-' + qna.prdQnaId + '" data-target="#accordion' + qna.prdQnaId + '" class="accordion-toggle">';
-		        newTbodyContent += '<td style="text-align: center;">' + qna.prdQnaCategory + '</td>';
+		 qnaList.forEach(function(list) {
+			 
+			 	console.log("QnAId:", list.qna.prdQnaId);
+			    console.log("Reply:", list.reply);
+		        newTbodyContent += '<tr id="accordion-' + list.qna.prdQnaId + '" data-target="#accordion' + list.qna.prdQnaId + '" class="accordion-toggle">';
+		        newTbodyContent += '<td style="text-align: center;">' + list.qna.prdQnaCategory + '</td>';
 		        
 		        // 답변 상태에 따른 처리
-		        if (qna.prdQnaState == 'Y') {
+		        if (list.qna.prdQnaState == 'Y') {
 		            newTbodyContent += '<td style="text-align: center;"><span class="state">답변완료</span></td>';
 		        } else {
 		            newTbodyContent += '<td style="text-align: center;"><span class="state">미답변</span></td>';
 		        }
 
 		        // 비밀글
-		         if (qna.prdQnaSecret == 0) {
-        				newTbodyContent += '<td class="accordion-content">' + qna.prdQnaContent + '</td>';
-    			} else if (qna.prdQnaSecret == 1 &&(isAdmin ||qna.isAuthor)) {
-        				newTbodyContent += '<td><i class="fa-solid fa-lock-open accordion-content"></i>' + qna.prdQnaContent + '</td>';
+		         if (list.qna.prdQnaSecret == 0) {
+        				newTbodyContent += '<td class="accordion-content">' + list.qna.prdQnaContent + '</td>';
+    			} else if (list.qna.prdQnaSecret == 1 &&(isAdmin ||list.qna.isAuthor)) {
+        				newTbodyContent += '<td><i class="fa-solid fa-lock-open accordion-content"></i>' + list.qna.prdQnaContent + '</td>';
     			} else {
         			newTbodyContent += '<td class="no-click accordion-content"><i class="fa-solid fa-lock"></i>비밀글입니다</td>';
    				 }
 
 		        // 작성자 정보 처리
 		        // 컨트롤러에서처리함
-		     	 newTbodyContent += '<td>' + qna.memberId +  '</td>';
+		     	 newTbodyContent += '<td>' + list.qna.memberId +  '</td>';
 		       
 
 		        // 작성일 처리
-		        newTbodyContent += '<td style="text-align: center;">' + formatDate(qna.prdQnaCreatedDate) + '</td>';
+		        newTbodyContent += '<td style="text-align: center;">' + formatDate(list.qna.prdQnaCreatedDate) + '</td>';
 
 
 		        newTbodyContent += '</tr>';
 		        // 아코디언 내용
-		        newTbodyContent += '<tr id="accordionContent-' + qna.prdQnaId + '" class="hidden-row">';
+		        newTbodyContent += '<tr id="accordionContent-' + list.qna.prdQnaId + '" class="hidden-row trsize">';
 		        newTbodyContent += '<td colspan="5">';
-		        newTbodyContent += '<div id="accordion' + qna.prdQnaId + '" class="accordion-collapse collapse">';
+		        newTbodyContent += '<div id="accordion' + list.qna.prdQnaId + '" class="accordion-collapse collapse">';
 		        newTbodyContent += '<div class="accordion-body pre-line">';
-		        newTbodyContent += qna.prdQnaContent + '<br><br>';
+		        newTbodyContent += list.qna.prdQnaContent + '<br><br>';
 		        // 관리자 버튼 추가도 권한이 필요함
 		        if(isAdmin){
-		        	newTbodyContent += '<button class="btn btn-secondary" data-qna-id="' + qna.prdQnaId + '">답변</button>';
-		            newTbodyContent += '<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="' + qna.prdQnaId + '">삭제</button>';
+		        	newTbodyContent += '<div class="d-flex justify-content-end">'
+		        	newTbodyContent += '<button class="btn btn-secondary" data-qna-id="' + list.qna.prdQnaId + '">답변</button>';
+		            newTbodyContent += '<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="' + list.qna.prdQnaId + '">삭제</button>';
+		            newTbodyContent += '</div>'
 		        }
 		        newTbodyContent += '</div></div></td></tr>';
 		    });
@@ -429,26 +470,37 @@ $(document).on('click', '.accordion-toggle', function(event) {
 	
 	function updatePageItem(pageMaker){
 		var newPageItem = "";
-
 	    // 이전 버튼
 	    if (pageMaker.hasPrev) {
 	        newPageItem += '<li class="page-item" id="prevBtn"><a class="page-link" href="javascript:void(0);" data-page="' + (pageMaker.startPageNo - 1) + '">이전</a></li>';
 	    }
-
 	    // 페이지 번호
 	    for (var num = pageMaker.startPageNo; num <= pageMaker.endPageNo; num++) {
 	        var isActive = num === pageMaker.criteria.page ? 'active' : '';
 	        newPageItem += '<li class="page-item ' + isActive + '"><a class="page-link" href="javascript:void(0);" data-page="' + num + '">' + num + '</a></li>';
 	    }
-
 	    // 다음 버튼
 	    if (pageMaker.hasNext) {
 	        newPageItem += '<li class="page-item" id="nextBtn" ><a class="page-link" href="javascript:void(0);" data-page="' + (pageMaker.endPageNo + 1) + '">다음</a></li>';
 	    }
-
 	   // 추가
 	    $('#nav .pagination').html(newPageItem);
-		
+	}
+	
+	function answerArea(qnaId){
+		var answerDivId = "answer-" + qnaId;
+		console.log('answerArea qnaId', qnaId);
+		var answerBody = 
+			'<div class="answer-input-area">' +
+        	'<textarea class="form-control" id="answerText-' + qnaId + '" rows="3" placeholder="답변"></textarea>' +
+       		'<button class="btn btn-primary mt-2" onclick="submitAnswer(' + qnaId + ')">답변하기</button>' +
+    		'</div>';
+		$('#' + answerDivId).html(answerBody);
+	}
+	
+	function submitAnswer(qnaId){
+		//내가 보내야하는거 내용, 멤버아이디(컨트롤러 처리),문의ID, productId
+		console.log('submitAnswer qnaId', qnaId);
 	}
 
 </script>

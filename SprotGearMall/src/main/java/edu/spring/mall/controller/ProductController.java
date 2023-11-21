@@ -27,6 +27,7 @@ import edu.spring.mall.domain.CartProductJoinVO;
 import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.OrdersVO;
+import edu.spring.mall.domain.ProductQnaJoinReplyVO;
 import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
@@ -198,7 +199,7 @@ public class ProductController {
 		
 		//제품문의 
 		PageCriteria criteria = new PageCriteria();
-		List<ProductQnaVO> qnaList = qnaService.read(productId,criteria);
+		List<ProductQnaJoinReplyVO> qnaList = qnaService.read(productId,criteria);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(qnaService.getTotalCounts(productId));

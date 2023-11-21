@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import edu.spring.mall.domain.ProductQnaJoinReplyVO;
 import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.persistence.ProductQnaDAO;
@@ -38,21 +39,23 @@ public class ProductQnaServiceImple implements ProductQnaService {
 	 * 디테일 접근
 	 */
 	@Override
-	public List<ProductQnaVO> read(int productId, PageCriteria criteria) {
+	public List<ProductQnaJoinReplyVO> read(int productId, PageCriteria criteria) {
 		logger.info("read(productId) 호출");
-		List<ProductQnaVO> list = dao.select(productId,criteria);
+		List<ProductQnaJoinReplyVO> list = dao.select(productId,criteria);
+		logger.info("qna 확인 : " + list.get(0).getQna().toString());
+		logger.info("reply 확인 : " + list.get(0).getReply().toString());
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String memberId = auth.getName();
 		boolean isAdmin = auth.getAuthorities().stream()
 		                      .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 		
 		
-		for(ProductQnaVO qna : list) {
-		    qna.setAdmin(isAdmin);;
-		    qna.setAuthor(memberId.equals(qna.getMemberId()));
-		    if(!qna.isAuthor()) {
-		        String maskedMemberId = qna.getMemberId().substring(0, 3) + "***";
-		        qna.setMemberId(maskedMemberId);
+		for(ProductQnaJoinReplyVO qna : list) {
+		    qna.getQna().setAdmin(isAdmin);;
+		    qna.getQna().setAuthor(memberId.equals(qna.getQna().getMemberId()));
+		    if(!qna.getQna().isAuthor()) {
+		        String maskedMemberId = qna.getQna().getMemberId().substring(0, 3) + "***";
+		        qna.getQna().setMemberId(maskedMemberId);
 		    }
 		}
 		return list;

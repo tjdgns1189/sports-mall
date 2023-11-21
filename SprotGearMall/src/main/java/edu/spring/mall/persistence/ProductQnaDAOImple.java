@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import edu.spring.mall.domain.ProductQnaJoinReplyVO;
 import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.pageutil.PageCriteria;
 @Repository
@@ -33,7 +34,7 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 	}
 	//디테일창에 보여줄거
 	@Override
-	public List<ProductQnaVO> select(int productId, PageCriteria criteria) {
+	public List<ProductQnaJoinReplyVO> select(int productId, PageCriteria criteria) {
 		logger.info("select 호출(디테일)");
 		Map<String, Object> params = new HashMap<>();
 		params.put("productId", productId);
