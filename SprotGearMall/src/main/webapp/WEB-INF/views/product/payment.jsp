@@ -86,22 +86,28 @@ li {
                 <tbody>
                     <tr class="align-middle">
                         <td>
-                            <img class="img-thumbnail" src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="Product Image" style="width: 150px; height: auto;" />
+                            <img class="img-thumbnail" 
+                            src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }"
+                            alt="Product Image" style="width: 150px; height: auto;" />
                         </td>
                         <td>
-                            <input type="text" class="form-control-plaintext" name="productName" value="${vo.productName}" readonly>
+                            <input type="text" class="form-control-plaintext" 
+                            name="productName" value="${vo.productName}" readonly>
                         </td>
                         <td>
-                            <input type="text" class="form-control-plaintext text-center" name="productPrice" value="${vo.productPrice}" id="productPrice" readonly>
+                            <input type="text" class="form-control-plaintext text-center" 
+                            name="productPrice" value="${vo.productPrice}" id="productPrice" readonly>
                         </td>
                         <td>
-                            <input type="number" class="form-control" name="productQuantity" id="productQuantity" value="1" oninput="calculateTotalPrice()" min="1">
+                            <input type="number" class="form-control" name="productQuantity" 
+                            id="productQuantity" value="1" oninput="calculateTotalPrice()" min="1">
                         </td>
                         <td>
                             배송비 무료
                         </td>
                         <td>
-                            <input type="text" class="form-control-plaintext text-center" name="totalPrice" id="totalPrice" value="${vo.productPrice}" readonly>
+                            <input type="text" class="form-control-plaintext text-center" 
+                            name="totalPrice" id="totalPrice" value="${vo.productPrice}" readonly>
                         </td>
                     </tr>
                 </tbody>
@@ -168,7 +174,8 @@ li {
                     </td> 
                     <td>
                         총 상품금액<br>
-                        <input type="text" class="form-control-plaintext" name="totalPrice" id="totalPrice1" readonly> 원 
+                        <input type="text" class="form-control-plaintext" 
+                        name="totalPrice" id="totalPrice1" value="${vo.productPrice}" readonly> 원 
                     </td>          
                 </tr>
             </table>
@@ -177,13 +184,13 @@ li {
 
     <div class="row justify-content-center mb-5">
         <div class="col-md-8 text-center">
-            <form action="../orders/orderlist" method="POST">
+            <form onsubmit="return firstJavascript()" action="../orders/orderlist" method="POST">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <input type="hidden" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly>
                 <input type="hidden" name="productId" value="${vo.productId}" readonly>
                 <input type="hidden" name="productQuantity" id="productQuantity1" value="1" readonly>
                 <input type="hidden" name="productPrice" id="productPrice1" value="${vo.productPrice}" readonly>
-                <button type="submit" class="btn btn-primary btn-lg">결제하기</button>
+                <button type="submit" class="btn btn-primary btn-lg" id="btn-vo">결제하기</button>
                 <a href="/mall">
                 	<button type="button" class="btn btn-secondary btn-lg">취소</button>  
                 </a>
@@ -215,22 +222,26 @@ li {
                 <c:forEach var="vo" items="${list }">
                     <tr class="align-middle">
                         <td>
-                            <img class="img-thumbnail" src="https://storage.googleapis.com/edu-mall-img/${vo.product.productImgPath }" alt="Product Image" style="width: 150px; height: auto;" />
+                            <img class="img-thumbnail" src="https://storage.googleapis.com/edu-mall-img/${vo.product.productImgPath }" 
+                            alt="Product Image" style="width: 150px; height: auto;" />
                         </td>
                         <td>
                             <input type="text" class="form-control-plaintext" name="productName" value="${vo.product.productName}" readonly>
                         </td>
                         <td>
-                            <input type="text" class="form-control-plaintext text-center" name="productPrice" value="${vo.product.productPrice}" id="productPrice_${vo.cart.cartId}" readonly>
+                            <input type="text" class="form-control-plaintext text-center" name="productPrice" value="${vo.product.productPrice}" 
+                            id="productPrice_${vo.cart.cartId}" readonly>
                         </td>
                         <td>
-                            <input type="number" class="form-control" name="productQuantity" id="productQuantity_${vo.cart.cartId}" value="${vo.cart.productQuantity}" oninput="calculateTotalPriceList('${vo.cart.cartId}')" min="1">
+                            <input type="number" class="form-control" name="productQuantity" id="productQuantity_${vo.cart.cartId}" 
+                            value="${vo.cart.productQuantity}" oninput="calculateTotalPriceList('${vo.cart.cartId}')" min="1">
                         </td>
                         <td>
                             배송비 무료
                         </td>
                         <td>
-                            <input type="text" class="form-control-plaintext text-center" name="totalPrice" id="totalPrice_${vo.cart.cartId}" value="${vo.product.productPrice}" readonly>
+                            <input type="text" class="form-control-plaintext text-center" name="totalPrice" id="totalPrice_${vo.cart.cartId}" 
+                            value="<c:out value='${vo.cart.productQuantity * vo.product.productPrice}' />" readonly>
                         </td>
                     </tr>
                 </c:forEach>
@@ -322,6 +333,10 @@ li {
 
 
 	<script type="text/javascript">
+	
+	    updateAllTotalPrice();
+	    
+	    
 		//가격계산 - vo올때
 		function calculateTotalPrice() {
 			const productQuantity = document.getElementById('productQuantity').value;
@@ -341,6 +356,8 @@ li {
 	        
 		}
 		
+		
+		
 		//가격계산 - cartlist올때
 		function calculateTotalPriceList(cartId) {
 		    const productQuantity = document.getElementById('productQuantity_' + cartId).value;
@@ -350,7 +367,10 @@ li {
 		    
 		    // 전체 상품 가격 다시 계산
 		    updateAllTotalPrice();
+		    		    
 		}
+		
+
 		
 		//cartlist올때 총가격계산
 		function updateAllTotalPrice() {
@@ -367,6 +387,8 @@ li {
 		}
 		
 		
+		
+		
 		//체크박스
 		function checkAll(checkAllId, className) {
 	        var checkAllCheckbox = document.getElementById(checkAllId);
@@ -380,6 +402,14 @@ li {
 		//list로 올때 구매버튼클릭
 		<c:if test="${not empty list}">
 		$("#btn-order").click(function () {
+			
+			//체크박스 전부 체크되었는지 확인
+			if (!areCheckboxesChecked()) {
+                alert("체크박스를 체크하세요");
+                return false; // 버튼 클릭 이벤트 중단
+            }
+						
+			
 			const ordersList = [];
 			var csrfToken = $("#csrfToken").val();
 			var bringList = ${jsonList};
@@ -418,6 +448,35 @@ li {
 		});//end btn-order click
 		</c:if>
 		
+		
+		// 체크박스 모두 체크되었는지 확인하는 함수
+	    function areCheckboxesChecked() {
+	        // 체크박스들의 상태를 확인
+	        var checkbox1 = $("#check1").prop("checked");
+	        var checkbox2 = $("#check2").prop("checked");
+	        var checkbox3 = $("#check3").prop("checked");
+
+	        // 모든 체크박스가 체크되었는지 여부 반환
+	        return checkbox1 && checkbox2 && checkbox3;
+	    }
+		
+		
+		//detail에서 왔을때 체크박스확인
+	    function firstJavascript() {
+
+	        // 체크박스 전부 체크되었는지 확인
+			if (!areCheckboxesChecked()) {
+            alert("체크박스를 모두 체크하세요");
+            return false; // 폼 제출 취소
+        }
+	        //조건 통화시 true제출하면 폼제출허용됨
+			return true;
+		
+	    }
+
+	
+
+	    
 		
 	</script>
  

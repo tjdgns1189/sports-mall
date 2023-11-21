@@ -2,8 +2,12 @@ package edu.spring.mall.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -291,6 +295,41 @@ public class ProductController {
 		
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
+	
+	
+	@GetMapping("/recent")
+    public void recentGET(Model model, HttpServletRequest request) {
+        // 클라이언트로부터 전송된 쿠키 배열을 가져옵니다.
+        Cookie[] cookies = request.getCookies();
+        logger.info("cookies = " + cookies.toString());
+        // 만약 쿠키가 존재하면 recentProducts 쿠키를 찾아서 처리합니다.
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("recentProducts".equals(cookie.getName())) {
+                    // 쿠키에서 값을 가져와 List 형태로 변환합니다.
+                    String recentProductsCookie = cookie.getValue();
+                    List<String> recentProductsList = new ArrayList<>();
+                    if (!recentProductsCookie.isEmpty()) {
+                        String[] recentProductsArray = recentProductsCookie.split(",");
+                        for (String productId : recentProductsArray) {
+                            recentProductsList.add(productId);
+                        }
+                    }
+
+                    // 여기서 recentProductsList를 이용하여 필요한 로직을 수행합니다.
+                    // 예를 들면 recentProductsList를 모델에 추가하여 화면에 전달할 수 있습니다.
+                    // model.addAttribute("recentProducts", recentProductsList);
+                    model.addAttribute("recentProductsList", recentProductsList);
+                    // 나머지 로직을 작성하세요.
+
+                    break;  // 쿠키를 찾았으면 루프 종료
+                }
+            }
+        }
+
+        // 나머지 로직을 작성하세요.
+        
+    }
 	
 	
 	
