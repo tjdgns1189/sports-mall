@@ -308,11 +308,6 @@ li {
 
     <div class="row justify-content-center mb-5">
         <div class="col-md-8 text-center">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-                <input type="hidden" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly>
-                <input type="hidden" name="productId" value="${vo.productId}" readonly>
-                <input type="hidden" name="productQuantity" id="productQuantity1" value="1" readonly>
-                <input type="hidden" name="productPrice" id="productPrice1" value="${vo.productId}" readonly>
                 <button type="button" class="btn btn-secondary btn-lg" id="btn-order">결제하기</button>
                 <a href="/mall">
                 	<button type="button" class="btn btn-secondary btn-lg">취소</button>  
@@ -382,13 +377,13 @@ li {
 	        }
 	    }
 		
-		
 		//list로 올때 구매버튼클릭
+		<c:if test="${not empty list}">
 		$("#btn-order").click(function () {
 			const ordersList = [];
 			var csrfToken = $("#csrfToken").val();
-		  	
 			var bringList = ${jsonList};
+			
 			$.each(bringList, function(index, vo) {
 		        const ordersVO = {		           
 		            memberId: "${pageContext.request.userPrincipal.name}",
@@ -421,6 +416,8 @@ li {
 		        }
 		    });	//end ajax
 		});//end btn-order click
+		</c:if>
+		
 		
 	</script>
  
