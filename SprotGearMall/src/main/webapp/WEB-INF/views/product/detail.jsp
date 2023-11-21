@@ -201,14 +201,14 @@ text-align: center;
            	<nav id="nav">
 				<ul class="pagination justify-content-center">
 				 <c:if test="${pageMaker.hasPrev }">
-					<li class="page-item" id="prevBtn" data-page="${pageMaker.startPageNo - 1 }"><a class="page-link" href="javascript:void(0);">이전</a></li>
+					<li class="page-item" id="prevBtn"><a class="page-link" href="javascript:void(0);" data-page="${pageMaker.startPageNo - 1 }">이전</a></li>
 					</c:if>
 					<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
 					<li class="page-item ${num == pageMaker.criteria.page ? 'active' : ''}">
 					<a class="page-link" href="javascript:void(0);" data-page="${num }">${num }</a></li>
 					</c:forEach>
 				<c:if test="${pageMaker.hasNext }">
-					<li class="page-item" id="nextBtn" data-page="${pageMaker.endPageNo + 1 }"><a class="page-link" href="javascript:void(0);">다음</a></li>
+					<li class="page-item" id="nextBtn" ><a class="page-link" href="javascript:void(0);" data-page="${pageMaker.endPageNo + 1 }">다음</a></li>
 				</c:if>
 					
 				</ul>
@@ -266,12 +266,13 @@ $(()=>{
 	    });
 	  });
 	
-    $('.page-link').click(function(e) {
-        e.preventDefault(); // 기본 동작(링크 이동) 방지
-        var pageNum = $(this).data('page');
-        var productId = $('#productId').val()
-        loadPageContent(productId,pageNum);
-    });
+	$(document).on('click', '.page-link', function(e) {
+	    e.preventDefault(); // 기본 동작(링크 이동) 방지
+	    var pageNum = $(this).data('page');
+	    var productId = $('#productId').val();
+	    console.log("pageNum",pageNum);
+	    loadPageContent(productId, pageNum);
+	});
 
 })//end document.ready
     
@@ -360,6 +361,7 @@ $(document).on('click', '.accordion-toggle', function(event) {
 	            	var pageMaker = result.pageMaker;
 	            	var isAdmin = result.isAdmin;
 	                updateTableBody(qnaList, isAdmin);
+	                updatePageItem(pageMaker);
 	            },
 	            error:(error) =>{
 	                alert("에러 발생")
@@ -375,16 +377,13 @@ $(document).on('click', '.accordion-toggle', function(event) {
 		        newTbodyContent += '<td style="text-align: center;">' + qna.prdQnaCategory + '</td>';
 		        
 		        // 답변 상태에 따른 처리
-		        //여기 했음
 		        if (qna.prdQnaState == 'Y') {
 		            newTbodyContent += '<td style="text-align: center;"><span class="state">답변완료</span></td>';
 		        } else {
 		            newTbodyContent += '<td style="text-align: center;"><span class="state">미답변</span></td>';
 		        }
 
-		        // 비밀글 여부에 따른 처리
-		        // 관리자 여부 본인 작성글 여부 따로 처리해야함
-		        //ajax에서 권한 돌려주는가 확인
+		        // 비밀글
 		         if (qna.prdQnaSecret == 0) {
         				newTbodyContent += '<td class="accordion-content">' + qna.prdQnaContent + '</td>';
     			} else if (qna.prdQnaSecret == 1 &&(isAdmin ||qna.isAuthor)) {
@@ -399,7 +398,6 @@ $(document).on('click', '.accordion-toggle', function(event) {
 		       
 
 		        // 작성일 처리
-		        //했음
 		        newTbodyContent += '<td style="text-align: center;">' + formatDate(qna.prdQnaCreatedDate) + '</td>';
 
 
@@ -427,6 +425,30 @@ $(document).on('click', '.accordion-toggle', function(event) {
 	    var day = ('0' + date.getDate()).slice(-2); // 일
 
 	    return year + '.' + month + '.' + day;
+	}
+	
+	function updatePageItem(pageMaker){
+		var newPageItem = "";
+
+	    // 이전 버튼
+	    if (pageMaker.hasPrev) {
+	        newPageItem += '<li class="page-item" id="prevBtn"><a class="page-link" href="javascript:void(0);" data-page="' + (pageMaker.startPageNo - 1) + '">이전</a></li>';
+	    }
+
+	    // 페이지 번호
+	    for (var num = pageMaker.startPageNo; num <= pageMaker.endPageNo; num++) {
+	        var isActive = num === pageMaker.criteria.page ? 'active' : '';
+	        newPageItem += '<li class="page-item ' + isActive + '"><a class="page-link" href="javascript:void(0);" data-page="' + num + '">' + num + '</a></li>';
+	    }
+
+	    // 다음 버튼
+	    if (pageMaker.hasNext) {
+	        newPageItem += '<li class="page-item" id="nextBtn" ><a class="page-link" href="javascript:void(0);" data-page="' + (pageMaker.endPageNo + 1) + '">다음</a></li>';
+	    }
+
+	   // 추가
+	    $('#nav .pagination').html(newPageItem);
+		
 	}
 
 </script>
