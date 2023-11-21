@@ -170,13 +170,17 @@ text-align: center;
             			<fmt:formatDate value="${qna.prdQnaCreatedDate }" pattern="yy.MM.dd" var="qnaDate"/>
             			<td style="text-align: center;">${qnaDate }</td>
             		</tr>
-            	
+            		<!-- 아코디언 -->
             		   <tr id="accordionContent-${qna.prdQnaId }"class="hidden-row">
         <td colspan="5">
             <div id="accordion${qna.prdQnaId}" class="accordion-collapse collapse">
                 <div class="accordion-body pre-line">
                     <!-- Q&A 상세 내용 -->
-                    ${qna.prdQnaContent}<br><br>
+                    
+                   <c:if test="${qna.prdQnaSecret == 0 || qna.admin || qna.author}">
+                     ${qna.prdQnaContent}<br><br>
+                    </c:if>
+                    
                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                    <!-- 대댓글 기능 -->
                         <button class="btn btn-secondary" data-qna-id="${qna.prdQnaId }">답변</button>
@@ -283,26 +287,23 @@ $(()=>{
     }
     
 
-    
-	document.querySelectorAll('.accordion-toggle').forEach(function(row) {
-    row.addEventListener('click', function(event) {
-        // event.target을 사용하여 실제 클릭된 요소 확인
-        if (event.target.classList.contains('no-click')) {
-            event.preventDefault(); // 기본 동작 중단
-            return; // 이벤트 실행 중단
-        }
+$(document).on('click', '.accordion-toggle', function(event) {
+    // event.target을 사용하여 실제 클릭된 요소 확인
+    if ($(event.target).hasClass('no-click')) {
+        event.preventDefault(); // 기본 동작 중단
+        return; // 이벤트 실행 중단
+    }
 
-        var targetId = this.getAttribute('data-target');
-        var accordion = document.querySelector(targetId);
-        var accordionRow = accordion.closest('tr');
-        accordion.classList.toggle('show');
+    var targetId = $(this).attr('data-target');
+    var accordion = $(targetId);
+    var accordionRow = accordion.closest('tr');
+    accordion.toggleClass('show');
 
-        if (accordion.classList.contains('show')) {
-            accordionRow.classList.remove('hidden-row');
-        } else {
-            accordionRow.classList.add('hidden-row');
-        }
-    });
+    if (accordion.hasClass('show')) {
+        accordionRow.removeClass('hidden-row');
+    } else {
+        accordionRow.addClass('hidden-row');
+    }
 });
     
 	   function qnaDelete(element) {
@@ -345,9 +346,6 @@ $(()=>{
 	    
 	    function loadPageContent(productId,pageNum){
 	        var csrfToken = $('#csrfToken').val();
-	        console.log("loadPageContent 호출");
-	        console.log("productId",productId);
-	        console.log("pageNum",pageNum);
 	        var url = 'prdQna?page=' + pageNum;
 	        var headers={
 	            'Content-Type' : 'application/json',
@@ -360,8 +358,8 @@ $(()=>{
 	            success: (result) =>{
 	            	var qnaList = result.qnaList;
 	            	var pageMaker = result.pageMaker;
-	            	console.log("result",result)
-	                updateTableBody(qnaList);
+	            	var isAdmin = result.isAdmin;
+	                updateTableBody(qnaList, isAdmin);
 	            },
 	            error:(error) =>{
 	                alert("에러 발생")
@@ -370,7 +368,7 @@ $(()=>{
 	        })//end ajax 
 	      }//end loadPagecOntent
  
-	function updateTableBody(qnaList){
+	function updateTableBody(qnaList, isAdmin){
 		 var newTbodyContent = '';
 		 qnaList.forEach(function(qna) {
 		        newTbodyContent += '<tr id="accordion-' + qna.prdQnaId + '" data-target="#accordion' + qna.prdQnaId + '" class="accordion-toggle">';
@@ -386,19 +384,22 @@ $(()=>{
 
 		        // 비밀글 여부에 따른 처리
 		        // 관리자 여부 본인 작성글 여부 따로 처리해야함
+		        //ajax에서 권한 돌려주는가 확인
 		         if (qna.prdQnaSecret == 0) {
         				newTbodyContent += '<td class="accordion-content">' + qna.prdQnaContent + '</td>';
-    			} else if (qna.prdQnaSecret == 1) {
+    			} else if (qna.prdQnaSecret == 1 &&(isAdmin ||qna.isAuthor)) {
         				newTbodyContent += '<td><i class="fa-solid fa-lock-open accordion-content"></i>' + qna.prdQnaContent + '</td>';
     			} else {
         			newTbodyContent += '<td class="no-click accordion-content"><i class="fa-solid fa-lock"></i>비밀글입니다</td>';
    				 }
 
 		        // 작성자 정보 처리
+		        // 컨트롤러에서처리함
 		     	 newTbodyContent += '<td>' + qna.memberId +  '</td>';
 		       
 
 		        // 작성일 처리
+		        //했음
 		        newTbodyContent += '<td style="text-align: center;">' + formatDate(qna.prdQnaCreatedDate) + '</td>';
 
 
@@ -406,10 +407,14 @@ $(()=>{
 		        // 아코디언 내용
 		        newTbodyContent += '<tr id="accordionContent-' + qna.prdQnaId + '" class="hidden-row">';
 		        newTbodyContent += '<td colspan="5">';
-		        newTbodyContent += '<div id="accordion-' + qna.prdQnaId + '" class="accordion-collapse collapse">';
+		        newTbodyContent += '<div id="accordion' + qna.prdQnaId + '" class="accordion-collapse collapse">';
 		        newTbodyContent += '<div class="accordion-body pre-line">';
 		        newTbodyContent += qna.prdQnaContent + '<br><br>';
 		        // 관리자 버튼 추가도 권한이 필요함
+		        if(isAdmin){
+		        	newTbodyContent += '<button class="btn btn-secondary" data-qna-id="' + qna.prdQnaId + '">답변</button>';
+		            newTbodyContent += '<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="' + qna.prdQnaId + '">삭제</button>';
+		        }
 		        newTbodyContent += '</div></div></td></tr>';
 		    });
 		    $('#prdQnaBody').html(newTbodyContent);

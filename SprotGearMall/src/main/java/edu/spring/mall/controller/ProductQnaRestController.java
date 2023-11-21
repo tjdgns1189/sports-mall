@@ -59,12 +59,15 @@ public class ProductQnaRestController {
     	for(ProductQnaVO x : qnaList) {
 			if(!x.getMemberId().equals(memberId)) {
 				x.setMemberId(x.getMemberId().substring(0,3)+ "***");
+			}else {
+				x.setAuthor(true);
 			}
 		
 		}
         Map<String, Object> response = new HashMap<>();
         response.put("qnaList", qnaList);
         response.put("pageMaker", pageMaker);
+        response.put("isAdmin", isAdmin);
         return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
