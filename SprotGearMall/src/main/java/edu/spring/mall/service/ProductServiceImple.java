@@ -2,6 +2,7 @@ package edu.spring.mall.service;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +16,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.spring.mall.domain.CartProductJoinVO;
+import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.pageutil.PageCriteria;
+import edu.spring.mall.persistence.CartDAO;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
 import edu.spring.mall.persistence.ReviewDAO;
@@ -36,6 +40,15 @@ public class ProductServiceImple implements ProductService {
 	
 	@Autowired
 	private ReviewDAO reviewDAO;
+	
+	@Autowired
+	private CartDAO cartDAO;
+	
+	@Autowired
+	private CartService cartService;
+	
+	@Autowired
+	private ProductService product;
 	
 	@Autowired
 	private ImageService imageService;
@@ -113,7 +126,6 @@ public class ProductServiceImple implements ProductService {
 		return dao.select(searchText , criteria);
 		
 	}
-	
 	
 
 }

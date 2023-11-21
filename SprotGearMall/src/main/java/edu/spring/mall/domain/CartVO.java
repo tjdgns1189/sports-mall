@@ -1,6 +1,7 @@
 package edu.spring.mall.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class CartVO {
 	private int cartId;
@@ -9,6 +10,7 @@ public class CartVO {
 	private int productPrice;
 	private int productQuantity;
 	private Date cartCreatedDate;
+	
 	
 	public CartVO() {}
 
@@ -77,7 +79,6 @@ public class CartVO {
 				+ productPrice + ", productQuantity=" + productQuantity + ", cartCreatedDate=" + cartCreatedDate + "]";
 	}
 	
-	
-	
-	
+
 }
+

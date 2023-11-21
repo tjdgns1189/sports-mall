@@ -8,24 +8,35 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.spring.mall.domain.CartProductJoinVO;
+import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.domain.LikesVO;
+import edu.spring.mall.domain.OrdersVO;
 import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
+import edu.spring.mall.persistence.CartDAO;
 import edu.spring.mall.persistence.LikesDAO;
+import edu.spring.mall.persistence.OrdersDAO;
 import edu.spring.mall.persistence.ProductDAO;
+import edu.spring.mall.service.CartService;
 import edu.spring.mall.service.ProductQnaService;
 import edu.spring.mall.service.ProductService;
 
@@ -43,10 +54,19 @@ public class ProductController {
 	private ProductDAO dao;
 	
 	@Autowired
+	private CartDAO cartDAO;
+	
+	@Autowired
+	private CartService cartService;
+	
+	@Autowired
 	private ProductQnaService qnaService;
 	
 	@Autowired
 	private LikesDAO likesDAO;
+	
+	@Autowired
+	private OrdersDAO ordersDAO;
 
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage) {
@@ -76,11 +96,28 @@ public class ProductController {
 
 
 	@GetMapping("/payment")
-	public void paymentGET(Model model, Integer productId) {
-		logger.info("paymentGET() 호출");
-		ProductVO vo = dao.selectById(productId);
-		model.addAttribute("vo", vo);
+	public void paymentGET(Model model, Integer productId, Principal principal) throws Exception {
+	    logger.info("paymentGET() 호출");
+
+	    // productId있을 경우
+	    if (productId != null) {
+	    	logger.info("paymentGET() 호출");
+			ProductVO vo = dao.selectById(productId);
+			model.addAttribute("vo", vo);
+	    } 
+	    // productId 없을경우
+	    else {
+	    	String memberId = principal.getName();
+		    logger.info("paymnet에서 memberId는 : " + memberId);
+			List<CartProductJoinVO> list = cartService.read(memberId);
+			model.addAttribute("list", list);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String jsonList = objectMapper.writeValueAsString(list);
+			model.addAttribute("jsonList", jsonList);
+	    }
 	}
+	
+
 
 	@GetMapping("/register")
 	public void registerGET(Model model) {
@@ -214,13 +251,6 @@ public class ProductController {
 			return "redirect:/board/list";
 		}
 	} // end delete()
-	
-	@GetMapping("/cart")
-	public String cartGET() {
-
-	    return "product/cart";
-	}
-	
 
 
 	@GetMapping("/search")
@@ -249,5 +279,19 @@ public class ProductController {
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
 	}
+	
+	
+	@PostMapping(value="/orderlists", produces = "application/json")
+	public ResponseEntity<Integer> orderlistsPost(@RequestBody List<OrdersVO> ordersList){
+		logger.info("ordersList = " + ordersList.toString());
+		int result = 0;
+		for(OrdersVO ordersVO : ordersList) {
+			result += ordersDAO.insert(ordersVO);
+		}
+		
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+	
+	
 	
 } // end ProductController
