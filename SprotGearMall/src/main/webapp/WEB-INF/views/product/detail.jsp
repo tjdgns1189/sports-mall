@@ -195,23 +195,24 @@ text-align: center;
                 <div class="accordion-body pre-line">
                     <!-- Q&A 상세 내용 -->        
                    <c:if test="${qna.qna.prdQnaSecret == 0 || qna.qna.admin || qna.qna.author}">
-                     ${qna.qna.prdQnaContent}
-                    </c:if>
-                    <!-- 대댓글 시작할거임 -->
-                    <c:if test="${qna.qna.prdQnaState == 'Y' }">
-                    <hr>
-                    <div class="pre-line">
-                    ${qna.reply.pqrContent }
-                    </div>
-                    </c:if>
-                    
-                   <sec:authorize access="hasRole('ROLE_ADMIN')">
+                     ${qna.qna.prdQnaContent}    <sec:authorize access="hasRole('ROLE_ADMIN')">
                    <!-- 대댓글 기능 -->
-                   <div class="d-flex justify-content-end">
+                   	<div class="d-flex justify-content-end">
                         <button class="btn btn-secondary" onclick="answerArea(${qna.qna.prdQnaId })">답변</button>
                     	<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="${qna.qna.prdQnaId }">삭제</button>
                     	</div>
 					</sec:authorize>    
+                    </c:if>
+                    <!-- 대댓글 시작할거임 -->
+                    <c:if test="${qna.qna.prdQnaState == 'Y' }">
+                    <hr>
+                    <!-- 답변들어가는곳 -->
+                    <div id="replyContent-${qna.qna.prdQnaId}" class="pre-line">
+                    ${qna.reply.pqrContent }
+                    </div>
+                    </c:if>
+                    
+               
                 </div>
             </div>
         <div id="answer-${qna.qna.prdQnaId}" class="answer">
@@ -457,7 +458,7 @@ $(document).on('click', '.accordion-toggle', function(event) {
 		        // 관리자 버튼 추가도 권한이 필요함
 		        if(isAdmin){
 		        	newTbodyContent += '<div class="d-flex justify-content-end">'
-		        	newTbodyContent += '<button class="btn btn-secondary" data-qna-id="' + list.qna.prdQnaId + '">답변</button>';
+		        		newTbodyContent += '<button class="btn btn-secondary" onclick="answerArea(' + list.qna.prdQnaId + ')">답변</button>';
 		            newTbodyContent += '<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="' + list.qna.prdQnaId + '">삭제</button>';
 		            newTbodyContent += '</div>'
 		        }
@@ -502,17 +503,24 @@ $(document).on('click', '.accordion-toggle', function(event) {
 		var answerBody = 
 			'<div class="answer-input-area">' +
         	'<textarea class="form-control" id="answerText-' + qnaId + '" rows="3" placeholder="답변"></textarea>' +
-       		'<button class="btn btn-primary mt-2" onclick="submitAnswer(' + qnaId + ')">답변하기</button>' +
+       		'<button class="btn btn-primary mt-2 submit-answer" data-qna-id="' + qnaId+'">답변하기</button>' +
     		'</div>';
 		$('#' + answerDivId).html(answerBody);
 	}
 	
+	$(document).on('click', '.submit-answer', function() {
+	    var qnaId = $(this).data('qna-id');
+	    submitAnswer(qnaId);
+	});
+	
 	function submitAnswer(qnaId){
 		//내가 보내야하는거 내용, 멤버아이디(컨트롤러 처리),문의ID(qnaId), productId
-		console.log('submitAnswer qnaId', qnaId);
-		var pqrContent = $('#answerText' + qnaId).val();
+		var pqrContent = $('#answerText-' + qnaId).val();
 		var csrfToken = $('#csrfToken').val();
-		var productId = $('#productId').val()
+	    var productId = "${product.productId}";
+		console.log('submitAnswer qnaId', qnaId);
+		console.log('pqrContent' ,pqrContent);
+	    console.log('productId', productId)
 		headers ={
 			'Content-Type' : 'application/json',
 	    		'X-CSRF-TOKEN': csrfToken
