@@ -7,8 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.spring.mall.service.QnaReplyServiceImple;
+import edu.spring.mall.domain.QnaBoardVO;
 import edu.spring.mall.domain.QnaReplyVO;
 import edu.spring.mall.persistence.QnaReplyDAO;
+import edu.spring.mall.pageutil.PageCriteria;
 
 @Service
 public class QnaReplyServiceImple implements QnaReplyService {
@@ -20,29 +23,32 @@ public class QnaReplyServiceImple implements QnaReplyService {
 
 	@Override
 	public int create(QnaReplyVO vo) throws Exception {
-		logger.info("create() È£Ãâ : vo = " + vo.toString());
+		logger.info("create() í˜¸ì¶œ : vo = " + vo.toString());
 		int resultInsert = qnaReplyDAO.insert(vo);
-		logger.info(resultInsert + " Çà ´ñ±Û ÀÔ·Â ¼º°ø");
+		logger.info(resultInsert + " í–‰ ëŒ“ê¸€ ìž…ë ¥ ì„±ê³µ");
 		return 1;
 	}
 
 	@Override
 	public List<QnaReplyVO> read(int qnaBoardId) {
-		logger.info("read() È£Ãâ : qnaBoardId = " + qnaBoardId);
+		logger.info("read() í˜¸ì¶œ : qnaBoardId = " + qnaBoardId);
 		return qnaReplyDAO.select(qnaBoardId);
 	}
 
 	@Override
 	public int update(int qnaReplyId, String qnaReplyContent) {
-		// TODO Auto-generated method stub
-		return 0;
+		logger.info("update() í˜¸ì¶œ");
+		logger.info("qnaReplyId = " + qnaReplyId + ", qnaReplyContent = " + qnaReplyContent);
+		return qnaReplyDAO.update(qnaReplyId, qnaReplyContent);
 	}
 
 	@Override
-	public int delete(int qnaReplyId, int qnaBoardId) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delete(int qnaReplyId) throws Exception {
+		logger.info("delete() í˜¸ì¶œ : qnaReplyId = " + qnaReplyId);
+		return qnaReplyDAO.delete(qnaReplyId);
 	}
+	
+	
 	
 	
 }

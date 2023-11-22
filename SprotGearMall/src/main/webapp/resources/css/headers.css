@@ -32,6 +32,12 @@
 	}
 }
 
+.logo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
 .b-example-divider {
 	height: 3rem;
 	background-color: rgba(0, 0, 0, .1);
@@ -115,7 +121,6 @@
 	align-items: center;
 	padding: 10px 20px;
 	border-bottom: 1px solid #e5e5e5;
-	background-color: #fff;
     overflow: visible; /* 드롭다운 메뉴가 헤더 밖으로 확장될 수 있도록 설정 */
 }
 
@@ -144,6 +149,68 @@
 .nav-list li a:hover {
 	color: #007BFF; /* 원하는 색상으로 변경 */
 }
+
+.navi_bar_area a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.p-dropdown {
+  float: left;
+  overflow: hidden; //  요소의 내용이 넘치는 경우에 대비하여 내용을 숨김.
+  margin-left: 10px;
+}
+
+.p-dropdown .dropbtn {
+  font-size: 16px;
+  font-weight: bold;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+  width:140px;
+}
+
+.p-dropdown-content {
+  display:none;
+  position: absolute;
+  background-color: #f9f9f9;
+  width: 466px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.p-dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: inline-block;
+  text-align: left;
+  width: 80px;
+}
+
+.p-dropdown:hover .p-dropdown-content {
+  display: block; // .p-dropdown 요소가 호버(마우스를 올렸을 때)되면 
+  				  //.p-dropdown-content 요소가 표시되도록 설정합니다.
+}
+
+.navi_bar_area a:hover, .p-dropdown:hover .dropbtn {
+  background-color: #475382;
+}
+
+.p-dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+
 
 .search-bar input {
 	padding-right:	10px;

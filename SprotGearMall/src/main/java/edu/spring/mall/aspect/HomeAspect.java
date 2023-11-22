@@ -8,39 +8,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component // Proxy °´Ã¼¿¡ ÁÖÀÔ(injection)ÇÏ±â À§ÇØ ¼±¾ğ
+@Component 
 @Aspect // Aspect = Advice + Pointcut
 public class HomeAspect {
 	private static final Logger logger =
 			LoggerFactory.getLogger(HomeAspect.class);
+
+	@Pointcut("execution(* edu.spring.mall.HomeController.home(..))") 
+	public void pcHome() {}
 	
-	// * Aspect
-	// - ÀÏ¹İÀûÀ¸·Î ¸Ş¼Òµå¿¡ Æ¯Á¤ ±â´ÉÀ» Àû¿ë½ÃÅ´
-	// - ¸Ş¼Òµå ½ÇÇà ÀüÈÄ¿¡ Æ¯Á¤ ±â´ÉÀ» Àû¿ë½ÃÅ³ ¼ö ÀÖÀ½
-	
-	// * PointcutÀ» ÁöÁ¤ÇÏ´Â ¹æ¹ı
-	// 1. @Before, @After, ... ¾î³ëÅ×ÀÌ¼Ç ¾È¿¡¼­ ÁöÁ¤
-	// 2. @Pointcut ¾î³ëÅ×ÀÌ¼Ç ¾È¿¡¼­ ÁöÁ¤
-	// - µ¿ÀÏÇÑ Pointcut ÀÌ ¹İº¹µÇ´Â °ÍÀ» ÇÇÇÒ ¼ö ÀÖÀ½
-	// - ÇÑ ¹ø ÁöÁ¤ÇÑ PointcutÀ» ¿©·¯ advice ¸Ş¼Òµå¿¡¼­ ÂüÁ¶
-	// ¶È¶ÈÇØ¾ß ¾¸
-	
-	@Pointcut("execution(* edu.spring.mall.HomeController.home(..))") // ÀÌ À§Ä¡ÀÇ È¨ÀÌ¶ó´Â ¸Ş¼Òµå.¿¡´Ù°¡ ¾îµå¹ÙÀÌ½º¸¦ ÇÏ°íÀÖ´Ù.
-	public void pcHome() {} // Æ÷ÀÎÆ®ÄÆ À§Ä¡ ÁöÁ¤
-	
-	@Around("pcHome()") // Æ÷ÀÎÆ®ÄÆ ¸Ş¼Òµå¸¦ Àû¿ë
+	@Around("pcHome()") 
 	public Object homeAdvice(ProceedingJoinPoint jp) {
 		Object result = null;
 		
 		logger.info("===== homeAdvice");
 		
 		try {
-			logger.info("===== home() È£Ãâ Àü"); // @before
-			result = jp.proceed(); // HomeController.home() ½ÇÇà
-			logger.info("===== home() ¸®ÅÏ ÈÄ"); //@afterReturning
+			logger.info("===== home() í˜¸ì¶œ");
+			result = jp.proceed(); 
+			logger.info("===== home() "); 
 		} catch (Throwable e) { 
-			// @afterThrowing
-			logger.info("===== ¿¹¿Ü ¹ß»ı : " + e.getMessage());
+			
+			logger.info("===== : " + e.getMessage());
 		} finally {
 			logger.info("===== finally");
 		}

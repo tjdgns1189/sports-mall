@@ -15,5 +15,6 @@ public interface ProductDAO {
 	int delete(String productName);
 	int getTotalCounts();
 	List<ProductVO> selectPaging(String productName);
-	
+	List<ProductVO> select(String searchText,PageCriteria criteria);
+
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.ReviewMapper">
+
+	<insert id="insert">
+    insert into ${review_table}
+    (${productId}, ${reviewContent}, ${reviewRating}, ${memberId}, ${orderId})
+    values(#{productId}, #{reviewContent}, #{reviewRating}, #{memberId}, #{orderId})    
+</insert>
+
+<select id="select" resultType="ReviewVO">
+    select * from ${review_table}
+    where ${memberId} = #{memberId}
+</select>
+
+<select id="select_by_reviewId" resultType="ReviewVO">
+	select * from ${review_table}
+	where ${reviewId} = #{reviewId}
+</select>
+
+ 	<select id="count_Review" resultType="int">
+        SELECT COUNT(*) FROM ${review_table} 
+        WHERE ${orderId} = #{orderId}
+    </select>
+    
+    <select id="select_product_review" resultType="reviewVO">
+    	select * from ${review_table}
+    	where ${productId} = #{productId}
+    </select>
+
+
+
+<update id="update">
+    update ${review_table}
+    set ${reviewContent} = #{reviewContent},
+    ${reviewRating} = #{reviewRating}   
+    where ${reviewId} = #{reviewId}
+</update>
+
+
+
+
+<delete id="delete">
+    delete from ${review_table}
+    where ${reviewId} = #{reviewId}
+</delete>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

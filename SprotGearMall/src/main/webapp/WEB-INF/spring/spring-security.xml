@@ -7,6 +7,7 @@
 	<!-- 핸들러 빈 -->
 	<b:bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl" />
 	<b:bean id="accessSuccessHandler" class="edu.spring.mall.security.CustomAuthenticationSuccessHandler"/>
+	<b:bean id="logoutSuccessHandler" class="edu.spring.mall.security.CustomLogoutSuccessHandler"/>
 	<b:bean id="rememberMeTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
     <b:property name="dataSource" ref="ds"/>
 	</b:bean>
@@ -15,17 +16,28 @@
     <b:constructor-arg value="/member/loginForm"/>
 	</b:bean>
 	
-	<http pattern="/member" security="none"/>
 	<http pattern="/member/checkid" security="none"/>
-	<http pattern="/member/register" security="none"/>
 	<http pattern="/resources/**" security="none"/>
 	<http pattern="/css/**" security="none"/>
+	<http pattern="/qnaBoard/replies" security="none"/>
+	<http pattern="/qnaBoard/register" security="none"/>
+	<http pattern="/qnaBoard/delete" security="none"/>
+	<http pattern="/qnaBoard/qnaUpdate" security="none"/>
+	<http pattern="/qnaBoard/replyReplies" security="none"/>
+	<http pattern="/orders/delete" security="none"/>
+	<http pattern="/upload" security="none"/>
+	<http pattern="/notice/uploadImg**" security="none"/>
+	
+	
+	
 
+	
+
+	
+	
 	<http auto-config="true" use-expressions="true">
-	
-	
 	 <access-denied-handler ref="accessDeniedHandler"/>
-	
+	 <intercept-url pattern="/gsi/**" access="permitAll"/>
 	 <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 	 <intercept-url pattern="/index" access="permitAll"/>
 	 <intercept-url pattern="/member/loginForm" access="isAnonymous()"/>
@@ -33,39 +45,44 @@
 	 <intercept-url pattern="/member/register" access="isAnonymous()"/>
 	 <intercept-url pattern="/member/delete" access="isAuthenticated()"/>
 	 <intercept-url pattern="/member/mypage" access="isAuthenticated()"/>
+	 <intercept-url pattern="/member/likes" access="isAuthenticated()"/>
 	 <intercept-url pattern="/member/passwordCheck" access="isAuthenticated()"/>
+	 <intercept-url pattern="/member/review" access="isAuthenticated()"/>
+	 <intercept-url pattern="/member/reviewDelete" access="isAuthenticated()"/>
 	 <intercept-url pattern="/info" access="isAuthenticated()"/>
 	 <intercept-url pattern="/logout" access="isAuthenticated()"/>
 	 <intercept-url pattern="/mall/logout" access="isAuthenticated()"/>
-	 <intercept-url pattern="/product/orderlist/**" access="isAuthenticated()"/>
-	 <intercept-url pattern="/product/orderlist" access="isAuthenticated()"/>
-	 
-	 
-	 <intercept-url pattern="/product/likes/**" access="permitAll"/>
-	 
+	 <intercept-url pattern="/product/payment/**" access="isAuthenticated()"/>
+	 <intercept-url pattern="/orders/orderlist" access="isAuthenticated()"/>
+	 <intercept-url pattern="/product/likes" access="isAuthenticated()"/>
+	 <intercept-url pattern="/cart/cartlist" access="isAuthenticated()"/>
+     <intercept-url pattern="/product/prdQna" access="isAuthenticated()"/>
+     <intercept-url pattern="/product/prdQnaPaging" access="permitAll"/>
+     
+	
+	 <!--  
+	 <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
+	 -->
+
     <http-basic entry-point-ref="ajaxAwareAuthenticationEntryPoint" />
 
 		<form-login login-page="/member/loginForm"
 			login-processing-url="/login"
-			default-target-url="/index"
+			default-target-url="/"
 			always-use-default-target="false"
 			authentication-success-handler-ref="accessSuccessHandler"
 			authentication-failure-url="/member/loginForm?error"
 			username-parameter="memberId" 
 			password-parameter="password" />
-			
 			 <remember-me token-repository-ref="rememberMeTokenRepository" key="athwartbriefly"/>
 				
-			<logout
-				logout-url="/logout"
-				logout-success-url="/index"
-				delete-cookies="JSESSIONID, remember-me"/>
-		
-			
+		<logout
+			logout-url="/logout"
+			success-handler-ref="logoutSuccessHandler"
+			delete-cookies="JSESSIONID, remember-me"/>
+						
 	</http>
 	
-
-
 <!-- 비밀번호 암호화 -->
 	<b:bean id="PasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<b:bean id="CustomUserDetailService" class="edu.spring.mall.security.CustomUserDetailService" />

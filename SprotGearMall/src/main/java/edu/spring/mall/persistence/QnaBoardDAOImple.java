@@ -25,25 +25,25 @@ public class QnaBoardDAOImple implements QnaBoardDAO{
 	
 	@Override
 	public int insert(QnaBoardVO vo) {
-		logger.info("insert() ȣ��");
+		logger.info("insert() 호출");
 		return sqlSession.insert(NAMESPACE + ".insert", vo);
 	}
 
 	@Override
 	public List<QnaBoardVO> select() {
-		logger.info("select() ȣ��");
+		logger.info("select() 호출");
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	}
 
 	@Override
 	public QnaBoardVO select(int qnaBoardId) {
-		logger.info("select() ȣ�� : qnaBoardId = " + qnaBoardId);
+		logger.info("select() 호출 : qnaBoardId = " + qnaBoardId);
 		return sqlSession.selectOne(NAMESPACE + ".select_by_qna_board_id", qnaBoardId);
 	}
 
 	@Override
 	public List<QnaBoardVO> select(PageCriteria criteria) {
-		logger.info("select() ȣ��");
+		logger.info("select() 호출");
 		logger.info("start = " + criteria.getStart());
 		logger.info("end = " + criteria.getEnd());
 		return sqlSession.selectList(NAMESPACE + ".paging", criteria);
@@ -53,6 +53,30 @@ public class QnaBoardDAOImple implements QnaBoardDAO{
 	public int getTotalCounts() {
 		logger.info("getTotalCounts()");
 		return sqlSession.selectOne(NAMESPACE + ".total_count");
+	}
+
+	@Override
+	public int update(QnaBoardVO vo) {
+		logger.info("update() 호출 : vo = " + vo.toString());
+		return sqlSession.update(NAMESPACE + ".update", vo);
+	}
+
+	@Override
+	public int delete(int qnaBoardId) {
+		logger.info("delete() 호출 : qnaBoardId = " + qnaBoardId);
+		return sqlSession.delete(NAMESPACE + ".delete", qnaBoardId);
+	}
+
+	@Override
+	public List<QnaBoardVO> select(String memberId) {
+		logger.info("select() 호출 : memberId = " + memberId);
+		return sqlSession.selectList(NAMESPACE + ".select_by_memberid", "%" + memberId + "%");
+	}
+
+	@Override
+	public List<QnaBoardVO> selectByTitleOrContent(String keyword) {
+		logger.info("selectByTitleOrContent() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_by_title_content", "%" + keyword + "%");
 	}
 
 }

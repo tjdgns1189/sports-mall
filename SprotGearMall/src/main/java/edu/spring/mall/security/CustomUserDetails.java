@@ -96,11 +96,10 @@ public class CustomUserDetails implements UserDetails {
 	}
 
 	@Override
+	// ìœ ì € ê¶Œí•œ ì„¤ì •ë¶€ë¶„
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// ±ÇÇÑ Á¤º¸¸¦ °ü¸®ÇÏ´Â ¸ñ·Ï
 		ArrayList<GrantedAuthority> authorities = new ArrayList<>();
 
-		// ¿¹¸¦ µé¾î, userGrade°¡ 'ADMIN'ÀÌ¸é 'ROLE_ADMIN' ±ÇÇÑÀ» Ãß°¡
 		if ("ROLE_ADMIN".equals(userGrade)) {
 			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		} else {
@@ -117,7 +116,6 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		logger.info("getUsernameÈ£Ãâ");
 		return this.memberId;
 	}
 

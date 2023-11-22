@@ -7,8 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 <insert id="insert">
 	 	insert into ${product}
-	 	(${productName}, ${productPrice}, ${productStock}, ${productMaker}, ${productImgPath}, ${productCategory}, ${productIsDeleted})
-	 	values (#{productName}, #{productPrice}, #{productStock}, #{productMaker}, #{productImgPath}, #{productCategory}, #{productIsDeleted})
+	 	(${productName}, ${productPrice}, ${productStock}, ${productMaker}, ${productImgPath}, ${productCategory},${productContent})
+	 	values (#{productName}, #{productPrice}, #{productStock}, #{productMaker}, #{productImgPath}, #{productCategory}, #{productContent})
 	 </insert>
 	 
 	 <select id="select_all" resultType="ProductVO">
@@ -22,9 +22,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 
 	 <select id="select_by_product_id" resultType="ProductVO">
-	 	select * from ${product} where ${productId} = #{productId}
+	 	select * from ${product} 
+	 	where ${productId} = #{productId}
 	 </select>
-	 
+
 	 <update id="update">
 	 	update ${product}
 	 	set ${productName} = #{productName}, ${productPrice} = #{productPrice}, ${productStock} = #{productStock}, 
@@ -54,6 +55,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="select_by_productName" resultType="ProductVO">
 	 	select * from ${product}
 	 	where ${productName} like #{productName}
+	 </select>
+	 
+	<select id="select_by_search_text" resultType="ProductVO">
+	 	 select * from ${product}
+        where ${productName} like #{searchText}
+        or ${productCategory} like #{searchText}
+        order by ${productId} desc
 	 </select>
 </mapper>
 

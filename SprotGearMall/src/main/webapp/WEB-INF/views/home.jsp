@@ -1,98 +1,103 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
+
 
 <!DOCTYPE html>
 
 <html>
 <head>
+<link href="<c:url value="/resources/css/product.css" />" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
 <meta charset="UTF-8">
+
 	<title>Home</title>
+
+
 
 </head>
 <body>
+<!-- Header-->
+	<header class="bg-dark py-5">
+		<div class="container px-4 px-lg-5 my-5">
+			<div class="text-center text-white">
+				<h1 class="display-4 fw-bolder">메인페이지</h1>
+				<p class="lead fw-normal text-white-50 mb-0">이미지랑 글자 넣기</p>
+			</div>
+		</div>
+	</header>
+	
+	<!-- Section-->
+	<section class="py-5">
+			<h3>&nbsp;신상품</h3>
+			
+		<hr>
+			<div class="container px-4 px-lg-5 mt-5">
+				<div
+					class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+					<c:forEach var="vo" items="${list }">
+					<div class="col mb-5">
+						<div class="card h-100" onclick="location.href='${pageContext.request.contextPath}/product/detail?productId=${vo.productId}'">
+						
+							<!-- 상품 이미지-->
+							<img class="card-img-top"
+								src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="이미지" />
+							<div class="text-center">
+								<!-- 상품 이름-->
+								<span class="fw-bolder">${vo.productName}</span><br>
+								<!-- 가격들어가는곳-->
+                			<fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+				</div>
+			</div>
 
-
-
-<h2>메인 페이지</h2>
-
-	<sec:authorize access="isAuthenticated()">
-    로그인한 사용자: <sec:authentication property="principal.username"/>
-    	
-    <c:url var="logoutUrl" value="/logout"/>
-      <form class="form-inline" action="${logoutUrl}" method="post">
-          <input type="submit" value="Log out" />
-          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-      </form>
-	<a href="member/mypage" >마이페이지</a>
-</sec:authorize>
-<sec:authorize access="isAnonymous()">
-<a href="member/loginForm">로그인</a>
-<a href="member/register">회원가입</a>
-</sec:authorize>
-
-
-<hr>
-
-
-<h1>상품목록리스트</h1>
-	<table>
-    	<thead>
-    		<tr>
-    		<!--  상품 헤드 -->
-    			<th style="width : 60px">번호</th>
-    			<th style="width : 100px">이름</th>
-    			<th style="width : 100px">가격</th>
-    			<th style="width : 100px">재고</th>
-    			<th style="width : 100px">제조사</th>
-    			<th style="width : 100px">이미지</th>
-    			<th style="width : 100px">분류</th>
-    		</tr>
-    	</thead>
-    	<tbody>
-    	
-    	<!-- 상품 목록 -->
-    		<c:forEach var="vo" items="${list }"> 
-    			<tr>
-    				<td>${vo.productId }</td>
-    				<td>${vo.productPrice }</td>
-    				 <!--  사이트이동하는데 데이터보내면서-->
-    				 <!-- productName이 아니라 Id써야됨 -->
-    				<td><a href="product/detail?productId=${vo.productId }&page=${pageMaker.criteria.page}">${vo.productName }</a></td>
-    				<!-- 여기서는 경로에 앞에 product를 붙여줘야함 -->
-    				<td>${vo.productStock }</td>
-    				<td>${vo.productMaker }</td>
-    				<td>${vo.productImgPath }</td>
-    				<td>${vo.productCategory }</td>
-    			</tr>
-    		</c:forEach>
-    	</tbody>
-    </table>
-	<ul>	
+		</section>
+		<ul>
 		<c:if test="${pageMaker.hasPrev }">
-			<li><a href="list?page=${pageMaker.startPageNo - 1 }">이전</a></li>
+		    <li class="page-item">
+      	<a class="page-link" href="${pageMaker.startPageNo - 1 }" aria-label="Previous">
+       	 <span aria-hidden="true">&laquo;</span>
+     	 </a>
+    	</li>
 		</c:if>
 		<c:forEach begin="${pageMaker.startPageNo }" end="${pageMakger.endPageNo }" var="num">
 		<li><a href="list?page=${num }">${num }</a></li>
 		</c:forEach>
 		<c:if test="${pageMaker.hasNext }">
-			<li><a href="list?page=${pageMaker.endPageNo + 1 }">다음</a></li>
+		<li class="page-item">
+      		<a class="page-link" href="list?page=${pageMaker.endPageNo + 1 }" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+     		 </a>
 		</c:if>
 	</ul>
 
 	<input type="hidden" id="insertAlert" value="${insert_result }">
-
+	
+	
+	
 	<script type="text/javascript">
 		var result = $('#insertAlert').val();
 		if(result == 'success') {
 			alert('새 상품 등록 성공!');
 		}
+		
+		
+		
 	</script>
-
+	
+	<script>
+		
+	</script>
+	
+	
 
 <footer>
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 </footer>
 </body>
 </html>
+

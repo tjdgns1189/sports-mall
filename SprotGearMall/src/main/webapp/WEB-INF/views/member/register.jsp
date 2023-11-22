@@ -5,7 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <title>회원가입</title>
 <link href="<c:url value="/resources/css/register.css" />" rel="stylesheet"> 
@@ -15,8 +19,9 @@
 <div>
 	<h1 id="registerLogo"><a href="${pageContext.request.contextPath}/index">스포츠용품 쇼핑몰</a></h1>
 	</div>
-	<div class="signup-form">
+	<div class="signup-form .row">
 		<form action="register" method="POST">
+		    <input type="hidden" name="${_csrf.parameterName}" id ="csrfToken" value="${_csrf.token}">
 			<input type="text" name="memberId" id="memberId" required="required"
 				placeholder="아이디"><br>
 			<div id="checkedId"></div>
@@ -49,7 +54,13 @@
 		var idChecked = false;
 		var passwordCheck = false;
 		var phoneCheck = false;
+		var csrfToken = $("#csrfToken").val();
+	    var headers = {
+	        'Content-Type': 'application/json'
+	    };
+	    headers['X-CSRF-TOKEN'] = csrfToken;
 		$('#memberId').on('blur', function(){
+			
 			console.log("아이디체크");
 			var memberId = $(this).val();
 			
@@ -65,9 +76,7 @@
 			$.ajax({
 				type : 'POST',
 				url : 'checkid',
-				headers : {
-					'Content-Type' : 'application/json'
-				},
+				headers : headers,
 				data : JSON.stringify({ "memberId": memberId }),
 				success : function(result){
 					console.log(result);
