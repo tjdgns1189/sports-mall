@@ -71,6 +71,11 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 		logger.info("getTotalCount 호출");
 		return sqlSession.selectOne(NAMESPACE+ ".total_count", productId);
 	}
+	@Override
+	public int count(int prdQnaId) {
+		logger.info("count 호출");
+		return sqlSession.selectOne(NAMESPACE + ".count",prdQnaId);
+	}
 
 
 }

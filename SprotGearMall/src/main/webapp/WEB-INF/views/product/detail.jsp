@@ -165,13 +165,13 @@ text-align: center;
             	</thead>
             	<tbody id="prdQnaBody">
             	<c:forEach var="qna" items="${qnaList }">
-   				 <tr id="accordion-${qna.qna.prdQnaId}" data-target="#accordion${qna.qna.prdQnaId}" class="accordion-toggle">
+   	<tr id="accordion-${qna.qna.prdQnaId}" data-target="#accordion${qna.qna.prdQnaId}" class="accordion-toggle">
             			<td style="text-align: center;">${qna.qna.prdQnaCategory }</td>
             			<c:if test="${qna.qna.prdQnaState == 'Y'}" >
             			<td style="text-align: center;"><span class="state">답변완료</span></td>
             			</c:if>
             			<c:if test="${qna.qna.prdQnaState == 'N'}" >
-            			<td style="text-align: center;"><span class="state">미답변</span></td>
+            			<td style="text-align: center;"><span id="state-${qna.qna.prdQnaId}" class="state">미답변</span></td>
             			</c:if>
             			 <c:choose>
         					<c:when test="${qna.qna.prdQnaSecret == 0}">
@@ -195,33 +195,42 @@ text-align: center;
                 <div class="accordion-body pre-line">
                     <!-- Q&A 상세 내용 -->        
                    <c:if test="${qna.qna.prdQnaSecret == 0 || qna.qna.admin || qna.qna.author}">
-                     ${qna.qna.prdQnaContent}    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                     ${qna.qna.prdQnaContent}    
                    <!-- 대댓글 기능 -->
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                    	<div class="d-flex justify-content-end">
                         <button class="btn btn-secondary" onclick="answerArea(${qna.qna.prdQnaId })">답변</button>
                     	<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="${qna.qna.prdQnaId }">삭제</button>
                     	</div>
 					</sec:authorize>    
                     </c:if>
-                    <!-- 대댓글 시작할거임 -->
+                    <!-- 대댓글 시작점-->
+                    <div id="replyContent-${qna.qna.prdQnaId}">
                     <c:if test="${qna.qna.prdQnaState == 'Y' }">
                     <hr>
                     <!-- 답변들어가는곳 -->
-                    <div id="replyContent-${qna.qna.prdQnaId}" class="pre-line">
+                    <div id="reply-${qna.reply.pqrId}" class="pre-line">
                     ${qna.reply.pqrContent }
+                    <div class="d-flex justify-content-end">
+						<button class="btn btn-outline-secondary" onclick="answerUpdate(${qna.reply.pqrId}, '${qna.reply.pqrContent}')">수정</button>
+                    	<button class="btn btn-outline-danger" onclick="replyDelete(this)" data-qna-id="${qna.qna.prdQnaId }" data-pqr-id="${qna.reply.pqrId }">삭제</button>
+
+                    </div>
                     </div>
                     </c:if>
-                    
-               
+					</div>
                 </div>
             </div>
+            <!-- 답변 다는 공간 -->
         <div id="answer-${qna.qna.prdQnaId}" class="answer">
+        </div>
+        <div id="answer-update-${qna.reply.pqrId}" class="answer" >
         </div>
         </td>
     </tr>
-            		</c:forEach>
-            	</tbody>
-            </table>
+           </c:forEach>
+          </tbody>
+         </table>
             <div style="text-align : right;">
            		<button class="btn btn-outline-primary" onclick="location.href='/mall/qnaBoard/qnaBoard'">고객센터 문의하기</button>
            		<button class="btn btn-primary" onclick="openPrdQnaPopup()">상품 문의하기</button>
@@ -314,7 +323,7 @@ $(()=>{
         var windowSize = "width=800, height=600";
         console.log("productId :", productId );
         window.open(url, windowName, windowSize);
-    }
+    }//end openPopup
     
 
 $(document).on('click', '.accordion-toggle', function(event) {
@@ -322,7 +331,6 @@ $(document).on('click', '.accordion-toggle', function(event) {
         event.preventDefault(); 
         return; 
     }
-
     var targetId = $(this).attr('data-target');
     var accordion = $(targetId);
     var accordionRow = accordion.closest('tr');
@@ -341,6 +349,11 @@ $(document).on('click', '.accordion-toggle', function(event) {
         accordion.removeClass('show');
         accordionRow.addClass('hidden-row');
     }
+})//end accodion.on
+
+$(document).on('click', '.cancel-answer', function() {
+    var answerDivId = $(this).data('answer-div-id');
+    $('#' + answerDivId).empty(); // 해당 div의 내용을 비웁니다.
 });
     
 	   function qnaDelete(element) {
@@ -368,7 +381,8 @@ $(document).on('click', '.accordion-toggle', function(event) {
 	                200: (result)=>{
 	                    alert("삭제성공");
 	                    $('#accordion-' + prdQnaId).closest('tr').remove();
-	                    $('#accordionContent-' + prdQnaId).remove()
+	                    $('#accordionContent-' + prdQnaId).remove();
+	                    $('#replyContent-' + prdQnaId).remove();
 	                    },
 	                400: (result)=>{
 	                    alert("삭제 실패")
@@ -417,11 +431,8 @@ $(document).on('click', '.accordion-toggle', function(event) {
 		        newTbodyContent += '<td style="text-align: center;">' + list.qna.prdQnaCategory + '</td>';
 		        
 		        // 답변 상태에 따른 처리
-		        if (list.qna.prdQnaState == 'Y') {
-		            newTbodyContent += '<td style="text-align: center;"><span class="state">답변완료</span></td>';
-		        } else {
-		            newTbodyContent += '<td style="text-align: center;"><span class="state">미답변</span></td>';
-		        }
+		        newTbodyContent += '<td style="text-align: center;"><span class="' + (list.qna.prdQnaState == 'Y' ? 'state">답변완료' : 'state">미답변') + '</span></td>';
+
 
 		        // 비밀글
 		         if (list.qna.prdQnaSecret == 0) {
@@ -435,39 +446,48 @@ $(document).on('click', '.accordion-toggle', function(event) {
 		        // 작성자 정보 처리
 		     	 newTbodyContent += '<td>' + list.qna.memberId +  '</td>';
 		       
-
 		        // 작성일 처리
 		        newTbodyContent += '<td style="text-align: center;">' + formatDate(list.qna.prdQnaCreatedDate) + '</td>';
-
-
 		        newTbodyContent += '</tr>';
+		        
 		        // 아코디언 내용
 		        newTbodyContent += '<tr id="accordionContent-' + list.qna.prdQnaId + '" class="hidden-row trsize">';
 		        newTbodyContent += '<td colspan="5">';
 		        newTbodyContent += '<div id="accordion' + list.qna.prdQnaId + '" class="accordion-collapse collapse">';
 		        newTbodyContent += '<div class="accordion-body pre-line">';
-		     	// 권한에 따라 비활성화 해야함
+		     	
+		        // 권한에 따라 비활성화 해야함
 		        if(isAdmin ||list.qna.isAutor || list.qna.prdQnaSecret == 0){
-		        newTbodyContent += list.qna.prdQnaContent + '<br><br>';
+		        	newTbodyContent += list.qna.prdQnaContent + '<br><br>';
 		        }
-		     	if(list.qna.prdQnaState == 'Y'){
-		     		newTbodyContent += '<hr><div class="pre-line">'
-		     		newTbodyContent += list.reply.pqrContent
-		     		newTbodyContent += '</div>'
-		     	}
+		     	
 		        // 관리자 버튼 추가도 권한이 필요함
 		        if(isAdmin){
 		        	newTbodyContent += '<div class="d-flex justify-content-end">'
-		        		newTbodyContent += '<button class="btn btn-secondary" onclick="answerArea(' + list.qna.prdQnaId + ')">답변</button>';
+		        	newTbodyContent += '<button class="btn btn-secondary" onclick="answerArea(' + list.qna.prdQnaId + ')">답변</button>';
 		            newTbodyContent += '<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="' + list.qna.prdQnaId + '">삭제</button>';
 		            newTbodyContent += '</div>'
 		        }
-		        newTbodyContent += '</div></div>';
-		        newTbodyContent += '<div id="answer-' + list.qna.prdQnaId + '" class="answer"></div>'
-		        newTbodyContent += '</td></tr>'
+		        //답변완료시
+		     	if(list.qna.prdQnaState == 'Y'){
+		     		  newTbodyContent += '<hr><div id="replyContent-' + list.qna.prdQnaId + '" class="pre-line">';
+		              newTbodyContent += '<div id="reply-' + list.reply.pqrId + '" class="pre-line">';
+		              newTbodyContent += list.reply.pqrContent;
+
+		              newTbodyContent += '<div class="d-flex justify-content-end">';
+		              newTbodyContent += '<button class="btn btn-outline-secondary" onclick="answerUpdate(' + list.reply.pqrId + ', \'' + list.reply.pqrContent + '\')">수정</button>';
+		              newTbodyContent += '<button class="btn btn-outline-danger" onclick="replyDelete(this)" data-qna-id="' + list.qna.prdQnaId + '" data-pqr-id="' + list.reply.pqrId + '">삭제</button>';
+		              newTbodyContent += '</div></div></div>';
+		     	}
+		      
+		        
+		        //답변 입력창
+		        newTbodyContent += '<div id="answer-' + list.qna.prdQnaId + '" class="answer"></div>';
+		        newTbodyContent += '<div id="answer-update-' + list.reply.pqrId + '" class="answer"></div>';
+		        newTbodyContent += '</td></tr>';
 		    });
 		    $('#prdQnaBody').html(newTbodyContent);
-	      }
+	      }//end updateTableBody
 	      
 	function formatDate(timestamp) {
 	    var date = new Date(timestamp);
@@ -476,7 +496,7 @@ $(document).on('click', '.accordion-toggle', function(event) {
 	    var day = ('0' + date.getDate()).slice(-2); // 일
 
 	    return year + '.' + month + '.' + day;
-	}
+	}//end formatDate
 	
 	function updatePageItem(pageMaker){
 		var newPageItem = "";
@@ -495,7 +515,7 @@ $(document).on('click', '.accordion-toggle', function(event) {
 	    }
 	   // 추가
 	    $('#nav .pagination').html(newPageItem);
-	}
+	}//end UpdatePageItem
 	
 	function answerArea(qnaId){
 		var answerDivId = "answer-" + qnaId;
@@ -506,45 +526,136 @@ $(document).on('click', '.accordion-toggle', function(event) {
        		'<button class="btn btn-primary mt-2 submit-answer" data-qna-id="' + qnaId+'">답변하기</button>' +
     		'</div>';
 		$('#' + answerDivId).html(answerBody);
+	}//end answerArea
+	
+	function answerUpdate(pqrId, replyContent){
+	    var answerDivId = "answer-update-" + pqrId;
+	    var answerBody = 
+	        '<div class="answer-input-area">' +
+	        '<textarea class="form-control" id="updateText-' + pqrId + '" rows="3">' + replyContent + '</textarea>' +
+	        '<button class="btn btn-primary mt-2 update-answer" data-pqr-id="' + pqrId + '">수정</button>' +
+	        '<button class="btn btn--outline-secondary mt-2 cancel-answer" data-answer-div-id="' + answerDivId + '">취소</button>' +
+	        '</div>';
+	    $('#' + answerDivId).html(answerBody);
 	}
 	
+	//문의 답변
 	$(document).on('click', '.submit-answer', function() {
 	    var qnaId = $(this).data('qna-id');
 	    submitAnswer(qnaId);
-	});
+	});//end submit.on
+	
+	//답변 수정
+	$(document).on('click', '.update-answer', function() {
+	    var pqrId = $(this).data('pqr-id');
+	   submitUpdate(pqrId);
+	});//end submit.on
 	
 	function submitAnswer(qnaId){
-		//내가 보내야하는거 내용, 멤버아이디(컨트롤러 처리),문의ID(qnaId), productId
-		var pqrContent = $('#answerText-' + qnaId).val();
-		var csrfToken = $('#csrfToken').val();
-	    var productId = "${product.productId}";
-		console.log('submitAnswer qnaId', qnaId);
-		console.log('pqrContent' ,pqrContent);
-	    console.log('productId', productId)
-		headers ={
-			'Content-Type' : 'application/json',
-	    		'X-CSRF-TOKEN': csrfToken
-		}
-		$.ajax({
-			type: 'POST',
-			url : 'qnaAnswer',
-			headers: headers,
-			data:JSON.stringify({
-				'pqrContent':pqrContent,
-				'prdQnaId': qnaId,
-				'productId':productId
-			}),//end data
-			success: (result)=>{
-			alert('답변 등록성공');
-			},
-			error:()=>{
-				alert('답변 실패');
-			}
+	    var pqrContent = $('#answerText-' + qnaId).val();
+	    var csrfToken = $('#csrfToken').val();
+	    var productId = $("#productId").val(); // 이 부분이 서버 사이드 코드가 아니라면 수정 필요
+	    var headers = {
+	        'Content-Type': 'application/json',
+	        'X-CSRF-TOKEN': csrfToken
+	    };
 
-		})//end ajax
- 
-	}
+	    $.ajax({
+	        type: 'POST',
+	        url: 'qnaAnswer',
+	        headers: headers,
+	        data: JSON.stringify({
+	            'pqrContent': pqrContent,
+	            'prdQnaId': qnaId,
+	            'productId': productId
+	        }),
+	        statusCode: {
+	            200: (result) => {
+	                alert('답변 등록성공');
+	                $('#replyContent-' + qnaId).html(pqrContent);
+	                $('#state-' + qnaId).text('답변완료');
+	            },
+	            400: (result) => {
+	                alert('중복 답변입니다');
+	            }
+	        },
+	        error: () => {
+	            alert('답변 실패');
+	        }
+	    });
+	}//end submitAnswer
 
+	function replyDelete(element) {
+	    var pqrId = $(element).data('pqr-id');
+	    var csrfToken = $('#csrfToken').val();
+		var qnaId = $(element).data('qna-id');
+	    var headers = {
+	        'Content-Type': 'application/json',
+	        'X-CSRF-TOKEN': csrfToken
+	    };
+
+	    console.log('pqrId', pqrId);
+	    console.log('qnaId', qnaId);
+
+	    // confirm 함수의 결과를 변수에 저장
+	    var isConfirmed = confirm("답변을 삭제하겠습니까?");
+	    if (!isConfirmed) {
+	        return;
+	    }
+	    $.ajax({
+	        type: 'delete',
+	        url: 'deleteReply',
+	        headers: headers,
+	        data: JSON.stringify({
+	            "pqrId": pqrId
+	        }),
+	        statusCode: {
+	            200: (result) => {
+	                alert("삭제성공");
+	                $('#replyContent-' + qnaId).remove(); 
+	                $('#state-' + qnaId).text('미답변');
+
+	               
+	            },
+	            500: (result) => {
+	                alert("삭제 실패");
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            console.error('오류 발생:', error);
+	        }
+	    }); // end ajax
+	} // end replyDelete
+	
+	
+	function submitUpdate(pqrId){
+		 var pqrContent = $('#updateText-' + pqrId).val();
+		    var csrfToken = $('#csrfToken').val();
+		    var productId = $("#productId").val(); 
+		    
+		    var headers = {
+		        'Content-Type': 'application/json',
+		        'X-CSRF-TOKEN': csrfToken
+		    };
+		    $.ajax({
+		        type: 'PUT',
+		        url: 'updateAnswer',
+		        headers: headers,
+		        data: JSON.stringify({
+		            'pqrContent': pqrContent,
+		            'pqrId': pqrId,
+		        }),
+		        statusCode: {
+		            200: (result) => {
+		                alert('답변 수정성공');
+		                $('#reply-' + pqrId).text(pqrContent);
+		            },
+		        },
+		        error: () => {
+		            alert('수정 실패');
+		        }
+		    });
+	}//end submitUpdate
 </script>
 </body>
 </html>

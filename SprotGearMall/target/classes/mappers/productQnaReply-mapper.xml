@@ -12,8 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<update id="update">
-	update ${prq_table}
-	set ${pqrContent} = ${pqrContent}
+	update ${pqr_table}
+	set ${pqrContent} = #{pqrContent}
 	where ${pqrId} = #{pqrId}
 	</update>
 	
@@ -21,9 +21,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	delete ${pqr_table}
 	where ${pqrId} = #{pqrId}
 	</delete>
-	
-	 
-
-
 
 </mapper>
