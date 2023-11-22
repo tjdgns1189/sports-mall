@@ -9,10 +9,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	(${pqrContent},${prdQnaId},${memberId},${productId})
 	values(#{pqrContent},#{prdQnaId},#{memberId},#{productId})
 	</insert>
-		
 	
-	 
-
-
+	
+	<update id="update">
+	update ${pqr_table}
+	set ${pqrContent} = #{pqrContent}
+	where ${pqrId} = #{pqrId}
+	</update>
+	
+	<delete id="delete">
+	delete ${pqr_table}
+	where ${pqrId} = #{pqrId}
+	</delete>
 
 </mapper>

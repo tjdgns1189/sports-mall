@@ -93,6 +93,11 @@ public class ProductQnaServiceImple implements ProductQnaService {
 		logger.info("getTotalCounts 호출");
 		return dao.getTotalCount(productId);
 	}
+	@Override
+	public int count(int prdQnaId) {
+		logger.info("count호출");
+		return dao.count(prdQnaId);
+	}
 
 
 }

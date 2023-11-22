@@ -11,6 +11,7 @@ public interface ProductQnaService {
 	List<ProductQnaVO> read();
 	List<ProductQnaJoinReplyVO> read(int productId, PageCriteria criteria);
 	List<ProductQnaVO> read(String memberId);
+	int count(int prdQnaId);
 	ProductQnaVO readDetail(int prdQnaId);
 	int update(ProductQnaVO vo);
 	int delete(int prdQnaId);

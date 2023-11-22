@@ -221,7 +221,7 @@ public class ProductController {
 		model.addAttribute("pageMaker", pageMaker);
 	    model.addAttribute("principal", memberId);
 	    
-	    //
+	    
 	
 	} // end detail()
 

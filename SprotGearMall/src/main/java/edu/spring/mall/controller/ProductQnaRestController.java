@@ -42,7 +42,6 @@ public class ProductQnaRestController {
         criteria.setPage(page);
         List<ProductQnaJoinReplyVO> qnaList = service.read(productId, criteria);
         logger.info("qnaList.qna : " + qnaList.get(0).getQna().toString());
-      
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCriteria(criteria);
         pageMaker.setTotalCount(service.getTotalCounts(productId));

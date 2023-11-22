@@ -15,6 +15,7 @@ public interface ProductQnaDAO {
 	int update(ProductQnaVO vo);
 	int delete(int prdQnaId);
 	int getTotalCount(int productId);
+	int count(int prdQnaId);
 
 	
 
