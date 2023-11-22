@@ -177,7 +177,7 @@ text-align: center;
         					<c:when test="${qna.qna.prdQnaSecret == 0}">
            					 <td class="accordion-content">${qna.qna.prdQnaContent}</td>
         					</c:when>
-  							<c:when test="${qna.qna.prdQnaSecret == 1 && (qna.admin || qna.author)}">
+  							<c:when test="${qna.qna.prdQnaSecret == 1 && (qna.qna.admin || qna.qna.author)}">
             				<td><i class="fa-solid fa-lock-open accordion-content"></i>${qna.qna.prdQnaContent}</td>
         					</c:when>
        						 <c:otherwise>
