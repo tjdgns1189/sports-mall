@@ -39,6 +39,7 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 		Map<String, Object> params = new HashMap<>();
 		params.put("productId", productId);
 		params.put("criteria", criteria);
+		logger.info("select 확인");
 		return sqlSession.selectList(NAMESPACE + ".paging", params);
 	}
 	//유저 개인 문의
