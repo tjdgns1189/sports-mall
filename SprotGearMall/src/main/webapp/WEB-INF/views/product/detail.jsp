@@ -432,7 +432,6 @@ $(document).on('click', '.accordion-toggle', function(event) {
    				 }
 
 		        // 작성자 정보 처리
-		        // 컨트롤러에서처리함
 		     	 newTbodyContent += '<td>' + list.qna.memberId +  '</td>';
 		       
 
@@ -446,7 +445,15 @@ $(document).on('click', '.accordion-toggle', function(event) {
 		        newTbodyContent += '<td colspan="5">';
 		        newTbodyContent += '<div id="accordion' + list.qna.prdQnaId + '" class="accordion-collapse collapse">';
 		        newTbodyContent += '<div class="accordion-body pre-line">';
+		     	// 권한에 따라 비활성화 해야함
+		        if(isAdmin ||list.qna.isAutor || list.qna.prdQnaSecret == 0){
 		        newTbodyContent += list.qna.prdQnaContent + '<br><br>';
+		        }
+		     	if(list.qna.prdQnaState == 'Y'){
+		     		newTbodyContent += '<hr><div class="pre-line">'
+		     		newTbodyContent += list.reply.pqrContent
+		     		newTbodyContent += '</div>'
+		     	}
 		        // 관리자 버튼 추가도 권한이 필요함
 		        if(isAdmin){
 		        	newTbodyContent += '<div class="d-flex justify-content-end">'
@@ -454,7 +461,9 @@ $(document).on('click', '.accordion-toggle', function(event) {
 		            newTbodyContent += '<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="' + list.qna.prdQnaId + '">삭제</button>';
 		            newTbodyContent += '</div>'
 		        }
-		        newTbodyContent += '</div></div></td></tr>';
+		        newTbodyContent += '</div></div>';
+		        newTbodyContent += '<div id="answer-' + list.qna.prdQnaId + '" class="answer"></div>'
+		        newTbodyContent += '</td></tr>'
 		    });
 		    $('#prdQnaBody').html(newTbodyContent);
 	      }
@@ -499,8 +508,33 @@ $(document).on('click', '.accordion-toggle', function(event) {
 	}
 	
 	function submitAnswer(qnaId){
-		//내가 보내야하는거 내용, 멤버아이디(컨트롤러 처리),문의ID, productId
+		//내가 보내야하는거 내용, 멤버아이디(컨트롤러 처리),문의ID(qnaId), productId
 		console.log('submitAnswer qnaId', qnaId);
+		var pqrContent = $('#answerText' + qnaId).val();
+		var csrfToken = $('#csrfToken').val();
+		var productId = $('#productId').val()
+		headers ={
+			'Content-Type' : 'application/json',
+	    		'X-CSRF-TOKEN': csrfToken
+		}
+		$.ajax({
+			type: 'POST',
+			url : 'qnaAnswer',
+			headers: headers,
+			data:JSON.stringify({
+				'pqrContent':pqrContent,
+				'prdQnaId': qnaId,
+				'productId':productId
+			}),//end data
+			success: (result)=>{
+			alert('답변 등록성공');
+			},
+			error:()=>{
+				alert('답변 실패');
+			}
+
+		})//end ajax
+ 
 	}
 
 </script>

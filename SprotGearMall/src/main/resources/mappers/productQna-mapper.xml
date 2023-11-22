@@ -56,21 +56,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 ) where rn between #{criteria.start}  and #{criteria.end} 
 	 </select>
 	 -->
+	 <!-- 
 	 
+	 SELECT * FROM (
+    SELECT pq_inner.*, rownum rn
+    FROM (
+        SELECT pq.PRD_QNA_ID, pq.PRD_QNA_CONTENT, pq.PRD_QNA_CATEGORY,
+               pq.PRD_QNA_SECRET, pq.MEMBER_ID AS pq_member_id,
+               pq.PRODUCT_ID AS pq_product_id, pq.PRD_QNA_CREATED_DATE,
+               pq.PRD_QNA_STATE, pqr.PQR_ID, pqr.PQR_CONTENT,
+               pqr.MEMBER_ID AS pqr_member_id, pqr.PRODUCT_ID AS pqr_product_id,
+               pqr.PQR_CREATED_DATE
+        FROM product_qna pq
+        LEFT JOIN PRODUCT_QNA_REPLY pqr ON pq.PRD_QNA_ID = pqr.PRD_QNA_ID
+        WHERE pq.product_id = 34
+        ORDER BY pq.prd_qna_created_date DESC
+    ) pq_inner
+) 
+WHERE rn BETWEEN 1 AND 5;
+	  -->
 	 
 	 	<select id="paging" resultMap="qnaReplyJoin">
-	 	SELECT *
-			FROM (
-    			SELECT pq.PRD_QNA_ID, pq.PRD_QNA_CONTENT, pq.PRD_QNA_CATEGORY,
-    			 pq.PRD_QNA_SECRET, pq.MEMBER_ID AS pq_member_id,
-    			  pq.PRODUCT_ID AS pq_product_id, pq.PRD_QNA_CREATED_DATE,
-    			   pq.PRD_QNA_STATE, pqr.PQR_ID, pqr.PQR_CONTENT,
-    			    pqr.MEMBER_ID AS pqr_member_id, pqr.PRODUCT_ID AS pqr_product_id,
-    			     pqr.PQR_CREATED_DATE, rownum rn
-    			FROM ${prdQna_table} pq
-    			LEFT JOIN PRODUCT_QNA_REPLY pqr ON pq.PRD_QNA_ID= pqr.PRD_QNA_ID
-    			WHERE pq.${productId} = #{productId}
-    			ORDER BY pq.${prdQnaCreatedDate} DESC
+	 		 SELECT * FROM (
+    			SELECT pq_inner.*, rownum rn
+    			FROM (
+        			SELECT pq.PRD_QNA_ID, pq.PRD_QNA_CONTENT, pq.PRD_QNA_CATEGORY,
+               			pq.PRD_QNA_SECRET, pq.MEMBER_ID AS pq_member_id,
+               			pq.PRODUCT_ID AS pq_product_id, pq.PRD_QNA_CREATED_DATE,
+               			pq.PRD_QNA_STATE, pqr.PQR_ID, pqr.PQR_CONTENT,
+               			pqr.MEMBER_ID AS pqr_member_id, pqr.PRODUCT_ID AS pqr_product_id,
+              			 pqr.PQR_CREATED_DATE
+        			FROM product_qna pq
+        			LEFT JOIN PRODUCT_QNA_REPLY pqr ON pq.PRD_QNA_ID = pqr.PRD_QNA_ID
+        			WHERE pq.${productId} = #{productId}
+        			ORDER BY pq.${prdQnaCreatedDate} DESC
+    			) pq_inner
 			) 
 			where rn between #{criteria.start}  and #{criteria.end}
 	 	</select>
