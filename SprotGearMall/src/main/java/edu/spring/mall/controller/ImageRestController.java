@@ -31,15 +31,40 @@ public class ImageRestController {
 	@Autowired
 	private ImageService service;
 	
-	@PostMapping("upload")
-	  public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-        try {
-        	String filename = file.getOriginalFilename();
-            String response = service.uploadFile(file, filename);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed: " + e.getMessage());
-        }
-    }
+//	@PostMapping("upload")
+//	  public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+//        try {
+//        	String filename = file.getOriginalFilename();
+//            String response = service.uploadFile(file, filename);
+//            return ResponseEntity.status(HttpStatus.OK).body(response);
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed: " + e.getMessage());
+//        }
+//    }
+	
+	@PostMapping(value="/notice/uploadImg", produces = "application/json")
+	public ResponseEntity<Map<String, Object>> uploadFile(@RequestParam("upload") MultipartFile file) {
+	    logger.info("uploadFile");
+	    try {
+	        String randomString = UUID.randomUUID().toString().replace("-", "").substring(0, 32);
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+	        String dateString = dateFormat.format(new Date());
+
+	        String fileName = "notice/" + randomString + dateString + ".jpg"; 
+	        String fileUrl = service.noticeImg(file, fileName); 
+	        Map<String, Object> response  = new HashMap<String, Object>();
+	        response.put("url", fileUrl);
+
+
+	        return ResponseEntity.ok(response);
+	    } catch (Exception e) {
+	        Map<String, Object> response  = new HashMap<String, Object>();
+	        response.put("error", "업로드 실패");
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+
+
+	    }
+
+	}
 
 }

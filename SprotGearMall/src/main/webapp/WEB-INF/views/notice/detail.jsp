@@ -14,8 +14,6 @@
             color: #adb5bd; /* 부트스트랩 secondary 색상 */
             margin-bottom: 1rem;
         }
-
-        
         .btn-custom:hover {
             background-color: #bb2d3b; /* 색상을 약간 어둡게 조정 */
         }
