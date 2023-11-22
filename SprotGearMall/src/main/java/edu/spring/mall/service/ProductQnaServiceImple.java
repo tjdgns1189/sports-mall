@@ -42,13 +42,10 @@ public class ProductQnaServiceImple implements ProductQnaService {
 	public List<ProductQnaJoinReplyVO> read(int productId, PageCriteria criteria) {
 		logger.info("read(productId) 호출");
 		List<ProductQnaJoinReplyVO> list = dao.select(productId,criteria);
-		logger.info("qna 확인 : " + list.get(0).getQna().toString());
-		logger.info("reply 확인 : " + list.get(0).getReply().toString());
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String memberId = auth.getName();
 		boolean isAdmin = auth.getAuthorities().stream()
 		                      .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-		
 		
 		for(ProductQnaJoinReplyVO qna : list) {
 		    qna.getQna().setAdmin(isAdmin);;

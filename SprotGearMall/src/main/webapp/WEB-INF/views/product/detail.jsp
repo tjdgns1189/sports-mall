@@ -424,7 +424,7 @@ $(document).on('click', '.cancel-answer', function() {
 	function updateTableBody(qnaList, isAdmin){
 		 var newTbodyContent = '';
 		 qnaList.forEach(function(list) {
-			 
+
 			 	console.log("QnAId:", list.qna.prdQnaId);
 			    console.log("Reply:", list.reply);
 		        newTbodyContent += '<tr id="accordion-' + list.qna.prdQnaId + '" data-target="#accordion' + list.qna.prdQnaId + '" class="accordion-toggle">';
