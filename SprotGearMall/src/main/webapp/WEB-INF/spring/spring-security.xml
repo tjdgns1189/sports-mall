@@ -53,6 +53,7 @@
 	 <intercept-url pattern="/orders/orderlist" access="isAuthenticated()"/>
 	 <intercept-url pattern="/product/likes" access="isAuthenticated()"/>
 	 <intercept-url pattern="/cart/cartlist" access="isAuthenticated()"/>
+     <intercept-url pattern="/product/prdQna" access="isAuthenticated()"/>
 	
 	 <!--  
 	 <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
@@ -72,7 +73,7 @@
 				
 			<logout
 				logout-url="/logout"
-				success-handler-ref="logoutSuccessHandler"
+            	logout-success-url="/" 
 				delete-cookies="JSESSIONID, remember-me"/>
 				
 		   <oauth2-login authentication-success-handler-ref="accessSuccessHandler"/>

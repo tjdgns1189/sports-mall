@@ -15,10 +15,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -34,12 +35,15 @@ import edu.spring.mall.util.CookieUtil;
 
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 	private final Logger logger = LoggerFactory.getLogger(CustomLogoutSuccessHandler.class);
+	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	@Autowired
 	private OAuth2AuthorizedClientService authService;
 
 	@Autowired
 	private ClientRegistrationRepository social;
+	
+
 
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -61,9 +65,8 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 			
 		}
 		
-		
+		String accessToken;
 		if(registrationId.equals("naver")) {
-			String accessToken;
 			try {
 				accessToken = CookieUtil.getDecryptedCookieValue(request, "Token");
 				logger.info("Token" + accessToken);
@@ -77,11 +80,21 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			response.sendRedirect("/mall");
+			redirectStrategy.sendRedirect(request, response, "/");
 			return;
 		}
+		
 		if(registrationId.equals("google")) {
-			
+			try {
+				accessToken = CookieUtil.getDecryptedCookieValue(request, "Token");
+				logger.info("Token" + accessToken);
+				JsonNode resultNode = deleteGoogleToken(accessToken, registrationId);
+				CookieUtil.deleteCookie(request, response, "Token");
+				redirectStrategy.sendRedirect(request, response, "/");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		}
 		
 
@@ -125,6 +138,25 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readTree(responseBody);
 
+	}
+	
+	private JsonNode deleteGoogleToken(String accessToken, String registrationId) 
+			throws JsonMappingException, JsonProcessingException {
+		logger.info("구글 토큰 삭제 요청");
+		logger.info("accessToken : " + accessToken);
+		ClientRegistration registration = social.findByRegistrationId(registrationId);
+		String clientId = registration.getClientId();
+		String clientSecret = registration.getClientSecret();
+		String baseurl = registration.getProviderDetails().getTokenUri();
+		String url = "https://accounts.google.com/o/oauth2/revoke?token=" + accessToken;
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+		
+		String responseBody =response.getBody();
+		logger.info("response : " + response);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readTree(responseBody);
 	}
 
 }

@@ -77,7 +77,7 @@
       <button type="submit" class="btn btn-primary">등록</button>
     </form>
   </div>
->>>>>>> refs/remotes/origin/feature/click-product
+
 </body>
 </html>
 

@@ -8,12 +8,52 @@
 <head>
     <meta charset="UTF-8">
     <title>${product.productName}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="<c:url value='/resources/css/detail.css' />" rel="stylesheet">
     <script src="<c:url value='/resources/js/detail.js' />"></script>
     <script>
         var isLiked = ${isLiked}; 
     </script>
+    <style type="text/css">
+   .small-column {
+    width: 12%; 
+   
+}
+
+.table-head tr th{
+text-align: center;
+
+}
+.my-column{
+ white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.accordion-content {
+
+}
+
+.large-column {
+    width: 52%;
+
+}
+
+.pre-line {
+    white-space: pre-line;
+}
+
+.hidden-row {
+    display: none;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff; 
+    color: white; 
+    font-weight: bold;
+}
+    </style>
 </head>
 <body>
 
@@ -93,8 +133,82 @@
                 </c:forEach>
             </div>
             <!-- 상품 문의 -->
-            <div class="tab-pane container fade" id="inquiry">
-                상품 문의 입니다
+            <div class="tab-pane container fade my-column" id="inquiry">
+            <table class="table">
+            	<thead class= "table-head">
+            	<tr>
+            	<th class="small-column">문의유형</th>
+            	<th class="small-column">답변상태</th>
+            	<th class="large-column">문의/답변</th>
+            	<th class="small-column">작성자</th>
+            	<th class="small-column">작성일</th>
+            	</tr>
+            	</thead>
+            	<tbody>
+            	<c:forEach var="qna" items="${qnaList }">
+   				 <tr data-target="#accordion${qna.prdQnaId}" class="accordion-toggle">
+            			<td style="text-align: center;">${qna.prdQnaCategory }</td>
+            			<c:if test="${qna.prdQnaState == 'Y'}" >
+            			<td style="text-align: center;"><span class="state">답변완료</span></td>
+            			</c:if>
+            			<c:if test="${qna.prdQnaState == 'N'}" >
+            			<td style="text-align: center;"><span class="state">미답변</span></td>
+            			</c:if>
+            			 <c:choose>
+        					<c:when test="${qna.prdQnaSecret == 0}">
+           					 <td class="accordion-content">${qna.prdQnaContent}</td>
+        					</c:when>
+        					<c:when test="${qna.prdQnaSecret == 1 && (isAdmin || qna.memberId == principal)}">
+            				<td><i class="fa-solid fa-lock-open accordion-content"></i>${qna.prdQnaContent}</td>
+        					</c:when>
+       						 <c:otherwise>
+            				<td class="no-click accordion-content"><i class="fa-solid fa-lock"></i>비밀글입니다</td>
+        					</c:otherwise>
+    					</c:choose>
+    					<c:choose>
+    					<c:when test="${qna.memberId == principal }">
+    					<td>${qna.memberId }</td>
+    					</c:when>
+    					<c:otherwise>
+            			<td>${fn:substring(qna.memberId, 0, 3)} 
+            			<c:forEach begin="1" end="${fn:length(qna.memberId) - 3}" var="i">*</c:forEach></td>
+            			</c:otherwise>
+            			</c:choose>
+            			<fmt:formatDate value="${qna.prdQnaCreatedDate }" pattern="yy.MM.dd" var="qnaDate"/>
+            			<td style="text-align: center;">${qnaDate }</td>
+            		</tr>
+            		   <tr class="hidden-row">
+        <td colspan="5">
+            <div id="accordion${qna.prdQnaId}" class="accordion-collapse collapse">
+                <div class="accordion-body pre-line">
+                    <!-- Q&A 상세 내용 -->
+                    ${qna.prdQnaContent}<br><br>
+                   <sec:authorize access="hasRole('ROLE_ADMIN')">
+                   <!-- 대댓글 기능 -->
+                        <button class="btn btn-secondary" data-review-id="${qna.prdQnaId }">답변</button>
+                    	<button class="btn btn-danger reviewDelete"  data-review-id="${qna.prdQnaId }">삭제</button>
+					</sec:authorize>    
+                </div>
+            </div>
+        </td>
+    </tr>
+            		</c:forEach>
+            	</tbody>
+            </table>
+            <div style="text-align : right;">
+           		<button class="btn btn-outline-secondary" onclick="location.href='/mall/qnaBoard/qnaBoard'">고객센터 문의하기</button>
+           		<button class="btn btn-secondary" onclick="openPrdQnaPopup()">상품 문의하기</button>
+           	</div>
+           	<!-- 버튼 배치 -->
+           	<nav id="nav">
+				<ul class="pagination justify-content-center">
+					<li  class="page-item"><a class="page-link" href="#">이전</a></li>
+					<li class="page-item active"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>	
+					<li class="page-item"><a class="page-link" href="#">3</a></li>	
+					<li class="page-item"><a class="page-link" href="#">다음</a></li>
+				</ul>
+			</nav>
             </div>
         </div>
     </div>
@@ -145,6 +259,59 @@
       }
     });
   });
+    
+
+   
+    function openPrdQnaPopup() {
+    	var productId = $('#productId').val();
+        var url = "/mall/product/prdQna?productId="+ productId;
+        var windowName = "상품 문의하기";
+        var windowSize = "width=800, height=600";
+        console.log("productId :", productId );
+
+        window.open(url, windowName, windowSize);
+    }
+    
+    document.querySelectorAll('.accordion-toggle').forEach(function(row) {
+        row.addEventListener('click', function(event) {
+            // event.target을 사용하여 실제 클릭된 요소 확인
+            if (event.target.classList.contains('no-click')) {
+                event.preventDefault(); // 기본 동작 중단
+                return; // 이벤트 실행 중단
+            }
+
+            var targetId = this.getAttribute('data-target');
+            var accordion = document.querySelector(targetId);
+            var accordionRow = accordion.closest('tr');
+            accordion.classList.toggle('show');
+
+            if (accordion.classList.contains('show')) {
+                accordionRow.classList.remove('hidden-row');
+            } else {
+                accordionRow.classList.add('hidden-row');
+            }
+        });
+    });
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        // 특정 클래스 또는 id가 있는 요소를 대상으로 선택합니다.
+        var elements = document.querySelectorAll('.accordion-content'); 
+
+        elements.forEach(function(element) {
+            var htmlContent = element.innerHTML;
+            var brIndex = htmlContent.indexOf('<br>');
+
+            if (brIndex !== -1) {
+                element.innerHTML = htmlContent.substring(0, brIndex);
+            }
+        });
+    });
+    
+    $('.pagination .page-link').on('click', function() {
+        $('.pagination .page-item').removeClass('active'); 
+        $(this).parent().addClass('active'); 
+    });
+
 </script>
 </body>
 </html>

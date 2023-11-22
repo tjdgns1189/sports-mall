@@ -115,8 +115,6 @@
       }
     });
     $('#currentRating').text(ratingValue + "점");
-
-
   }//end setRating()
   setRating(currentRating);
 
@@ -148,7 +146,5 @@
       } // end success function
     }); // end ajax 
   }); // end delete_btn.click
-
-
 
   }); // end document.ready

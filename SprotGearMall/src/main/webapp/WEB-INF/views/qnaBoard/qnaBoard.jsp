@@ -62,7 +62,7 @@ li {
 			</c:forEach>
 		</tbody>
 	</table>
-	<nav id="nav" aria-label="Page navigation example">
+	<nav id="nav">
 	<ul class="pagination">
 		<c:if test="${pageMaker.hasPrev }">
 			<li  class="page-item"><a  class="page-link" href="qnaBoard?page=${pageMaker.startPageNo - 1 }">이전</a></li>

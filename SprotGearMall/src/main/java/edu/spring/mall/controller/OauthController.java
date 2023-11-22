@@ -122,7 +122,7 @@ public class OauthController {
                 		response.sendRedirect("/member/loginForm?error=error");
                 	}
               
-
+                	
                 }//end catch
             }//end if(resultcode.equals("00") && message.equals("success"))
         }//end else(state 인증 성공시)
