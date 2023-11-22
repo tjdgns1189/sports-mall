@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.spring.mall.domain.ProductQnaJoinReplyVO;
 import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
@@ -35,13 +35,14 @@ public class ProductQnaRestController {
 	@Autowired
 	private ProductQnaService service;
 	
-	//받아야하는거 productId 페이지 
+	
 	@GetMapping(value="/product/prdQnaPaging")
 	public ResponseEntity<Map<String, Object>> prdQnaGet(int productId, int page){
-		
         PageCriteria criteria = new PageCriteria();
         criteria.setPage(page);
-        List<ProductQnaVO> qnaList = service.read(productId, criteria);
+        List<ProductQnaJoinReplyVO> qnaList = service.read(productId, criteria);
+        logger.info("qnaList.qna : " + qnaList.get(0).getQna().toString());
+      
         PageMaker pageMaker = new PageMaker();
         pageMaker.setCriteria(criteria);
         pageMaker.setTotalCount(service.getTotalCounts(productId));
@@ -56,15 +57,19 @@ public class ProductQnaRestController {
 		    }
 		}
         String memberId = auth.getName();
-    	for(ProductQnaVO x : qnaList) {
-			if(!x.getMemberId().equals(memberId)) {
-				x.setMemberId(x.getMemberId().substring(0,3)+ "***");
+    	for(ProductQnaJoinReplyVO x : qnaList) {
+			if(!x.getQna().getMemberId().equals(memberId)) {
+				x.getQna().setMemberId(x.getQna().getMemberId().substring(0,3)+ "***");
+			}else {
+				x.getQna().setAuthor(true);
+				
 			}
 		
 		}
         Map<String, Object> response = new HashMap<>();
         response.put("qnaList", qnaList);
         response.put("pageMaker", pageMaker);
+        response.put("isAdmin", isAdmin);
         return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	

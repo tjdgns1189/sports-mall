@@ -3,11 +3,14 @@ package edu.spring.mall.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,11 +30,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.client.util.StringUtils;
 
 import edu.spring.mall.domain.CartProductJoinVO;
 import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.OrdersVO;
+import edu.spring.mall.domain.ProductQnaJoinReplyVO;
 import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
@@ -202,7 +208,7 @@ public class ProductController {
 		
 		//제품문의 
 		PageCriteria criteria = new PageCriteria();
-		List<ProductQnaVO> qnaList = qnaService.read(productId,criteria);
+		List<ProductQnaJoinReplyVO> qnaList = qnaService.read(productId,criteria);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(qnaService.getTotalCounts(productId));
@@ -297,40 +303,83 @@ public class ProductController {
 	}
 	
 	
+//	@GetMapping("/recent")
+//    public void recentGET(Model model, HttpServletRequest request) {
+//		// 클라이언트로부터 전송된 쿠키 배열을 가져옵니다.
+//        Cookie[] cookies = request.getCookies();
+//        for (Cookie cookie : cookies) {
+//        	String recentProductsCookie = cookie.getValue();
+//        	List<String> recentProductsList = new ArrayList<>();
+//        	String[] recentProductsArray = recentProductsCookie.split(",");
+//        	for (String productId : recentProductsArray) {
+//                recentProductsList.add(productId);
+//            }
+//        	logger.info("recentProductsList = " + recentProductsList);
+//        	model.addAttribute("recentProductsList", recentProductsList);
+//        }
+//        
+//        
+//        var a = 1;
+//        var b = 2;
+//        List<Integer> test = new ArrayList<>();
+//        test.add(a);
+//        test.add(b);
+//        logger.info("test = " + test);
+//        model.addAttribute("test", test);
+//    }
+	
+	 //데이터 여러개일땐 안뜸. 하나일땐 뜸. 근데 문자열이라결국 하나아닌가
 	@GetMapping("/recent")
-    public void recentGET(Model model, HttpServletRequest request) {
-        // 클라이언트로부터 전송된 쿠키 배열을 가져옵니다.
-        Cookie[] cookies = request.getCookies();
-        logger.info("cookies = " + cookies.toString());
-        // 만약 쿠키가 존재하면 recentProducts 쿠키를 찾아서 처리합니다.
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("recentProducts".equals(cookie.getName())) {
-                    // 쿠키에서 값을 가져와 List 형태로 변환합니다.
-                    String recentProductsCookie = cookie.getValue();
-                    List<String> recentProductsList = new ArrayList<>();
-                    if (!recentProductsCookie.isEmpty()) {
-                        String[] recentProductsArray = recentProductsCookie.split(",");
-                        for (String productId : recentProductsArray) {
-                            recentProductsList.add(productId);
-                        }
-                    }
+	public void recentGET(Model model, HttpServletRequest request) {
+		logger.info("recentGET호출 ");
+		Cookie[] cookies = request.getCookies();
+	    List<Integer> recentProductsList = new ArrayList<>();
 
-                    // 여기서 recentProductsList를 이용하여 필요한 로직을 수행합니다.
-                    // 예를 들면 recentProductsList를 모델에 추가하여 화면에 전달할 수 있습니다.
-                    // model.addAttribute("recentProducts", recentProductsList);
-                    model.addAttribute("recentProductsList", recentProductsList);
-                    // 나머지 로직을 작성하세요.
+	    if (cookies != null) {
+	    	for (Cookie cookie : cookies) {
+	    		if ("recentProducts".equals(cookie.getName())) {
+	    			logger.info("recentProducts가 여러개일때 값이 올까 ");
+	    			
+	    		}
+	    }
+	    	
+	    }
 
-                    break;  // 쿠키를 찾았으면 루프 종료
-                }
-            }
-        }
 
-        // 나머지 로직을 작성하세요.
-        
-    }
+	}
 	
 	
+//	@GetMapping("/recent")
+//	public void recentGET(Model model, HttpServletRequest request) {
+//	    logger.info("recentGET 호출");
+//	    Cookie[] cookies = request.getCookies();
+//	    List<Integer> recentProductsList = new ArrayList<>();
+//
+//	    if (cookies != null) {
+//	        for (Cookie cookie : cookies) {
+//	            if ("recentProducts".equals(cookie.getName())) {
+//	                String cookieValue = cookie.getValue();
+//	                String[] productIdArray = cookieValue.split(",");
+//
+//	                for (String productIdString : productIdArray) {
+//	                    try {
+//	                        int productId = Integer.parseInt(productIdString.trim());
+//	                        recentProductsList.add(productId);
+//	                    } catch (NumberFormatException e) {
+//	                        // 예외 처리: 유효하지 않은 숫자가 있을 경우
+//	                        logger.warn("Invalid productId found in the recentProducts cookie: " + productIdString);
+//	                    }
+//	                }
+//
+//	                logger.info("recentProductsList = " + recentProductsList);
+//	                // 여러 값을 처리하고 싶다면 이 부분에서 추가적인 로직을 구현할 수 있습니다.
+//	                break; // 찾았으므로 더 이상 반복할 필요가 없으니 반복문을 종료합니다.
+//	            }
+//	        }
+//	    }
+//
+//	    // recentProductsList를 모델에 추가하거나 필요한 작업을 수행할 수 있습니다.
+//	    model.addAttribute("recentProductsList", recentProductsList);
+//	}
 	
 } // end ProductController

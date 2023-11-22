@@ -93,6 +93,13 @@ public class ProductQnaVO {
 		this.prdQnaCreatedDate = prdQnaCreatedDate;
 		this.prdQnaState = prdQnaState;
 	}
+	@Override
+	public String toString() {
+		return "ProductQnaVO [prdQnaId=" + prdQnaId + ", prdQnaContent=" + prdQnaContent + ", prdQnaCategory="
+				+ prdQnaCategory + ", prdQnaSecret=" + prdQnaSecret + ", memberId=" + memberId + ", productId="
+				+ productId + ", prdQnaCreatedDate=" + prdQnaCreatedDate + ", prdQnaState=" + prdQnaState + ", isAdmin="
+				+ isAdmin + ", isAuthor=" + isAuthor + "]";
+	}
 
 
 

@@ -82,7 +82,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 			}
 			redirectStrategy.sendRedirect(request, response, "/");
 			return;
-		}
+		}//end naver
 		
 		if(registrationId.equals("google")) {
 			try {
@@ -91,15 +91,17 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 				logger.info("Token" + accessToken);
 				JsonNode resultNode = deleteGoogleToken(accessToken, registrationId);
 				CookieUtil.deleteCookie(request, response, "Token");
-				redirectStrategy.sendRedirect(request, response, "/");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			redirectStrategy.sendRedirect(request, response, "/");
+			return;
 
-		}
-		
+		}//end google
+		redirectStrategy.sendRedirect(request, response, "/");
 
-	}
+
+	}//end onLogoutSuccess
 
 	private JsonNode deleteNaverToken(String accessToken, String registrationId) 
 			throws JsonMappingException, JsonProcessingException {

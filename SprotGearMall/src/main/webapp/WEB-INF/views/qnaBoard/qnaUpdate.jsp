@@ -10,6 +10,7 @@
 <body>
 	<h2>글 수정 페이지</h2>
 	<form action="qnaUpdate" method="POST">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<input type="hidden" name="page" value="${page }">
 		<div>
 			<p>글 번호 : ${vo.qnaBoardId }</p>

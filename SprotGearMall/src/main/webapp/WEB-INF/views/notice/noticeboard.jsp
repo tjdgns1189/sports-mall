@@ -38,7 +38,7 @@ tr th td{
 		<c:if test="${pageMaker.hasPrev }">
 			<li  class="page-item"><a  class="page-link" href="noticeboard?page=${pageMaker.startPageNo - 1 }">이전</a></li>
 		</c:if>
-		<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }"var="num">
+		<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
 			<li class="page-item"><a class="page-link" href="noticeboard?page=${num }">${num }</a></li>	
 		</c:forEach>
 		<c:if test="${pageMaker.hasNext }">
