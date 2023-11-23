@@ -20,6 +20,9 @@ public class ProductQnaServiceImple implements ProductQnaService {
 	@Autowired
 	private ProductQnaDAO dao;
 	
+	@Autowired
+	private NotificationService notificationService;
+	
 	@Override
 	public int create(ProductQnaVO vo) {
 		int result = 1;
@@ -29,7 +32,12 @@ public class ProductQnaServiceImple implements ProductQnaService {
 		vo.setMemberId(memberId);
 	    vo.setPrdQnaContent(vo.getPrdQnaContent().replace("\n", "<br>"));
 	    dao.testInsert(vo);
-	    logger.info("prdQnaId : " + vo.getPrdQnaId());
+	    logger.info("돌려받은 prdQnaId : " + vo.getPrdQnaId());
+	    if(vo.getPrdQnaId() == 0) {
+	    	return result;
+	    }
+	    //이제 여기서 알림 메서드 실행할거임
+	    
 		return result;
 	}
 	//전체 문의 출력
