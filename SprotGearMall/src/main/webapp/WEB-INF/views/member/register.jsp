@@ -5,12 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <title>회원가입</title>
 <link href="<c:url value="/resources/css/register.css" />" rel="stylesheet"> 
 </head>
@@ -19,6 +17,9 @@
 <div>
 	<h1 id="registerLogo"><a href="${pageContext.request.contextPath}/index">스포츠용품 쇼핑몰</a></h1>
 	</div>
+	<div class="container">
+	    <div class="row justify-content-center">
+	 <div class="col-md-6">
 	<div class="signup-form .row">
 		<form action="register" method="POST">
 		    <input type="hidden" name="${_csrf.parameterName}" id ="csrfToken" value="${_csrf.token}">
@@ -46,6 +47,9 @@
 				value="회원 가입">
 			
 		</form>
+	</div>
+	</div>
+	</div>
 	</div>
 
 
