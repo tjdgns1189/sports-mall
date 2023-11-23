@@ -16,6 +16,11 @@
 	<main class="bg-secondary">
 	<a href="${pageContext.request.contextPath}/"><img class="rounded shadow img-fluid logo" alt="메인 로고"
 		src="${pageContext.request.contextPath}/resources/img/logo-removebg.png"></a>
+		
+	<button id="bookmarkButton">즐겨찾기에 추가</button>
+	<!-- <button class="favorite" onclick="favorite()">즐겨찾기에 추가</button> -->
+	
+		
 	<!-- 네비게이션 바 기능 -->
 	<div>
 	</div>
@@ -110,6 +115,55 @@
 </div>
 </div>
 
+<script>
+function addToFavorites() {
+    var pageTitle = document.title; // 현재 페이지의 제목
+    var pageURL = window.location.href; // 현재 페이지의 URL
 
+    if (window.chrome && chrome.bookmarks) {
+      chrome.bookmarks.create({
+        title: pageTitle,
+        url: pageURL
+      }, function() {
+        alert('즐겨찾기에 추가되었습니다.');
+      });
+    } else {
+      alert('크롬 브라우저에서만 지원됩니다. 수동으로 추가해주세요.');
+    }
+  }
+
+  document.getElementById('bookmarkButton').addEventListener('click', addToFavorites);
+  
+  /* function favorite(){
+	         // 즐겨찾기 (모든 브라우저 호환)
+	    $('.favorite').on('click', function(e) {
+	        var bookmarkURL = window.location.href;
+	        var bookmarkTitle = document.title;
+	        var triggerDefault = false;
+	        
+	        if (window.sidebar && window.sidebar.addPanel) {
+	            // Firefox version &lt; 23
+	            window.sidebar.addPanel(bookmarkTitle, bookmarkURL, '');
+	        } else if ((window.sidebar && (navigator.userAgent.toLowerCase().indexOf('firefox') < -1)) || (window.opera && window.print)) {
+	            // Firefox version &gt;= 23 and Opera Hotlist
+	            var $this = $(this);
+	            $this.attr('href', bookmarkURL);
+	            $this.attr('title', bookmarkTitle);
+	            $this.attr('rel', 'sidebar');
+	            $this.off(e);
+	            triggerDefault = true;
+	        } else if (window.external && ('AddFavorite' in window.external)) {
+	            // IE Favorite
+	            window.external.AddFavorite(bookmarkURL, bookmarkTitle);
+	        } else {
+	            // WebKit - Safari/Chrome
+	            alert((navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Cmd' : 'Ctrl') + '+D 를 이용해 이 페이지를 즐겨찾기에 추가할 수 있습니다.');
+	        }
+	        return triggerDefault;
+	    });
+	} */
+  
+  
+  </script>
 
 </main>
