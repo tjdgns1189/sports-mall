@@ -165,7 +165,7 @@ text-align: center;
             	</thead>
             	<tbody id="prdQnaBody">
             	<c:forEach var="qna" items="${qnaList }">
-   	<tr id="accordion-${qna.qna.prdQnaId}" data-target="#accordion${qna.qna.prdQnaId}" class="accordion-toggle">
+   					<tr id="accordion-${qna.qna.prdQnaId}" data-target="#accordion${qna.qna.prdQnaId}" class="accordion-toggle">
             			<td style="text-align: center;">${qna.qna.prdQnaCategory }</td>
             			<c:if test="${qna.qna.prdQnaState == 'Y'}" >
             			<td style="text-align: center;"><span class="state">답변완료</span></td>
@@ -189,20 +189,29 @@ text-align: center;
             			<td style="text-align: center;">${qnaDate }</td>
             		</tr>
             		<!-- 아코디언 -->
-    <tr id="accordionContent-${qna.qna.prdQnaId }"class="hidden-row trsize">
-        <td colspan="5">
-            <div id="accordion${qna.qna.prdQnaId}" class="accordion-collapse collapse">
-                <div class="accordion-body pre-line">
+    				<tr id="accordionContent-${qna.qna.prdQnaId }"class="hidden-row trsize">
+       				 	<td colspan="5">
+            			<div id="accordion${qna.qna.prdQnaId}" class="accordion-collapse collapse">
+               			<div class="accordion-body pre-line">
                     <!-- Q&A 상세 내용 -->        
                    <c:if test="${qna.qna.prdQnaSecret == 0 || qna.qna.admin || qna.qna.author}">
                      ${qna.qna.prdQnaContent}    
                    <!-- 대댓글 기능 -->
-                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                    	<div class="d-flex justify-content-end">
+                   	
+                   	<!-- 관리자일때 답변 -->
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
                         <button class="btn btn-secondary" onclick="answerArea(${qna.qna.prdQnaId })">답변</button>
+					</sec:authorize>
+					<!-- 작성자이면 수정 답변완료 상태일시 비활성화-->
+					<c:if test="${qna.qna.author && qna.qna.prdQnaState == 'N'}">
+						<button class="btn btn-outline-secondary" onclick="updatePopup(this.getAttribute('data-prdQnaId'))" data-prdQnaId="${qna.qna.prdQnaId }">수정</button>
+					</c:if>
+					<!-- 관리자거나 작성자이면 삭제 -->
+					<c:if test="${qna.qna.admin || qna.qna.author}">
                     	<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="${qna.qna.prdQnaId }">삭제</button>
+                    </c:if>
                     	</div>
-					</sec:authorize>    
                     </c:if>
                     <!-- 대댓글 시작점-->
                     <div id="replyContent-${qna.qna.prdQnaId}">
@@ -257,6 +266,7 @@ text-align: center;
 
     <a href="update?productId=${product.productId}&page=${page}"><input type="button" value="상품 수정"></a>
     <form action="delete" method="POST">
+    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
         <input type="hidden" id="productId" name="productId" value="${product.productId}">
         <input type="hidden" id="memberId" name="memberId" value="${pageContext.request.userPrincipal.name}">
         <input type="submit" value="상품 삭제">
@@ -313,9 +323,7 @@ $(()=>{
 	});
 
 })//end document.ready
-    
-
-   
+  
     function openPrdQnaPopup() {
     	var productId = $('#productId').val();
         var url = "/mall/product/prdQna?productId="+ productId;
@@ -350,10 +358,10 @@ $(document).on('click', '.accordion-toggle', function(event) {
         accordionRow.addClass('hidden-row');
     }
 })//end accodion.on
-
+//답변 취소
 $(document).on('click', '.cancel-answer', function() {
     var answerDivId = $(this).data('answer-div-id');
-    $('#' + answerDivId).empty(); // 해당 div의 내용을 비웁니다.
+    $('#' + answerDivId).empty(); 
 });
     
 	   function qnaDelete(element) {
@@ -480,7 +488,6 @@ $(document).on('click', '.cancel-answer', function() {
 		              newTbodyContent += '</div></div></div>';
 		     	}
 		      
-		        
 		        //답변 입력창
 		        newTbodyContent += '<div id="answer-' + list.qna.prdQnaId + '" class="answer"></div>';
 		        newTbodyContent += '<div id="answer-update-' + list.reply.pqrId + '" class="answer"></div>';
@@ -517,6 +524,26 @@ $(document).on('click', '.cancel-answer', function() {
 	    $('#nav .pagination').html(newPageItem);
 	}//end UpdatePageItem
 	
+	//문의 답변
+	$(document).on('click', '.submit-answer', function() {
+	    var qnaId = $(this).data('qna-id');
+	    submitAnswer(qnaId);
+	});//end submit.on
+	
+	//문의 수정
+	$(document).on('click', '.update-qna', function(){
+	    var qnaId = $(this).data('qna-id');
+		qnaUpdate(qnaId);
+	})//end update-answer.on
+	
+	//답변 수정
+	$(document).on('click', '.update-answer', function() {
+	    var pqrId = $(this).data('pqr-id');
+	   submitUpdate(pqrId);
+	});//end submit.on
+	
+	
+	//답변 작성
 	function answerArea(qnaId){
 		var answerDivId = "answer-" + qnaId;
 		console.log('answerArea qnaId', qnaId);
@@ -527,7 +554,8 @@ $(document).on('click', '.cancel-answer', function() {
     		'</div>';
 		$('#' + answerDivId).html(answerBody);
 	}//end answerArea
-	
+
+	//답변 수정
 	function answerUpdate(pqrId, replyContent){
 	    var answerDivId = "answer-update-" + pqrId;
 	    var answerBody = 
@@ -538,19 +566,15 @@ $(document).on('click', '.cancel-answer', function() {
 	        '</div>';
 	    $('#' + answerDivId).html(answerBody);
 	}
+	//문의 수정
+	function updatePopup(prdQnaId){
+	    var url = "/mall/product/prdQnaupdate?prdQnaId=" + prdQnaId;
+	    var windowName = "상품 문의하기";
+	    var windowSize = "width=800, height=600";
+	    window.open(url, windowName, windowSize);
+}
 	
-	//문의 답변
-	$(document).on('click', '.submit-answer', function() {
-	    var qnaId = $(this).data('qna-id');
-	    submitAnswer(qnaId);
-	});//end submit.on
-	
-	//답변 수정
-	$(document).on('click', '.update-answer', function() {
-	    var pqrId = $(this).data('pqr-id');
-	   submitUpdate(pqrId);
-	});//end submit.on
-	
+	//답변작성
 	function submitAnswer(qnaId){
 	    var pqrContent = $('#answerText-' + qnaId).val();
 	    var csrfToken = $('#csrfToken').val();
@@ -584,7 +608,8 @@ $(document).on('click', '.cancel-answer', function() {
 	        }
 	    });
 	}//end submitAnswer
-
+	
+	//답변 삭제
 	function replyDelete(element) {
 	    var pqrId = $(element).data('pqr-id');
 	    var csrfToken = $('#csrfToken').val();
@@ -627,7 +652,7 @@ $(document).on('click', '.cancel-answer', function() {
 	    }); // end ajax
 	} // end replyDelete
 	
-	
+	//답변 수정
 	function submitUpdate(pqrId){
 		 var pqrContent = $('#updateText-' + pqrId).val();
 		    var csrfToken = $('#csrfToken').val();
@@ -656,6 +681,7 @@ $(document).on('click', '.cancel-answer', function() {
 		        }
 		    });
 	}//end submitUpdate
+	
 </script>
 </body>
 </html>

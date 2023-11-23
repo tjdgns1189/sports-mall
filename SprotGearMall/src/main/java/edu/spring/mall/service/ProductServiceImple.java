@@ -109,9 +109,9 @@ public class ProductServiceImple implements ProductService {
 	}
 
 	@Override
-	public int delete(String productName) {
-		logger.info("delete()  호출: productName = " + productName);
-		return dao.delete(productName);
+	public int delete(int productId) {
+		logger.info("delete()  호출: productName = " + productId);
+		return dao.delete(productId);
 	}
 
 	@Override
