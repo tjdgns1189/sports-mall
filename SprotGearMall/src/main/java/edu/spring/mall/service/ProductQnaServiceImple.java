@@ -50,7 +50,7 @@ public class ProductQnaServiceImple implements ProductQnaService {
 		for(ProductQnaJoinReplyVO qna : list) {
 		    qna.getQna().setAdmin(isAdmin);;
 		    qna.getQna().setAuthor(memberId.equals(qna.getQna().getMemberId()));
-		    if(!qna.getQna().isAuthor()) {
+		    if(!qna.getQna().isAuthor() && !isAdmin) {
 		        String maskedMemberId = qna.getQna().getMemberId().substring(0, 3) + "***";
 		        qna.getQna().setMemberId(maskedMemberId);
 		    }

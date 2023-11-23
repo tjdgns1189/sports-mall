@@ -220,11 +220,13 @@ text-align: center;
                     <!-- 답변들어가는곳 -->
                     <div id="reply-${qna.reply.pqrId}" class="pre-line">
                     ${qna.reply.pqrContent }
+                    <c:if test="${qna.qna.admin }">
                     <div class="d-flex justify-content-end">
 						<button class="btn btn-outline-secondary" onclick="answerUpdate(${qna.reply.pqrId}, '${qna.reply.pqrContent}')">수정</button>
                     	<button class="btn btn-outline-danger" onclick="replyDelete(this)" data-qna-id="${qna.qna.prdQnaId }" data-pqr-id="${qna.reply.pqrId }">삭제</button>
-
                     </div>
+                    </c:if>
+                    
                     </div>
                     </c:if>
 					</div>
@@ -441,11 +443,10 @@ $(document).on('click', '.cancel-answer', function() {
 		        // 답변 상태에 따른 처리
 		        newTbodyContent += '<td style="text-align: center;"><span class="' + (list.qna.prdQnaState == 'Y' ? 'state">답변완료' : 'state">미답변') + '</span></td>';
 
-
 		        // 비밀글
 		         if (list.qna.prdQnaSecret == 0) {
         				newTbodyContent += '<td class="accordion-content">' + list.qna.prdQnaContent + '</td>';
-    			} else if (list.qna.prdQnaSecret == 1 &&(isAdmin ||list.qna.isAuthor)) {
+    			} else if (list.qna.prdQnaSecret == 1 &&(isAdmin ||list.qna.author)) {
         				newTbodyContent += '<td><i class="fa-solid fa-lock-open accordion-content"></i>' + list.qna.prdQnaContent + '</td>';
     			} else {
         			newTbodyContent += '<td class="no-click accordion-content"><i class="fa-solid fa-lock"></i>비밀글입니다</td>';
@@ -465,7 +466,7 @@ $(document).on('click', '.cancel-answer', function() {
 		        newTbodyContent += '<div class="accordion-body pre-line">';
 		     	
 		        // 권한에 따라 비활성화 해야함
-		        if(isAdmin ||list.qna.isAutor || list.qna.prdQnaSecret == 0){
+		        if(isAdmin ||list.qna.author || list.qna.prdQnaSecret == 0){
 		        	newTbodyContent += list.qna.prdQnaContent + '<br><br>';
 		        }
 		     	
@@ -481,11 +482,12 @@ $(document).on('click', '.cancel-answer', function() {
 		     		  newTbodyContent += '<hr><div id="replyContent-' + list.qna.prdQnaId + '" class="pre-line">';
 		              newTbodyContent += '<div id="reply-' + list.reply.pqrId + '" class="pre-line">';
 		              newTbodyContent += list.reply.pqrContent;
-
+					if(isAdmin){
 		              newTbodyContent += '<div class="d-flex justify-content-end">';
 		              newTbodyContent += '<button class="btn btn-outline-secondary" onclick="answerUpdate(' + list.reply.pqrId + ', \'' + list.reply.pqrContent + '\')">수정</button>';
 		              newTbodyContent += '<button class="btn btn-outline-danger" onclick="replyDelete(this)" data-qna-id="' + list.qna.prdQnaId + '" data-pqr-id="' + list.reply.pqrId + '">삭제</button>';
 		              newTbodyContent += '</div></div></div>';
+					}
 		     	}
 		      
 		        //답변 입력창

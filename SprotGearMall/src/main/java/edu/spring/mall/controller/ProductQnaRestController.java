@@ -56,15 +56,7 @@ public class ProductQnaRestController {
 		    }
 		}
         String memberId = auth.getName();
-    	for(ProductQnaJoinReplyVO x : qnaList) {
-			if(!x.getQna().getMemberId().equals(memberId)) {
-				x.getQna().setMemberId(x.getQna().getMemberId().substring(0,3)+ "***");
-			}else {
-				x.getQna().setAuthor(true);
-				
-			}
-		
-		}
+    
         Map<String, Object> response = new HashMap<>();
         response.put("qnaList", qnaList);
         response.put("pageMaker", pageMaker);
@@ -75,7 +67,7 @@ public class ProductQnaRestController {
 	
 	
 	@PostMapping(value = "/product/prdQna", produces = "application/json")
-	public ResponseEntity<String> prdQnaPOST(@ModelAttribute ProductQnaVO vo){
+	public ResponseEntity<String> prdQnaPOST(@ModelAttribute ProductQnaVO vo) throws Exception{
 		logger.info("prdQnaPost호출");
 		String result = "";
 	    String success = "{\"result\":\"success\"}";
