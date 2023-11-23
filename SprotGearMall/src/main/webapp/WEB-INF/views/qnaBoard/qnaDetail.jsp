@@ -492,45 +492,6 @@
 		
 		
 		
-		// 쿠키를 설정하는 함수
-		  function setCookie(name, value, days) {
-		    var expires = "";
-		    if (days) {
-		      var date = new Date();
-		      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-		      expires = "; expires=" + date.toUTCString();
-		    }
-		    document.cookie = name + "=" + value + expires + "; path=/";
-		  }
-
-		  // 쿠키에서 이름에 해당하는 값을 가져오는 함수
-		  function getCookie(name) {
-		    var nameEQ = name + "=";
-		    var ca = document.cookie.split(';');
-		    for (var i = 0; i < ca.length; i++) {
-		      var c = ca[i];
-		      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-		      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-		    }
-		    return null;
-		  }
-
-		  // 서버에서 받은 productId
-		  var productId = "${vo.qnaBoardId}";
-
-		  // 이전에 저장된 쿠키에서 최근 본 상품 목록을 가져옵니다.
-		  var recentProducts = getCookie("recentProducts");
-
-		  // 쿠키에 최근 본 상품 목록이 없다면 새로운 배열을 생성합니다.
-		  var productIdList = recentProducts ? recentProducts.split(',') : [];
-
-		  // 새로운 상품 ID를 배열에 추가합니다.
-		  productIdList.unshift(productId);
-
-		  // 배열을 문자열로 변환하여 쿠키에 저장합니다. 최대 7일 동안 유지됩니다.
-		  setCookie("recentProducts", productIdList.join(','), 7);
-		
-		
 	</script>
 			
 </body>

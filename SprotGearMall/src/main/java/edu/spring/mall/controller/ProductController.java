@@ -302,84 +302,11 @@ public class ProductController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
+
 	
-//	@GetMapping("/recent")
-//    public void recentGET(Model model, HttpServletRequest request) {
-//		// 클라이언트로부터 전송된 쿠키 배열을 가져옵니다.
-//        Cookie[] cookies = request.getCookies();
-//        for (Cookie cookie : cookies) {
-//        	String recentProductsCookie = cookie.getValue();
-//        	List<String> recentProductsList = new ArrayList<>();
-//        	String[] recentProductsArray = recentProductsCookie.split(",");
-//        	for (String productId : recentProductsArray) {
-//                recentProductsList.add(productId);
-//            }
-//        	logger.info("recentProductsList = " + recentProductsList);
-//        	model.addAttribute("recentProductsList", recentProductsList);
-//        }
-//        
-//        
-//        var a = 1;
-//        var b = 2;
-//        List<Integer> test = new ArrayList<>();
-//        test.add(a);
-//        test.add(b);
-//        logger.info("test = " + test);
-//        model.addAttribute("test", test);
-//    }
-	
-	 //데이터 여러개일땐 안뜸. 하나일땐 뜸. 근데 문자열이라결국 하나아닌가
 	@GetMapping("/recent")
-	public void recentGET(Model model, HttpServletRequest request) {
-		logger.info("recentGET호출 ");
-		Cookie[] cookies = request.getCookies();
-	    List<Integer> recentProductsList = new ArrayList<>();
-
-	    if (cookies != null) {
-	    	for (Cookie cookie : cookies) {
-	    		if ("recentProducts".equals(cookie.getName())) {
-	    			logger.info("recentProducts가 여러개일때 값이 올까 ");
-	    			
-	    		}
-	    }
-	    	
-	    }
-
-
+	public void recentGET() {
+		
 	}
-	
-	
-//	@GetMapping("/recent")
-//	public void recentGET(Model model, HttpServletRequest request) {
-//	    logger.info("recentGET 호출");
-//	    Cookie[] cookies = request.getCookies();
-//	    List<Integer> recentProductsList = new ArrayList<>();
-//
-//	    if (cookies != null) {
-//	        for (Cookie cookie : cookies) {
-//	            if ("recentProducts".equals(cookie.getName())) {
-//	                String cookieValue = cookie.getValue();
-//	                String[] productIdArray = cookieValue.split(",");
-//
-//	                for (String productIdString : productIdArray) {
-//	                    try {
-//	                        int productId = Integer.parseInt(productIdString.trim());
-//	                        recentProductsList.add(productId);
-//	                    } catch (NumberFormatException e) {
-//	                        // 예외 처리: 유효하지 않은 숫자가 있을 경우
-//	                        logger.warn("Invalid productId found in the recentProducts cookie: " + productIdString);
-//	                    }
-//	                }
-//
-//	                logger.info("recentProductsList = " + recentProductsList);
-//	                // 여러 값을 처리하고 싶다면 이 부분에서 추가적인 로직을 구현할 수 있습니다.
-//	                break; // 찾았으므로 더 이상 반복할 필요가 없으니 반복문을 종료합니다.
-//	            }
-//	        }
-//	    }
-//
-//	    // recentProductsList를 모델에 추가하거나 필요한 작업을 수행할 수 있습니다.
-//	    model.addAttribute("recentProductsList", recentProductsList);
-//	}
 	
 } // end ProductController
