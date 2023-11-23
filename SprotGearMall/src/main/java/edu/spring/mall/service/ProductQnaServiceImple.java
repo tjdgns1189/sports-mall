@@ -22,12 +22,15 @@ public class ProductQnaServiceImple implements ProductQnaService {
 	
 	@Override
 	public int create(ProductQnaVO vo) {
+		int result = 1;
 		logger.info("create 호출");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String memberId = authentication.getName();
 		vo.setMemberId(memberId);
 	    vo.setPrdQnaContent(vo.getPrdQnaContent().replace("\n", "<br>"));
-		return dao.insert(vo);
+	    dao.testInsert(vo);
+	    logger.info("prdQnaId : " + vo.getPrdQnaId());
+		return result;
 	}
 	//전체 문의 출력
 	@Override

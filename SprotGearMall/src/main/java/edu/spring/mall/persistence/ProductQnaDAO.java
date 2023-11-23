@@ -8,6 +8,7 @@ import edu.spring.mall.pageutil.PageCriteria;
 
 public interface ProductQnaDAO {
 	int insert(ProductQnaVO vo);
+	int testInsert(ProductQnaVO vo);
 	List<ProductQnaVO> select();
 	List<ProductQnaJoinReplyVO> select(int productId, PageCriteria criteria);
 	List<ProductQnaVO> select(String memberId);
