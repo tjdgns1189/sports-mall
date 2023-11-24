@@ -119,7 +119,8 @@
  function addToFavorites() {
     var pageTitle = document.title; // 현재 페이지의 제목
     var pageURL = window.location.href; // 현재 페이지의 URL
-
+	
+    // 현재 실행 중인 브라우저가 Google Chrome이며, Chrome의 bookmarks API를 지원하는 경우에 참(True)으로 간주
     if (window.chrome && chrome.bookmarks) {
       chrome.bookmarks.create({
         title: pageTitle,
