@@ -83,6 +83,8 @@
   	<div class="menu">
     <button class="menu-button" type="button">
         <img src="<c:url value='/resources/img/user-logo.png' />" alt="메뉴아이콘" />
+        <span id="notificationBadges" class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle visually-hidden">
+  		</span>
     </button>
     <div class="dropdown-menu dropdown-content dropdown-menu-right" aria-labelledby="dropdownMenuButton">
         <sec:authorize access="isAnonymous()">

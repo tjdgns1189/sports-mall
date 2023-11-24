@@ -21,8 +21,11 @@
 <h1>
 	실험용  예비 페이지
 </h1>
-
-
+<a href="/mall/product/detail?productId=34">
+<button>
+경로이동 실험
+</button>
+</a>
 <button type="button" class="btn btn-primary position-relative">
   Profile
   <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
