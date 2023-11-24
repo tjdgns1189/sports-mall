@@ -88,14 +88,12 @@ function updateReadDate(notificationId){
 	
 	   $.ajax({
         type: 'PUT',
-        url: 'notificationUpdate',
+        url: '/mall/notificationUpdate',
         headers:headers,
         data: JSON.stringify({
             'notificationId': notificationId,
             'readDate': readDate
             })
     });
-	
-	
 }
 

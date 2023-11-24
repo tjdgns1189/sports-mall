@@ -472,13 +472,23 @@ $(document).on('click', '.cancel-answer', function() {
 		        	newTbodyContent += list.qna.prdQnaContent + '<br><br>';
 		        }
 		     	
-		        // 관리자 버튼 추가도 권한이 필요함
-		        if(isAdmin){
-		        	newTbodyContent += '<div class="d-flex justify-content-end">'
-		        	newTbodyContent += '<button class="btn btn-secondary" onclick="answerArea(' + list.qna.prdQnaId + ', \'' + list.qna.memberId + '\')">답변</button>';
-		            newTbodyContent += '<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="' + list.qna.prdQnaId + '">삭제</button>';
+	        	newTbodyContent += '<div class="d-flex justify-content-end">'
+
+		        // 버튼들 권한별로 배치
+		        // 수정 버튼
+		        if (list.qna.author && list.qna.prdQnaState == 'N') {
+           			 newTbodyContent += '<button class="btn btn-outline-secondary" onclick="updatePopup(' + list.qna.prdQnaId + ')">수정</button>';
+        			}
+	        	//답변버튼
+	        	if (isAdmin) {
+	                newTbodyContent += '<button class="btn btn-secondary" onclick="answerArea(' + list.qna.prdQnaId + ', \'' + list.qna.memberId + '\')">답변</button>';
+	             	}
+	        	//삭제버튼
+	        	if (isAdmin || list.qna.author) {
+	                newTbodyContent += '<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="' + list.qna.prdQnaId + '">삭제</button>';
+	            	}
+		      
 		            newTbodyContent += '</div>'
-		        }
 		     		newTbodyContent += '<hr><div id="replyContent-' + list.qna.prdQnaId + '" class="pre-line">';
 		        //답변완료시
 		     	if(list.qna.prdQnaState == 'Y'){
