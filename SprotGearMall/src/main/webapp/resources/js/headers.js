@@ -30,7 +30,9 @@ console.log('checkNotification() 호출')
         success:(result)=>{
         //result 조건에 따라 달기
         	console.log("result",result);
+        	 if (result.length > 0) {
             $('#notificationBadges').removeClass('visually-hidden');
+            }
         }
     })//end ajax
 }
