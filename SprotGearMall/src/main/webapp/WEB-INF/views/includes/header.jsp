@@ -18,7 +18,7 @@
 		src="${pageContext.request.contextPath}/resources/img/logo-removebg.png"></a>
 		
 	<button id="bookmarkButton">즐겨찾기에 추가</button>
-	<!-- <button class="favorite" onclick="favorite()">즐겨찾기에 추가</button> -->
+	<!--  <button class="favorite" onclick="favorite()">즐겨찾기에 추가</button> -->
 	
 		
 	<!-- 네비게이션 바 기능 -->
@@ -116,7 +116,7 @@
 </div>
 
 <script>
-function addToFavorites() {
+ function addToFavorites() {
     var pageTitle = document.title; // 현재 페이지의 제목
     var pageURL = window.location.href; // 현재 페이지의 URL
 
@@ -134,7 +134,7 @@ function addToFavorites() {
 
   document.getElementById('bookmarkButton').addEventListener('click', addToFavorites);
   
-  /* function favorite(){
+  	/* function favorite(){
 	         // 즐겨찾기 (모든 브라우저 호환)
 	    $('.favorite').on('click', function(e) {
 	        var bookmarkURL = window.location.href;
@@ -142,7 +142,7 @@ function addToFavorites() {
 	        var triggerDefault = false;
 	        
 	        if (window.sidebar && window.sidebar.addPanel) {
-	            // Firefox version &lt; 23
+	            // 파이어폭스
 	            window.sidebar.addPanel(bookmarkTitle, bookmarkURL, '');
 	        } else if ((window.sidebar && (navigator.userAgent.toLowerCase().indexOf('firefox') < -1)) || (window.opera && window.print)) {
 	            // Firefox version &gt;= 23 and Opera Hotlist
@@ -153,15 +153,15 @@ function addToFavorites() {
 	            $this.off(e);
 	            triggerDefault = true;
 	        } else if (window.external && ('AddFavorite' in window.external)) {
-	            // IE Favorite
+	            // IE 
 	            window.external.AddFavorite(bookmarkURL, bookmarkTitle);
 	        } else {
-	            // WebKit - Safari/Chrome
+	            // WebKit - 사파리/크롬
 	            alert((navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Cmd' : 'Ctrl') + '+D 를 이용해 이 페이지를 즐겨찾기에 추가할 수 있습니다.');
 	        }
 	        return triggerDefault;
 	    });
-	} */
+	}  */
   
   
   </script>

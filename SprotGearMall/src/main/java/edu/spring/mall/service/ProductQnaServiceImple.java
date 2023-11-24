@@ -2,7 +2,6 @@ package edu.spring.mall.service;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import edu.spring.mall.domain.ProductQnaJoinReplyVO;
 import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.persistence.ProductQnaDAO;
@@ -39,10 +39,25 @@ public class ProductQnaServiceImple implements ProductQnaService {
 	 * 디테일 접근
 	 */
 	@Override
-	public List<ProductQnaVO> read(int productId) {
+	public List<ProductQnaJoinReplyVO> read(int productId, PageCriteria criteria) {
 		logger.info("read(productId) 호출");
-		return dao.select(productId);
+		List<ProductQnaJoinReplyVO> list = dao.select(productId,criteria);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String memberId = auth.getName();
+		boolean isAdmin = auth.getAuthorities().stream()
+		                      .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+		
+		for(ProductQnaJoinReplyVO qna : list) {
+		    qna.getQna().setAdmin(isAdmin);;
+		    qna.getQna().setAuthor(memberId.equals(qna.getQna().getMemberId()));
+		    if(!qna.getQna().isAuthor() && !isAdmin) {
+		        String maskedMemberId = qna.getQna().getMemberId().substring(0, 3) + "***";
+		        qna.getQna().setMemberId(maskedMemberId);
+		    }
+		}
+		return list;
 	}
+	
 	//유저 개인 문의
 	@Override
 	public List<ProductQnaVO> read(String memberId) {
@@ -73,7 +88,12 @@ public class ProductQnaServiceImple implements ProductQnaService {
 	@Override
 	public int getTotalCounts(int productId) {
 		logger.info("getTotalCounts 호출");
-		return 0;
+		return dao.getTotalCount(productId);
+	}
+	@Override
+	public int count(int prdQnaId) {
+		logger.info("count호출");
+		return dao.count(prdQnaId);
 	}
 
 

@@ -8,29 +8,43 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.MediaType;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import edu.spring.mall.domain.CartProductJoinVO;
+import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.domain.LikesVO;
+import edu.spring.mall.domain.OrdersVO;
+import edu.spring.mall.domain.ProductQnaJoinReplyVO;
 import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
+import edu.spring.mall.persistence.CartDAO;
 import edu.spring.mall.persistence.LikesDAO;
+import edu.spring.mall.persistence.OrdersDAO;
 import edu.spring.mall.persistence.ProductDAO;
+
+import edu.spring.mall.service.CartService;
 import edu.spring.mall.service.ProductQnaService;
 import edu.spring.mall.service.ProductService;
 
@@ -47,11 +61,21 @@ public class ProductController {
 	@Autowired
 	private ProductDAO dao;
 
+	
+	@Autowired
+	private CartDAO cartDAO;
+	
+	@Autowired
+	private CartService cartService;
+	
 	@Autowired
 	private ProductQnaService qnaService;
 
 	@Autowired
 	private LikesDAO likesDAO;
+	
+	@Autowired
+	private OrdersDAO ordersDAO;
 
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage) {
@@ -66,9 +90,6 @@ public class ProductController {
 		}
 		List<ProductVO> list = productService.read(criteria);
 
-		// 매개변수를 criteria를 가지고 있는 list
-
-		// 내가 받아야하는건 reviewProductList
 		model.addAttribute("list", list);
 
 		PageMaker pageMaker = new PageMaker();
@@ -80,11 +101,28 @@ public class ProductController {
 	} // end list()
 
 	@GetMapping("/payment")
-	public void paymentGET(Model model, Integer productId) {
-		logger.info("paymentGET() 호출");
-		ProductVO vo = dao.selectById(productId);
-		model.addAttribute("vo", vo);
+	public void paymentGET(Model model, Integer productId, Principal principal) throws Exception {
+	    logger.info("paymentGET() 호출");
+
+	    // productId있을 경우
+	    if (productId != null) {
+	    	logger.info("paymentGET() 호출");
+			ProductVO vo = dao.selectById(productId);
+			model.addAttribute("vo", vo);
+	    } 
+	    // productId 없을경우
+	    else {
+	    	String memberId = principal.getName();
+		    logger.info("paymnet에서 memberId는 : " + memberId);
+			List<CartProductJoinVO> list = cartService.read(memberId);
+			model.addAttribute("list", list);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String jsonList = objectMapper.writeValueAsString(list);
+			model.addAttribute("jsonList", jsonList);
+	    }
 	}
+	
+
 
 	@GetMapping("/register")
 	public void registerGET(Model model) {
@@ -92,25 +130,30 @@ public class ProductController {
 
 	} // end registerGET()
 
+
+
 	@PostMapping("/register")
-	public void registerPOST(@RequestParam("productName") String productName,
-			@RequestParam("productPrice") int productPrice, @RequestParam("productStock") int productStock,
-			@RequestParam("productMaker") String productMaker, @RequestParam("productImgPath") MultipartFile file,
-			@RequestParam("productCategory") String productCategory,
-			@RequestParam("productContent") String productContent) throws IOException {
 
+	public String registerPOST(@RequestParam("productName") String productName,
+            @RequestParam("productPrice") int productPrice,
+            @RequestParam("productStock") int productStock,
+            @RequestParam("productMaker") String productMaker,
+            @RequestParam("productImgPath") MultipartFile file,
+            @RequestParam("productCategory") String productCategory,
+            @RequestParam("productContent") String productContent) throws IOException {
+			
 		logger.info("registerPOST 호출");
-		String productImgPath = file.getOriginalFilename();
-		ProductVO vo = new ProductVO(productName, productPrice, productStock, productMaker, productImgPath,
-				productCategory, productContent);
-		logger.info("productService 호출전");
-		int result = productService.create(vo, file);
-		logger.info("productService 호출후");
+			String productImgPath = file.getOriginalFilename();
+			ProductVO vo = 
+					new ProductVO(productName, productPrice, productStock,
+							productMaker, productImgPath, productCategory, productContent);
+			int result = productService.create(vo, file);
 
-		if (result == 1) {
-
-		}
-
+			if(result == 1) {
+				logger.info("상품등록 성공");
+				return "redirect:/";
+			}
+			return "redirect:/admin/adminPage";
 	}
 
 	@GetMapping("/detail")
@@ -137,7 +180,9 @@ public class ProductController {
 		}
 		model.addAttribute("avg", avg);
 		model.addAttribute("reviewCount", count);
-		// 좋아요 확인용임
+
+		
+		//좋아요 확인용임
 		if (principal != null) {
 			logger.info("principal호출" + principal.getName());
 			String memberId = principal.getName();
@@ -149,21 +194,26 @@ public class ProductController {
 
 		}
 		model.addAttribute("isLiked", isLiked);
-		List<ProductQnaVO> qnaList = qnaService.read(productId);
-		model.addAttribute("qnaList", qnaList);
+
+		
+		//제품문의 
+		PageCriteria criteria = new PageCriteria();
+		List<ProductQnaJoinReplyVO> qnaList = qnaService.read(productId,criteria);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(qnaService.getTotalCounts(productId));
+		pageMaker.setPageData();
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String memberId = auth.getName();
-		boolean isAdmin = false;
-		for (GrantedAuthority authority : auth.getAuthorities()) {
-			if ("ROLE_ADMIN".equals(authority.getAuthority())) {
-				isAdmin = true;
-				break;
-			}
-		}
 
-		model.addAttribute("isAdmin", isAdmin);
-		model.addAttribute("principal", memberId);
-
+		String memberId =auth.getName();
+	
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("pageMaker", pageMaker);
+	    model.addAttribute("principal", memberId);
+	    
+	    
+	
 	} // end detail()
 
 	@GetMapping("/update")
@@ -191,22 +241,19 @@ public class ProductController {
 	} // end updatePOST()
 
 	@PostMapping("/delete")
-	public String delete(String productName) {
-		logger.info("delete()호출 : productName = " + productName);
+	public String delete(int productId) {
+		logger.info("delete()호출 : productName = " + productId);
 
-		int result = productService.delete(productName);
+		int result = productService.delete(productId);
 		if (result == 1) {
-			return "redirect:/board/list";
+			return "redirect:/";
 		} else {
-			return "redirect:/board/list";
+			return "redirect:/";
 		}
 	} // end delete()
 
-	@GetMapping("/cart")
-	public String cartGET() {
 
-		return "product/cart";
-	}
+
 
 	@GetMapping("/search")
 	public void search(@RequestParam(name = "searchtext") String searchText, Model model, Integer page,
@@ -239,24 +286,51 @@ public class ProductController {
 		 */
 	}
 
-	
-	  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-	  @ResponseBody 
-	  public List<ProductVO> searchJsonData( @RequestParam(name = "searchtext") String searchText, 
-	  Model model, Integer page, Integer numsPerPage) { 
-		  
-	  logger.info("list() 호출"); logger.info("page = "+ page + ", numsPerPage = " + numsPerPage);
-	  
-	  PageCriteria criteria = new PageCriteria();
-	  
-	  if (page != null) { criteria.setPage(page); }
-	  if (numsPerPage != null) { criteria.setNumsPerPage(numsPerPage); }
-	  
-	  List<ProductVO> list = productService.readBySearchText(searchText, criteria);
-	 
-	  return list; 
-	  
-	  }
-	 
+	@GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<ProductVO> searchJsonData(@RequestParam(name = "searchtext") String searchText, Model model, Integer page,
+			Integer numsPerPage) {
+		logger.info("list() 호출");
+		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
+		PageCriteria criteria = new PageCriteria();
+		if (page != null) {
+			criteria.setPage(page);
+		}
+		if (numsPerPage != null) {
+			criteria.setNumsPerPage(numsPerPage);
+		}
+		List<ProductVO> list = productService.readBySearchText(searchText, criteria);
 
+		// 매개변수를 criteria를 가지고 있는 list
+
+		// 내가 받아야하는건 reviewProductList
+		model.addAttribute("list", list);
+		model.addAttribute("searchText", searchText);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(productService.getTotalCounts());
+		pageMaker.setPageData();
+		model.addAttribute("pageMaker", pageMaker);
+
+		/*
+		 * ObjectMapper objm = new ObjectMapper(); String productList =
+		 * objm.writeValueAsString(list);
+		 */
+		return list;
+	}
+
+	
+	@PostMapping(value="/orderlists", produces = "application/json")
+	public ResponseEntity<Integer> orderlistsPost(@RequestBody List<OrdersVO> ordersList){
+		logger.info("ordersList = " + ordersList.toString());
+		int result = 0;
+		for(OrdersVO ordersVO : ordersList) {
+			result += ordersDAO.insert(ordersVO);
+		}
+		
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+	
+	
+	
 } // end ProductController

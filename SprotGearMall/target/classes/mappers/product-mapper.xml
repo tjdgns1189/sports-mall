@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 
 	 <delete id="delete">
 	 	delete from ${product}
-	 	where ${productName} = #{productName}
+	 	where ${productId} = #{productId}
 	 </delete>
 	  
 	 <select id="paging" resultType="ProductVO">

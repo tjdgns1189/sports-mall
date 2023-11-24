@@ -93,11 +93,11 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 			  <div class="sort-options">
 			   <input type="button" value="가격 오름차순" onclick="sort('asc')">
 			   <input type="button" value="가격 내림차순" onclick="sort('desc')">
-			    <button onclick="">최신등록 순</button>
-			    <button onclick="">좋아요 순</button>
+			   <!--  <button onclick="">최신등록 순</button>
+			    <button onclick="">좋아요 순</button> -->
 			    <input type="button" value="가나다 순" onclick="sort('alphabetize')">
-			    <button onclick="">평점 순</button>
-			    <button onclick="">리뷰 순</button>
+			    <!-- <button onclick="">평점 순</button>
+			    <button onclick="">리뷰 순</button> -->
 			  </div>
 			</div>	
 		<hr>
@@ -209,8 +209,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	                    '</div>' +
 	                    '</div>';
 	                });
-
-	                // 생성된 HTML을 어떤 요소에 추가할지는 상황에 따라 결정
+	              
 	                $('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center').html(str);
 	            },
 	            error: function(error) {

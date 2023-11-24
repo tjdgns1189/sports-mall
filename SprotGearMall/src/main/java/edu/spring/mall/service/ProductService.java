@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.spring.mall.domain.CartProductJoinVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.pageutil.PageCriteria;
 
@@ -15,7 +16,7 @@ public interface ProductService {
 	ProductVO read(int productId);
 	Map<String, Object> readProductById(int productId);
 	int update(ProductVO vo);
-	int delete(String productName);
+	int delete(int productId);
 	int getTotalCounts();
 	List<ProductVO> readBySearchText(String serchText,PageCriteria criteria);
 }
