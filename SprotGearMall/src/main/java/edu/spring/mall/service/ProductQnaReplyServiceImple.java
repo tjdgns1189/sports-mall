@@ -38,7 +38,7 @@ public class ProductQnaReplyServiceImple implements ProductQnaReplyService {
 	    	int entityId = vo.getProductId();
 	    	String targetUrl = "/mall/product/detail?productId=" + entityId;
 	    	//상품 문의에 대한 답변이 도착했습니다 클릭시 이동됩니다
-	    	String notificationContent = "상품 문의에 대한 답변이 등록되었습니다 클릭이 이동됩니다";
+	    	String notificationContent = "상품 문의에 대한 답변이 등록되었습니다 클릭시 이동됩니다";
 	    	NotificationVO notification = new NotificationVO(0, memberId, null, notificationType, notificationContent, targetUrl, null, null, entityId);
 	    	notificationService.create(notification);
 	    }

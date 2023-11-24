@@ -475,7 +475,7 @@ $(document).on('click', '.cancel-answer', function() {
 		        // 관리자 버튼 추가도 권한이 필요함
 		        if(isAdmin){
 		        	newTbodyContent += '<div class="d-flex justify-content-end">'
-		        	newTbodyContent += '<button class="btn btn-secondary" onclick="answerArea(' + list.qna.prdQnaId + ')">답변</button>';
+		        		newTbodyContent += '<button class="btn btn-secondary" onclick="answerArea(' + list.qna.prdQnaId + ', \'' + list.qna.memberId + '\')">답변</button>';
 		            newTbodyContent += '<button class="btn btn-danger" onclick="qnaDelete(this)" data-qna-id="' + list.qna.prdQnaId + '">삭제</button>';
 		            newTbodyContent += '</div>'
 		        }

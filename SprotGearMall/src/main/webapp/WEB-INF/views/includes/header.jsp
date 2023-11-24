@@ -92,6 +92,7 @@
             <a class="dropdown-item" href="#" onclick="targetURL()">로그인</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/member/register">회원가입</a>
         </sec:authorize>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/member/mypage">마이페이지</a>
       	<a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>
         <a class="dropdown-item" href="${pageContext.request.contextPath}/qnaBoard/qnaBoard?page=1">고객센터</a>
         <sec:authorize access="hasRole('ROLE_ADMIN')">
