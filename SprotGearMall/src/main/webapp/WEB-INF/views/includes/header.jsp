@@ -27,7 +27,6 @@
 	
 	<div class="header-container bg-secondary ">
 	<ul class="nav-list">
-		<li><a href="${pageContext.request.contextPath}/notice/noticeboard?page=1">임시 공지사항</a></li>
 		<li>
 			<div class="navi_bar_area">
 			

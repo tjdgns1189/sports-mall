@@ -8,11 +8,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-=======
->>>>>>> refs/remotes/origin/feature/product
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -25,19 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-<<<<<<< HEAD
 import com.fasterxml.jackson.databind.ObjectMapper;
-=======
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.http.MediaType;
->>>>>>> refs/remotes/origin/feature/product
 
 import edu.spring.mall.domain.CartProductJoinVO;
-import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.OrdersVO;
 import edu.spring.mall.domain.ProductQnaJoinReplyVO;
-import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.pageutil.PageCriteria;
@@ -46,10 +37,7 @@ import edu.spring.mall.persistence.CartDAO;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.OrdersDAO;
 import edu.spring.mall.persistence.ProductDAO;
-<<<<<<< HEAD
 import edu.spring.mall.service.CartService;
-=======
->>>>>>> refs/remotes/origin/feature/product
 import edu.spring.mall.service.ProductQnaService;
 import edu.spring.mall.service.ProductService;
 
@@ -301,7 +289,25 @@ public class ProductController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
+
 	
+	@GetMapping("/recent")
+	public void recentGET() {
+		
+	}
+	
+	@PostMapping("/result")
+	public void resultPOST(Model model, OrdersVO vo, Principal principal){
+		logger.info("resultPOST() 호출 : vo = " + vo.toString());
+		int result = ordersDAO.insert(vo);
+		
+		int productId = vo.getProductId();
+		int orderId = vo.getOrderId();
+		ProductVO productVO = productService.read(productId);
+		OrdersVO ordersVO = ordersDAO.select(orderId);
+		model.addAttribute("productVO", productVO);
+		model.addAttribute("vo", vo);
+	}
 	
 	  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
 	  @ResponseBody 
