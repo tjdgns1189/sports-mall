@@ -547,7 +547,7 @@ $(document).on('click', '.cancel-answer', function() {
 	
 
 		
-	// 쿠키를 설정하는 함수
+	// 최근 본 상품을 위한 쿠키등록
 	  function setCookie(name, value, days) {
 	    var expires = "";
 	    if (days) {
@@ -569,8 +569,8 @@ $(document).on('click', '.cancel-answer', function() {
 	    }
 	    return null;
 	  }
+	  
 
-	  // 서버에서 받은 productId
 	  var productId = "${product.productId}";
 
 	  // 이전에 저장된 쿠키에서 최근 본 상품 목록을 가져옵니다.
@@ -580,10 +580,14 @@ $(document).on('click', '.cancel-answer', function() {
 	  var productIdList = recentProducts ? recentProducts.split(',') : [];
 
 	  // 새로운 상품 ID를 배열에 추가합니다.
-	  productIdList.unshift(productId);
+	  if (!productIdList.includes(productId)) {
+  		productIdList.unshift(productId);
 
-	  // 배열을 문자열로 변환하여 쿠키에 저장합니다. 최대 7일 동안 유지됩니다.
-	  setCookie("recentProducts", productIdList.join(','), 7);
+	  // 배열을 문자열로 변환하여 쿠키저장. 1일
+	  setCookie("recentProducts", productIdList.join(','), 1 / 48);
+	  }
+	  
+	  
 
 	//문의 답변
 	$(document).on('click', '.submit-answer', function() {

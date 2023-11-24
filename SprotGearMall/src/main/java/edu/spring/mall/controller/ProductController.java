@@ -309,4 +309,17 @@ public class ProductController {
 		
 	}
 	
+	@PostMapping("/result")
+	public void resultPOST(Model model, OrdersVO vo, Principal principal){
+		logger.info("resultPOST() 호출 : vo = " + vo.toString());
+		int result = ordersDAO.insert(vo);
+		
+		int productId = vo.getProductId();
+		int orderId = vo.getOrderId();
+		ProductVO productVO = productService.read(productId);
+		OrdersVO ordersVO = ordersDAO.select(orderId);
+		model.addAttribute("productVO", productVO);
+		model.addAttribute("vo", vo);
+	}
+	
 } // end ProductController

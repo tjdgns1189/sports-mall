@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -8,27 +10,71 @@
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <title>Insert title here</title>
+<style type="text/css">
+table, th, td {
+   border-style : solid;
+   border-width : 0px;
+   text-align : center;
+}
+
+th, td {
+   border-top: 1px solid #ddd;
+   border-bottom: 1px solid #ddd;
+}
+
+ul {
+    list-style-type : none;
+}
+
+li {
+    display : inline-block;
+}
+
+#productTableBody {
+	vertical-align: middle;
+    text-align: center;
+    font-size: 20px; 
+}
+
+.form-control-plaintext{
+	text-align: center;
+}
+
+</style>
 </head>
 <body>
-<input type="text" id="productQuantity" 
-                            value="${productList}">
 
+
+<div align="center">
+
+<h2>최근 본 상품</h2>
 
 <table>
-        <tbody id="productTableBody">
-<!-- 여기서 JSTL 변수인 serverProductList를 사용할 수 있습니다. -->
-<c:forEach var="vo" items="${productList}">
-    <tr class="align-middle">
-        <td>
-            <input type="text" class="productQuantity1" value="${vo.productId}">
-        </td>
-        <td>
-            <input type="text" class="productQuantity2" value="${vo}">
-        </td>
-    </tr>
-</c:forEach>
-		</tbody>
+	<thead>
+		<tr>
+			<th>상품정보</th>
+			<th>상품정보</th>
+            <th>이름</th>
+            <th>가격</th>
+            <th>재고</th>
+            <th>삭제버튼</th>
+        </tr>    
+	</thead>
+
+    <tbody align="center" id="productTableBody">
+	<c:forEach var="vo" items="${productList}">
+    	<tr class="align-middle">
+
+    	</tr>
+	</c:forEach>
+	</tbody>
 </table>
+
+</div>
+
+
+
+
 
 
 <script type="text/javascript">
@@ -71,7 +117,7 @@ $.ajax({
     success: function (productList) {
         // 성공 시 처리
         if (productList !== null) {
-            alert('성공');
+           
             console.log('productList서버에서 얘 왔는지 확인:', productList);
 //            $('#test').val(productList);
 //           $('#productQuantity').val(productList);
@@ -89,12 +135,21 @@ $.ajax({
                         var newRow = $('<tr class="align-middle">');
 
                         // 입력 엘리먼트를 포함한 셀 추가
-                        var cell1 = $('<td>').append('<input type="text" class="productQuantity1" value="' + product.productId + '">');
-                        var cell2 = $('<td>').append('<input type="text" class="productQuantity2" value="' + product + '">');
+                        var cell1 = $('<td>').append('<input type="text" class="form-control-plaintext" value="' + product.productId + '">');
+                        var cell2 = $('<td>').append('<img class="img-thumbnail" src="https://storage.googleapis.com/edu-mall-img/' 
+                        		+ product.productImgPath + '" alt="Product Image" style="width: 150px; height: auto;" />');
+                        var cell3 = $('<td>').append('<a href="../product/detail?productId=' + product.productId + '">' + product.productName + '</a>');
+                        var cell4 = $('<td>').append('<input type="text" class="form-control-plaintext" value="' + product.productPrice + '">');
+                        var cell5 = $('<td>').append('<input type="text" class="form-control-plaintext" value="' + product.productStock + '">');
+                        var cell6 = $('<td>').append('<input type="button" class="btn btn-outline-danger" value="삭제버튼">');
 
                         // 행에 셀 추가
                         newRow.append(cell1);
                         newRow.append(cell2);
+                        newRow.append(cell3);
+                        newRow.append(cell4);
+                        newRow.append(cell5);
+                        newRow.append(cell6);
 
                         // 행을 테이블 본문에 추가
                         $('#productTableBody').append(newRow);

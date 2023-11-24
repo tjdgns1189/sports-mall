@@ -40,6 +40,9 @@ public class OrdersController {
 	@Autowired
 	private OrderService orderService;
 	
+	@Autowired
+	private ProductService productService;
+	
 	@PostMapping("/orderlist")
 	public String ordersPOST(Model model, OrdersVO vo, Principal principal) {
 		logger.info("paymentPOST() 호출 : vo = " + vo.toString());
@@ -49,7 +52,8 @@ public class OrdersController {
 		List<OrdersVO> list = dao.select(memberId);
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("list", list);
-
+	
+		
 		return "redirect:/orders/orderlist";
 	}
 	

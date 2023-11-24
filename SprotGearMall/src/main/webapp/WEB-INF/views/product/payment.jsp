@@ -184,7 +184,7 @@ li {
 
     <div class="row justify-content-center mb-5">
         <div class="col-md-8 text-center">
-            <form onsubmit="return firstJavascript()" action="../orders/orderlist" method="POST">
+            <form onsubmit="return firstJavascript()" action="result" method="POST">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <input type="hidden" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly>
                 <input type="hidden" name="productId" value="${vo.productId}" readonly>
