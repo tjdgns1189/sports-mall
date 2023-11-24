@@ -30,12 +30,22 @@ body {
     height: 100vh;
 }
 
+.center{
+	display: flex;           
+	text-align:center;
+	justify-content: center;
+    align-items: center; 
+}
+
 .signup-form {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
+    align-items: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 350px;
+   
+    
 }
 
 .signup-form input {
@@ -108,7 +118,7 @@ body {
 <header>
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 </header>
-
+<div class="container center">
  <div class="signup-form">
 	<form action="update" method="POST">
 	 <c:if test="${not empty error}"> 
@@ -130,7 +140,7 @@ body {
 	<input type="submit" onclick="checkAllConditions()" class="btn btn-lg btn-primary btn-block" value="정보수정">
 	</form>
 	</div>
-	
+</div>
 	
 <script>
 	$(()=>{

@@ -41,7 +41,6 @@ public class OrdersController {
 	private OrderService orderService;
 	
 	@PostMapping("/orderlist")
-
 	public String ordersPOST(Model model, OrdersVO vo, Principal principal) {
 		logger.info("paymentPOST() 호출 : vo = " + vo.toString());
 

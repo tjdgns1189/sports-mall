@@ -28,8 +28,8 @@
 	</div>
 	
 	<a href="qnaBoard?page=${page }"><input type="button" value="글 목록"></a>
-	
-
+												
+									
 		<a href="qnaUpdate?qnaBoardId=${vo.qnaBoardId }&page=${page }"><input type="button" value="글 수정"></a>
 		<form action="delete" method="POST">
 			<input type="hidden" id="qnaBoardId" name="qnaBoardId" value="${vo.qnaBoardId }">
@@ -40,8 +40,8 @@
 		
 		
 	<input type="hidden" id="qnaBoardId" name="qnaBoardId" value="${vo.qnaBoardId }">	
-	
-		
+			
+
 	<div style="text-align: center;">
 		<input type="text" id="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">
 		<input type="text" id="qnaReplyContent">

@@ -25,8 +25,7 @@
 		문의 내용 : ${qna.prdQnaContent }<br>
 		비밀글 여부 : ${qna.prdQnaSecret }<br>
 		<button class="btn btn-outline-secondary" 
-		onclick="updatePopup(this.getAttribute('data-prdQnaId'))"
-		data-prdQnaId="${qna.prdQnaId }">수정</button>
+		onclick="updatePopup(this.getAttribute('data-prdQnaId'))" data-prdQnaId="${qna.prdQnaId }">수정</button>
 		<form action="deleteMyQna" method="POST">
 		<input type="hidden" id="prdQnaId" name="prdQnaId" value="${qna.prdQnaId }">
 		<input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">

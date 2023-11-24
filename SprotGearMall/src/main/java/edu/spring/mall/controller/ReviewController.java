@@ -35,9 +35,7 @@ public class ReviewController {
 	public void reviewGET(Model model, int productId, int orderId) {
 		logger.info("reviewGET 호출" + productId + " | " + orderId);
 		ProductVO productvo = productService.read(productId);
-		logger.info("productvo 호출 " + productvo);
 		OrdersVO ordervo = orderDAO.select(orderId);
-		logger.info("order호출 : " + productvo);
 		model.addAttribute("productVO", productvo);
 		model.addAttribute("orderVO", ordervo);
 	}

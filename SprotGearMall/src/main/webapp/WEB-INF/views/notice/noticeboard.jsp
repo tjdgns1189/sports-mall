@@ -12,6 +12,7 @@
 tr th td{
 	align:center;
 }
+
 </style>
 </head>
 <body>
@@ -28,18 +29,21 @@ tr th td{
     <c:forEach var="vo" items="${list }">
       <tr style="height:60px">
         <td class="align-middle" style="margin-left:10px"><a href="detail?noticeId=${vo.noticeId }">${vo.noticeTitle }</a></td>
-        <td class="text-center align-middle">${vo.noticeCreatedDate }</td>
+            <fmt:formatDate value="${vo.noticeCreatedDate}" pattern="yyyy-MM-dd" var="date"/>
+        <td class="text-center align-middle">${date }</td>
          </tr>
       </c:forEach>
     </tbody>
   </table>
-  	<nav id="nav" aria-label="Page navigation example">
+  
+ 
+  
+	<nav id="nav" aria-label="Page navigation example">
 	<ul class="pagination">
 		<c:if test="${pageMaker.hasPrev }">
 			<li  class="page-item"><a  class="page-link" href="noticeboard?page=${pageMaker.startPageNo - 1 }">이전</a></li>
 		</c:if>
-		<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }"
-			var="num">
+		<c:forEach begin="${pageMaker.startPageNo }" end="${pageMaker.endPageNo }" var="num">
 			<li class="page-item"><a class="page-link" href="noticeboard?page=${num }">${num }</a></li>	
 		</c:forEach>
 		<c:if test="${pageMaker.hasNext }">
@@ -47,7 +51,12 @@ tr th td{
 		</c:if>
 	</ul>
 	</nav>
+	 <div style="text-align: right;">
+    <sec:authorize access="hasRole('ROLE_ADMIN')">
+      <a href="register"><button class="btn btn-primary">글작성</button></a>
+    </sec:authorize>
+  </div>
 </div>
-<a href="register"><button class="btn btn-primary">글작성</button></a>
+
 </body>
 </html>

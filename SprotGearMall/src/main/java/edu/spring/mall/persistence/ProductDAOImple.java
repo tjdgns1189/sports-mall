@@ -69,9 +69,9 @@ public class ProductDAOImple implements ProductDAO{
 	}
 
 	@Override
-	public int delete(String productName) {
-		logger.info("delete() 호출 : productId = " + productName);
-		return sqlSession.delete(NAMESPACE + ".delete",productName);
+	public int delete(int productId) {
+		logger.info("delete() 호출 : productId = " + productId);
+		return sqlSession.delete(NAMESPACE + ".delete",productId);
 	}
 
 	
@@ -96,9 +96,6 @@ public class ProductDAOImple implements ProductDAO{
 	    paramMap.put("searchText", searchText);
 	    paramMap.put("criteria", criteria);
 	    return sqlSession.selectList(NAMESPACE + ".select_by_search_text", paramMap);
-	    
-	    
-	    
 	}
 
 

@@ -121,8 +121,27 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="productId" value="product_id"/>
 		<property name="prdQnaCreatedDate" value="prd_qna_created_date"/>
 		<property name="prdQnaState" value="prd_qna_state"/>
-
 		
+		
+		<property name="pqr_table" value="product_qna_reply"/>
+		<property name="pqrId" value="pqr_id"/>
+		<property name="pqrContent" value="pqr_content"/>
+		<property name="prdQnaId" value="prd_qna_id"/>
+		<property name="memberId" value="member_id"/>
+		<property name="productId" value="product_id"/>
+		<property name="pqrCratedDate" value="pqr_created_date"/>
+		
+		<property name="notification_table" value="notifications"/>
+		<property name="notificationId" value="notification_id"/>
+		<property name="memberId" value="member_id"/>
+		<property name="groupId" value="group_id"/>
+		<property name="notificationType" value="notification_type"/>
+		<property name="notificationContent" value="notification_content"/>
+		<property name="targetUrl" value="target_url"/>
+		<property name="notificationDate" value="notification_date"/>
+		<property name="readDate" value="read_date"/>
+		<property name="entityId" value="entity_id"/>
+	
  	 </properties>
 	 
 	 
