@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         	<if test="groupId != null">, #{groupId}</if>)
 	</insert>
 	
+	
 	<select id="select_member" resultType="NotificationVO">
 		select * from ${notification_table}
 		where ${readDate} IS NULL

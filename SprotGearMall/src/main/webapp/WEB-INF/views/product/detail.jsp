@@ -201,7 +201,7 @@ text-align: center;
                    	
                    	<!-- 관리자일때 답변 -->
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
-                        <button class="btn btn-secondary" onclick="answerArea(${qna.qna.prdQnaId })">답변</button>
+						<button class="btn btn-secondary" onclick="answerArea(${qna.qna.prdQnaId}, '${qna.qna.memberId}')">답변</button>
 					</sec:authorize>
 					<!-- 작성자이면 수정 답변완료 상태일시 비활성화-->
 					<c:if test="${qna.qna.author && qna.qna.prdQnaState == 'N'}">
@@ -360,12 +360,14 @@ $(document).on('click', '.accordion-toggle', function(event) {
         accordionRow.addClass('hidden-row');
     }
 })//end accodion.on
+
 //답변 취소
 $(document).on('click', '.cancel-answer', function() {
     var answerDivId = $(this).data('answer-div-id');
     $('#' + answerDivId).empty(); 
 });
     
+    //문의 삭제
 	   function qnaDelete(element) {
 	        var prdQnaId = parseInt($(element).data('qna-id'),10);
 	        var csrfToken = $('#csrfToken').val();
@@ -529,7 +531,8 @@ $(document).on('click', '.cancel-answer', function() {
 	//문의 답변
 	$(document).on('click', '.submit-answer', function() {
 	    var qnaId = $(this).data('qna-id');
-	    submitAnswer(qnaId);
+	    var authorId = $(this).data('author');
+	    submitAnswer(qnaId, authorId);
 	});//end submit.on
 	
 	//문의 수정
@@ -546,13 +549,13 @@ $(document).on('click', '.cancel-answer', function() {
 	
 	
 	//답변 작성
-	function answerArea(qnaId){
+	function answerArea(qnaId, authorId){
 		var answerDivId = "answer-" + qnaId;
 		console.log('answerArea qnaId', qnaId);
 		var answerBody = 
 			'<div class="answer-input-area">' +
         	'<textarea class="form-control" id="answerText-' + qnaId + '" rows="3" placeholder="답변"></textarea>' +
-       		'<button class="btn btn-primary mt-2 submit-answer" data-qna-id="' + qnaId+'">답변하기</button>' +
+        	'<button class="btn btn-primary mt-2 submit-answer" data-author="' + authorId + '" data-qna-id="' + qnaId + '">답변하기</button>'
     		'</div>';
 		$('#' + answerDivId).html(answerBody);
 	}//end answerArea
@@ -577,10 +580,10 @@ $(document).on('click', '.cancel-answer', function() {
 }
 	
 	//답변작성
-	function submitAnswer(qnaId){
+	function submitAnswer(qnaId, authorId){
 	    var pqrContent = $('#answerText-' + qnaId).val();
 	    var csrfToken = $('#csrfToken').val();
-	    var productId = $("#productId").val(); // 이 부분이 서버 사이드 코드가 아니라면 수정 필요
+	    var productId = $("#productId").val(); 
 	    var headers = {
 	        'Content-Type': 'application/json',
 	        'X-CSRF-TOKEN': csrfToken
@@ -588,7 +591,7 @@ $(document).on('click', '.cancel-answer', function() {
 
 	    $.ajax({
 	        type: 'POST',
-	        url: 'qnaAnswer',
+	        url: 'qnaAnswer/' + authorId,
 	        headers: headers,
 	        data: JSON.stringify({
 	            'pqrContent': pqrContent,

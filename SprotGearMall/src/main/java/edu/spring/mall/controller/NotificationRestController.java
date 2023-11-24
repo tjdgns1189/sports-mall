@@ -41,6 +41,7 @@ public class NotificationRestController {
 		if(isAdmin) {
 			notificationList = service.readGroup("ROLE_ADMIN");
 		}else {
+			logger.info("memberId : " + memberId);
 			notificationList = service.read(memberId);
 		}
 	
