@@ -32,6 +32,27 @@
 	}
 }
 
+.menu-container {
+    align-items: center; /* 수평 정렬을 위한 센터 정렬 */
+    gap: 20px; /* 버튼 사이 간격 */
+    display: flex;
+    justify-content: flex-end; /* 메뉴를 오른쪽 정렬 */
+    padding-right: 120px; /* 오른쪽 패딩을 조절하여 왼쪽으로 이동 */
+}
+
+.btn-icon .bi {
+    font-size: 40px; /* 아이콘 크기를 픽셀 단위로 조정 */
+}
+
+#notificationBadge {
+    position: absolute;
+    top: -5px; /* 상단에서의 위치 조정 */
+    right: -5px; /* 우측에서의 위치 조정 */
+    padding: 3px; /* 내부 여백 조정 */
+    font-size: 12px; /* 폰트 크기 조정 */
+    line-height: 1; /* 줄 높이 조정 */
+}
+
 .logo {
   width: 120px;
   height: 120px;
@@ -115,6 +136,19 @@
 
 
 
+.width-120{
+	max-width:120px;
+}
+
+.dropdown-menu-notice {
+    right: 0; /* 오른쪽 끝을 부모 요소의 오른쪽 끝에 맞춤 */
+    left: auto; /* 기본 왼쪽 위치 해제 */
+    overflow-wrap: break-word; /* 긴 단어가 드롭다운 경계를 넘어갈 때 줄바꿈 */
+    
+}
+
+
+
 .header-container {
 	display: flex;
 	justify-content: space-between;
@@ -161,7 +195,7 @@
 
 .p-dropdown {
   float: left;
-  overflow: hidden; //  요소의 내용이 넘치는 경우에 대비하여 내용을 숨김.
+  overflow: hidden; 
   margin-left: 10px;
 }
 
@@ -198,8 +232,8 @@
 }
 
 .p-dropdown:hover .p-dropdown-content {
-  display: block; // .p-dropdown 요소가 호버(마우스를 올렸을 때)되면 
-  				  //.p-dropdown-content 요소가 표시되도록 설정합니다.
+  display: block; 
+  				  
 }
 
 .navi_bar_area a:hover, .p-dropdown:hover .dropbtn {

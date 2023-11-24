@@ -7,6 +7,7 @@
 
 
 <!DOCTYPE html>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -17,14 +18,11 @@
 	<a href="${pageContext.request.contextPath}/"><img class="rounded shadow img-fluid logo" alt="메인 로고"
 		src="${pageContext.request.contextPath}/resources/img/logo-removebg.png"></a>
 	<!-- 네비게이션 바 기능 -->
-	<div>
-	</div>
+	<input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"><br>
+	
 	<div class="header-container bg-secondary ">
 	<ul class="nav-list">
-		<li><a href="${pageContext.request.contextPath}/product/list">메뉴</a></li>
 		<li><a href="${pageContext.request.contextPath}/notice/noticeboard?page=1">임시 공지사항</a></li>
-		<li><a href="${pageContext.request.contextPath}/cart/cartlist">장바구니</a></li>
-		<li><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard?page=1">QNA</a></li>
 		<li>
 			<div class="navi_bar_area">
 			
@@ -71,6 +69,8 @@
 		</li>
 		
 	</ul>
+	
+	<!-- 검색창 -->
 	<div class="search-bar">
 		<form action="${pageContext.request.contextPath}/product/search" method="get">
         <input type="text" name="searchtext" placeholder="검색창">
@@ -80,23 +80,20 @@
 		</form>
     </div>
     
-  	<div class="menu">
-    <button class="menu-button" type="button">
-        <img src="<c:url value='/resources/img/user-logo.png' />" alt="메뉴아이콘" />
-        <span id="notificationBadges" class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle visually-hidden">
-  		</span>
+    <!-- 오른쪽 메뉴 세개 -->
+ <div class="menu-container">
+    <!-- 사용자 아이콘 -->
+  	<div class="menu ">
+    <button id="btn-user" class="btn btn-icon" type="button">
+    	<i class="bi bi-person"></i>
     </button>
-    <div class="dropdown-menu dropdown-content dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+    <div class="dropdown-menu dropdown-content dropdown-menu-right width-120" aria-labelledby="dropdownMenuButton">
         <sec:authorize access="isAnonymous()">
             <a class="dropdown-item" href="#" onclick="targetURL()">로그인</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/member/register">회원가입</a>
         </sec:authorize>
-        <a class="dropdown-item" href="${pageContext.request.contextPath}/member/mypage">내 정보</a>
-        <a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>
-        <a class="dropdown-item" href="${pageContext.request.contextPath}/member/likes">찜한 상품</a>
-        
-        <a class="dropdown-item" href="#">고객센터</a>
-
+      	<a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/qnaBoard/qnaBoard?page=1">고객센터</a>
         <sec:authorize access="hasRole('ROLE_ADMIN')">
        <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/adminPage">관리자페이지</a>
         </sec:authorize>
@@ -105,10 +102,38 @@
             <div class="dropdown-divider"></div>
             <form action="${pageContext.request.contextPath}/logout" method="post">
                 &nbsp;&nbsp;<input type="submit" class="btn btn-danger btn-block" value="로그아웃" />
-                <input type="hidden" id="csrfToken"name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </sec:authorize>
     </div>
+</div>
+
+<!-- 구매 관련 메뉴 -->
+<div class="menu width-120">
+    <button id="btn-cart" class="btn btn-icon" type="button">
+    	<i class="bi bi-cart"></i>
+    </button>
+    <div class="dropdown-menu dropdown-content dropdown-menu-right width-120">
+        <!-- 구매 관련 옵션들 -->
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/cart/cartlist">장바구니</a>
+        <a class="dropdown-item" href="${pageContext.request.contextPath}/member/likes">찜한 상품</a>
+        
+        <!-- 추가 옵션들 -->
+    </div>
+</div>
+
+<!-- 알림 관련 메뉴 -->
+<div class="menu">
+    <button id="btn-notification" class="btn btn-icon" type="button">
+    	<i class="bi bi-bell"></i>
+        <span id="notificationBadge" class="position-absolute top-30 start-60 translate-middle p-2 bg-danger border border-light rounded-circle visually-hidden">
+        </span>
+    </button>
+    <div id="drop-notification" class="dropdown-menu dropdown-content dropdown-menu-right dropdown-menu-notice">
+        <!-- 알림 텍스트 들어갈곳 -->
+        알림이 없습니다
+    </div>
+</div>
 </div>
 </div>
 
