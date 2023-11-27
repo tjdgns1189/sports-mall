@@ -97,3 +97,23 @@ function updateReadDate(notificationId){
     });
 }
 
+
+function addToFavorites() {
+    var pageTitle = document.title; // 현재 페이지의 제목
+    var pageURL = window.location.href; // 현재 페이지의 URL
+
+    if (window.chrome && chrome.bookmarks) {
+      chrome.bookmarks.create({
+        title: pageTitle,
+        url: pageURL
+      }, function() {
+        alert('즐겨찾기에 추가되었습니다.');
+      });
+    } else {
+      alert('크롬 브라우저에서만 지원됩니다. 수동으로 추가해주세요.');
+    }
+  }
+
+  document.getElementById('bookmarkButton').addEventListener('click', addToFavorites);
+  
+  
