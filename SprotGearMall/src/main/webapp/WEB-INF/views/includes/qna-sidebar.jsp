@@ -1,0 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<div class="col-md-2">
+    <div class="list-group">
+    	<h2>고객 센터</h2><br>
+    	<p><strong>고객상담</strong></p>
+    	<a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard?page=1" class="list-group-item list-group-item-action">문의 게시판</a>
+    	<a href="${pageContext.request.contextPath}/qnaBoard/chat" class="list-group-item list-group-item-action">채팅 상담</a>
+    	<br><hr>
+		<p><strong>나의 고객센터</strong></p>
+		<a href="#" class="list-group-item list-group-item-action">내 상담내역</a>
+		<a href="${pageContext.request.contextPath}/member/myqna" class="list-group-item list-group-item-action">상품 문의</a>
+		<br><hr>
+    	<p><strong>공지사항</strong></p>
+        <a href="${pageContext.request.contextPath}/notice/noticeboard" class="list-group-item list-group-item-action">공지 사항</a>
+    </div>
+</div>
