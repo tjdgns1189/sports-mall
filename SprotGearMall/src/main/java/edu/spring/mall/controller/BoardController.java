@@ -114,5 +114,10 @@ public class BoardController {
 		}
 	}
 	
+	@GetMapping("/chat")
+	public void chatGET() {
+		logger.info("chatGet 호출");
+	}
+	
 	
 }
