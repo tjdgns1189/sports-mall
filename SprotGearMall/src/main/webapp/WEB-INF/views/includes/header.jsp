@@ -24,9 +24,10 @@
 				<img src="${pageContext.request.contextPath}/resources/img/main-logo.png" alt="로고" class="logo">
 				</a>
 			</div>
+		
 			<!-- 검색창 -->
 			<div class="col">
-				<div class="search-bar">
+				<div class="search-bar d-flex">
 					<form action="${pageContext.request.contextPath}/product/search" method="get">
 						<input type="text" name="searchtext" placeholder="검색창">
 						<button type="submit" id="searchBtn" class="menu-button">
@@ -45,8 +46,8 @@
 						</button>
 						<div class="dropdown-menu dropdown-content dropdown-menu-right width-120" aria-labelledby="dropdownMenuButton">
 							<sec:authorize access="isAnonymous()">
-								<a class="dropdown-item" href="#" onclick="targetURL()">로그인</a>
-								<a class="dropdown-item" href="${pageContext.request.contextPath}/member/register">회원가입</a>
+							<a class="dropdown-item" href="#" onclick="targetURL()">로그인</a>
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/member/register">회원가입</a>
 							</sec:authorize>
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/member/mypage">마이페이지</a>
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>

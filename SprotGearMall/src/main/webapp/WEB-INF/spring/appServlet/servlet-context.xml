@@ -32,14 +32,6 @@
 	
 	<context:component-scan base-package="edu.spring.mall" />
 	
-	<!-- 웹소켓 빈 -->
-	<websocket:handlers>
-    	<websocket:mapping handler="websocketHandler" path="/mall/echo" />
-    	<websocket:sockjs />
-	</websocket:handlers>
 
-	<beans:bean id="websocketHandler" class="edu.spring.mall.websocket.UserQueryWebsocketHandler" />
-	
-	
 	
 </beans:beans>

@@ -12,21 +12,31 @@
 <title>채팅창</title>
     <script type="text/javascript">
     $('#send').click(() => {
+        console.log("ws", ws);
         sendMessage();
-        $('#message').val('')
+        $('#message').val('');
     });
 
-    var ws = new SockJS("/mall/echo");
-    ws.onmessage = onMessage;
-    ws.onclose = onClose;
+    var ws = new WebSocket("ws://localhost:8080/mall/echo");
+
+    ws.onmessage = function(event) {
+        onMessage(event);
+    };
+
+    ws.onclose = function(event) {
+        onClose();
+    };
 
     function sendMessage() {
-        ws.send($('#message').val());
+        var message = $('#message').val();
+        ws.send(message);
+        console.log("Sent: " + message);
     }
 
     function onMessage(msg) {
         var data = msg.data;
         $('#log').append(data + "<br/>");
+        console.log("Received: " + data);
     }
 
     function onClose() {
