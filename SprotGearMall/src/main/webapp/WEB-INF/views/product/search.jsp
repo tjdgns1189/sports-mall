@@ -93,8 +93,8 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 			  <div class="sort-options">
 			   <input type="button" value="가격 오름차순" onclick="sort('asc')">
 			   <input type="button" value="가격 내림차순" onclick="sort('desc')">
-			   <!--  <button onclick="">최신등록 순</button>
-			    <button onclick="">좋아요 순</button> -->
+			   <input type="button" value="최신 등록순" onclick="sort('registration')">
+			    <!-- <button onclick="">좋아요 순</button> -->
 			    <input type="button" value="가나다 순" onclick="sort('alphabetize')">
 			    <!-- <button onclick="">평점 순</button>
 			    <button onclick="">리뷰 순</button> -->
@@ -191,6 +191,11 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	                	// 가나다순 정렬
 	                	data.sort(function(a, b) {
 	                		return a.productName.localeCompare(b.productName);
+	                	});
+	                } else if (order === 'registration') {
+	                	// 최신등록순 정렬
+	                	data.sort(function(a, b) {
+                    		return new Date(a.productCreatedDate) - new Date(b.productCreatedDate);
 	                	});
 	                }
 	            	

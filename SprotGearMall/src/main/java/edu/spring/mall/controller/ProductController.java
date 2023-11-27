@@ -2,14 +2,15 @@ package edu.spring.mall.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,18 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.http.MediaType;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.spring.mall.domain.CartProductJoinVO;
-import edu.spring.mall.domain.CartVO;
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.OrdersVO;
 import edu.spring.mall.domain.ProductQnaJoinReplyVO;
-import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.pageutil.PageCriteria;
@@ -43,7 +38,6 @@ import edu.spring.mall.persistence.CartDAO;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.OrdersDAO;
 import edu.spring.mall.persistence.ProductDAO;
-
 import edu.spring.mall.service.CartService;
 import edu.spring.mall.service.ProductQnaService;
 import edu.spring.mall.service.ProductService;
@@ -133,7 +127,6 @@ public class ProductController {
 
 
 	@PostMapping("/register")
-
 	public String registerPOST(@RequestParam("productName") String productName,
             @RequestParam("productPrice") int productPrice,
             @RequestParam("productStock") int productStock,
@@ -144,9 +137,10 @@ public class ProductController {
 			
 		logger.info("registerPOST 호출");
 			String productImgPath = file.getOriginalFilename();
+			
 			ProductVO vo = 
 					new ProductVO(productName, productPrice, productStock,
-							productMaker, productImgPath, productCategory, productContent);
+							productMaker, productImgPath, productCategory,productContent);
 			int result = productService.create(vo, file);
 
 			if(result == 1) {
