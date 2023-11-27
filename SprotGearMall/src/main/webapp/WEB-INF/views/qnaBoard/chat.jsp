@@ -11,11 +11,15 @@
 
 <title>채팅창</title>
     <script type="text/javascript">
+    $(()=>{
+    	
     $('#send').click(() => {
+        console.log('클릭했음');
         console.log("ws", ws);
         sendMessage();
         $('#message').val('');
     });
+    })
 
     var ws = new WebSocket("ws://localhost:8080/mall/echo");
 

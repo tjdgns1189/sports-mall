@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -18,7 +20,7 @@ public class UserQueryWebsocketHandler extends TextWebSocketHandler {
 	//웹소켓 연결시 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		logger.info("afterConnectionEstablished 호출");
+		logger.info("id : " + session.getId() + " 접속");
         sessionList.add(session);
 	}
 	

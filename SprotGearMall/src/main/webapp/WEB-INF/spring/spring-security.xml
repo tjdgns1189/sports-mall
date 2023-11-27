@@ -27,7 +27,6 @@
 	<http pattern="/orders/delete" security="none"/>
 	<http pattern="/upload" security="none"/>
 	<http pattern="/notice/uploadImg**" security="none"/>
-	<http pattern="/mall/echo/**" security="none"/>
 
 	
 	<http auto-config="true" use-expressions="true">
