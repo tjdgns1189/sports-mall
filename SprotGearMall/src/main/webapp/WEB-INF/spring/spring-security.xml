@@ -52,6 +52,8 @@
 	 <intercept-url pattern="/cart/cartlist" access="isAuthenticated()"/>
      <intercept-url pattern="/product/prdQna" access="isAuthenticated()"/>
      <intercept-url pattern="/product/prdQnaPaging" access="permitAll"/>
+     <intercept-url pattern="/qnaBoard/chat" access="isAuthenticated()"/>
+     
      
 	
 	 <!--  

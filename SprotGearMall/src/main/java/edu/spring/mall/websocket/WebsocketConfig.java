@@ -17,7 +17,8 @@ public class WebsocketConfig implements WebSocketConfigurer{
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		logger.info("웹소켓 생성");
         registry.addHandler(userQueryWebSocketHandler(), "/echo")
-        .setAllowedOrigins("*");
+        .setAllowedOrigins("*")
+        .addInterceptors(new SecurityHandshakeInterceptor());
 	}
 	
 	@Bean
