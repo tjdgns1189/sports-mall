@@ -138,7 +138,7 @@ public class ProductController {
 
 
 	@PostMapping("/register")
-	public void registerPOST(@RequestParam("productName") String productName,
+	public String registerPOST(@RequestParam("productName") String productName,
             @RequestParam("productPrice") int productPrice,
             @RequestParam("productStock") int productStock,
             @RequestParam("productMaker") String productMaker,
@@ -151,23 +151,16 @@ public class ProductController {
 			ProductVO vo = 
 					new ProductVO(productName, productPrice, productStock,
 							productMaker, productImgPath, productCategory, productContent);
-			logger.info("productService 호출전");
 			int result = productService.create(vo, file);
-			logger.info("productService 호출후");
 
 
 			if(result == 1) {
-				
+				logger.info("상품등록 성공");
+				return "redirect:/";
 			}
-
-	
-
+			return "redirect:/admin/adminPage";
 	}
-	
 
-	
-	
-	
 	@GetMapping("/detail")
 	public void detail(int productId, Principal principal, Model model) {
 		boolean isLiked = false;
@@ -251,14 +244,14 @@ public class ProductController {
 	} // end updatePOST()
 
 	@PostMapping("/delete")
-	public String delete(String productName) {
-		logger.info("delete()호출 : productName = " + productName);
+	public String delete(int productId) {
+		logger.info("delete()호출 : productName = " + productId);
 
-		int result = productService.delete(productName);
+		int result = productService.delete(productId);
 		if (result == 1) {
-			return "redirect:/board/list";
+			return "redirect:/";
 		} else {
-			return "redirect:/board/list";
+			return "redirect:/";
 		}
 	} // end delete()
 

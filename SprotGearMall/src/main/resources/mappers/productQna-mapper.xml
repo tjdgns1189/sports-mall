@@ -3,12 +3,22 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.spring.mall.ProductQnaMapper">
+
 	<insert id="insert">
 	insert into ${prdQna_table}
 		(${prdQnaContent}, ${prdQnaCategory}, ${prdQnaSecret}, ${memberId}, ${productId})
 		values(#{prdQnaContent}, #{prdQnaCategory},#{prdQnaSecret},#{memberId},#{productId})
 	</insert>
 	
+	
+	<insert id="insert_seq" parameterType="edu.spring.mall.domain.ProductQnaVO">
+    <selectKey keyProperty="prdQnaId" resultType="int" order="BEFORE">
+        SELECT product_qna_seq.NEXTVAL FROM DUAL
+    </selectKey>
+    INSERT INTO product_qna (prd_qna_id, prd_qna_content, prd_qna_category, prd_qna_secret, member_id, product_id) 
+    VALUES (#{prdQnaId}, #{prdQnaContent}, #{prdQnaCategory}, #{prdQnaSecret}, #{memberId}, #{productId})
+</insert>
+
 	<select id="selectDetail" resultType="ProductQnaVO">
 		select * from ${prdQna_table}
 		where ${productId} = #{productid}

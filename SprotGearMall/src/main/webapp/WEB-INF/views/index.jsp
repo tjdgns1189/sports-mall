@@ -17,19 +17,41 @@
 </head>
 <body>
 
+
+<h1>
+	실험용  예비 페이지
+</h1>
+<a href="/mall/product/detail?productId=34">
+<button>
+경로이동 실험
+</button>
+</a>
+<button type="button" class="btn btn-primary position-relative">
+  Profile
+  <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+  </span>
+</button>
+<br>
+visually-hidden:이거 사용하면 배지 숨길수 있음
+position-absolute: 위치 절대적위치로 배치<br>
+top-0:가장자리 상단에 배치<br>
+start-100:왼쪽 가장자리 에서 오른쪽으로 100퍼센트 떨어진 위치<br>
+translate-middle: 부모요소 중앙정렬<br>
+p-2:모든방향 패딩 부트스트랩 p-2만큼<br>
+bg-danger:색을 danger색으로<br>
+border:테두리 추가<br>
+rounded-circle : 배지를 둥글게<br>
+visually-hidden: 배지안 글자 숨김
+<br><br><hr>
+
 임시 이미지 업로드
 <form method="POST" action="upload" enctype="multipart/form-data">
     <input type="file" name="file" />
   	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <button type="submit">Upload</button>
 </form>
-이미지 업로드 확인
 
-<img src="https://storage.googleapis.com/edu-mall-img/ea30cc4743c64fb1_231108.jpg" alt="Product Image">
 
-<h1>
-	실험용  예비 페이지
-</h1>
 
 
 <P>  The time on the server is ${serverTime}. </P>

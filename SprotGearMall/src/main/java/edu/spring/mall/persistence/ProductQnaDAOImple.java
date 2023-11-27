@@ -1,6 +1,7 @@
 package edu.spring.mall.persistence;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,10 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.spring.mall.domain.ProductQnaJoinReplyVO;
 import edu.spring.mall.domain.ProductQnaVO;
 import edu.spring.mall.pageutil.PageCriteria;
+
 @Repository
 public class ProductQnaDAOImple implements ProductQnaDAO {
 	private final Logger logger = LoggerFactory.getLogger(ProductQnaDAOImple.class);
@@ -21,6 +24,9 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	
+	
+	@Transactional
 	@Override
 	public int insert(ProductQnaVO vo) {
 		logger.info("insert");
@@ -55,13 +61,15 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 		logger.info("select 호출(업데이트용)");
 		return sqlSession.selectOne(NAMESPACE + ".select_by_qnaId", prdQnaId);
 	}
-
+	
+	@Transactional
 	@Override
 	public int update(ProductQnaVO vo) {
 		logger.info("update 호출");
 		return sqlSession.update(NAMESPACE +".update", vo);
 	}
-
+	
+	@Transactional
 	@Override
 	public int delete(int prdQnaId) {
 		logger.info("delete 호출");
@@ -76,6 +84,11 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 	public int count(int prdQnaId) {
 		logger.info("count 호출");
 		return sqlSession.selectOne(NAMESPACE + ".count",prdQnaId);
+	}
+	@Override
+	public int testInsert(ProductQnaVO vo) {
+		logger.info("테스트용 insert");
+		return sqlSession.insert(NAMESPACE + ".insert_seq",vo);
 	}
 
 

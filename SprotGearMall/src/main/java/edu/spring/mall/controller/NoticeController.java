@@ -37,13 +37,13 @@ public class NoticeController {
 			criteria.setNumsPerPage(numsPerPage);
 		}
 		List<NoticeVO> list = service.read(criteria);
-		model.addAttribute("list",list);
+		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(service.getTotalCount());
 		pageMaker.setPageData();
 		logger.info("");
-		
+		model.addAttribute("list",list);
 		model.addAttribute("pageMaker", pageMaker);
 	}
 	
