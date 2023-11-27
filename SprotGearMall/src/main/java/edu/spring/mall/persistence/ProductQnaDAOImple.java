@@ -85,6 +85,11 @@ public class ProductQnaDAOImple implements ProductQnaDAO {
 		logger.info("count 호출");
 		return sqlSession.selectOne(NAMESPACE + ".count",prdQnaId);
 	}
+	@Override
+	public int testInsert(ProductQnaVO vo) {
+		logger.info("테스트용 insert");
+		return sqlSession.insert(NAMESPACE + ".insert_seq",vo);
+	}
 
 
 }

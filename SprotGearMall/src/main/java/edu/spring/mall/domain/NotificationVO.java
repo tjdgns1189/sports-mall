@@ -12,8 +12,9 @@ public class NotificationVO {
 	private Date notificationDate;
 	private Date readDate;
 	private int entityId;
-	public NotificationVO() {
-	}
+	
+	public NotificationVO() {}
+	
 	public NotificationVO(int notificationId, String memberId, String groupId, String notificationType,
 			String notificationContent, String targetUrl, Date notificationDate, Date readDate, int entityId) {
 		this.notificationId = notificationId;
@@ -26,15 +27,28 @@ public class NotificationVO {
 		this.readDate = readDate;
 		this.entityId = entityId;
 	}
-	public NotificationVO(String memberId, String groupId, String notificationType, String notificationContent,
+	
+	
+	public NotificationVO(String groupId, String notificationType, String notificationContent,
 			String targetUrl, Date notificationDate, int entityId) {
-		super();
-		this.memberId = memberId;
 		this.groupId = groupId;
 		this.notificationType = notificationType;
 		this.notificationContent = notificationContent;
 		this.targetUrl = targetUrl;
 		this.notificationDate = notificationDate;
+		this.entityId = entityId;
+	}
+	
+	
+	public NotificationVO(int notificationId, String memberId, String notificationType, String notificationContent,
+			String targetUrl, Date notificationDate, Date readDate, int entityId) {
+		this.notificationId = notificationId;
+		this.memberId = memberId;
+		this.notificationType = notificationType;
+		this.notificationContent = notificationContent;
+		this.targetUrl = targetUrl;
+		this.notificationDate = notificationDate;
+		this.readDate = readDate;
 		this.entityId = entityId;
 	}
 	public int getNotificationId() {

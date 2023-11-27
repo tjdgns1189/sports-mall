@@ -41,7 +41,7 @@ public class NotificationDAOImple implements NotificationDAO {
 	@Override
 	public int update(NotificationVO vo) {
 		logger.info("update");
-		return sqlSession.update(NAMESPACE + ".update", vo);
+		return sqlSession.update(NAMESPACE + ".updateDate", vo);
 	}
 
 	@Override

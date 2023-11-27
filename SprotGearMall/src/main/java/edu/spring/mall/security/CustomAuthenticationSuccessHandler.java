@@ -26,7 +26,24 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		logger.info("인증성공 핸들러 호출(CustomAuthenticationSuccessHandler)");
-
+		
+		
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("targeturl".equals(cookie.getName())) {
+					logger.info("헤더 로그인으로 접근");
+					String decodedUrl = URLDecoder.decode(cookie.getValue(), "UTF-8");
+					logger.info("targetURL : " + decodedUrl);
+					cookie.setMaxAge(0);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+					redirectStrategy.sendRedirect(request, response, decodedUrl);
+					return;
+				}
+			}
+		}
+		
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
@@ -37,21 +54,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 				return;
 			}
 
-			Cookie[] cookies = request.getCookies();
-			if (cookies != null) {
-				for (Cookie cookie : cookies) {
-					if ("targeturl".equals(cookie.getName())) {
-						logger.info("헤더 로그인으로 접근");
-						String decodedUrl = URLDecoder.decode(cookie.getValue(), "UTF-8");
-						logger.info("targetURL : " + decodedUrl);
-						cookie.setMaxAge(0);
-						cookie.setPath("/");
-						response.addCookie(cookie);
-						redirectStrategy.sendRedirect(request, response, decodedUrl);
-						return;
-					}
-				}
-			}
+			
 			redirectStrategy.sendRedirect(request, response, "/index");
 		}
 	}
