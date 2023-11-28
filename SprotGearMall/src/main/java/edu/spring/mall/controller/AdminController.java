@@ -64,4 +64,10 @@ public class AdminController {
 	public void orderManagementGET() {
 		logger.info("orderManage 호출");
 	}
+	
+	
+	@GetMapping("/chat-list")
+	public void chatListGET() {
+		logger.info("chatListGET 호출");
+	}
 }

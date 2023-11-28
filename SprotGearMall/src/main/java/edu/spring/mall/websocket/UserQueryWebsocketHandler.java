@@ -3,6 +3,7 @@ package edu.spring.mall.websocket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
@@ -26,6 +27,11 @@ public class UserQueryWebsocketHandler extends TextWebSocketHandler {
         SecurityContext securityContext = (SecurityContext) session.getAttributes().get("SPRING_SECURITY_CONTEXT");
         if (securityContext != null) {
             Authentication auth = securityContext.getAuthentication();
+            boolean isAdmin = auth.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+            
+            String roomId = UUID.randomUUID().toString();
+
             String username = auth.getName();
             session.getAttributes().put("username", username);
             logger.info("id : " + username + " 접속");

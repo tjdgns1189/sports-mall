@@ -70,7 +70,7 @@
 			authentication-failure-url="/member/loginForm?error"
 			username-parameter="memberId" 
 			password-parameter="password" />
-			 <remember-me token-repository-ref="rememberMeTokenRepository" key="athwartbriefly"/>
+			<remember-me token-repository-ref="rememberMeTokenRepository" key="athwartbriefly"/>
 				
 		<logout
 			logout-url="/logout"

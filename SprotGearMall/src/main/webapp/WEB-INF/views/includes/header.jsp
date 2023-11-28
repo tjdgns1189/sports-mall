@@ -75,7 +75,8 @@
 							<!-- 구매 관련 옵션들 -->
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/cart/cartlist">장바구니</a>
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/member/likes">찜한 상품</a>
-
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/product/recent">최근 본 상품</a>
+							
 						</div>
 					</div>
 

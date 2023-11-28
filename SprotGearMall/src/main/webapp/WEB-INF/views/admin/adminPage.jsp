@@ -34,6 +34,10 @@
         <li class="nav-item">
           <a href="#" class="nav-link" onclick="loadContent('orderManage', 'contentDiv')">주문 관리</a>
         </li>
+        
+        <li class="nav-item">
+          <a href="#" class="nav-link" onclick="loadContent('chat-list', 'contentDiv')">채팅 문의 확인</a>
+        </li>
       </ul>
     </div>
 

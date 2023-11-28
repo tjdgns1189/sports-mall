@@ -28,9 +28,16 @@
         	
         $('#message').val('');
     	});//end send.click
+    	
+    	$('#endChatBtn').click(()=>{
+    		ws.close();
+    	})//end endChatBtn.click
+    	
     })//end document
 
-    var ws = new WebSocket("ws://localhost:8080/mall/echo");
+    var wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+    var wsUrl = wsProtocol + "//" + window.location.host + "/mall/echo";
+    var ws = new WebSocket(wsUrl);
 
     ws.onmessage = function(event) {
         onMessage(event);
@@ -54,16 +61,17 @@
 
     function onClose() {
         console.log("웹소켓 연결 끊김");
+        $('#log').append("채팅이 종료되었습니다" + "<br/>");
+
     }
     </script>
 </head>
 <body>
-
     <div class="container chat-container">
     		<div class="card-header d-flex justify-content-between align-items-center">
     		<div></div> <!-- 좌측 여백을 위한 빈 div -->
     		<h5 class="mb-0">채팅 상담</h5> <!-- 중앙에 배치될 제목 -->
-    	<button class="btn btn-danger" type="button" id="endChatButton">채팅 종료</button> <!-- 우측의 채팅 종료 버튼 -->
+    	<button class="btn btn-danger" type="button" id="endChatBtn">채팅 종료</button> <!-- 우측의 채팅 종료 버튼 -->
 		</div>
         <div class="row">
             <div class="col-12">

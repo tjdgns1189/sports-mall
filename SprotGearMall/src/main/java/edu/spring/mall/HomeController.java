@@ -74,8 +74,8 @@ public class HomeController {
 	    model.addAttribute("authorities", authorities);
 	}
 	
-	@GetMapping("/info")
-	public void infoGET() {
+	@GetMapping("/product/pay")
+	public void payGET() {
 		
 		
 	}

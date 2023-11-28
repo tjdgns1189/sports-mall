@@ -3,9 +3,15 @@ package edu.spring.mall.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +34,17 @@ public class BoardController {
 	private QnaBoardService qnaBoardService;
 	
 	@GetMapping("/qnaBoard")
-	public void qnaBoardGET(Model model, Integer page, Integer numsPerPage, String memberId) {  //, Principal principal
+	public void qnaBoardGET(Model model, Integer page, Integer numsPerPage, String memberId, HttpServletRequest request) {  //, Principal principal
 		logger.info("qnaBoardGET() 호출");
-		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
-		
+		 HttpSession session = request.getSession(false);
+		    if (session != null) {
+		        SecurityContext securityContext = (SecurityContext) session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+		        if (securityContext != null) {
+		        	Authentication auth = securityContext.getAuthentication();
+		        	logger.info("auth 확인 : " + auth.toString());
+		        	logger.info("memberId확인 : " + auth. getName());
+		        }
+		    }
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
 			criteria.setPage(page);
@@ -50,7 +63,6 @@ public class BoardController {
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("memberId", memberId);	
-//		return principal.getName();
 	}
 	
 	@GetMapping("/qnaDetail")
