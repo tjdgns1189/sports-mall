@@ -15,7 +15,6 @@ public class WebsocketConfig implements WebSocketConfigurer{
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		logger.info("웹소켓 생성");
         registry.addHandler(userQueryWebSocketHandler(), "/echo")
         .setAllowedOrigins("*")
         .addInterceptors(new SecurityHandshakeInterceptor());
@@ -23,7 +22,6 @@ public class WebsocketConfig implements WebSocketConfigurer{
 	
 	@Bean
 	public UserQueryWebsocketHandler userQueryWebSocketHandler() {
-		logger.info("userQueryWebSocketHandler 호출");
 	      return new UserQueryWebsocketHandler();
 	    }
 
