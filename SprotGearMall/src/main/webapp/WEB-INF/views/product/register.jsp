@@ -77,6 +77,7 @@
       <button type="submit" class="btn btn-primary">등록</button>
     </form>
   </div>
+
 </body>
 </html>
 

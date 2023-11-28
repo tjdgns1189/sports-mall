@@ -17,7 +17,14 @@ tr th td{
 </head>
 <body>
 
-<div class="container" style="max-width: 1000px;">
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- 사이드바 메뉴 -->
+       <jsp:include page="../includes/qna-sidebar.jsp" />
+        <!-- 메인 콘텐츠 -->
+        <div class="col-md-10">
   <table class="table">
     <thead>
       <tr>
@@ -56,6 +63,8 @@ tr th td{
       <a href="register"><button class="btn btn-primary">글작성</button></a>
     </sec:authorize>
   </div>
+</div>
+</div>
 </div>
 
 </body>
