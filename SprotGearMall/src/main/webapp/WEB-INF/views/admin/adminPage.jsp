@@ -36,7 +36,7 @@
         </li>
         
         <li class="nav-item">
-          <a href="#" class="nav-link" onclick="loadContent('chat-list', 'contentDiv')">채팅 문의 확인</a>
+          <a href="/mall/admin/chat-list" class="nav-link">채팅 문의 확인</a>
         </li>
       </ul>
     </div>

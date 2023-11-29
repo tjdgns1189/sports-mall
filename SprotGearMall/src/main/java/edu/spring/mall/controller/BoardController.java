@@ -15,6 +15,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,7 +23,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import edu.spring.mall.domain.QnaBoardVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
+import edu.spring.mall.service.ChatRoomService;
 import edu.spring.mall.service.QnaBoardService;
+import edu.spring.mall.websocket.ChatRoom;
 
 @Controller
 @RequestMapping(value = "/qnaBoard")
@@ -32,6 +35,9 @@ public class BoardController {
 	
 	@Autowired
 	private QnaBoardService qnaBoardService;
+	
+	@Autowired
+	private ChatRoomService chatService;
 	
 	@GetMapping("/qnaBoard")
 	public void qnaBoardGET(Model model, Integer page, Integer numsPerPage, String memberId, HttpServletRequest request) {  //, Principal principal
@@ -129,6 +135,16 @@ public class BoardController {
 	@GetMapping("/chat")
 	public void chatGET() {
 		logger.info("chatGet 호출");
+	}
+	
+	@GetMapping("/chat/{roomId}")
+	public String  chatRoomGET(@PathVariable String roomId, Model model) {
+	    logger.info("chatRoomGET roomId : "+ roomId + " 호출");
+	    ChatRoom room =chatService.getChatRoom(roomId);
+	    model.addAttribute("roomId", roomId);
+	    logger.info("room 확인 : " + room);
+	    
+		return "redirect:/qnaBoard/chat";
 	}
 	
 	

@@ -114,6 +114,5 @@ function addToFavorites() {
     }
   }
 
-  document.getElementById('bookmarkButton').addEventListener('click', addToFavorites);
   
   

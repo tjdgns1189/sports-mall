@@ -11,11 +11,11 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @Configuration
 @EnableWebSocket
 public class WebsocketConfig implements WebSocketConfigurer{
-	private Logger logger = LoggerFactory.getLogger(WebsocketConfig.class);
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(userQueryWebSocketHandler(), "/echo")
+        registry.addHandler(userQueryWebSocketHandler(), "/echo/{roomId}")
+        .addHandler(userQueryWebSocketHandler(), "/echo")
         .setAllowedOrigins("*")
         .addInterceptors(new SecurityHandshakeInterceptor());
 	}
