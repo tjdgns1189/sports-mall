@@ -33,6 +33,7 @@ public class UserQueryWebsocketHandler extends TextWebSocketHandler {
 	//웹소켓 연결시 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		logger.info("소켓 연결");
         SecurityContext securityContext = (SecurityContext) session.getAttributes().get("SPRING_SECURITY_CONTEXT");
         if (securityContext != null) {
             Authentication auth = securityContext.getAuthentication();

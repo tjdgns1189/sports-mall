@@ -144,7 +144,7 @@ public class BoardController {
 	    model.addAttribute("roomId", roomId);
 	    logger.info("room 확인 : " + room);
 	    
-		return "redirect:/qnaBoard/chat";
+		return "qnaBoard/chat";
 	}
 	
 	

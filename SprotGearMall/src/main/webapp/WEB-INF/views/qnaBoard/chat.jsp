@@ -42,16 +42,17 @@
     	var roomId = $('#roomId').val();
     	onWebsocket(roomId);
    	 console.log('roomId', roomId );
+   	 
+   	 ws.onmessage = function(event) {
+         onMessage(event);
+     };
+
+     ws.onclose = function(event) {
+         onClose();
+     };
     })//end document
   
-	console.log('url', wsUrl)
-    ws.onmessage = function(event) {
-        onMessage(event);
-    };
-
-    ws.onclose = function(event) {
-        onClose();
-    };
+   
 
     function sendMessage() {
         var message = $('#message').val();
@@ -72,8 +73,10 @@
     }
     
     function onWebsocket(roomId){
-    	 var wsUrl = "ws" + "//" + window.location.host + "/mall/echo" + (roomId ? "/" + roomId : "");
+    	 var wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+    	 var wsUrl = wsProtocol + "//" + window.location.host + "/mall/echo" + (roomId ? "/" + roomId : "");
     	 ws = new WebSocket(wsUrl); // 전역 변수에 할당
+    	 console.log('wsUrl', wsUrl);
     	
     }
     </script>
@@ -82,7 +85,7 @@
 	
     <div class="container chat-container">
     	<c:if test="${not empty roomId }">
-    		<input type="hidden" id="roomId" value="${roomId }">
+    	<input type="hidden" id="roomId" value="${roomId }">
     	</c:if>
     		<div class="card-header d-flex justify-content-between align-items-center">
     		<div></div> <!-- 좌측 여백을 위한 빈 div -->
