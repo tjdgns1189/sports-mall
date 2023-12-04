@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/includes/header.jsp" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>상품 등록 페이지</title>
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 <style type="text/css">
 	#result_card img{
@@ -114,9 +113,17 @@
 </style>
 </head>
 <body>
+<div class="container-fluid">
+  <div class="row">
+    <!-- 왼쪽 메뉴 -->
+   	  <jsp:include page="../includes/admin-sidebar.jsp" />
+   	
 
+    <!-- 오른쪽 컨텐츠 -->
+   
+ 
 
-  <div class="container mt-5">
+  <div class="col-md-9 container-fluid">
     <h2 class="mb-4">상품 등록 페이지</h2>
     
     <form action="${pageContext.request.contextPath}/product/register" method="POST" enctype="multipart/form-data">
@@ -183,6 +190,8 @@
       <button type="submit" class="btn btn-primary">등록</button>
     </form>
   </div>
+   </div>
+</div>
 
 </body>
 

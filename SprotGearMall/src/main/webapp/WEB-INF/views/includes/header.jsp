@@ -101,10 +101,7 @@
 <!-- 네비바 두번재줄 -->
 <div class="header-container bg-info ">
 <ul class="nav-list">
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/api
 		<li>
 			<div class="navi_bar_area">
 			
@@ -152,8 +149,5 @@
 		
 	</ul>
 </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/api
 </main>
