@@ -12,9 +12,8 @@ public interface ChatRoomService {
 	Collection<ChatRoomVO> getAllChatList();
 	void joinRoom(String roomId, WebSocketSession adminSession);
 	ChatRoom getChatRoom(String roomId);
-
 	ChatRoom getChatRoom(WebSocketSession session);
-
 	void  removeChatRoom(String roomId , WebSocketSession session);
+	boolean isUserAlreadyInChatRoom(String username);
 
 }

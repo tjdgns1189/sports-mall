@@ -72,12 +72,16 @@
 			password-parameter="password" />
 			<remember-me token-repository-ref="rememberMeTokenRepository" key="athwartbriefly"/>
 				
+	
 		<logout
 			logout-url="/logout"
 			success-handler-ref="logoutSuccessHandler"
 			delete-cookies="JSESSIONID, remember-me"/>
+			
+
 						
 	</http>
+
 	
 <!-- 비밀번호 암호화 -->
 	<b:bean id="PasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />

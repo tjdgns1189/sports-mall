@@ -26,7 +26,18 @@
     position:absolute;
     text-align: center;;
     }
-    
+.system-message {
+    background-color: #CCCCCC; /* 회색 배경 */
+    color: white; /* 흰색 글씨 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    border-radius: 15px; /* 모서리 둥글게 */
+    padding: 8px 15px; /* 안쪽 여백 */
+    margin: 10px 0; /* 위아래 마진 */
+    font-size: 0.9em; /* 글씨 크기 */
+    width: 60%; /* 너비 */
+    margin-left: auto; /* 왼쪽 마진 자동 */
+    margin-right: auto; /* 오른쪽 마진 자동 */
+}
 
 
 .message {
@@ -81,7 +92,6 @@
                     ws.close(); // 웹소켓 연결 종료
                 }
                 //나중에 memberId 님이 퇴장했습니다로 바꾸기 json으로 보내서
-                $('#log').append("채팅이 종료되었습니다.<br/>");
             });
 
             // roomId 값에 따라 웹소켓 연결
@@ -121,41 +131,45 @@
         }
 
         // 메시지 수신 함수
-        function onMessage(msg) {
+    	function onMessage(msg) {
     	var data = JSON.parse(msg.data);
-    	console.log("data",data);
-    	console.log("username", username);
-    	var isCurrentUser = data.username === username;
-    	console.log("isCurrentUser", isCurrentUser);
 
-    	// 메시지 요소 생성
-    	var $messageDiv = $("<div>").addClass("message").addClass(isCurrentUser ? "user-message" : "other-message");
+    	// 시스템 상태 메시지 처리
+    	if (data.senderType === 'state') {
+        	var $systemMessageDiv = $("<div>").addClass("system-message").text(data.message);
+        	$("#log").append($systemMessageDiv);
+    	} else {
+        	var isCurrentUser = data.username === username;
 
-    	// 메시지 헤더 (사용자 이름)
-    	var $headerDiv = $("<div>").addClass("message-header").text(data.username);
-    	$messageDiv.append($headerDiv);
+        // 일반 메시지 요소 생성
+        var $messageDiv = $("<div>").addClass("message").addClass(isCurrentUser ? "user-message" : "other-message");
 
-    	// 메시지 본문
-    	var $bodyDiv = $("<div>").addClass("message-body").text(data.message);
-    	$messageDiv.append($bodyDiv);
+        // 메시지 헤더 (사용자 이름)
+        var $headerDiv = $("<div>").addClass("message-header").text(data.username);
+        $messageDiv.append($headerDiv);
 
-    	// 메시지 푸터 (시간)
-    	var date = new Date(data.timestamp);
-    	var formattedTime = date.getHours() + ":" + date.getMinutes().toString().padStart(2, '0');
-    	var $footerDiv = $("<div>").addClass("message-footer").text(formattedTime);
-    	$messageDiv.append($footerDiv);
+        // 메시지 본문
+        var $bodyDiv = $("<div>").addClass("message-body").text(data.message);
+        $messageDiv.append($bodyDiv);
 
-    	// 메시지를 채팅박스에 추가
-    	$("#log").append($messageDiv);
+        // 메시지 푸터 (시간)
+        var date = new Date(data.timestamp);
+        var formattedTime = date.getHours() + ":" + date.getMinutes().toString().padStart(2, '0');
+        var $footerDiv = $("<div>").addClass("message-footer").text(formattedTime);
+        $messageDiv.append($footerDiv);
 
-    	// 채팅박스 스크롤을 가장 아래로 이동
-    	$("#log").scrollTop($("#log")[0].scrollHeight);
+        // 일반 메시지를 채팅박스에 추가
+        $("#log").append($messageDiv);
+    }
+
+    // 채팅박스 스크롤을 가장 아래로 이동
+    $("#log").scrollTop($("#log")[0].scrollHeight);
 }
+
 
         // 웹소켓 연결 종료 함수
         function onClose() {
             console.log("웹소켓 연결 끊김");
-            $('#log').append("채팅이 종료되었습니다.<br/>");
         }
     </script>
 </head>
