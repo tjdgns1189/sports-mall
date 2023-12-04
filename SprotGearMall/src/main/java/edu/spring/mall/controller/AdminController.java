@@ -10,9 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import edu.spring.mall.domain.MemberVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
+import edu.spring.mall.service.AdminService;
 import edu.spring.mall.service.ProductService;
 
 @Controller
@@ -23,6 +25,9 @@ public class AdminController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	private AdminService service;
 	
 	@GetMapping("/adminPage")
 	public void adminPageGET() {
@@ -69,5 +74,17 @@ public class AdminController {
 	@GetMapping("/chat-list")
 	public void chatListGET() {
 		logger.info("chatListGET 호출");
+	}
+	
+	@GetMapping("/user-list")
+	public void userListGET(Model model){
+		logger.info("user-listGET 호출");
+		List<MemberVO> list = service.read();
+		model.addAttribute("memberList", list);
+	}
+	
+	@GetMapping("/order-manage")
+	public void orderManageGET() {
+		logger.info("order-manage 호출");
 	}
 }

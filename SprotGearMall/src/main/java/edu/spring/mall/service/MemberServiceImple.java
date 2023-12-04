@@ -1,5 +1,6 @@
 package edu.spring.mall.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -47,8 +48,9 @@ public class MemberServiceImple implements MemberService {
 	}
 
 	@Override
-	public String read(String memberId) {
-		return null;
+	public List<MemberVO> read(String memberId) {
+		logger.info("read 호출 memberId : " + memberId);
+		return dao.selectById(memberId);
 	}
 
 	@Override
@@ -86,6 +88,18 @@ public class MemberServiceImple implements MemberService {
 		int result = dao.delete(MemberId);
 		
 		return result;
+	}
+
+	@Override
+	public List<MemberVO> read() {
+		logger.info("read 호출 유저 아이디 전체 검색");
+		return dao.select();
+	}
+
+	@Override
+	public MemberVO readDetail(String memberId) {
+		logger.info("readDetail 호출");
+		return dao.selectDetail(memberId);
 	}
 
 }
