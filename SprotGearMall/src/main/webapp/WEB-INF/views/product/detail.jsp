@@ -638,7 +638,6 @@ $(document).on('click', '.cancel-answer', function() {
 	  // 배열을 문자열로 변환하여 쿠키저장. 1일
 	  setCookie("recentProducts", productIdList.join(','), 1 / 48);
 	  }
-
 	  
 
 	//문의 답변
@@ -654,9 +653,8 @@ $(document).on('click', '.cancel-answer', function() {
 	});//end submit.on
 	
 
-
-	function submitAnswer(qnaId, authorId){
-	    var pqrContent = $('#answerText-' + qnaId).val();
+	function submitAnswer(qnaId, authorId){	    
+		var pqrContent = $('#answerText-' + qnaId).val();
 	    var csrfToken = $('#csrfToken').val();
 	    var productId = $("#productId").val(); 
 	    var headers = {

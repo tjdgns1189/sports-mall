@@ -190,7 +190,7 @@ li {
                 <input type="hidden" name="productId" value="${vo.productId}" readonly>
                 <input type="hidden" name="productQuantity" id="productQuantity1" value="1" readonly>
                 <input type="hidden" name="productPrice" id="productPrice1" value="${vo.productPrice}" readonly>
-                <button type="submit" class="btn btn-primary btn-lg" id="btn-vo" onclick="openNaverPay()">결제하기</button>
+                <button type="submit" class="btn btn-primary btn-lg" id="btn-vo">결제하기</button>
                 <a href="/mall">
                 	<button type="button" class="btn btn-secondary btn-lg">취소</button>  
                 </a>
@@ -471,8 +471,8 @@ li {
         }
 	        //조건 통화시 true제출하면 폼제출허용됨
 			return true;
-		
-	    }
+
+		}
 
 	
 /*
