@@ -72,7 +72,9 @@ review-btn{
                             <th>상품구매수량</th>
                             <th>상품 총 가격</th>
                             <th>구매 날짜</th>
-                            <th>버튼 들어갈곳</th>
+                            <th>상태</th>
+                            <th>리뷰</th>
+                            <th>환불</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,11 +93,17 @@ review-btn{
                                 <td>${vo.order.productQuantity}</td>
                                 <td>${vo.order.productQuantity * vo.order.productPrice}</td>
                                 <td><fmt:formatDate value="${vo.order.orderCreatedDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                <td id="state-${vo.order.orderId }">${vo.order.orderState }</td>
                                 <td>
                                     <c:if test="${!vo.hasReview}">
                                     <button type="button" class="btn btn-primary review-btn" 
                                     onclick="openReviewWindow('../member/review?orderId=${vo.order.orderId}&productId=${vo.product.productId}');">리뷰하기</button>
                                     </c:if>
+                                </td>
+                                <td>
+                                <c:if test="${vo.order.orderState == '구매완료'}">
+                                <button type="button" id="btn-${vo.order.orderId}" class="btn btn-outline-danger" onclick="refund(this)" data-order-id="${vo.order.orderId}">환불</button>
+                                </c:if>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -120,15 +128,17 @@ review-btn{
     $(document).ready(function() {
         $("#btnDeleteCheck").click(function() {
             var checkedIds = [];
+            var headers = {
+		    		'Content-Type': 'application/json',
+		    	     'X-CSRF-TOKEN': csrfToken
+		    }
             $("input[type=checkbox]:checked").each(function() {
                 checkedIds.push($(this).attr("id"));
             });
             $.ajax({
                 type: "POST",
                 url: "delete", 
-                headers : {
-					'Content-Type' : 'application/json'
-				},
+                headers : headers,
                 data: JSON.stringify(checkedIds),
                 success: function(result) {
                     console.log(result);
@@ -141,6 +151,37 @@ review-btn{
     function openReviewWindow(url) {
     	  window.open(url, 'reviewPopup', 'width=484,height=764');
     	}
+    
+    function refund(element){
+    	var orderId = $(element).data('order-id');
+		var csrfToken = $('#csrfToken').val();
+    	var isConfirm = confirm('환불요청을 하시겠습니까?');
+    	 var headers = {
+		    		'Content-Type': 'application/json',
+		    	     'X-CSRF-TOKEN': csrfToken
+		    }
+    	
+    	if(!isConfirm){
+    		return;
+    	}
+    	$.ajax({
+    		type: "PUT",
+    		url: '/mall/refund',
+    		headers:headers,
+    		data:JSON.stringify({
+    			'orderId': orderId,
+    			'orderState':'환불요청'		
+    		}),
+    		success:(result)=>{
+    			if(result === 'success'){
+    			alert('환불 요청 성공');
+    			$('#state-' + orderId).text('환불요청');
+    			$('#btn-' + orderId).remove();
+    			}
+    		}
+
+    	})//end ajax
+    }//end refund
 
 </script>
 

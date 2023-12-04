@@ -32,6 +32,12 @@ public class RestLikeController {
 		if(vo.getMemberId().isBlank()||vo.getMemberId()==null) {
 			return new ResponseEntity<String>(result, HttpStatus.FORBIDDEN);
 		}
+		int count = dao.select(vo);
+		if(count == 1) {
+			logger.info("중복 체크");
+			result ="duplicate";
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}
 		
 		int success = dao.insert(vo);
 		if (success == 1) {

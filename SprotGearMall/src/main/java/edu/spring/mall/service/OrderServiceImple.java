@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.persistence.OrdersDAO;
 @Service
 public class OrderServiceImple implements OrderService {
+	private final Logger logger = LoggerFactory.getLogger(OrderServiceImple.class);
 	
 	@Autowired
 	private OrdersDAO orderDAO;
@@ -39,6 +42,18 @@ public class OrderServiceImple implements OrderService {
 		}
 		
 		return orderList;
+	}
+
+	@Override
+	public int update(OrdersVO vo) throws Exception {
+		logger.info("update 호출");
+		return orderDAO.update(vo);
+	}
+
+	@Override
+	public List<OrdersVO> readRefund(String orderState) throws Exception {
+		logger.info("readRefund호출");
+		return orderDAO.selectRefund(orderState);
 	}
 
 }

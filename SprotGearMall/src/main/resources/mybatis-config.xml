@@ -46,6 +46,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="productPrice" value="product_price"/>
 	 	<property name="productQuantity" value="product_quantity"/>
 	 	<property name="orderCreatedDate" value="order_created_date"/>
+	 	<property name="orderState" value="order_state"/>
 	 	
 	 	<property name="cart" value="cart"/>
 	 	<property name="cartId" value="cart_id"/> 

@@ -91,13 +91,21 @@
                 if (ws) {
                     ws.close(); // 웹소켓 연결 종료
                 }
-                //나중에 memberId 님이 퇴장했습니다로 바꾸기 json으로 보내서
             });
 
-            // roomId 값에 따라 웹소켓 연결
             var roomId = $('#roomId').val();
             onWebsocket(roomId);
             console.log('roomId', roomId);
+            
+            
+            $('#message').keydown(function (e) {
+                // 쉬프트 키가 눌리지 않았고 엔터 키가 눌린 경우
+                if (!e.shiftKey && e.key === 'Enter') {
+                    e.preventDefault(); 
+                    sendMessage();
+                    $('#message').val('');
+                }
+            });
         });
 
         // 웹소켓 초기화 및 이벤트 핸들러 설정
@@ -124,7 +132,7 @@
 
         // 메시지 전송 함수
         function sendMessage() {
-            var message = $('#message').val();
+            var message = $('#message').val().trim(); 
             if (message) {
                 ws.send(message);
             }
