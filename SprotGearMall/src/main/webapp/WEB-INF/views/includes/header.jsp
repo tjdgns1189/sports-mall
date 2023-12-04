@@ -75,6 +75,7 @@
 							<!-- 구매 관련 옵션들 -->
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/cart/cartlist">장바구니</a>
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/member/likes">찜한 상품</a>
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/product/recent">최근 본 상품</a>
 
 						</div>
 					</div>
@@ -98,7 +99,7 @@
 
 
 <!-- 네비바 두번재줄 -->
-<div class="header-container bg-secondary ">
+<div class="header-container bg-info ">
 <ul class="nav-list">
 		<li>
 			<div class="navi_bar_area">
