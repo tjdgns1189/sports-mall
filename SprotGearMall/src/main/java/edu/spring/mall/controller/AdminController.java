@@ -80,7 +80,7 @@ public class AdminController {
 	public void userListGET(Model model){
 		logger.info("user-listGET 호출");
 		List<MemberVO> list = service.read();
-		model.addAttribute("memberList", list);
+		model.addAttribute("list", list);
 	}
 	
 	@GetMapping("/order-manage")

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <!-- 왼쪽 메뉴 -->
-    <div class="col-md-1 bg-light">
+    <div class="col-md-2 bg-light">
       <h4 class="bg-secondary">상품 관리</h4>
       <ul class="nav flex-column">
         <li class="nav-item">
