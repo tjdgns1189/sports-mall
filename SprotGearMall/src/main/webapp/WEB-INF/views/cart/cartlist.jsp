@@ -49,7 +49,7 @@
                     <input type="number" name="productQuantity" id="productQuantity_${vo.cart.cartId}" value="1" oninput="calculateTotalPrice('${vo.cart.cartId}')" min="1"><br>             
                 </p>
                 <p>총 가격 : 
-                    <input type="number" name="productPrice" id="totalPrice_${vo.cart.cartId}" value=${vo.cart.productPrice } readonly="readonly">
+                    <input type="number" name="productPrice" id="totalPrice_${vo.cart.cartId}" value=${vo.product.productPrice } readonly="readonly">
                 </p>                   
             </div>
             <div class="col-md-3">
@@ -75,6 +75,8 @@
 
 
 <script type="text/javascript">
+
+updateAllTotalPrice();
 
 function calculateTotalPrice(cartId) {
     const productQuantity = document.getElementById('productQuantity_' + cartId).value;

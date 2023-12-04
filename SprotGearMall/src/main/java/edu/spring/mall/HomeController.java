@@ -1,8 +1,6 @@
 package edu.spring.mall;
 
-import java.text.DateFormat;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,6 +46,7 @@ public class HomeController {
 		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
 		
 		PageCriteria criteria = new PageCriteria();
+		criteria.setNumsPerPage(100);
 		if(page != null) {
 			criteria.setPage(page);
 		}
@@ -57,6 +56,8 @@ public class HomeController {
 		List<ProductVO> list = productService.read(criteria);
 		model.addAttribute("list",list);
 		PageMaker pageMaker = new PageMaker();
+		PageCriteria pageCriteria = new PageCriteria();
+		
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(productService.getTotalCounts());
 		pageMaker.setPageData();

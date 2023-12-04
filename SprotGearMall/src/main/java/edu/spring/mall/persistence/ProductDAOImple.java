@@ -98,11 +98,32 @@ public class ProductDAOImple implements ProductDAO{
 	    return sqlSession.selectList(NAMESPACE + ".select_by_search_text", paramMap);
 	}
 
+	@Override
+	public List<ProductVO> selectLikesCount(String searchText, PageCriteria criteria) {
+		logger.info("selectLikesCount() 호출 : " + searchText);
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("searchText", searchText);
+	    paramMap.put("criteria", criteria);
+	    return sqlSession.selectList(NAMESPACE + ".select_likes_count", paramMap);
+	} 
 
-
-
-
+	@Override
+	public List<ProductVO> selectRating(String searchText, PageCriteria criteria) {
+		logger.info("selectRating() 호출 : " + searchText);
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("searchText", searchText);
+	    paramMap.put("criteria", criteria);
+	    return sqlSession.selectList(NAMESPACE + ".select_rating", paramMap);
+	} 
 	
+	@Override
+	public List<ProductVO> selectReviewCount(String searchText, PageCriteria criteria) {
+		logger.info("selectReviewCount() 호출 : " + searchText);
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("searchText", searchText);
+	    paramMap.put("criteria", criteria);
+	    return sqlSession.selectList(NAMESPACE + ".select_review_count", paramMap);
+	}
 	
 
 }

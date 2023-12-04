@@ -12,9 +12,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 </insert>
 	 
 	 <select id="select_all" resultType="ProductVO">
-	 	select * from ${product}
-	 	order by ${productId} desc
-	 </select>
+	    SELECT * FROM ${product}
+	    WHERE ${productIsDeleted} != 1
+	    ORDER BY ${productId} DESC
+	</select>
 	 
 	 <select id="select_by_product_name" resultType="ProductVO">
 	 	select * from ${product} where ${productName} = #{productName}
@@ -64,6 +65,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and ${productIsDeleted} != 1
         order by ${productId} desc
 	 </select>
+	 
+	 <select id="select_likes_count" resultType="ProductVO">
+	 	SELECT p.*, COALESCE(l.${likesCount}, 0) AS ${likesCount}
+			FROM ${product} p
+			LEFT JOIN (
+			    SELECT ${productId}, COUNT(*) AS ${likesCount}
+			    FROM ${likes}
+			    GROUP BY ${productId}
+			) l ON p.${productId} = l.${productId}
+			WHERE
+		    ${productName} LIKE #{searchText}
+		    OR ${productCategory} LIKE #{searchText}
+		    AND ${productIsDeleted} != 1
+			ORDER BY ${likesCount} DESC
+	 </select>
+	   
+	  <select id="select_rating" resultType="ProductVO">
+	 	SELECT p.${productId}, p.${productName}, p.${productPrice}, p.${productImgPath}, AVG(r.${reviewRating}) AS ${avgRating}
+			FROM ${product} p
+			LEFT JOIN ${review} r ON p.${productId} = r.${productId}
+			WHERE (p.${productName} LIKE #{searchText} 
+				   OR p.${productCategory} LIKE #{searchText})
+			       AND p.${productIsDeleted} != 1
+			GROUP BY p.${productId}, p.${productName}, p.${productPrice}, p.${productImgPath}
+			ORDER BY ${avgRating} DESC NULLS LAST
+	 </select>  
+	   
+	 <select id="select_review_count" resultType="ProductVO">
+	 	SELECT p.*, COALESCE(l.${reviewCount}, 0) AS ${reviewCount}
+			FROM ${product} p
+			LEFT JOIN (
+			    SELECT ${productId}, COUNT(*) AS ${reviewCount}
+			    FROM ${review}
+			    GROUP BY ${productId}
+			) l ON p.${productId} = l.${productId}
+			    WHERE ${productName} like #{searchText}
+			    OR ${productCategory} like #{searchText}
+			    AND ${productIsDeleted} !=1
+			ORDER BY ${reviewCount} DESC
+	 </select>
+	 
+	 
 </mapper>
 
 

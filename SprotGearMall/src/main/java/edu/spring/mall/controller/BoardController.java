@@ -68,7 +68,7 @@ public class BoardController {
 		logger.info("qnaRegisterGET()");
 	} // end registerGET()
 	
-	@PostMapping("/register")
+	@PostMapping(value="/register", produces = "application/json")
 	public String registerPOST(QnaBoardVO vo, RedirectAttributes reAttr, String memberId, Model model) {
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
@@ -91,7 +91,7 @@ public class BoardController {
 		model.addAttribute("page", page);
 	} // end updateGET()
 	
-	@PostMapping("/qnaUpdate")
+	@PostMapping(value="/qnaUpdate", produces = "application/json")
 	public String updatePOST(QnaBoardVO vo, Integer page) {
 		logger.info("updatePOST() 호출 : vo " + vo.toString());
 		int result = qnaBoardService.update(vo);
@@ -103,7 +103,7 @@ public class BoardController {
 		}
 	}
 	
-	@PostMapping("/delete")
+	@PostMapping(value="/delete", produces = "application/json")
 	public String delete(Integer qnaBoardId) {
 		logger.info("delete() 호출 : qnaBoardId = " + qnaBoardId);
 		int result = qnaBoardService.delete(qnaBoardId);
@@ -112,6 +112,11 @@ public class BoardController {
 		} else {
 			return "redirect:/qnaBoard/qnaBoard";
 		}
+	}
+	
+	@GetMapping("/chat")
+	public void chatGET() {
+		logger.info("chatGet 호출");
 	}
 	
 	

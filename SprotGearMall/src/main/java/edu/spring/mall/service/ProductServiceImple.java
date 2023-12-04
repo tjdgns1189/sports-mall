@@ -124,8 +124,26 @@ public class ProductServiceImple implements ProductService {
 	public List<ProductVO> readBySearchText(String searchText ,PageCriteria criteria) {
 		logger.info("serach() 호출");
 		return dao.select(searchText , criteria);
+	}
 		
+	@Override
+	public List<ProductVO> searchLikesCount(String searchText ,PageCriteria criteria) {
+		logger.info("searchLikesCount() 호출");
+		return dao.selectLikesCount(searchText , criteria);
+	}
+
+	@Override
+	public List<ProductVO> searchRating(String searchText ,PageCriteria criteria) {
+		logger.info("searchRating() 호출");
+		return dao.selectRating(searchText , criteria);
+	}
+
+	@Override
+	public List<ProductVO> searchReviewCount(String searchText ,PageCriteria criteria) {
+		logger.info("searchReviewCount() 호출");
+		return dao.selectReviewCount(searchText , criteria);
 	}
 	
-
+	
+		
 }

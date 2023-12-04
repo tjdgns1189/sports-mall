@@ -437,6 +437,7 @@
 				// prevAll() : 선택된 노드 이전에 있는 모든 형제 노드를 접근
 				var qnaReplyId = $(this).prevAll('#qnaReplyId').val();
 				var qnaReplyContent = $(this).prevAll('#qnaReplyContent').val();
+				var csrfToken = $("#csrfToken").val();
 				console.log("선택된 댓글 번호 : " + qnaReplyId + ", 댓글 내용 : " + qnaReplyContent);
 				
 				// ajax 요청
@@ -444,7 +445,8 @@
 					type : 'PUT', 
 					url : 'replies/' + qnaReplyId, 
 					headers : {
-						'Content-Type' : 'application/json'
+						'Content-Type' : 'application/json',
+						'X-CSRF-TOKEN': csrfToken
 					},
 					data : qnaReplyContent,
 					success : function(result) {
@@ -463,6 +465,7 @@
 			
 				var qnaBoardId = $('#qnaBoardId').val();
 				var qnaReplyId = $(this).prevAll('#qnaReplyId').val();
+				var csrfToken = $("#csrfToken").val();
 				console.log("선택된 댓글 번호 : " + qnaReplyId);
 				
 				// ajax 요청
@@ -470,7 +473,8 @@
 					type : 'DELETE', 
 					url : 'replies/' + qnaReplyId, 
 					headers : {
-						'Content-Type' : 'application/json'
+						'Content-Type' : 'application/json',
+						'X-CSRF-TOKEN': csrfToken
 					},
 					data : qnaBoardId,
 					success : function(result) {
@@ -485,6 +489,9 @@
 
 			
 		}); // end document
+		
+		
+		
 	</script>
 			
 </body>

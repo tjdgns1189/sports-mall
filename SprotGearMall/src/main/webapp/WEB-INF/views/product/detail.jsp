@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -273,6 +274,11 @@ text-align: center;
         <input type="hidden" id="memberId" name="memberId" value="${pageContext.request.userPrincipal.name}">
         <input type="submit" value="상품 삭제">
     </form>
+    
+
+    
+    
+    
     
 <script type="text/javascript">
 
@@ -582,6 +588,7 @@ $(document).on('click', '.cancel-answer', function() {
 	        '</div>';
 	    $('#' + answerDivId).html(answerBody);
 	}
+	
 	//문의 수정
 	function updatePopup(prdQnaId){
 	    var url = "/mall/product/prdQnaupdate?prdQnaId=" + prdQnaId;
@@ -590,9 +597,62 @@ $(document).on('click', '.cancel-answer', function() {
 	    window.open(url, windowName, windowSize);
 }
 	
-	//답변작성
-	function submitAnswer(qnaId, authorId){
-	    var pqrContent = $('#answerText-' + qnaId).val();
+
+	// 최근 본 상품을 위한 쿠키등록
+	  function setCookie(name, value, days) {
+	    var expires = "";
+	    if (days) {
+	      var date = new Date();
+	      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+	      expires = "; expires=" + date.toUTCString();
+	    }
+	    document.cookie = name + "=" + value + expires + "; path=/";
+	  }
+
+	  // 쿠키에서 이름에 해당하는 값을 가져오는 함수
+	  function getCookie(name) {
+	    var nameEQ = name + "=";
+	    var ca = document.cookie.split(';');
+	    for (var i = 0; i < ca.length; i++) {
+	      var c = ca[i];
+	      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+	      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+	    }
+	    return null;
+	  }
+	  
+
+	  var productId = "${product.productId}";
+
+	  // 이전에 저장된 쿠키에서 최근 본 상품 목록을 가져옵니다.
+	  var recentProducts = getCookie("recentProducts");
+
+	  // 쿠키에 최근 본 상품 목록이 없다면 새로운 배열을 생성합니다.
+	  var productIdList = recentProducts ? recentProducts.split(',') : [];
+
+	  // 새로운 상품 ID를 배열에 추가합니다.
+	  if (!productIdList.includes(productId)) {
+  		productIdList.unshift(productId);
+
+	  // 배열을 문자열로 변환하여 쿠키저장. 1일
+	  setCookie("recentProducts", productIdList.join(','), 1 / 48);
+	  }
+	  
+
+	//문의 답변
+	$(document).on('click', '.submit-answer', function() {
+	    var qnaId = $(this).data('qna-id');
+	    submitAnswer(qnaId);
+	});//end submit.on
+	
+	//답변 수정
+	$(document).on('click', '.update-answer', function() {
+	    var pqrId = $(this).data('pqr-id');
+	   submitUpdate(pqrId);
+	});//end submit.on
+	
+	function submitAnswer(qnaId, authorId){	    
+		var pqrContent = $('#answerText-' + qnaId).val();
 	    var csrfToken = $('#csrfToken').val();
 	    var productId = $("#productId").val(); 
 	    var headers = {

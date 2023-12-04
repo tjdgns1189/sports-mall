@@ -15,6 +15,7 @@ public class ProductVO {
    private Date productCreatedDate;
    
    
+   
    public ProductVO() {}
 
 
@@ -158,6 +159,8 @@ public class ProductVO {
    public void setProductCreatedDate(Date productCreatedDate) {
 	      this.productCreatedDate = productCreatedDate;
 	   }
+   
+   
    
    
    @Override

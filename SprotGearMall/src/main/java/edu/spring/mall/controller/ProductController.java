@@ -2,7 +2,7 @@ package edu.spring.mall.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +55,6 @@ public class ProductController {
 	@Autowired
 	private ProductDAO dao;
 
-	
 	@Autowired
 	private CartDAO cartDAO;
 	
@@ -83,7 +82,6 @@ public class ProductController {
 			criteria.setNumsPerPage(numsPerPage);
 		}
 		List<ProductVO> list = productService.read(criteria);
-
 		model.addAttribute("list", list);
 
 		PageMaker pageMaker = new PageMaker();
@@ -124,9 +122,8 @@ public class ProductController {
 
 	} // end registerGET()
 
-
-
 	@PostMapping("/register")
+
 	public String registerPOST(@RequestParam("productName") String productName,
             @RequestParam("productPrice") int productPrice,
             @RequestParam("productStock") int productStock,
@@ -136,18 +133,23 @@ public class ProductController {
             @RequestParam("productContent") String productContent) throws IOException {
 			
 		logger.info("registerPOST 호출");
+
 			String productImgPath = file.getOriginalFilename();
 			
 			ProductVO vo = 
 					new ProductVO(productName, productPrice, productStock,
+
 							productMaker, productImgPath, productCategory,productContent);
 			int result = productService.create(vo, file);
+
+
 
 			if(result == 1) {
 				logger.info("상품등록 성공");
 				return "redirect:/";
 			}
 			return "redirect:/admin/adminPage";
+
 	}
 
 	@GetMapping("/detail")
@@ -174,9 +176,9 @@ public class ProductController {
 		}
 		model.addAttribute("avg", avg);
 		model.addAttribute("reviewCount", count);
-
-		
+	
 		//좋아요 확인용임
+
 		if (principal != null) {
 			logger.info("principal호출" + principal.getName());
 			String memberId = principal.getName();
@@ -198,6 +200,7 @@ public class ProductController {
 		pageMaker.setTotalCount(qnaService.getTotalCounts(productId));
 		pageMaker.setPageData();
 		
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		String memberId =auth.getName();
@@ -206,8 +209,7 @@ public class ProductController {
 		model.addAttribute("pageMaker", pageMaker);
 	    model.addAttribute("principal", memberId);
 	    
-	    
-	
+
 	} // end detail()
 
 	@GetMapping("/update")
@@ -248,6 +250,11 @@ public class ProductController {
 
 
 
+	@GetMapping("/cart")
+	public String cartGET() {
+		return "product/cart";
+	}
+
 
 	@GetMapping("/search")
 	public void search(@RequestParam(name = "searchtext") String searchText, Model model, Integer page,
@@ -280,38 +287,8 @@ public class ProductController {
 		 */
 	}
 
-	@GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public List<ProductVO> searchJsonData(@RequestParam(name = "searchtext") String searchText, Model model, Integer page,
-			Integer numsPerPage) {
-		logger.info("list() 호출");
-		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
-		PageCriteria criteria = new PageCriteria();
-		if (page != null) {
-			criteria.setPage(page);
-		}
-		if (numsPerPage != null) {
-			criteria.setNumsPerPage(numsPerPage);
-		}
-		List<ProductVO> list = productService.readBySearchText(searchText, criteria);
 
-		// 매개변수를 criteria를 가지고 있는 list
-
-		// 내가 받아야하는건 reviewProductList
-		model.addAttribute("list", list);
-		model.addAttribute("searchText", searchText);
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(productService.getTotalCounts());
-		pageMaker.setPageData();
-		model.addAttribute("pageMaker", pageMaker);
-
-		/*
-		 * ObjectMapper objm = new ObjectMapper(); String productList =
-		 * objm.writeValueAsString(list);
-		 */
-		return list;
-	}
+	
 
 	
 	@PostMapping(value="/orderlists", produces = "application/json")
@@ -325,6 +302,57 @@ public class ProductController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
+
 	
+	@GetMapping("/recent")
+	public void recentGET() {
+		
+	}
 	
+
+	@PostMapping("/result")
+	public void resultPOST(Model model, OrdersVO vo, Principal principal){
+		logger.info("resultPOST() 호출 : vo = " + vo.toString());
+		int result = ordersDAO.insert(vo);
+		
+		int productId = vo.getProductId();
+		int orderId = vo.getOrderId();
+		ProductVO productVO = productService.read(productId);
+		OrdersVO ordersVO = ordersDAO.select(orderId);
+		model.addAttribute("productVO", productVO);
+		model.addAttribute("vo", vo);
+	}
+	
+	  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+	  @ResponseBody 
+	  public List<ProductVO> searchJsonData(
+			  @RequestParam(name = "searchtext") String searchText,
+			  @RequestParam(name = "order", required = false) String order,
+			  Model model, Integer page, Integer numsPerPage) { 
+		  
+	  logger.info("list() 호출"); logger.info("page = "+ page + ", numsPerPage = " + numsPerPage);
+	  
+	  PageCriteria criteria = new PageCriteria();
+	  
+	  if (page != null) { criteria.setPage(page); }
+	  if (numsPerPage != null) { criteria.setNumsPerPage(numsPerPage); }
+	  
+	  List<ProductVO> list = new ArrayList<>();
+	 
+	  if("asc".equals(order) || "desc".equals(order) 
+	     || "registration".equals(order) || "alphabetize".equals(order)) {
+		  list = productService.readBySearchText(searchText, criteria);
+	  } else if("likes".equals(order)) {
+		  list = productService.searchLikesCount(searchText, criteria);
+	  } else if("rating".equals(order)) {
+		  list = productService.searchRating(searchText, criteria);
+	  } else if("review".equals(order)) {
+		  list = productService.searchReviewCount(searchText, criteria);
+	  } 
+	  
+	  return list; 
+	  
+	  }
+	 
+
 } // end ProductController
