@@ -8,16 +8,16 @@
     <title>관리자 채팅방 목록</title>
 </head>
 <body>
+
 <div class="container-fluid">
   <div class="row">
     <!-- 왼쪽 메뉴 -->
-    <jsp:include page="../includes/admin-sidebar.jsp" />
+   	  <jsp:include page="../includes/admin-sidebar.jsp" />
+   	
 
     <!-- 오른쪽 컨텐츠 -->
-    <div class="col-md-11">
-         <div class="container mt-5">
-    
-        <h2>채팅방 목록</h2>
+   <div id="contentDiv" class="col-md-9 container-fluid">
+    <h2>채팅방 목록</h2>
         <ul class="list-group">
             <!-- 채팅방 목록 출력되는곳 -->
             
@@ -25,8 +25,7 @@
     </div>
   </div>
 </div>
-</div>
-    
+
 
     <script>
     $(document).ready(function() {
