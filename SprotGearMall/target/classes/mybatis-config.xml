@@ -32,6 +32,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="productCategory" value="product_category"/>
 	 	<property name="productIsDeleted" value="product_is_deleted"/>
 	 	<property name="productContent" value="product_content"/>
+	 	<property name="likesCount" value="likes_count"/>
+	 	<property name="avgRating" value="avg_rating"/>
+	 	<property name="reviewCount" value="review_count"/>
+	 	
+	 	
+	 	
 	 	
 	    <property name="orders" value="orders"/>
 	 	<property name="orderId" value="order_id"/> 

@@ -6,6 +6,11 @@
 <meta charset="UTF-8">
 <title>상품 등록 페이지</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 <style type="text/css">
 	#result_card img{
 		max-width: 100%;
@@ -34,6 +39,77 @@
 	    display: block;
 	    cursor: pointer;	
 	}
+	
+.category-dropbtn {
+    background-color: #808080;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+.category-dropdown {
+    position: relative;
+    display: inline-block;
+}
+.category-dropdown-content {
+    display: none;
+    position: relative;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.category-dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.category-dropdown-content a:hover {
+    background-color: #f1f1f1
+}
+.category-dropdown:hover .category-dropdown-content {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+}
+.category-dropdown:hover .category-dropbtn {
+    background-color: #3e8e41;
+}
+
+.sub-links {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 0;
+    left: 100%;
+}
+
+.category-dropdown-content a:hover + .sub-links,
+.sub-links:hover {
+    display: block;
+}
+
+.sub-links a {
+    position: relative;
+}
+
+.sub-links a:first-child::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px; /* Adjust this value based on the desired spacing */
+    background-color: #f9f9f9;
+    z-index: -1;
+}
 	
 </style>
 </head>
@@ -66,12 +142,42 @@
       </div>
       
       <div class="form-group">
-        <label for="productCategory">종류:</label>
-        <input type="text" class="form-control" id="productCategory" name="productCategory" required>
-      </div>
+    <label for="productCategory">종류:</label>
+    <div class="category-dropdown">
+        <button class="category-dropbtn">선택</button>
+        <div class="category-dropdown-content">
+            <a href="#" onclick="eventPreventDefault()">축구</a>
+            <div class="sub-links">
+                <a href="#" onclick="updateProductCategory('축구공')">축구공</a>
+                <a href="#" onclick="updateProductCategory('축구골대')">축구골대</a>
+                <a href="#" onclick="updateProductCategory('골키퍼장갑')">골키퍼장갑</a>
+                <a href="#" onclick="updateProductCategory('축구양말')">축구양말</a>
+                <a href="#" onclick="updateProductCategory('축구유니폼')">축구유니폼</a>
+            </div>
+            <a href="#" onclick="eventPreventDefault()">농구</a>
+            <div class="sub-links">
+                <a href="#" onclick="updateProductCategory('농구공')">농구공</a>
+                <a href="#" onclick="updateProductCategory('농구화')">농구화</a>
+                <a href="#" onclick="updateProductCategory('농구림')">농구림</a>
+                <a href="#" onclick="updateProductCategory('농구골망')">농구골망</a>
+                <a href="#" onclick="updateProductCategory('농구유니폼')">농구유니폼</a>
+            </div>
+            <a href="#" onclick="eventPreventDefault()">야구</a>
+            <div class="sub-links">
+                <a href="#" onclick="updateProductCategory('야구방망이')">야구방망이</a>
+                <a href="#" onclick="updateProductCategory('글러브')">글러브</a>
+                <a href="#" onclick="updateProductCategory('베이스')">베이스</a>
+                <a href="#" onclick="updateProductCategory('포수보호대')">포수보호대</a>
+                <a href="#" onclick="updateProductCategory('야구모자')">야구모자</a>
+                <a href="#" onclick="updateProductCategory('야구유니폼')">야구유니폼</a>
+            </div>
+        </div>
+    </div>
+    <input type="text" class="form-control" id="productCategory" name="productCategory" required readonly>
+</div>
       <div class="form-group">
         <label for="productContent">상품 설명:</label>
-        <textarea class="form-control" id="productContent" name="productContent"></textarea>
+        <textarea class="form-control summernote" id="productContent" name="productContent" rows="10"></textarea>  
       </div>
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
       <button type="submit" class="btn btn-primary">등록</button>
@@ -79,5 +185,24 @@
   </div>
 
 </body>
+
+<script type="text/javascript">
+$(()=>{
+	$('#productContent').summernote({
+    	height: 400,
+    	minHeight: null,
+   	 	maxHeight: null,
+	})
+})
+
+ function updateProductCategory(category) {
+		event.preventDefault(); // 기본 동작을 막음
+        document.getElementById('productCategory').value = category;
+    }
+    
+function eventPreventDefault() {
+	event.preventDefault(); // 기본 동작을 막음
+}  
+</script>
 </html>
 

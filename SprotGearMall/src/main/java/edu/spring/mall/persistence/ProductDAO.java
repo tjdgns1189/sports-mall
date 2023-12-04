@@ -16,5 +16,9 @@ public interface ProductDAO {
 	int getTotalCounts();
 	List<ProductVO> selectPaging(String productName);
 	List<ProductVO> select(String searchText,PageCriteria criteria);
-
+	List<ProductVO> selectLikesCount(String searchText,PageCriteria criteria);
+	List<ProductVO> selectRating(String searchText,PageCriteria criteria);
+	List<ProductVO> selectReviewCount(String searchText,PageCriteria criteria);
+	
+	
 }

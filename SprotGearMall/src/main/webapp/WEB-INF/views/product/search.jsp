@@ -93,11 +93,11 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 			  <div class="sort-options">
 			   <input type="button" value="가격 오름차순" onclick="sort('asc')">
 			   <input type="button" value="가격 내림차순" onclick="sort('desc')">
-			    <button onclick="">최신등록 순</button>
-			    <button onclick="">좋아요 순</button>
-			    <input type="button" value="가나다 순" onclick="sort('alphabetize')">
-			    <button onclick="">평점 순</button>
-			    <button onclick="">리뷰 순</button>
+			   <input type="button" value="최신 등록순" onclick="sort('registration')">
+			   <input type="button" value="좋아요순" onclick="sort('likes')">
+			   <input type="button" value="가나다 순" onclick="sort('alphabetize')">
+			   <input type="button" value="평점 순" onclick="sort('rating')">
+			   <input type="button" value="리뷰 순" onclick="sort('review')">
 			  </div>
 			</div>	
 		<hr>
@@ -163,14 +163,32 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	 
 		
 		function sort(order) {
-	        console.log("hi");
 	        var searchTextValue = ($('#searchTextValue').val()); 
 	        console.log('URL:', '/mall/product/search?searchtext=' + searchTextValue);
+	        
+	        var dataToSend = { searchtext : searchTextValue };
+	        
+	        if (order === 'asc') {
+	            dataToSend.order = 'asc';
+	        } else if (order === 'desc') {
+	            dataToSend.order = 'desc';
+	        } else if (order === 'registration') {
+	            dataToSend.order = 'registration';
+	        } else if (order === 'alphabetize') {
+	            dataToSend.order = 'alphabetize';
+	        } else if (order === 'likes') {
+	            dataToSend.order = 'likes';
+	        } else if (order === 'rating') {
+	            dataToSend.order = 'rating';
+	        } else if (order === 'review') {
+	            dataToSend.order = 'review';
+	        } 
+	        
 	     // Ajax를 사용하여 서버에서 데이터를 가져옴
 	        $.ajax({
 	            url: '/mall/product/search',  // 요청을 처리하는 서버의 URL
 	            type: 'GET',
-	            data: { searchtext: searchTextValue },  // 필요한 데이터 전달
+	            data: dataToSend,  // 필요한 데이터 전달
 	            dataType: 'json',
 	            headers: {
 	                'Accept': 'application/json'  // JSON 형식의 응답을 요청하는 헤더
@@ -192,6 +210,11 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	                	data.sort(function(a, b) {
 	                		return a.productName.localeCompare(b.productName);
 	                	});
+	                } else if (order === 'registration') {
+	                	// 최신등록순 정렬
+	                	data.sort(function(a, b) {
+                    		return new Date(a.productCreatedDate) - new Date(b.productCreatedDate);
+	                	});
 	                }
 	            	
 	            	console.log(data);
@@ -209,8 +232,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	                    '</div>' +
 	                    '</div>';
 	                });
-
-	                // 생성된 HTML을 어떤 요소에 추가할지는 상황에 따라 결정
+	              
 	                $('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center').html(str);
 	            },
 	            error: function(error) {

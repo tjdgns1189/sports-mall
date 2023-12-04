@@ -13,7 +13,6 @@
 <link href="<c:url value="/resources/css/headers.css" />" rel="stylesheet">
 <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
 
-<<<<<<< HEAD
 <main>
 <!-- 헤더 첫번재줄 -->
 <div class="bg-white py-2">
@@ -150,4 +149,5 @@
 		
 	</ul>
 </div>
+
 </main>
