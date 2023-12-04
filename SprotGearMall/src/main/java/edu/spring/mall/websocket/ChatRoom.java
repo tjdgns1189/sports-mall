@@ -1,5 +1,6 @@
 package edu.spring.mall.websocket;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +55,17 @@ public class ChatRoom {
 	public ChatRoom() {
 		super();
 	}
+	
+    public List<WebSocketSession> getJoinUser() {
+        List<WebSocketSession> participants = new ArrayList<>();
+        if (userSession != null) {
+            participants.add(userSession);
+        }
+        if (adminSession != null) {
+            participants.add(adminSession);
+        }
+        return participants;
+    }
 	@Override
 	public String toString() {
 		return "ChatRoom [roomId=" + roomId + ", userSession=" + userSession + ", adminSession=" + adminSession

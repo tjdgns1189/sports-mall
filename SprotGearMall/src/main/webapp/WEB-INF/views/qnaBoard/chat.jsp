@@ -26,59 +26,137 @@
     position:absolute;
     text-align: center;;
     }
+    
+
+
+.message {
+    max-width: 70%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    position: relative;
+}
+
+.user-message {
+    background-color: #1E90FF;
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 0;
+}
+
+.other-message {
+    background-color: #EF8B47;
+    border-bottom-left-radius: 0;
+}
+
+.message-header, .message-footer {
+    font-size: 0.8em;
+}
+
+.message-header {
+    margin-bottom: 5px;
+}
+
+.message-footer {
+    margin-top: 5px;
+    text-align: right;
+}
 </style>
 
     <script type="text/javascript">
-    $(()=>{
-   		$('#send').click(() => {
-        	sendMessage();
-        	
-        $('#message').val('');
-    	});//end send.click
-    	
-    	$('#endChatBtn').click(()=>{
-    		ws.close();
-    	})//end endChatBtn.click
-    	var roomId = $('#roomId').val();
-    	onWebsocket(roomId);
-   	 console.log('roomId', roomId );
-   	 
-   	 ws.onmessage = function(event) {
-         onMessage(event);
-     };
+        var ws; // 전역 웹소켓 변수
+		var username;
+        $(() => {
+        	username = $('#username').val();
+        	console.log("username", username);
+            // 메시지 전송 이벤트
+            $('#send').click(() => {
+                sendMessage();
+                $('#message').val('');
+            });
 
-     ws.onclose = function(event) {
-         onClose();
-     };
-    })//end document
-  
-   
+            // 채팅 종료 이벤트
+            $('#endChatBtn').click(() => {
+                if (ws) {
+                    ws.close(); // 웹소켓 연결 종료
+                }
+                //나중에 memberId 님이 퇴장했습니다로 바꾸기 json으로 보내서
+                $('#log').append("채팅이 종료되었습니다.<br/>");
+            });
 
-    function sendMessage() {
-        var message = $('#message').val();
-        ws.send(message);
-        console.log("Sent: " + message);
-    }
+            // roomId 값에 따라 웹소켓 연결
+            var roomId = $('#roomId').val();
+            onWebsocket(roomId);
+            console.log('roomId', roomId);
+        });
 
-    function onMessage(msg) {
-        var data = msg.data;
-        $('#log').append(data + "<br/>");
-        console.log("Received: " + data);
-    }
+        // 웹소켓 초기화 및 이벤트 핸들러 설정
+        function onWebsocket(roomId) {
+            var wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+            var wsUrl = wsProtocol + "//" + window.location.host + "/mall/echo";
 
-    function onClose() {
-        console.log("웹소켓 연결 끊김");
-        $('#log').append("채팅이 종료되었습니다" + "<br/>");
+            if (roomId) {
+                wsUrl += "?roomId=" + encodeURIComponent(roomId);
+            }
 
-    }
-    
-    function onWebsocket(roomId){
-    	 var wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    	 var wsUrl = wsProtocol + "//" + window.location.host + "/mall/echo" + (roomId ? "/" + roomId : "");
-    	 ws = new WebSocket(wsUrl); // 전역 변수에 할당
-    	 console.log('wsUrl', wsUrl);
-    	
-    }
+            ws = new WebSocket(wsUrl);
+            console.log('wsUrl', wsUrl);
+
+            ws.onmessage = onMessage;
+            ws.onclose = onClose;
+            ws.onopen = function(event) {
+                console.log("웹소켓 연결 성공");
+            };
+            ws.onerror = function(event) {
+                console.error("웹소켓 에러 발생", event);
+            };
+        }
+
+        // 메시지 전송 함수
+        function sendMessage() {
+            var message = $('#message').val();
+            if (message) {
+                ws.send(message);
+            }
+        }
+
+        // 메시지 수신 함수
+        function onMessage(msg) {
+    	var data = JSON.parse(msg.data);
+    	console.log("data",data);
+    	console.log("username", username);
+    	var isCurrentUser = data.username === username;
+    	console.log("isCurrentUser", isCurrentUser);
+
+    	// 메시지 요소 생성
+    	var $messageDiv = $("<div>").addClass("message").addClass(isCurrentUser ? "user-message" : "other-message");
+
+    	// 메시지 헤더 (사용자 이름)
+    	var $headerDiv = $("<div>").addClass("message-header").text(data.username);
+    	$messageDiv.append($headerDiv);
+
+    	// 메시지 본문
+    	var $bodyDiv = $("<div>").addClass("message-body").text(data.message);
+    	$messageDiv.append($bodyDiv);
+
+    	// 메시지 푸터 (시간)
+    	var date = new Date(data.timestamp);
+    	var formattedTime = date.getHours() + ":" + date.getMinutes().toString().padStart(2, '0');
+    	var $footerDiv = $("<div>").addClass("message-footer").text(formattedTime);
+    	$messageDiv.append($footerDiv);
+
+    	// 메시지를 채팅박스에 추가
+    	$("#log").append($messageDiv);
+
+    	// 채팅박스 스크롤을 가장 아래로 이동
+    	$("#log").scrollTop($("#log")[0].scrollHeight);
+}
+
+        // 웹소켓 연결 종료 함수
+        function onClose() {
+            console.log("웹소켓 연결 끊김");
+            $('#log').append("채팅이 종료되었습니다.<br/>");
+        }
     </script>
 </head>
 <body>
@@ -86,6 +164,9 @@
     <div class="container chat-container">
     	<c:if test="${not empty roomId }">
     	<input type="hidden" id="roomId" value="${roomId }">
+    	</c:if>
+    	<c:if test="${not empty username }">
+    	<input type="hidden" id="username" value="${username }">
     	</c:if>
     		<div class="card-header d-flex justify-content-between align-items-center">
     		<div></div> <!-- 좌측 여백을 위한 빈 div -->
@@ -98,6 +179,8 @@
                      <!-- 채팅 내용 들어가는곳 -->
                     <div id="chatbox" class="card-body chat-box">
                     <div id="log">
+                    
+                    
                     </div>
                     </div>
                     <div class="card-footer">
