@@ -82,11 +82,6 @@ public class ChatRoomServiceImple implements ChatRoomService {
 			logger.info("채팅방이 없음");
 			return;
 		}
-		
-		//관리자 중복입장 방지
-		if(room.getAdminSession() != null) {
-			return;
-		}
 		room.setAdminSession(adminSession);
 		chatMapping.put(adminSession, room);
 	}

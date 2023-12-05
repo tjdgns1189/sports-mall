@@ -42,8 +42,11 @@ public class UserQueryWebsocketHandler extends TextWebSocketHandler {
 				String roomId = extractRoomIdFromSession(session);
             	logger.info("관리자 접속 : " + username + " || 채팅방 번호 : " + roomId);
 				session.getAttributes().put("username", username);
+				ChatRoom chatRoom = service.getChatRoom(roomId);
+				if(chatRoom.getAdminSession() ==null) {
 				service.joinRoom(roomId, session);
 				sendMessageToRoom(roomId, username + "님이 입장했습니다");
+				}
 			}else{
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 				String dateTime = dateFormat.format(new Date());

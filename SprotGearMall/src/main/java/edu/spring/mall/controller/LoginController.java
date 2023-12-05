@@ -1,10 +1,13 @@
 package edu.spring.mall.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,41 +65,10 @@ public class LoginController {
 	    	model.addAttribute("targeturl", targeturl);
 	    }
 	    
+	
 	 
 	}
 
-	// 스프링 내장 로그인 기능 사용으로 주석처리
-
-//	@PostMapping("/login")
-//	public String loginPost(String memberId, String password) {
-//		logger.info("loginPOST 호출");
-//	    
-//	    try {
-//		    UserDetails user = userService.loadUserByUsername(memberId);
-//
-//		    String encodedPassword= user.getPassword();
-//		    if(passwordEncoder.matches(password, encodedPassword)) {
-//		    	logger.info("로그인 성공");
-
-//		    	SecurityContext context = SecurityContextHolder.createEmptyContext(); 
-//		    	Authentication auth =
-//		    			new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-//		    	SecurityContextHolder.getContext().setAuthentication(auth);
-//		    	SecurityContextHolder.setContext(context); 
-//
-//		    	return "redirect:/index";
-//		    }
-//		    logger.info("로그인 실패");
-//		    return "redirect:/member/loginForm?error";
-//		} catch (UsernameNotFoundException e) {
-//			logger.info("아이디 조회 실패");
-
-//			e.printStackTrace();
-//		    return "redirect:/member/loginForm?error";
-//
-//		}
-//	}
-//	
 	@GetMapping("/register")
 	public void registerGET() {
 		logger.info("loginGet 호출");
@@ -125,7 +97,12 @@ public class LoginController {
 
 
 	@GetMapping("/mypage")
-	public void mypageGET() {
+	public void mypageGET(Model model) {
+		logger.info("마이페이지 호출");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+		model.addAttribute("user", user);
 
 	}
 
@@ -137,14 +114,17 @@ public class LoginController {
 		String name = user.getName();
 		String phone = user.getPhone();
 		String email = user.getEmail();
+		if(user.getAddress() !=null) {
 		String address[] = user.getAddress().split("\\.");
-
-		model.addAttribute("name", name);
-		model.addAttribute("phone", phone);
-		model.addAttribute("email", email);
 		model.addAttribute("postcode", address[0]);
 		model.addAttribute("address", address[1]);
 		model.addAttribute("detailAddress", address[2]);
+		}
+		model.addAttribute("isOauthLogin", user.getIsOauthLogin());
+		model.addAttribute("name", name);
+		model.addAttribute("phone", phone);
+		model.addAttribute("email", email);
+		
 
 	}
 
