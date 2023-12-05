@@ -323,6 +323,20 @@ public class ProductController {
 		model.addAttribute("productPrice", vo.getProductPrice());
 	}
 	
+	@GetMapping(value="/result", produces = "application/json")
+	public void resultGet(Model model, OrdersVO vo, Principal principal){
+		logger.info("resultPOST() 호출 : vo = " + vo.toString());
+		int result = ordersDAO.insert(vo);
+		
+		int productId = vo.getProductId();
+		int orderId = vo.getOrderId();
+		ProductVO productVO = productService.read(productId);
+		OrdersVO ordersVO = ordersDAO.select(orderId);
+		model.addAttribute("productVO", productVO);
+		model.addAttribute("vo", vo);
+		model.addAttribute("productPrice", vo.getProductPrice());
+	}
+	
 	  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
 	  @ResponseBody 
 	  public List<ProductVO> searchJsonData(
