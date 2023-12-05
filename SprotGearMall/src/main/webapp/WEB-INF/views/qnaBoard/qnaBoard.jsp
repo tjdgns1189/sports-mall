@@ -83,6 +83,5 @@ li {
 </div>
 
 
-<a href="chat"><button>채팅 문의</button></a>
 </body>
 </html>

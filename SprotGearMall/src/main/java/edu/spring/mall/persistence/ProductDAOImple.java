@@ -130,6 +130,7 @@ public class ProductDAOImple implements ProductDAO{
 	public int softDelete(ProductVO vo) {
 		logger.info("softDelete 호출");
 		return sqlSession.update(NAMESPACE + ".soft_delete", vo);
+	}
 
 	public List<ProductVO> selectSoccerBall() {
 		logger.info("select() 호출");

@@ -11,11 +11,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
 <meta charset="UTF-8">
-
 	<title>Home</title>
+	<style type="text/css">
+	.card-img-top {
+    height: 350px; /* 이미지 높이 고정 */
+    object-fit: cover; /* 이미지 비율 유지 */
+}
 
-
-
+.lead{
+	width: 20%;        /* 선의 길이 */
+    margin: auto;  
+}
+.card .text-center {
+    height: 100px; /* 텍스트 박스 높이 고정 */
+}
+	</style>
 </head>
 <body>
 
@@ -31,91 +41,105 @@
 		</div>
 	</header>
 	
+	
+	
 	<!-- Section-->
-	<section class="py-5">
-			<h3>&nbsp;축구공</h3>
-			
-		<hr>
-			<div class="container px-4 px-lg-5 mt-5">
-			
-				<div
-					class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-					<c:forEach var="vo" items="${soccerBallList }">
-					<div class="col mb-5">
-						<div class="card h-100" onclick="location.href='${pageContext.request.contextPath}/product/detail?productId=${vo.productId}'">
-						j
-							<!-- 상품 이미지-->
-							<img class="card-img-top"
-								src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="이미지" />
-							<div class="text-center">
-								<!-- 상품 이름-->
-								<span class="fw-bolder">${vo.productName}</span><br>
-								<!-- 가격들어가는곳-->
-                			<fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-				</div>
-			</div>
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center mb-4">
+            <!-- 텍스트 섹션 -->
+            <div class="col text-center">
+                <h3>축구공</h3>
+                <hr class="lead">
+                <p>코난이 즐겨차는 축구공</p>
+            </div>
+            <!-- 버튼 섹션 -->
+            <div class="col-auto">
+                <a href="/mall/product/search?searchtext=농구공" class="btn btn-primary">전체 보기</a>
+            </div>
+        </div>
+        <hr>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+				<c:forEach var="vo" items="${soccerBallList}" begin="0" end="3">
+            
+                <div class="col mb-5">
+                    <div class="card h-100" onclick="location.href='${pageContext.request.contextPath}/product/detail?productId=${vo.productId}'">
+                        <img class="card-img-top" src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath}" alt="이미지" />
+                        <div class="text-center">
+                            <span class="fw-bolder">${vo.productName}</span><br>
+                            <fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
 </section>
 
 
-	<section class="py-5">
-			<h3>&nbsp;야구공</h3>
-			
-		<hr>
-			<div class="container px-4 px-lg-5 mt-5">
-			
-				<div
-					class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-					<c:forEach var="vo" items="${baseBallList }">
-					<div class="col mb-5">
-						<div class="card h-100" onclick="location.href='${pageContext.request.contextPath}/product/detail?productId=${vo.productId}'">
-						j
-							<!-- 상품 이미지-->
-							<img class="card-img-top"
-								src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="이미지" />
-							<div class="text-center">
-								<!-- 상품 이름-->
-								<span class="fw-bolder">${vo.productName}</span><br>
-								<!-- 가격들어가는곳-->
-                			<fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-				</div>
-			</div>
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center mb-4">
+            <!-- 텍스트 섹션 -->
+            <div class="col text-center">
+                <h3>야구공</h3>
+                <hr class="lead">
+                <p>마운드의 주인공이 되는 야구공</p>
+            </div>
+            <!-- 버튼 섹션 -->
+            <div class="col-auto">
+                <a href="/mall/product/search?searchtext=농구공" class="btn btn-primary">전체 보기</a>
+            </div>
+        </div>
+        <hr>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+				<c:forEach var="vo" items="${baseBallList}" begin="0" end="3">
+            
+                <div class="col mb-5">
+                    <div class="card h-100" onclick="location.href='${pageContext.request.contextPath}/product/detail?productId=${vo.productId}'">
+                        <img class="card-img-top" src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath}" alt="이미지" />
+                        <div class="text-center">
+                            <span class="fw-bolder">${vo.productName}</span><br>
+                            <fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
 </section>
 
 
-	<section class="py-5">
-			<h3>&nbsp;농구공</h3>
-			
-		<hr>
-			<div class="container px-4 px-lg-5 mt-5">
-			
-				<div
-					class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-					<c:forEach var="vo" items="${basketBallList }">
-					<div class="col mb-5">
-						<div class="card h-100" onclick="location.href='${pageContext.request.contextPath}/product/detail?productId=${vo.productId}'">
-						j
-							<!-- 상품 이미지-->
-							<img class="card-img-top"
-								src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="이미지" />
-							<div class="text-center">
-								<!-- 상품 이름-->
-								<span class="fw-bolder">${vo.productName}</span><br>
-								<!-- 가격들어가는곳-->
-                			<fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-				</div>
-			</div>
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center mb-4">
+            <!-- 텍스트 섹션 -->
+            <div class="col text-center">
+                <h3>농구공</h3>
+                <hr class="lead">
+                <p class="lead">확실한 존재감</p>
+            </div>
+            <!-- 버튼 섹션 -->
+            <div class="col-auto">
+                <a href="/mall/product/search?searchtext=농구공" class="btn btn-primary">전체 보기</a>
+            </div>
+        </div>
+        <hr>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <c:forEach var="vo" items="${basketBallList}" begin="0" end="3">
+            
+                <div class="col mb-5">
+                    <div class="card h-100" onclick="location.href='${pageContext.request.contextPath}/product/detail?productId=${vo.productId}'">
+                        <img class="card-img-top" src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath}" alt="이미지" />
+                        <div class="text-center">
+                            <span class="fw-bolder">${vo.productName}</span><br>
+                            <fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
 </section>
 
 

@@ -307,7 +307,7 @@ public class ProductController {
 		
 	}
 
-	@PostMapping(value="/result", produces = "application/json")
+	@PostMapping(value="/result")
 	public void resultPOST(Model model, OrdersVO vo, Principal principal) throws Exception{
 		logger.info("resultPOST() 호출 : vo = " + vo.toString());
 		int result = orderService.create(vo);
