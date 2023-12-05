@@ -124,6 +124,13 @@ public class ProductDAOImple implements ProductDAO{
 	    paramMap.put("criteria", criteria);
 	    return sqlSession.selectList(NAMESPACE + ".select_review_count", paramMap);
 	}
+
+
+	@Override
+	public int softDelete(ProductVO vo) {
+		logger.info("softDelete 호출");
+		return sqlSession.update(NAMESPACE + ".soft_delete", vo);
+	}
 	
 
 }
