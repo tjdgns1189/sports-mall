@@ -17,6 +17,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    ORDER BY ${productId} DESC
 	</select>
 	
+	<select id="select_SoccerBall" resultType="ProductVO">
+    SELECT * FROM ${product}
+    WHERE ${productIsDeleted} != 1 AND ${productCategory} = '축구공'
+    ORDER BY ${productId} DESC
+</select>
+	
+	<select id="select_BaseBall" resultType="ProductVO">
+	    SELECT * FROM ${product}
+	    WHERE ${productIsDeleted} != 1 AND ${productCategory} = '야구방망이'
+	    ORDER BY ${productId} DESC
+	</select>
+	
+	<select id="select_BasketBall" resultType="ProductVO">
+	    SELECT * FROM ${product}
+	    WHERE ${productIsDeleted} != 1 AND ${productCategory} = '농구공'
+	    ORDER BY ${productId} DESC
+	</select>
+	
 	 <!-- <select id="select_by_category" resultType="ProductVO">
 	    SELECT * FROM ${product}
 	    WHERE ${productIsDeleted} != 1
@@ -74,11 +92,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 </select>
 	 
 	<select id="select_by_search_text" resultType="ProductVO">
-	 	 select * from ${product}
-        where ${productName} like #{searchText}
-        or ${productCategory} like #{searchText}
-        and ${productIsDeleted} != 1
-        order by ${productId} desc
+	 	 SELECT *
+FROM ${product}
+WHERE (${productName} LIKE #{searchText}
+       OR ${productCategory} LIKE #{searchText})
+  AND  ${productIsDeleted} != 1
+ORDER BY ${productId} DESC
 	 </select>
 	 
 	 <select id="select_likes_count" resultType="ProductVO">
@@ -120,6 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			    AND ${productIsDeleted} !=1
 			ORDER BY ${reviewCount} DESC
 	 </select>
+	 
 	 
 	 
 </mapper>

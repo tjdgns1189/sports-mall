@@ -53,8 +53,26 @@ public class HomeController {
 		if(numsPerPage != null) {
 			criteria.setNumsPerPage(numsPerPage);
 		}
-		List<ProductVO> list = productService.read(criteria);
-		model.addAttribute("list",list);
+	//	List<ProductVO> list = productService.read(criteria);
+	//	model.addAttribute("list",list);
+		
+		List<ProductVO> soccerBallList = productService.readSoccerBall();
+		model.addAttribute("soccerBallList", soccerBallList);
+		
+		if(soccerBallList.size() == 0) {
+			logger.info("soccerBallList안에 아무것도 안들었음");
+		}
+		for(ProductVO x : soccerBallList) {
+			logger.info("축구공 : " + x.getProductName());
+		}
+
+		List<ProductVO> baseBallList = productService.readBaseBall();
+		model.addAttribute("baseBallList", baseBallList);
+
+		List<ProductVO> basketBallList = productService.readBasketBall();
+		model.addAttribute("basketBallList", basketBallList);
+		
+		
 		PageMaker pageMaker = new PageMaker();
 		PageCriteria pageCriteria = new PageCriteria();
 		

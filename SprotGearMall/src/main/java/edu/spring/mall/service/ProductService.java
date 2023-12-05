@@ -24,4 +24,8 @@ public interface ProductService {
 	List<ProductVO> searchRating(String serchText,PageCriteria criteria);
 	List<ProductVO> searchReviewCount(String serchText,PageCriteria criteria);
 	
+	List<ProductVO> readSoccerBall();
+	List<ProductVO> readBaseBall();
+	List<ProductVO> readBasketBall();
+	
 }
