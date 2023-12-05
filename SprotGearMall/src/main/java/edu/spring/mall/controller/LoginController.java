@@ -1,13 +1,10 @@
 package edu.spring.mall.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.spring.mall.domain.MemberVO;
-import edu.spring.mall.persistence.MemberDAO;
 import edu.spring.mall.security.CustomUserDetails;
 import edu.spring.mall.service.MemberService;
 
@@ -36,8 +32,7 @@ import edu.spring.mall.service.MemberService;
 
 public class LoginController {
 	private final Logger logger = LoggerFactory.getLogger(LoginController.class);
-	@Autowired
-	private MemberDAO dao;
+	
 
 	@Autowired
 	private MemberService service;

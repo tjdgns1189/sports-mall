@@ -11,6 +11,7 @@ public interface MemberService {
 	MemberVO read(String memberId, String password)throws Exception;
 	MemberVO readDetail(String memberId);
 	List<MemberVO> read();
+	int checkDuplication(String memberId);
 	List<MemberVO>read(String memberId);
 	int update(Map userDetail)throws Exception;
 	int delete(String MemberId) throws Exception;

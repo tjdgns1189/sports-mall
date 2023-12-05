@@ -15,6 +15,7 @@ import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewProductJoinVO;
 import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.persistence.OrdersDAO;
+import edu.spring.mall.service.OrderService;
 import edu.spring.mall.service.ProductService;
 import edu.spring.mall.service.ReviewService;
 
@@ -26,16 +27,16 @@ public class ReviewController {
 	ReviewService reviewService;
 	
 	@Autowired
-	OrdersDAO orderDAO;
-	
+	private OrderService orderService;
+
 	@Autowired
 	ProductService productService;
 	
 	@GetMapping("/member/review")
-	public void reviewGET(Model model, int productId, int orderId) {
+	public void reviewGET(Model model, int productId, int orderId) throws Exception {
 		logger.info("reviewGET 호출" + productId + " | " + orderId);
 		ProductVO productvo = productService.read(productId);
-		OrdersVO ordervo = orderDAO.select(orderId);
+		OrdersVO ordervo = orderService.read(orderId);
 		model.addAttribute("productVO", productvo);
 		model.addAttribute("orderVO", ordervo);
 	}
@@ -56,7 +57,7 @@ public class ReviewController {
 	public String reviewUpdateGET(Model model, int reviewId) throws Exception {
 		logger.info("reviewUpdateGET 호출");
 		ReviewVO review = reviewService.read(reviewId);
-		OrdersVO order = orderDAO.select(review.getOrderId());
+		OrdersVO order = orderService.read(review.getOrderId());
 		logger.info("order"  +order.getProductPrice()); 
 		logger.info("order"  +order.getOrderId()); 
 		ProductVO product = productService.read(review.getProductId());
