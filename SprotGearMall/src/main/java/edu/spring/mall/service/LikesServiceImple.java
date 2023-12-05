@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
@@ -21,9 +23,6 @@ public class LikesServiceImple implements LikesService {
 	@Autowired
 	LikesDAO likesDAO;
 
-	
-	
-	
 	@Override
 	public List<ProductVO> read(String memberId) {
 		logger.info("read 호출");
@@ -37,6 +36,25 @@ public class LikesServiceImple implements LikesService {
         }
 
 		return likedProducts;
+	}
+
+	@Override
+	public int count(LikesVO vo) {
+		logger.info("count호출");
+		return likesDAO.select(vo);
+	}
+
+	@Override
+	public int create(LikesVO vo) throws Exception {
+		logger.info("create 호출");
+		return likesDAO.insert(vo);
+	}
+
+	@Override
+	public int delete(LikesVO vo) throws Exception {
+		logger.info("delete 호출");
+		
+		return likesDAO.delete(vo);
 	}
 
 }

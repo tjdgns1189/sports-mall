@@ -13,11 +13,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
 <title>Insert title here</title>
-
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <style type="text/css">
- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
     
     
 
@@ -115,9 +114,7 @@ body {
 </style>
 </head>
 <body>
-<header>
-<%@ include file="/WEB-INF/views/includes/header.jsp" %>
-</header>
+
 <div class="container center">
  <div class="signup-form">
 	<form action="update" method="POST">
@@ -196,8 +193,6 @@ body {
 	
 
 </script>
-<footer>
-    <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
-</footer>
+
 </body>
 </html>

@@ -45,5 +45,17 @@ public class CartServiceImple implements CartService{
 		return cartDAO.delete(cartId);
 	}
 
+	@Override
+	public int create(CartVO vo) throws Exception {
+		logger.info("create 호출");
+		return cartDAO.insert(vo);
+	}
+
+	@Override
+	public int update(CartVO vo) throws Exception {
+		logger.info("update 호출");
+		return cartDAO.update(vo);
+	}
+
 
 }

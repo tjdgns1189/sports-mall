@@ -11,12 +11,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <if test="email != null">, ${email}</if>
     <if test="address != null">, ${address}</if>
     <if test="userGrade != null">, ${userGrade}</if>
+    <if test="isOauthLogin != null">, ${isOauthLogin}</if>
   ) VALUES (
     #{memberId}, #{password}, #{name}
     <if test="phone != null">, #{phone}</if>
     <if test="email != null">, #{email}</if>
     <if test="address != null">, #{address}</if>
     <if test="userGrade != null">, #{userGrade}</if>
+    <if test="isOauthLogin != null">, #{isOauthLogin}</if>
+    
   )
 </insert>
 

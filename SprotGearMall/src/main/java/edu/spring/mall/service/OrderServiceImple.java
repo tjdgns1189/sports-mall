@@ -56,4 +56,28 @@ public class OrderServiceImple implements OrderService {
 		return orderDAO.selectRefund(orderState);
 	}
 
+	@Override
+	public int create(OrdersVO vo) throws Exception {
+		logger.info("create 호출");
+		return orderDAO.insert(vo);
+	}
+
+	@Override
+	public List<OrdersVO> readOrder(String memberId) throws Exception {
+		logger.info("readOrder 호출");
+		return orderDAO.select(memberId);
+	}
+
+	@Override
+	public int delete(int orderId) throws Exception {
+		logger.info("delete 호출");
+		return orderDAO.delete(orderId);
+	}
+
+	@Override
+	public OrdersVO read(int orderId) throws Exception {
+		logger.info("read 호출");
+		return orderDAO.select(orderId);
+	}
+
 }

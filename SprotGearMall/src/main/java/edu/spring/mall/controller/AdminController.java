@@ -39,7 +39,10 @@ public class AdminController {
 	@GetMapping("/adminPage")
 	public void adminPageGET() {
 		logger.info("adminPageGET 호출");
+
 	}
+	
+
 	
 	@GetMapping("/memberList")
 	public void memberListGET() {

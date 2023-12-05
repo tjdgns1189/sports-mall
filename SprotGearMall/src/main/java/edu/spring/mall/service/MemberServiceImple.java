@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.spring.mall.domain.MemberVO;
 import edu.spring.mall.persistence.MemberDAO;
@@ -29,7 +30,8 @@ public class MemberServiceImple implements MemberService {
 
 	@Autowired
 	private UserDetailsService service;
-
+	
+	@Transactional
 	@Override
 	public int create(MemberVO vo) throws Exception {
 		logger.info("create 호출 vo = " + vo.toString());
@@ -100,6 +102,12 @@ public class MemberServiceImple implements MemberService {
 	public MemberVO readDetail(String memberId) {
 		logger.info("readDetail 호출");
 		return dao.selectDetail(memberId);
+	}
+
+	@Override
+	public int checkDuplication(String memberId) {
+		logger.info("checkDuplication");
+		return dao.select(memberId);
 	}
 
 }

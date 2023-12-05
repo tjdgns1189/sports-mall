@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="email" value="email"/>
 	 	<property name="address" value="address"/>
 	 	<property name="userGrade" value="user_grade"/>
+	 	<property name="isOauthLogin" value="is_oauth_login"/>
 	 	
 	 	<property name="product" value="product"/>
 	 	<property name="productId" value="product_id"/> 
