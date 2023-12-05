@@ -66,7 +66,7 @@ public class OrdersController {
 		model.addAttribute("memberId", memberId);
 	}
 	
-	@PostMapping("/delete")
+	@PostMapping(value="/delete", produces = "application/json")
 	public ResponseEntity<Integer> ordersDeletePOST(@RequestBody List<Integer> checkedIds) {
 		logger.info("orderDeletePOST() 호출 : " + checkedIds.toString());
 		int totalDeleted = 0; // 삭제된 항목 수를 추적하는 변수

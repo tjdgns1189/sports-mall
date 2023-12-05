@@ -546,10 +546,10 @@ function iamport(){
             success: function (productPrice) {
                 if (rsp.paid_amount === productPrice) {
                 	
-                    alert("결제 성공");
                     console.log('productPric' + productPrice);
                     console.log('rsp.paid_amount' + rsp.paid_amount);
                     window.location.href = '../orders/orderlist';
+                    alert("결제 성공");
                 } else {
                     alert("결제 실패");
                     console.log('실패');

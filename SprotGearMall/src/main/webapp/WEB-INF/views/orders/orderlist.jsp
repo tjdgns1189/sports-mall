@@ -119,6 +119,7 @@ review-btn{
 	<script>
     $(document).ready(function() {
         $("#btnDeleteCheck").click(function() {
+        	var csrfToken = $("#csrfToken").val();
             var checkedIds = [];
             $("input[type=checkbox]:checked").each(function() {
                 checkedIds.push($(this).attr("id"));
@@ -127,7 +128,8 @@ review-btn{
                 type: "POST",
                 url: "delete", 
                 headers : {
-					'Content-Type' : 'application/json'
+					'Content-Type' : 'application/json',
+					'X-CSRF-TOKEN': csrfToken
 				},
                 data: JSON.stringify(checkedIds),
                 success: function(result) {

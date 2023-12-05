@@ -50,7 +50,7 @@ public class ReplyReplyRESTController {
 		return new ResponseEntity<List<ReplyReplyVO>>(list, HttpStatus.OK);
 	}
 	
-	@PutMapping("/{replyReplyId}")
+	@PutMapping(value="/{replyReplyId}", produces = "application/json")
 	public ResponseEntity<Integer> updateReply(
 			@PathVariable("replyReplyId") int replyReplyId,
 			@RequestBody String replyReplyContent
@@ -59,7 +59,7 @@ public class ReplyReplyRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{replyReplyId}")
+	@DeleteMapping(value="/{replyReplyId}", produces = "application/json")
 	public ResponseEntity<Integer> deleteReply(
 			@PathVariable("replyReplyId") int replyReplyId){
 		logger.info("replyReplyId = " + replyReplyId);
