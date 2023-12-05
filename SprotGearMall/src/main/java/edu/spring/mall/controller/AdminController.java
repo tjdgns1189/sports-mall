@@ -1,5 +1,6 @@
 package edu.spring.mall.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -9,10 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.spring.mall.domain.MemberVO;
+import edu.spring.mall.domain.OrdersVO;
 import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
+import edu.spring.mall.service.AdminService;
+import edu.spring.mall.service.OrderService;
 import edu.spring.mall.service.ProductService;
 
 @Controller
@@ -23,6 +29,12 @@ public class AdminController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	private AdminService service;
+	
+	@Autowired
+	private OrderService orderService;
 	
 	@GetMapping("/adminPage")
 	public void adminPageGET() {
@@ -60,8 +72,34 @@ public class AdminController {
 		logger.info("memberList 호출");
 	}
 	
+	
+	@GetMapping("/chat-list")
+	public void chatListGET() {
+		logger.info("chatListGET 호출");
+	}
+	
+	@GetMapping("/user-list")
+	public void userListGET(@RequestParam(required=false) String memberId, Model model){
+		logger.info("user-listGET 호출");
+		List<MemberVO> list = new ArrayList<MemberVO>();
+		if(memberId == null) {
+			list = service.read();
+		}else {
+			list = service.readSearch(memberId);
+		}
+		model.addAttribute("list", list);
+
+	}
+	
 	@GetMapping("/orderManage")
-	public void orderManagementGET() {
-		logger.info("orderManage 호출");
+	public void orderManageGET(Model model) throws Exception {
+		logger.info("ordermanage 호출");
+		String orderState = "환불요청";
+		List<OrdersVO> list = orderService.readRefund(orderState);
+		
+		for(OrdersVO vo : list) {
+			logger.info("order확인 : "  + vo.getOrderId());
+		}
+		model.addAttribute("list", list);
 	}
 }

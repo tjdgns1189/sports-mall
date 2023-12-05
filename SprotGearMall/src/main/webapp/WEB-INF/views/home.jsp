@@ -23,11 +23,11 @@
 
     <!-- 신상품 섹션 -->
     <section class="py-5">
-        <h3>&nbsp;신상품</h3>
+        <h3>&nbsp;야구방망이</h3>
         <hr>
         <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="newProductList">
-                <!-- 신상품 목록이 여기에 동적으로 추가될 것입니다. -->
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="baseBallProductList">
+                <!-- 야구방망이 목록이 여기에 동적으로 추가될 것입니다. -->
             </div>
         </div>
     </section>
@@ -59,21 +59,9 @@
     <input type="hidden" id="insertAlert" value="${insert_result }">
 
     <script type="text/javascript">
-    $(()=>{
-    	console.log('dkdkdkdkdkdkdkdkd');
-    	var list = ${list};  // 뷰에서 전달받은 상품 목록
-    	list = JSON.parse('${list}');  // JSON 문자열을 JavaScript 객체로 파싱
-    	console.log('list', list);
-        displayProductsByCategory('신상품', 'newProductList');
-
-        // 카테고리별로 상품 출력
-        displayProductsByCategory('축구공', 'soccerBallList');
-        displayProductsByCategory('농구공', 'basketballList');
-    })
-        
+        var list = ${list};  // 뷰에서 전달받은 상품 목록
 
         function displayProductsByCategory(category, containerId) {
-        	console.log('displayProductsByCategory 호출');
             var filteredProducts = list.filter(function(vo) {
                 return vo.category === category;
             });
@@ -95,7 +83,11 @@
         }
 
         // 초기화: 신상품 출력
+        displayProductsByCategory('신상품', 'baseBallProductList');
 
+        // 카테고리별로 상품 출력
+        displayProductsByCategory('축구공', 'soccerBallList');
+        displayProductsByCategory('농구공', 'basketballList');
 
         // 다른 카테고리 섹션들에 대한 출력 코드를 필요에 따라 추가
 

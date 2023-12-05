@@ -13,7 +13,6 @@
 <link href="<c:url value="/resources/css/headers.css" />" rel="stylesheet">
 <input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}">
 
-
 <main>
 <!-- 헤더 첫번재줄 -->
 <div class="bg-white py-2">
@@ -25,9 +24,10 @@
 				<img src="${pageContext.request.contextPath}/resources/img/main-logo.png" alt="로고" class="logo">
 				</a>
 			</div>
+		
 			<!-- 검색창 -->
 			<div class="col">
-				<div class="search-bar">
+				<div class="search-bar d-flex">
 					<form action="${pageContext.request.contextPath}/product/search" method="get">
 						<input type="text" name="searchtext" placeholder="검색창">
 						<button type="submit" id="searchBtn" class="menu-button">
@@ -46,8 +46,8 @@
 						</button>
 						<div class="dropdown-menu dropdown-content dropdown-menu-right width-120" aria-labelledby="dropdownMenuButton">
 							<sec:authorize access="isAnonymous()">
-								<a class="dropdown-item" href="#" onclick="targetURL()">로그인</a>
-								<a class="dropdown-item" href="${pageContext.request.contextPath}/member/register">회원가입</a>
+							<a class="dropdown-item" href="#" onclick="targetURL()">로그인</a>
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/member/register">회원가입</a>
 							</sec:authorize>
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/member/mypage">마이페이지</a>
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/orders/orderlist">주문내역</a>
@@ -75,6 +75,7 @@
 							<!-- 구매 관련 옵션들 -->
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/cart/cartlist">장바구니</a>
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/member/likes">찜한 상품</a>
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/product/recent">최근 본 상품</a>
 
 						</div>
 					</div>
@@ -98,8 +99,9 @@
 
 
 <!-- 네비바 두번재줄 -->
-<div class="header-container bg-secondary ">
+<div class="header-container bg-info ">
 <ul class="nav-list">
+
 		<li>
 			<div class="navi_bar_area">
 			
@@ -147,36 +149,5 @@
 		
 	</ul>
 </div>
-<script type="text/javascript">
-  	/* function favorite(){
-	         // 즐겨찾기 (모든 브라우저 호환)
-	    $('.favorite').on('click', function(e) {
-	        var bookmarkURL = window.location.href;
-	        var bookmarkTitle = document.title;
-	        var triggerDefault = false;
-	        
-	        if (window.sidebar && window.sidebar.addPanel) {
-	            // 파이어폭스
-	            window.sidebar.addPanel(bookmarkTitle, bookmarkURL, '');
-	        } else if ((window.sidebar && (navigator.userAgent.toLowerCase().indexOf('firefox') < -1)) || (window.opera && window.print)) {
-	            // Firefox version &gt;= 23 and Opera Hotlist
-	            var $this = $(this);
-	            $this.attr('href', bookmarkURL);
-	            $this.attr('title', bookmarkTitle);
-	            $this.attr('rel', 'sidebar');
-	            $this.off(e);
-	            triggerDefault = true;
-	        } else if (window.external && ('AddFavorite' in window.external)) {
-	            // IE 
-	            window.external.AddFavorite(bookmarkURL, bookmarkTitle);
-	        } else {
-	            // WebKit - 사파리/크롬
-	            alert((navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Cmd' : 'Ctrl') + '+D 를 이용해 이 페이지를 즐겨찾기에 추가할 수 있습니다.');
-	        }
-	        return triggerDefault;
-	    });
-	}  */
-  
-  
-  </script>
+
 </main>

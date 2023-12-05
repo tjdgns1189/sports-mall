@@ -31,7 +31,7 @@ public class NotificationServiceImple implements NotificationService {
 
 	@Override
 	public List<NotificationVO> readGroup(String group) {
-		logger.info("readGroup");
+		logger.info("관리자 알림 확인");
 		return dao.selectAdmin(group);
 	}
 

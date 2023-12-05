@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ include file="/WEB-INF/views/includes/header.jsp" %>
+    
     
 <!DOCTYPE html>
 <html>
@@ -9,8 +10,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-삭제버튼 제약조건 두기 전까지 하지말기
-	<input type="hidden" id="memberId" value="${pageContext.request.userPrincipal.name}">
+<div class="container-fluid">
+  <div class="row">
+    <!-- 왼쪽 메뉴 -->
+   	  <jsp:include page="../includes/admin-sidebar.jsp" />
+   	
+
+    <!-- 오른쪽 컨텐츠 -->
+   <div id="contentDiv" class="col-md-9 container-fluid">
+   <input type="hidden" id="memberId" value="${pageContext.request.userPrincipal.name}">
 	<input type="hidden" id="csrfToken" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	 <c:if test="${not empty list}">
 	<div class="container mt-5">
@@ -35,6 +43,10 @@
 		</c:forEach>
 	</div>
 	</c:if>
+    </div>
+  </div>
+</div>
+	
 	
 </body>
 </html>

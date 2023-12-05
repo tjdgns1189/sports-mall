@@ -28,8 +28,6 @@ public class QnaBoardServiceImple implements QnaBoardService {
 	@Override
 	public List<QnaBoardVO> read(PageCriteria criteria) {
 		logger.info("read() 호출");
-		logger.info("start = " + criteria.getStart());
-		logger.info("end = " + criteria.getEnd());
 		return dao.select(criteria);
 	}
 

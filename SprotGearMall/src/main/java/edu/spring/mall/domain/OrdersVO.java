@@ -9,8 +9,32 @@ public class OrdersVO {
 	private int productPrice;
 	private int productQuantity;
 	private Date orderCreatedDate;
+	private String orderState;
 	
 	
+	public OrdersVO(int orderId, String memberId, int productId, int productPrice, int productQuantity,
+			Date orderCreatedDate, String orderState) {
+		super();
+		this.orderId = orderId;
+		this.memberId = memberId;
+		this.productId = productId;
+		this.productPrice = productPrice;
+		this.productQuantity = productQuantity;
+		this.orderCreatedDate = orderCreatedDate;
+		this.orderState = orderState;
+	}
+
+
+	public String getOrderState() {
+		return orderState;
+	}
+
+
+	public void setOrderState(String orderState) {
+		this.orderState = orderState;
+	}
+
+
 	public OrdersVO() {}
 
 

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,12 @@ public class RestLikeController {
 		if(vo.getMemberId().isBlank()||vo.getMemberId()==null) {
 			return new ResponseEntity<String>(result, HttpStatus.FORBIDDEN);
 		}
+		int count = dao.select(vo);
+		if(count == 1) {
+			logger.info("중복 체크");
+			result ="duplicate";
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}
 		
 		int success = dao.insert(vo);
 		if (success == 1) {
@@ -50,6 +57,11 @@ public class RestLikeController {
 		}
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 
+	}
+	
+	@GetMapping("/product/test/asdf")
+	public ResponseEntity<Void> test(){
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 }

@@ -68,4 +68,17 @@ public class MemberDAOImple implements MemberDAO {
 		return sqlSession.update(NAMESPACE + ".updateUserPassword", user);
 	}
 
+	@Override
+	public List<MemberVO> selectById(String memberId) {
+		logger.info("selectById호출");
+		String searchId = "%" + memberId + "%";
+		return sqlSession.selectList(NAMESPACE + ".select_by_id", searchId);
+	}
+
+	@Override
+	public MemberVO selectDetail(String memberId) {
+		logger.info("selectDetail 호출");
+		return sqlSession.selectOne(NAMESPACE + ".select_detail", memberId);
+	}
+
 }

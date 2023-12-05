@@ -70,8 +70,10 @@ li {
 	</tbody>
 </table>
 
+
 </div>
 
+<button style="float: left; margin-right: 10px; font-size: 20px;" id="cookieDelete" onclick="deleteRecentProducts()">전체삭제</button>
 
 
 
@@ -124,7 +126,7 @@ $.ajax({
 
 
 
-	// 기존 내용을 지우기
+					// 기존 내용을 지우기
                     $('#productTableBody').empty();
 
                     // 받은 데이터를 기반으로 동적으로 HTML 엘리먼트 추가
@@ -162,6 +164,15 @@ $.ajax({
         }
     }
 });
+
+
+function deleteRecentProducts() {
+    // Set the expiration date in the past to delete the cookie
+    document.cookie = "recentProducts=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    alert('최근 본 상품이 삭제되었습니다.');
+    // Reload the page or perform any other necessary actions
+    location.reload();
+}
 
 
 </script>

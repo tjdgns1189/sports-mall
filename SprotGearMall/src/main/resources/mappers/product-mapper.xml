@@ -16,6 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    WHERE ${productIsDeleted} != 1
 	    ORDER BY ${productId} DESC
 	</select>
+	
+	 <!-- <select id="select_by_category" resultType="ProductVO">
+	    SELECT * FROM ${product}
+	    WHERE ${productIsDeleted} != 1
+	    and ${productCategory} = #{productCategory}
+	    ORDER BY ${productId} DESC
+	</select> -->
 	 
 	 <select id="select_by_product_name" resultType="ProductVO">
 	 	select * from ${product} where ${productName} = #{productName}

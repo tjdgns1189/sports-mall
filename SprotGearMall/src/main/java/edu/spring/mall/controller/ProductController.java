@@ -308,9 +308,8 @@ public class ProductController {
 	public void recentGET() {
 		
 	}
-	
 
-	@PostMapping("/result")
+	@PostMapping(value="/result", produces = "application/json")
 	public void resultPOST(Model model, OrdersVO vo, Principal principal){
 		logger.info("resultPOST() 호출 : vo = " + vo.toString());
 		int result = ordersDAO.insert(vo);
@@ -353,6 +352,11 @@ public class ProductController {
 	  return list; 
 	  
 	  }
+	  
+	  @GetMapping("/test")
+	  public void testGET() {}
+	  
+	  
 	 
 
 } // end ProductController
