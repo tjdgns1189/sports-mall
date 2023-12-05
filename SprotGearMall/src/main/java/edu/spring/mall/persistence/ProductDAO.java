@@ -20,5 +20,8 @@ public interface ProductDAO {
 	List<ProductVO> selectRating(String searchText,PageCriteria criteria);
 	List<ProductVO> selectReviewCount(String searchText,PageCriteria criteria);
 	
+	List<ProductVO> selectSoccerBall();
+	List<ProductVO> selectBaseBall();
+	List<ProductVO> selectBasketBall();
 	
 }

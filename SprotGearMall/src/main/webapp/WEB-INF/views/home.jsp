@@ -11,85 +11,112 @@
     <title>Home</title>
 </head>
 <body>
-    <!-- Header-->
-    <header class="bg-dark py-5">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">메인페이지</h1>
-                <p class="lead fw-normal text-white-50 mb-0">이미지랑 글자 넣기</p>
-            </div>
-        </div>
-    </header>
 
-    <!-- 신상품 섹션 -->
-    <section class="py-5">
-        <h3>&nbsp;야구방망이</h3>
-        <hr>
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="baseBallProductList">
-                <!-- 야구방망이 목록이 여기에 동적으로 추가될 것입니다. -->
-            </div>
-        </div>
-    </section>
+<!-- Header-->
+	<header class="bg-info py-5">
+		<div class="container px-4 px-lg-5 my-5">
+			<div class="text-center text-white">
+				<h1 class="display-4 fw-bolder">메인페이지</h1>
+				<p class="lead fw-normal text-white-50 mb-0">이미지랑 글자 넣기</p>
+			</div>
+		</div>
+	</header>
+	
+	<!-- Section-->
+	<section class="py-5">
+			<h3>&nbsp;축구공</h3>
+			
+		<hr>
+			<div class="container px-4 px-lg-5 mt-5">
+			
+				<div
+					class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+					<c:forEach var="vo" items="${soccerBallList }">
+					<div class="col mb-5">
+						<div class="card h-100" onclick="location.href='${pageContext.request.contextPath}/product/detail?productId=${vo.productId}'">
+						j
+							<!-- 상품 이미지-->
+							<img class="card-img-top"
+								src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="이미지" />
+							<div class="text-center">
+								<!-- 상품 이름-->
+								<span class="fw-bolder">${vo.productName}</span><br>
+								<!-- 가격들어가는곳-->
+                			<fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+				</div>
+			</div>
+</section>
 
-    <!-- 축구공 섹션 -->
-    <section class="py-5">
-        <h3>&nbsp;축구공</h3>
-        <hr>
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="soccerBallList">
-                <!-- 축구공 목록이 여기에 동적으로 추가될 것입니다. -->
-            </div>
-        </div>
-    </section>
+	<section class="py-5">
+			<h3>&nbsp;야구공</h3>
+			
+		<hr>
+			<div class="container px-4 px-lg-5 mt-5">
+			
+				<div
+					class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+					<c:forEach var="vo" items="${baseBallList }">
+					<div class="col mb-5">
+						<div class="card h-100" onclick="location.href='${pageContext.request.contextPath}/product/detail?productId=${vo.productId}'">
+						j
+							<!-- 상품 이미지-->
+							<img class="card-img-top"
+								src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="이미지" />
+							<div class="text-center">
+								<!-- 상품 이름-->
+								<span class="fw-bolder">${vo.productName}</span><br>
+								<!-- 가격들어가는곳-->
+                			<fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+				</div>
+			</div>
+</section>
 
-    <!-- 농구공 섹션 -->
-    <section class="py-5">
-        <h3>&nbsp;농구공</h3>
-        <hr>
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="basketballList">
-                <!-- 농구공 목록이 여기에 동적으로 추가될 것입니다. -->
-            </div>
-        </div>
-    </section>
+	<section class="py-5">
+			<h3>&nbsp;농구공</h3>
+			
+		<hr>
+			<div class="container px-4 px-lg-5 mt-5">
+			
+				<div
+					class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+					<c:forEach var="vo" items="${basketBallList }">
+					<div class="col mb-5">
+						<div class="card h-100" onclick="location.href='${pageContext.request.contextPath}/product/detail?productId=${vo.productId}'">
+						j
+							<!-- 상품 이미지-->
+							<img class="card-img-top"
+								src="https://storage.googleapis.com/edu-mall-img/${vo.productImgPath }" alt="이미지" />
+							<div class="text-center">
+								<!-- 상품 이름-->
+								<span class="fw-bolder">${vo.productName}</span><br>
+								<!-- 가격들어가는곳-->
+                			<fmt:formatNumber value="${vo.productPrice}" type="number" pattern="#,###"/>원
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+				</div>
+			</div>
+</section>
+
+
 
     <!-- 추가 카테고리 섹션들을 필요에 따라 추가 -->
 
     <input type="hidden" id="insertAlert" value="${insert_result }">
 
     <script type="text/javascript">
-        var list = ${list};  // 뷰에서 전달받은 상품 목록
-
-        function displayProductsByCategory(category, containerId) {
-            var filteredProducts = list.filter(function(vo) {
-                return vo.category === category;
-            });
-
-            var str = '';
-            filteredProducts.forEach(function(vo) {
-                str += '<div class="col mb-5">' +
-                    '<div class="card h-100" onclick="location.href=\'${pageContext.request.contextPath}/product/detail?productId=' + vo.productId + '\'">' +
-                    '<img class="card-img-top" src="https://storage.googleapis.com/edu-mall-img/' + vo.productImgPath + '" alt="이미지" />' +
-                    '<div class="text-center">' +
-                    '<span class="fw-bolder">' + vo.productName + '</span><br>' +
-                    vo.productPrice + ' 원' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
-            });
-
-            $('#' + containerId).html(str);
-        }
-
-        // 초기화: 신상품 출력
-        displayProductsByCategory('신상품', 'baseBallProductList');
-
-        // 카테고리별로 상품 출력
-        displayProductsByCategory('축구공', 'soccerBallList');
-        displayProductsByCategory('농구공', 'basketballList');
-
-        // 다른 카테고리 섹션들에 대한 출력 코드를 필요에 따라 추가
+    	$(()=>{
+    		console.log('a');
+    	})
 
         var result = $('#insertAlert').val();
         if(result == 'success') {

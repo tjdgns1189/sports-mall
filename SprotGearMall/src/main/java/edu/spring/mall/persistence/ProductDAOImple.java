@@ -38,7 +38,7 @@ public class ProductDAOImple implements ProductDAO{
 		logger.info("select() 호출");
 		return sqlSession.selectList(NAMESPACE + ".select_all");
 	}
-
+	
 
 	//검색용
 	@Override
@@ -123,6 +123,27 @@ public class ProductDAOImple implements ProductDAO{
 	    paramMap.put("searchText", searchText);
 	    paramMap.put("criteria", criteria);
 	    return sqlSession.selectList(NAMESPACE + ".select_review_count", paramMap);
+	}
+
+
+	@Override
+	public List<ProductVO> selectSoccerBall() {
+		logger.info("select() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_SoccerBall");
+	}
+
+
+	@Override
+	public List<ProductVO> selectBaseBall() {
+		logger.info("select() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_BaseBall");
+	}
+
+
+	@Override
+	public List<ProductVO> selectBasketBall() {
+		logger.info("select() 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_BasketBall");
 	}
 	
 
