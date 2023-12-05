@@ -320,6 +320,7 @@ public class ProductController {
 		OrdersVO ordersVO = ordersDAO.select(orderId);
 		model.addAttribute("productVO", productVO);
 		model.addAttribute("vo", vo);
+		model.addAttribute("productPrice", vo.getProductPrice());
 	}
 	
 	  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
