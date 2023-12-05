@@ -8,6 +8,13 @@ body {
 	height: 100vh;
 }
 
+.container{
+	  display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    height: 100vh; /* 뷰포트 높이를 전체로 설정 */
+}
+
 #registerLogo {
 	text-align: center;
 }
@@ -21,6 +28,8 @@ body {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	width: 350px;
 	text-align: center;
+ margin: auto; /* 추가: 자동 마진으로 중앙 정렬 */
+	
 }
 
 .signup-form input {
@@ -31,6 +40,7 @@ body {
 	border-radius: 5px;
 	font-size: 14px;
 }
+
 
 .signup-form button {
 	width: 100%;
@@ -90,4 +100,9 @@ body {
 .btn-block {
 	display: block;
 	width: 100%;
+}
+
+#registerLogo {
+    margin-bottom: 20px; /* 하단 여백 조정 */
+    font-size: 24px; /* 글자 크기 조정 */
 }

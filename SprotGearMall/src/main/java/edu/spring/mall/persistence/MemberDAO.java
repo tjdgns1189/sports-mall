@@ -9,6 +9,8 @@ import edu.spring.mall.security.CustomUserDetails;
 public interface MemberDAO {
 	int insert(MemberVO vo);
 	List<MemberVO> select();
+	List<MemberVO> selectById(String memberId);
+	MemberVO selectDetail(String memberId);
 	int select(String memberId);
 	CustomUserDetails login(String memberId);
 	int update(MemberVO vo);

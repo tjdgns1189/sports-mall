@@ -88,6 +88,9 @@ function isLike() {
                 if (result === 'success') {
                     $('.heart').toggleClass('heart-filled');
                     $('.heart').prop('disabled', false);
+                }else if(result === 'duplicate'){
+                	$('.heart').toggleClass('heart-filled');
+                    $('.heart').prop('disabled', false);
                 }
             },
             error: (jqXHR, textStatus, errorThrown) => {

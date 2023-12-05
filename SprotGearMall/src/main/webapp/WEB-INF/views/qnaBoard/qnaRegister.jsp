@@ -11,6 +11,7 @@
 <body>
 	<h2>글 작성 페이지</h2>
 	<form action="register" method="POST">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<div>
 			<p>제목 : </p>
 			<input type="text" name="qnaBoardTitle" placeholder="제목 입력" required>

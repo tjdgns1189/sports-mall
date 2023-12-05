@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,6 +54,24 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
 
 </style>
+
+<!-- <script type="text/javascript">
+	function fetchProducts(searchText) {
+	console.log("hey");
+    var url = "/mall/product/search?searchtext=" + searchText;
+
+    // AJAX를 사용하여 상품 목록을 가져옴
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            products = data; // 받아온 데이터를 배열에 저장
+            
+        });
+   	 
+}
+</script> -->
+
+
 </head>
 <body>
 
@@ -72,13 +91,13 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<div class="sort-dropdown">
 			  <button class="sort-button">정렬</button>
 			  <div class="sort-options">
-			   <button onclick="sortByPrice('asc')">가격 오름차순</button>
-			   <button onclick="sortByPrice('desc')">가격 오름차순</button>
-			    <button onclick="">최신등록 순</button>
-			    <button onclick="">좋아요 순</button>
-			    <button onclick="">가나다 순</button>
-			    <button onclick="">평점 순</button>
-			    <button onclick="">리뷰 순</button>
+			   <input type="button" value="가격 오름차순" onclick="sort('asc')">
+			   <input type="button" value="가격 내림차순" onclick="sort('desc')">
+			   <input type="button" value="최신 등록순" onclick="sort('registration')">
+			   <input type="button" value="좋아요순" onclick="sort('likes')">
+			   <input type="button" value="가나다 순" onclick="sort('alphabetize')">
+			   <input type="button" value="평점 순" onclick="sort('rating')">
+			   <input type="button" value="리뷰 순" onclick="sort('review')">
 			  </div>
 			</div>	
 		<hr>
@@ -95,6 +114,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 								<span class="fw-bolder">${vo.productName}</span><br>
 								<!-- 가격들어가는곳-->
 								${vo.productPrice } 원
+								<input type="hidden" id="searchTextValue" value="${searchText}">
 							</div>
 						</div>
 					</div>
@@ -102,23 +122,130 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 				</div>
 			</div>
 		</section>
-		
-	<script>
-        var products = []; // 검색된 상품 목록을 저장할 배열
-        fetchProducts('${searchText}');
-        
-        function fetchProducts(searchText) {
-            var url = "/mall/product/search?searchtext=" + searchText;
-
-            // AJAX를 사용하여 상품 목록을 가져옴
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    products = data; // 받아온 데이터를 배열에 저장
-                    renderProducts(); // 상품을 화면에 출력
+	
+	<!-- <script>
+    // Fetch API를 사용하여 서버로부터 JSON 데이터를 가져오는 함수
+    function fetchProductList(searchText) {
+        fetch(`/mall/product/search?searchtext=${searchText}`)
+            .then(response => response.json())
+            .then(data => {
+				console.log(data);            	
+                // 가져온 JSON 데이터를 처리하는 함수 호출
+                var str = '';
+                data.forEach(vo => {
+                	str += `<div class="col mb-5">
+                            	<div class="card h-100" onclick="location.href='detail?productId=${product.productId}'">
+                                <!-- 상품 이미지 -->
+                <%--                 	<img class="card-img-top" src="https://storage.googleapis.com/edu-mall-img/${product.productImgPath}" alt="이미지" />
+                                	<div class="text-center">
+                                    <!-- 상품 이름 -->
+                                    	<span class="fw-bolder">${product.productName}</span><br>
+                                    <!-- 가격들어가는곳 -->
+                                    	${product.productPrice} 원
+                                	</div>
+                            	</div>
+                        	</div>`;
                 });
-        }
+
+                $('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center').html(str);
+            })
+            .catch(error => {
+                console.error('Error during fetch:', error);
+            });
+    }
+
+
+</script> --> --%>
+	
+		
+	 <script>
+		
+	 
+		
+		function sort(order) {
+	        var searchTextValue = ($('#searchTextValue').val()); 
+	        console.log('URL:', '/mall/product/search?searchtext=' + searchTextValue);
+	        
+	        var dataToSend = { searchtext : searchTextValue };
+	        
+	        if (order === 'asc') {
+	            dataToSend.order = 'asc';
+	        } else if (order === 'desc') {
+	            dataToSend.order = 'desc';
+	        } else if (order === 'registration') {
+	            dataToSend.order = 'registration';
+	        } else if (order === 'alphabetize') {
+	            dataToSend.order = 'alphabetize';
+	        } else if (order === 'likes') {
+	            dataToSend.order = 'likes';
+	        } else if (order === 'rating') {
+	            dataToSend.order = 'rating';
+	        } else if (order === 'review') {
+	            dataToSend.order = 'review';
+	        } 
+	        
+	     // Ajax를 사용하여 서버에서 데이터를 가져옴
+	        $.ajax({
+	            url: '/mall/product/search',  // 요청을 처리하는 서버의 URL
+	            type: 'GET',
+	            data: dataToSend,  // 필요한 데이터 전달
+	            dataType: 'json',
+	            headers: {
+	                'Accept': 'application/json'  // JSON 형식의 응답을 요청하는 헤더
+	            },
+	            success: function(data) {
+	            	// 가져온 데이터를 이용하여 가격 순으로 정렬
+	                if (order === 'asc') {
+	                    data.sort(function(a, b) {
+	                        // 오름차순 정렬 (낮은 가격부터)
+	                        return a.productPrice - b.productPrice;
+	                    });
+	                } else if (order === 'desc') {
+	                    // 내림차순 정렬 (높은 가격부터)
+	                    data.sort(function(a, b) {
+	                        return b.productPrice - a.productPrice;
+	                    });
+	                } else if (order === 'alphabetize') {
+	                	// 가나다순 정렬
+	                	data.sort(function(a, b) {
+	                		return a.productName.localeCompare(b.productName);
+	                	});
+	                } else if (order === 'registration') {
+	                	// 최신등록순 정렬
+	                	data.sort(function(a, b) {
+                    		return new Date(a.productCreatedDate) - new Date(b.productCreatedDate);
+	                	});
+	                }
+	            	
+	            	console.log(data);
+	            	
+	                var str = '';
+	                $.each(data, function(index, vo) {
+	                	str += '<div class="col mb-5">' +
+	                    '<div class="card h-100" onclick="location.href=\'detail?productId=' + vo.productId + '\'">' +
+	                    '<img class="card-img-top" src="https://storage.googleapis.com/edu-mall-img/' + vo.productImgPath + '" alt="이미지" />' +
+	                    '<div class="text-center">' +
+	                    '<span class="fw-bolder">' + vo.productName + '</span><br>' +
+	                    vo.productPrice + ' 원' +
+	                    '<input type="hidden" id="searchTextValue" value="' + searchTextValue + '">' +
+	                    '</div>' +
+	                    '</div>' +
+	                    '</div>';
+	                });
+	              
+	                $('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center').html(str);
+	            },
+	            error: function(error) {
+	                console.log('Error:', error);
+	            }
+	        });
+        	
+	       
+	    } 
+	        
 	</script>
+	
+	
 
 </body>
 </html>

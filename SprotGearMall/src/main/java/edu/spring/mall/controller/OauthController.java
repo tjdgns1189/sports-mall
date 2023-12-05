@@ -109,7 +109,8 @@ public class OauthController {
                 	logger.info("회원 계정 없어서 로그인 진행 해야함");
                 	String password = OAuth.generateRandomState();  
                 	String memberGrade = "ROLE_USER";
-                	MemberVO vo = new MemberVO(memberId, password, name, phone, null, null, memberGrade);
+                	String isOauthLogin = "Y";
+                	MemberVO vo = new MemberVO(memberId, password, name, phone, null, null, memberGrade, isOauthLogin);
                 	int result = memberService.create(vo);
                 	
                 	if(result == 1) {
@@ -193,7 +194,9 @@ public class OauthController {
 		} catch (UsernameNotFoundException e) {
 			logger.info("회원가입 진행");
 			String password = OAuth.generateRandomState();
-			MemberVO vo = new MemberVO(memberId, password, name, null, email, null, null);
+			String userGrade= "ROLE_USER";
+			String isOauthLogin = "Y";
+			MemberVO vo = new MemberVO(memberId, password, name, null, email, null, userGrade, isOauthLogin);
 			int result = memberService.create(vo);
 			if(result == 1) {
 				CustomUserDetails user = 

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,9 +32,9 @@ public class ProductQnaReplyRestController {
 	private ProductQnaService qnaService;
 	
 	
-	@PostMapping("/qnaAnswer")
-	public ResponseEntity<Void> qnaAnswerPOST(@RequestBody ProductQnaReplyVO vo){
-		logger.info("qnaAnswerPOST 호출");
+	@PostMapping("/qnaAnswer/{authorId}")
+	public ResponseEntity<Void> qnaAnswerPOST(@RequestBody ProductQnaReplyVO vo, @PathVariable String authorId) throws Exception{
+		logger.info("qnaAnswerPOST 호출 authorId : " + authorId);
 		 ProductQnaVO qna = qnaService.readDetail(vo.getPrdQnaId());
 		 if(qna.getPrdQnaState().equals("Y")) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -41,7 +42,7 @@ public class ProductQnaReplyRestController {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		vo.setMemberId(auth.getName());
-		int result = replyService.create(vo);
+		int result = replyService.create(vo,authorId);
 		if(result == 1) {
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		}

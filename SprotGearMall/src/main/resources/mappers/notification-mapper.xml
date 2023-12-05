@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.NotificationMapper">
+
+	<insert id="insert">
+    	INSERT INTO ${notification_table} 
+    	(${notificationType}, ${notificationContent}, ${targetUrl}, ${entityId}
+        	<if test="memberId != null">, ${memberId}</if>
+        	<if test="groupId != null">, ${groupId}</if>) 
+    	VALUES (#{notificationType}, #{notificationContent}, #{targetUrl}, #{entityId}
+        	<if test="memberId != null">, #{memberId}</if>
+        	<if test="groupId != null">, #{groupId}</if>)
+	</insert>
+	
+	
+	<select id="select_member" resultType="NotificationVO">
+		select * from ${notification_table}
+		where ${readDate} IS NULL
+		and ${memberId} = #{memberId}
+	</select>
+	
+	<select id="select_group" resultType="NotificationVO">
+		select * from ${notification_table}
+		where ${readDate} IS NULL
+		and ${groupId} = #{groupId}
+	</select>
+	
+	<update id="updateDate">
+		update ${notification_table}
+		set ${readDate} = #{readDate}
+		where ${notificationId} = #{notificationId}
+	</update>
+	
+	<delete id="delete">
+		delete ${notification_table}
+		where ${notificationId} = #{notificationId}
+	
+	</delete>
+	
+	
+	
+
+</mapper>

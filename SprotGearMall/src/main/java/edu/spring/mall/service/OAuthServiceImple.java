@@ -149,11 +149,8 @@ public class OAuthServiceImple implements OAuthService {
 	@Override
 	public void securityLogin(CustomUserDetails user) {
 		logger.info("시큐리티 로그인 수동으로 설정");
-		 Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-	        SecurityContextHolder.getContext().setAuthentication(authentication);
-	       
-
-
+		Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+	    SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 
 	@Override
@@ -180,15 +177,11 @@ public class OAuthServiceImple implements OAuthService {
 		logger.info("saveToken 호출");
 		
 		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
-		logger.info("principal.getName() : " + principal.getName());
-		  ClientRegistration registration = social.findByRegistrationId(registaionId);
-		    OAuth2AuthorizedClient authorizedClient 
+		ClientRegistration registration = social.findByRegistrationId(registaionId);
+		OAuth2AuthorizedClient authorizedClient 
 		    = new OAuth2AuthorizedClient(registration, principal.getName(), accessToken);
 		    
 		    authService.saveAuthorizedClient(authorizedClient, principal);
-		    
-	
-		    logger.info("현재 로그인중인 계정" + principal.getName());
 		    HttpSession session = request.getSession();
 	        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
             
@@ -201,8 +194,7 @@ public class OAuthServiceImple implements OAuthService {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		    successHandler.onAuthenticationSuccess(request, response, principal);
-		    
+		    successHandler.onAuthenticationSuccess(request, response, principal);  
 	}
 
 

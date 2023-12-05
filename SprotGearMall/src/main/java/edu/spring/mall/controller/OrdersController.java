@@ -2,7 +2,6 @@
 package edu.spring.mall.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -19,37 +18,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.spring.mall.domain.OrdersProductJoinVO;
 import edu.spring.mall.domain.OrdersVO;
-import edu.spring.mall.domain.ProductVO;
-import edu.spring.mall.persistence.OrdersDAO;
-import edu.spring.mall.persistence.ProductDAO;
 import edu.spring.mall.service.OrderService;
-import edu.spring.mall.service.ProductService;
 
 @Controller
 @RequestMapping(value = "/orders")
 public class OrdersController {
 	private static final Logger logger =
 			LoggerFactory.getLogger(LoginController.class);
-	
+
 	@Autowired
-	private OrdersDAO dao;
-	
-	@Autowired
-	private ProductService service;
-	
-	@Autowired
-	private OrderService orderService;
+	private OrderService service;
+
 	
 	@PostMapping("/orderlist")
-	public String ordersPOST(Model model, OrdersVO vo, Principal principal) {
+	public String ordersPOST(Model model, OrdersVO vo, Principal principal) throws Exception {
 		logger.info("paymentPOST() 호출 : vo = " + vo.toString());
 
-		int result = dao.insert(vo);
+		int result = service.create(vo);
 		String memberId = principal.getName();
-		List<OrdersVO> list = dao.select(memberId);
+		List<OrdersVO> list = service.readOrder(memberId);
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("list", list);
-
+	
+		
 		return "redirect:/orders/orderlist";
 	}
 	
@@ -57,7 +48,7 @@ public class OrdersController {
 	public void orderlistGET(Model model, Principal principal) throws Exception {
 		String memberId = principal.getName();
 		logger.info("orderlistGET 호출 : memberId = " + memberId);	
-		List<OrdersProductJoinVO> list = orderService.read(memberId);		
+		List<OrdersProductJoinVO> list = service.read(memberId);		
 		model.addAttribute("list", list);
 		model.addAttribute("memberId", memberId);
 	}
@@ -68,7 +59,7 @@ public class OrdersController {
 		int totalDeleted = 0; // 삭제된 항목 수를 추적하는 변수
 	    try {
 	        for (Integer id : checkedIds) {
-	            int result = dao.delete(id);
+	            int result = service.delete(id);
 	            totalDeleted += result;
 	        }
 

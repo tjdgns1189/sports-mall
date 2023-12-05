@@ -25,9 +25,7 @@ public class CartRestController {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(CartRestController.class);
 	
-	@Autowired
-	private CartDAO cartdao;
-	
+
 	@Autowired
 	private CartService cartService;
 	
@@ -37,7 +35,7 @@ public class CartRestController {
 		
 		int result = 0;
 		try {
-			result = cartdao.insert(vo);
+			result = cartService.create(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,7 +81,7 @@ public class CartRestController {
 
 	    try {
 	        for (CartVO cartVO : cartList) {
-	            result += cartdao.update(cartVO);
+	            result += cartService.update(cartVO);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();

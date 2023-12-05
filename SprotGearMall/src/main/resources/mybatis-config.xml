@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="email" value="email"/>
 	 	<property name="address" value="address"/>
 	 	<property name="userGrade" value="user_grade"/>
+	 	<property name="isOauthLogin" value="is_oauth_login"/>
 	 	
 	 	<property name="product" value="product"/>
 	 	<property name="productId" value="product_id"/> 
@@ -32,6 +33,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="productCategory" value="product_category"/>
 	 	<property name="productIsDeleted" value="product_is_deleted"/>
 	 	<property name="productContent" value="product_content"/>
+	 	<property name="likesCount" value="likes_count"/>
+	 	<property name="avgRating" value="avg_rating"/>
+	 	<property name="reviewCount" value="review_count"/>
+	 	
+	 	
+	 	
 	 	
 	    <property name="orders" value="orders"/>
 	 	<property name="orderId" value="order_id"/> 
@@ -40,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="productPrice" value="product_price"/>
 	 	<property name="productQuantity" value="product_quantity"/>
 	 	<property name="orderCreatedDate" value="order_created_date"/>
+	 	<property name="orderState" value="order_state"/>
 	 	
 	 	<property name="cart" value="cart"/>
 	 	<property name="cartId" value="cart_id"/> 
@@ -130,6 +138,17 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="memberId" value="member_id"/>
 		<property name="productId" value="product_id"/>
 		<property name="pqrCratedDate" value="pqr_created_date"/>
+		
+		<property name="notification_table" value="notifications"/>
+		<property name="notificationId" value="notification_id"/>
+		<property name="memberId" value="member_id"/>
+		<property name="groupId" value="group_id"/>
+		<property name="notificationType" value="notification_type"/>
+		<property name="notificationContent" value="notification_content"/>
+		<property name="targetUrl" value="target_url"/>
+		<property name="notificationDate" value="notification_date"/>
+		<property name="readDate" value="read_date"/>
+		<property name="entityId" value="entity_id"/>
 	
  	 </properties>
 	 

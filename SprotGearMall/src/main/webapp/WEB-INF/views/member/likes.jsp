@@ -41,13 +41,15 @@
 		</c:forEach>
 	</div>
 	</c:if>
+		 <c:if test="${empty list}">
+            <div class="col-md-9">
+                <div class="container mt-5 text-center">
+                    <h2>찜 한 상품이 없어요</h2>
+                </div>
+            </div>
+        </c:if>
 	</div>
-	<c:if test="${empty list}">
-	<div class="container mt-5">
-        <h2>찜 한 상품이 없어요</h2>
-	</div>
-	</c:if>
-	</div>
+    </div>
 	
 
 	<script type="text/javascript">

@@ -15,6 +15,7 @@
     <input type="hidden" id="csrfToken"name="${_csrf.parameterName}" value="${_csrf.token}"><br>
     <input type="hidden" name="productId" value="${productId } ">
     
+    
     <div class="form-row">
         <div class="form-group">
             <label>문의 유형</label>

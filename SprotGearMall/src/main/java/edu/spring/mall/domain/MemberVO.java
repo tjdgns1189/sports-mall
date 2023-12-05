@@ -9,8 +9,35 @@ public class MemberVO {
 	private String email;
 	private String address;
 	private String userGrade;
+	private String isOauthLogin;
 	
 	
+	public MemberVO(String memberId, String password, String name, String phone, String email, String address,
+			String userGrade, String isOauthLogin) {
+		this.memberId = memberId;
+		this.password = password;
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+		this.address = address;
+		this.userGrade = userGrade;
+		this.isOauthLogin = isOauthLogin;
+	}
+
+
+
+
+
+	public String getIsOauthLogin() {
+		return isOauthLogin;
+	}
+
+
+	public void setIsOauthLogin(String isOauthLogin) {
+		this.isOauthLogin = isOauthLogin;
+	}
+
+
 	public MemberVO() {}
 
 

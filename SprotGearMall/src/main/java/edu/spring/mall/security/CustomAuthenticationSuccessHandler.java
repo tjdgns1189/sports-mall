@@ -36,7 +36,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 				redirectStrategy.sendRedirect(request, response, targetURL);
 				return;
 			}
-
+			
 			Cookie[] cookies = request.getCookies();
 			if (cookies != null) {
 				for (Cookie cookie : cookies) {
@@ -52,6 +52,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 					}
 				}
 			}
+
+			
 			redirectStrategy.sendRedirect(request, response, "/index");
 		}
 	}

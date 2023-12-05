@@ -64,5 +64,17 @@ public class OrdersDAOImple implements OrdersDAO {
         return count != null && count > 0;
 	}
 
+	@Override
+	public int update(OrdersVO vo) {
+		logger.info("update 호출");
+		return sqlSession.update(NAMESPACE + ".refund_request", vo);
+	}
+
+	@Override
+	public List<OrdersVO> selectRefund(String orderState) {
+		logger.info("selectRefund 호출");
+		return sqlSession.selectList(NAMESPACE + ".select_by_refund", orderState);
+	}
+
 
 }

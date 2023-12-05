@@ -31,8 +31,13 @@ li {
 <title>Insert title here</title>
 </head>
 <body>
-<div align="left">
-	<h1>QNA 게시판입니다</h1>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- 사이드바 메뉴 -->
+       <jsp:include page="../includes/qna-sidebar.jsp" />
+        <!-- 메인 콘텐츠 -->
+        <div class="col-md-10">
 	
 	<input type="hidden" id="memberId" name="memberId" value="${memberId }">
 
@@ -77,5 +82,10 @@ li {
 	</ul>
 	</nav>
 </div>
+</div>
+</div>
+
+
+<a href="chat"><button>채팅 문의</button></a>
 </body>
 </html>

@@ -1,22 +1,29 @@
 package edu.spring.mall.controller;
 
 
+import java.security.Principal;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.spring.mall.domain.QnaBoardVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
+import edu.spring.mall.service.ChatRoomService;
 import edu.spring.mall.service.QnaBoardService;
+import edu.spring.mall.websocket.ChatRoom;
 
 @Controller
 @RequestMapping(value = "/qnaBoard")
@@ -27,11 +34,21 @@ public class BoardController {
 	@Autowired
 	private QnaBoardService qnaBoardService;
 	
+	@Autowired
+	private ChatRoomService chatService;
+	
 	@GetMapping("/qnaBoard")
-	public void qnaBoardGET(Model model, Integer page, Integer numsPerPage, String memberId) {  //, Principal principal
+	public void qnaBoardGET(Model model, Integer page, Integer numsPerPage, String memberId, HttpServletRequest request) {  //, Principal principal
 		logger.info("qnaBoardGET() 호출");
-		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
-		
+		 HttpSession session = request.getSession(false);
+		    if (session != null) {
+		        SecurityContext securityContext = (SecurityContext) session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+		        if (securityContext != null) {
+		        	Authentication auth = securityContext.getAuthentication();
+		        	logger.info("auth 확인 : " + auth.toString());
+		        	logger.info("memberId확인 : " + auth. getName());
+		        }
+		    }
 		PageCriteria criteria = new PageCriteria();
 		if(page != null) {
 			criteria.setPage(page);
@@ -50,8 +67,7 @@ public class BoardController {
 		pageMaker.setPageData();
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("memberId", memberId);	
-//		return principal.getName();
-	}
+	}//end qnaBoardGET()
 	
 	@GetMapping("/qnaDetail")
 	public void detail(Model model, Integer qnaBoardId, Integer page, String memberId) {
@@ -68,7 +84,7 @@ public class BoardController {
 		logger.info("qnaRegisterGET()");
 	} // end registerGET()
 	
-	@PostMapping("/register")
+	@PostMapping(value="/register", produces = "application/json")
 	public String registerPOST(QnaBoardVO vo, RedirectAttributes reAttr, String memberId, Model model) {
 		logger.info("registerPOST() 호출");
 		logger.info(vo.toString());
@@ -81,7 +97,7 @@ public class BoardController {
 		} else {
 			return "redirect:/qnaBoard/qnaRegister";
 		}
-	}
+	}//end registerPOST()
 	
 	@GetMapping("/qnaUpdate")
 	public void updateGET(Model model, Integer qnaBoardId, Integer page) {
@@ -91,7 +107,7 @@ public class BoardController {
 		model.addAttribute("page", page);
 	} // end updateGET()
 	
-	@PostMapping("/qnaUpdate")
+	@PostMapping(value="/qnaUpdate", produces = "application/json")
 	public String updatePOST(QnaBoardVO vo, Integer page) {
 		logger.info("updatePOST() 호출 : vo " + vo.toString());
 		int result = qnaBoardService.update(vo);
@@ -101,9 +117,9 @@ public class BoardController {
 		}else {
 			return "redirect:/qnaBoard/qnaUpdate?qnaBoardId=" + vo.getQnaBoardId();
 		}
-	}
+	}//end updatePOST()
 	
-	@PostMapping("/delete")
+	@PostMapping(value="/delete", produces = "application/json")
 	public String delete(Integer qnaBoardId) {
 		logger.info("delete() 호출 : qnaBoardId = " + qnaBoardId);
 		int result = qnaBoardService.delete(qnaBoardId);
@@ -112,7 +128,20 @@ public class BoardController {
 		} else {
 			return "redirect:/qnaBoard/qnaBoard";
 		}
-	}
+	}//end delete()
+	
+	@GetMapping("/chat")
+	public void chatGET(@RequestParam (required = false) String roomId, Model model, Principal principal) {
+		logger.info("chatGet 호출");
+		model.addAttribute("username", principal.getName());
+		logger.info("username 확인 : " + principal.getName());
+		if(roomId != null) {
+			ChatRoom room =chatService.getChatRoom(roomId);
+			model.addAttribute("roomId", roomId);
+			logger.info("room 확인 : " + roomId);
+			
+		}
+	}//end chatGET()
 	
 	
 }
