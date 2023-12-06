@@ -36,8 +36,6 @@ li {
         <div class="col-md-10">
 	<h1>QNA게시판</h1>
 	
-	<input type="hidden" id="memberId" name="memberId" value="${memberId }">
-	
 	
 	<a align="left" href="qnaRegister"><input type="button" value="글 작성"></a>
 	<hr>
@@ -54,7 +52,7 @@ li {
 		<tbody>
 			<c:forEach var="vo" items="${list }">
 				<tr>
-					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}&memberId=${memberId }">${vo.qnaBoardId }</a></td>
+					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}">${vo.qnaBoardId }</a></td>
 					<td>${vo.memberId }</td>
 					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}">${vo.qnaBoardTitle }</a></td>
 					<fmt:formatDate value="${vo.qnaBoardCreatedDate }"
