@@ -523,7 +523,7 @@ function iamport(){
         amount : productPrice,
         buyer_name: memberId,
         buyer_postcode: '임시주소',
-        m_redirect_url : 'http://localhost:8080/mall/product/result'
+        m_redirect_url : 'http://naver.com'
     }, function (rsp) {
         // 결제 완료 후의 처리
         var ordersVO = {
