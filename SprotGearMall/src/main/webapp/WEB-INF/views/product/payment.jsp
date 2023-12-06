@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <meta charset="UTF-8">
 <title>결제 창</title>
 <style type="text/css">
@@ -93,6 +95,9 @@ li {
                         <td>
                             <input type="text" class="form-control-plaintext" 
                             name="productName" value="${vo.productName}" readonly>
+                            
+                            <input type="hidden" class="form-control-plaintext" 
+                            name="productId" value="${vo.productId}" readonly>
                         </td>
                         <td>
                             <input type="text" class="form-control-plaintext text-center" 
@@ -187,10 +192,11 @@ li {
             <form onsubmit="return firstJavascript()" action="result" method="POST">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <input type="hidden" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly>
-                <input type="hidden" name="productId" value="${vo.productId}" readonly>
+                <input type="hidden" name="productId" id="productId" value="${vo.productId}" readonly>
                 <input type="hidden" name="productQuantity" id="productQuantity1" value="1" readonly>
+                <input type="hidden" name="productName" id="productName" value="${vo.productName}" readonly>
                 <input type="hidden" name="productPrice" id="productPrice1" value="${vo.productPrice}" readonly>
-                <button type="submit" class="btn btn-primary btn-lg" id="btn-vo">결제하기</button>
+                <button type="button" class="btn btn-primary btn-lg" id="btn-vo" onclick="iamport()">결제하기</button>
                 <a href="/mall">
                 	<button type="button" class="btn btn-secondary btn-lg">취소</button>  
                 </a>
@@ -331,10 +337,12 @@ li {
     
 
 
-	<script src="https://nsp.pay.naver.com/sdk/js/naverpay.min.js"></script>
-	<script type="text/javascript">
 	
+	<script type="text/javascript">
+	$(()=>{
 	    updateAllTotalPrice();
+
+	})
 	    
 	    
 		//가격계산 - vo올때
@@ -495,6 +503,64 @@ li {
 	        });
 	    }
 */
+
+
+function iamport(){
+    var IMP = window.IMP;
+    var csrfToken = $("#csrfToken").val();
+    var productId = document.getElementById('productId').value;
+    var productPrice = document.getElementById('productPrice').value;
+    var productName = document.getElementById('productName').value;
+    var productQuantity = document.getElementById('productQuantity1').value;
+    var memberId = '${pageContext.request.userPrincipal.name}';
+    IMP.init("imp61481183");
+    console.log('이거 실행되나');
+    IMP.request_pay({
+        pg : 'kakaopay',
+        pay_method : 'card',
+        merchant_uid : 'hi' + new Date().getTime(), // merchant_uid를 적절히 설정
+        name : productName,
+        amount : productPrice,
+        buyer_name: memberId,
+        buyer_postcode: '임시주소',
+        m_redirect_url : 'http://localhost:8080/mall/product/result'
+    }, function (rsp) {
+        // 결제 완료 후의 처리
+        var ordersVO = {
+            memberId: rsp.buyer_name,
+            productId: productId,
+            productPrice: productPrice, 
+            productQuantity: productQuantity
+        };
+        console.log('rsp', rsp);
+        console.log('ordersVO' + ordersVO);
+
+        $.ajax({
+            type: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            url: 'paymentAPI',
+            data: JSON.stringify(ordersVO),
+            success: function (productPrice) {
+                if (rsp.paid_amount === productPrice) {
+                	
+                    console.log('productPric' + productPrice);
+                    console.log('rsp.paid_amount' + rsp.paid_amount);
+                    window.location.href = '../orders/orderlist';
+                    alert("결제 성공");
+                } else {
+                    alert("결제 실패");
+                    console.log('실패');
+                }
+            },
+            error: function () {
+                alert("서버 오류");
+            }
+        });
+    });
+}
 
 
 		

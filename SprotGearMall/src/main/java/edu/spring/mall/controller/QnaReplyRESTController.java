@@ -53,7 +53,7 @@ public class QnaReplyRESTController {
 
 	}
 	
-	@PutMapping("/{qnaReplyId}")
+	@PutMapping(value="/{qnaReplyId}", produces = "application/json")
 	public ResponseEntity<Integer> updateReply(
 			@PathVariable("qnaReplyId") int qnaReplyId,
 			@RequestBody String qnaReplyContent
@@ -62,7 +62,7 @@ public class QnaReplyRESTController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{qnaReplyId}")
+	@DeleteMapping(value="/{qnaReplyId}", produces = "application/json")
 	public ResponseEntity<Integer> deleteReply(
 			@PathVariable("qnaReplyId") int qnaReplyId){
 		logger.info("qnaReplyId = " + qnaReplyId);

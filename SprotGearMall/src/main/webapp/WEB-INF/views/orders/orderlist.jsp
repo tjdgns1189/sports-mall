@@ -127,6 +127,7 @@ review-btn{
 	<script>
     $(document).ready(function() {
         $("#btnDeleteCheck").click(function() {
+        	var csrfToken = $("#csrfToken").val();
             var checkedIds = [];
             var headers = {
 		    		'Content-Type': 'application/json',
