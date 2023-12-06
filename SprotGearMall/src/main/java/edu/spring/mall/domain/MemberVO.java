@@ -10,10 +10,29 @@ public class MemberVO {
 	private String address;
 	private String userGrade;
 	private String isOauthLogin;
+	private Integer zonecode;
+	private String detailAddress;
 	
 	
+
+
+
+
+	public MemberVO(String memberId, String password, String name, String phone, String email, String userGrade,
+			String isOauthLogin) {
+		super();
+		this.memberId = memberId;
+		this.password = password;
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+		this.userGrade = userGrade;
+		this.isOauthLogin = isOauthLogin;
+	}
+
 	public MemberVO(String memberId, String password, String name, String phone, String email, String address,
-			String userGrade, String isOauthLogin) {
+			String userGrade, String isOauthLogin, Integer zonecode, String detailAddress) {
+		super();
 		this.memberId = memberId;
 		this.password = password;
 		this.name = name;
@@ -22,10 +41,25 @@ public class MemberVO {
 		this.address = address;
 		this.userGrade = userGrade;
 		this.isOauthLogin = isOauthLogin;
+		this.zonecode = zonecode;
+		this.detailAddress = detailAddress;
 	}
 
+	public Integer getZonecode() {
+		return zonecode;
+	}
 
+	public void setZonecode(Integer zonecode) {
+		this.zonecode = zonecode;
+	}
 
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
 
 
 	public String getIsOauthLogin() {
@@ -39,19 +73,6 @@ public class MemberVO {
 
 
 	public MemberVO() {}
-
-
-	public MemberVO(String memberId, String password, String name, String phone, String email, String address,
-			String userGrade) {
-		super();
-		this.memberId = memberId;
-		this.password = password;
-		this.name = name;
-		this.phone = phone;
-		this.email = email;
-		this.address = address;
-		this.userGrade = userGrade;
-	}
 
 
 	public String getMemberId() {
@@ -123,17 +144,16 @@ public class MemberVO {
 		this.userGrade = userGrade;
 	}
 
-
 	@Override
 	public String toString() {
 		return "MemberVO [memberId=" + memberId + ", password=" + password + ", name=" + name + ", phone=" + phone
-				+ ", email=" + email + ", address=" + address + ", userGrade=" + userGrade + "]";
+				+ ", email=" + email + ", address=" + address + ", userGrade=" + userGrade + ", isOauthLogin="
+				+ isOauthLogin + ", zonecode=" + zonecode + ", detailAddress=" + detailAddress + "]";
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
 	
 }

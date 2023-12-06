@@ -9,9 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     ${memberId}, ${password}, ${name}
     <if test="phone != null">, ${phone}</if>
     <if test="email != null">, ${email}</if>
-    <if test="address != null">, ${address}</if>
     <if test="userGrade != null">, ${userGrade}</if>
     <if test="isOauthLogin != null">, ${isOauthLogin}</if>
+    <if test="zoncode != null">
+    ${zonecode}, ${address} ${detailAddress}
+    </if>
   ) VALUES (
     #{memberId}, #{password}, #{name}
     <if test="phone != null">, #{phone}</if>
@@ -19,6 +21,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <if test="address != null">, #{address}</if>
     <if test="userGrade != null">, #{userGrade}</if>
     <if test="isOauthLogin != null">, #{isOauthLogin}</if>
+    <if test="zoncode != null">
+    #{zonecode}, #{address} #{detailAddress}
+    </if>
     
   )
 </insert>

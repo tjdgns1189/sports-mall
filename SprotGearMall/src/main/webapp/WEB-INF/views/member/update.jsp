@@ -129,9 +129,9 @@ body {
 	<input type="email" id="email" name=email value="${email }"required="required" placeholder="이메일"><br>
 	<div>
 	<input type="button" onclick="searchPost()" value="우편번호 찾기" class="post_btn"> <br>
-	<input type="text" id="postcode" name="postcode" value="${postcode }" required="required" placeholder="우편번호">
-	<input type="text" id="Address" name="address" value="${address }"class="d_form std" placeholder="주소">
-	<input type="text" id="detailAddress" name="detailAddress" value = "${detailAddress }" class="d_form std" placeholder="상세주소">
+	<input type="text" id="postcode" name="zonecode" value="${zonecode }" required="required" placeholder="우편번호" required>
+	<input type="text" id="Address" name="address" value="${address }"class="d_form std" placeholder="주소" required>
+	<input type="text" id="detailAddress" name="detailAddress" value = "${detailAddress }" class="d_form std" placeholder="상세주소" required>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	</div>
 	<input type="submit" onclick="checkAllConditions()" class="btn btn-lg btn-primary btn-block" value="정보수정">
@@ -142,14 +142,17 @@ body {
 <script>
 	$(()=>{
 		$('#phone').on('blur', function(){
-			var phone = $('this').val();
+			var phone = $(this).val();
 			var regex = /^010(-?\d{4})(-?\d{4})$/;
 			if(!regex.test(phone)){
 				$('#phoneConfirm').text('연락처를 정확히 입력해주세요');
 			}else{
+				$('#phoneConfirm').text('');
+
 				phoneCheck = true;
 			}
 		});//end phone.on
+		
 
 		function checkAllConditions() {
 	    	var checkedUserContact = $('#phone').val();
@@ -164,7 +167,7 @@ body {
 	    	if (!checkedUserContact == null|| 
 	    		    !checkedUserpostcode == null || 
 	    		    !checkedUserAddress == null || 
-	    		    !checkedUserdetailAddress ==null) {
+	    		    !checkedUserdetailAddress == null) {
 	    		    alert("정보를 다시 입력해주세요.");
 	    		    event.preventDefault();
 	    		}
@@ -183,8 +186,8 @@ body {
 	        onclose: (state) => {
 	            console.log(state);
 	            if (state === 'COMPLETE_CLOSE') {
-	                $('#postcode').attr('readonly', true);
-	                $('#Address').attr('readonly', true);
+	                $('#detailAddress').attr('readonly', false); 
+	                
 	            }
 	        }//end onclose
 	    }).open();//end Postcode

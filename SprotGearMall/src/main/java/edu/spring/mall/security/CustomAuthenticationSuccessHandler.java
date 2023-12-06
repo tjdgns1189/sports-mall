@@ -54,7 +54,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			}
 
 			
-			redirectStrategy.sendRedirect(request, response, "/index");
+			redirectStrategy.sendRedirect(request, response, "/");
 		}
 	}
 }
