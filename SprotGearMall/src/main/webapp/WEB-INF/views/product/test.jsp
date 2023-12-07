@@ -16,6 +16,10 @@
 
 <script type="text/javascript">
 
+function clickbutton(){
+	
+}
+
 function iamport(){
     var IMP = window.IMP;
     var csrfToken = $("#csrfToken").val();

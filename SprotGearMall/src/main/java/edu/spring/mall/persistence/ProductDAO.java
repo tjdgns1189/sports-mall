@@ -12,6 +12,7 @@ public interface ProductDAO {
 	ProductVO selectById(int productId);
 	List<ProductVO> select(PageCriteria criteria);
 	int update(ProductVO vo);
+	int softDelete(ProductVO vo);
 	int delete(int productId);
 	int getTotalCounts();
 	List<ProductVO> selectPaging(String productName);
@@ -20,5 +21,8 @@ public interface ProductDAO {
 	List<ProductVO> selectRating(String searchText,PageCriteria criteria);
 	List<ProductVO> selectReviewCount(String searchText,PageCriteria criteria);
 	
+	List<ProductVO> selectSoccerBall();
+	List<ProductVO> selectBaseBall();
+	List<ProductVO> selectBasketBall();
 	
 }

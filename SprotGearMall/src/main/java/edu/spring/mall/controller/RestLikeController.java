@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.spring.mall.domain.LikesVO;
 import edu.spring.mall.persistence.LikesDAO;
+import edu.spring.mall.service.LikesService;
 
 @RestController
 @RequestMapping
@@ -23,17 +24,23 @@ public class RestLikeController {
 
 
 	@Autowired
-	private LikesDAO dao;
+	private LikesService service;
 
 	@PostMapping("product/likes")
-	public ResponseEntity<String> insertLike(@RequestBody LikesVO vo, Authentication authentication) {
+	public ResponseEntity<String> insertLike(@RequestBody LikesVO vo, Authentication authentication) throws Exception {
 		logger.info("좋아요 insert");
 		String result = "";
 		if(vo.getMemberId().isBlank()||vo.getMemberId()==null) {
 			return new ResponseEntity<String>(result, HttpStatus.FORBIDDEN);
 		}
+		int count = service.count(vo);
+		if(count == 1) {
+			logger.info("중복 체크");
+			result ="duplicate";
+			return new ResponseEntity<String>(result, HttpStatus.OK);
+		}
 		
-		int success = dao.insert(vo);
+		int success = service.create(vo);
 		if (success == 1) {
 			result = "success";
 		}
@@ -42,10 +49,10 @@ public class RestLikeController {
 	}
 
 	@DeleteMapping("product/likes")
-	public ResponseEntity<String> deleteLike(@RequestBody LikesVO vo) {
+	public ResponseEntity<String> deleteLike(@RequestBody LikesVO vo) throws Exception {
 		logger.info("좋아요 삭제");
 		String result = "";
-		int success = dao.delete(vo);
+		int success = service.delete(vo);
 		if (success == 1) {
 			result = "success";
 		}

@@ -16,19 +16,25 @@
 <header>
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 </header>
-
-		 <h2><a href="/mall/index">회원탈퇴</a></h2>
-		 <c:if test="${not empty param.error}"> 
-       		<div class="alert alert-danger" role="alert">비밀번호가 틀렸습니다</div>
-       </c:if>
-		<form action="delete" method="post">
-		<input type="hidden" name="memberId" id ="memberId" value="${pageContext.request.userPrincipal.name}" required="required" placeholder="아이디"><br>
-		<p><input type="password" id="password" name="password" placeholder="비밀번호확인" required="required"></p>
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-		<button type="submit">회원탈퇴</button>
-		<a href="/mall/index"><button type="submit" >취소</button></a>
-		</form>
-		
+	<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4"><a href="/mall/index">회원탈퇴</a></h2>
+            <c:if test="${not empty param.error}"> 
+                <div class="alert alert-danger" role="alert">비밀번호가 틀렸습니다</div>
+            </c:if>
+            <form action="delete" method="post" class="mb-3">
+                <input type="hidden" name="memberId" id="memberId" value="${pageContext.request.userPrincipal.name}">
+                <div class="form-group">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호 확인" required="required">
+                </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                <button type="submit" class="btn btn-primary btn-block">회원탈퇴</button>
+            </form>
+            <a href="/mall" class="btn btn-secondary btn-block">취소</a>
+        </div>
+    </div>
+</div>
 <footer>
     <%@ include file="/WEB-INF/views/includes/footer.jsp" %>
 </footer>

@@ -14,11 +14,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="select_by_member_id" resultType="OrdersVO">
 	 	select * from ${orders} where ${memberId} = #{memberId}
 	 </select>
-	 
+	 	
 	 <select id="select_by_order_Id" resultType="OrdersVO">
 	 	select * from ${orders} 
 	 	where ${orderId} = #{orderId}
 	 </select>
+	 
+	 <select id="select_by_refund" resultType="OrdersVO">
+	 	select * from ${orders}
+	 	where ${orderState} = #{orderState}
+	 </select>
+	 
+	 <update id="refund_request">
+	 	update ${orders}
+	 	set ${orderState} = #{orderState}
+	 	where ${orderId} = #{orderId}
+	 </update>
+	 
+	 
 	 
 	 <delete id="delete">
 	 	delete from ${orders}

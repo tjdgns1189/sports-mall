@@ -27,6 +27,8 @@
 </head>
 <body>
 <div class="container-fluid">
+	<input type="hidden" id="isOauthLogin" value="${user.isOauthLogin }">
+	
     <div class="row">
         <!-- 사이드바 메뉴 -->
        <jsp:include page="../includes/mypage-sidebar.jsp" />
@@ -45,8 +47,10 @@
             </tr>
             <tr>
                 <th scope="row">비밀번호</th>
-                <td>				
+                <td>
+                <c:if test="${user.isOauthLogin == 'N' }">			
 				<button type="button" class ="btn btn-link modal-dialog-centered" data-bs-toggle="modal" data-bs-target="#myModal">비밀번호 변경</button>
+                </c:if>
                 </td>
             </tr>
             <tr>
@@ -64,9 +68,19 @@
     </table>
     <a href="update" class="btn btn-primary ">정보 수정</a>
     <sec:authorize access="hasRole('ROLE_USER')">
+  	<c:set var="username" value="${principal.username}" />
+  	
 	<td><a href="delete">
+	<c:if test="${user.isOauthLogin == 'N' }">			
 	<button type="button" class="btn btn-danger">회원탈퇴</button>
-	</a></td>
+	</c:if>
+	</a>
+	
+	<c:if test="${user.isOauthLogin == 'Y' }">
+	<button type="button" class="btn btn-danger" onclick="userDelete(this)" data-member-id="${user.memberId}">회원탈퇴</button>
+	</c:if>		
+	
+	</td>
 	</sec:authorize>
        </div>
     </div>
@@ -147,14 +161,55 @@
 					alert('비밀번호 변경 성공.');
 					$('#form').submit();
 					$('#myModal').modal('hide');
+
 				}else{
 					alert('기존 비밀번호가 일치하지 않습니다.');
 			        $('#passwordText').text('');
-					return;
 				}
 			}//end success
 			})//end ajax
 	}
+	
+	
+	function userDelete(element){
+		$(this).prop('disabled', true);
+		var memberId = $(element).data('member-id');
+		var csrfToken = $('#csrfToken').val();
+		var headers = {
+				'Content-Type': 'application/json',
+				'X-CSRF-TOKEN': csrfToken
+		}
+		
+		var isDelete = confirm('정말 회원탈퇴를 하시겠습니까?');
+		if(!isDelete){
+			return
+		}
+		
+		$.ajax({
+			type:'DELETE',
+			url: 'userDelete',
+			headers:headers,
+			data:JSON.stringify({
+				"memberId":memberId,
+			}),
+			success: (result)=>{
+				if(result === 'success'){
+					alert("회원탈퇴에 성공했습니다");
+					window.location.href="/mall";
+				}else{
+					alert('서버에 문제가 발생했습니다 다시 시도해주세요');
+					$(this).prop('disabled', false);
+				}
+			},     
+			 error: function (xhr, status, error) {
+            alert("에러 발생: " + error);
+        },
+        complete: function () {
+            button.prop('disabled', false); 
+        }
+    }); // end ajax
+			
+	}//end userDelete
 </script>
 
 <footer>

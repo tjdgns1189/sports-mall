@@ -39,6 +39,8 @@ import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.OrdersDAO;
 import edu.spring.mall.persistence.ProductDAO;
 import edu.spring.mall.service.CartService;
+import edu.spring.mall.service.LikesService;
+import edu.spring.mall.service.OrderService;
 import edu.spring.mall.service.ProductQnaService;
 import edu.spring.mall.service.ProductService;
 
@@ -53,22 +55,18 @@ public class ProductController {
 	private ProductService productService;
 
 	@Autowired
-	private ProductDAO dao;
-
-	@Autowired
-	private CartDAO cartDAO;
-	
-	@Autowired
 	private CartService cartService;
 	
 	@Autowired
 	private ProductQnaService qnaService;
 
 	@Autowired
-	private LikesDAO likesDAO;
+	private OrderService orderService;
 	
 	@Autowired
-	private OrdersDAO ordersDAO;
+	private LikesService likesService;
+	
+
 
 	@GetMapping("/list")
 	public void list(Model model, Integer page, Integer numsPerPage) {
@@ -99,7 +97,7 @@ public class ProductController {
 	    // productId있을 경우
 	    if (productId != null) {
 	    	logger.info("paymentGET() 호출");
-			ProductVO vo = dao.selectById(productId);
+			ProductVO vo = productService.read(productId);
 			model.addAttribute("vo", vo);
 	    } 
 	    // productId 없을경우
@@ -183,7 +181,7 @@ public class ProductController {
 			logger.info("principal호출" + principal.getName());
 			String memberId = principal.getName();
 			LikesVO likesVO = new LikesVO(0, memberId, productId);
-			int result = likesDAO.select(likesVO);
+			int result = likesService.count(likesVO);
 			if (result == 1) {
 				isLiked = true;
 			}
@@ -292,11 +290,11 @@ public class ProductController {
 
 	
 	@PostMapping(value="/orderlists", produces = "application/json")
-	public ResponseEntity<Integer> orderlistsPost(@RequestBody List<OrdersVO> ordersList){
+	public ResponseEntity<Integer> orderlistsPost(@RequestBody List<OrdersVO> ordersList) throws Exception{
 		logger.info("ordersList = " + ordersList.toString());
 		int result = 0;
 		for(OrdersVO ordersVO : ordersList) {
-			result += ordersDAO.insert(ordersVO);
+			result += orderService.create(ordersVO);
 		}
 		
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
@@ -309,15 +307,15 @@ public class ProductController {
 		
 	}
 
-	@PostMapping(value="/result", produces = "application/json")
-	public void resultPOST(Model model, OrdersVO vo, Principal principal){
+	@PostMapping(value="/result")
+	public void resultPOST(Model model, OrdersVO vo, Principal principal) throws Exception{
 		logger.info("resultPOST() 호출 : vo = " + vo.toString());
-		int result = ordersDAO.insert(vo);
+		int result = orderService.create(vo);
 		
 		int productId = vo.getProductId();
 		int orderId = vo.getOrderId();
 		ProductVO productVO = productService.read(productId);
-		OrdersVO ordersVO = ordersDAO.select(orderId);
+		OrdersVO ordersVO = orderService.read(orderId);
 		model.addAttribute("productVO", productVO);
 		model.addAttribute("vo", vo);
 		model.addAttribute("productPrice", vo.getProductPrice());
@@ -326,12 +324,16 @@ public class ProductController {
 	@GetMapping(value="/result", produces = "application/json")
 	public void resultGet(Model model, OrdersVO vo, Principal principal){
 		logger.info("resultPOST() 호출 : vo = " + vo.toString());
-		int result = ordersDAO.insert(vo);
+		try {
+			int result = orderService.create(vo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		int productId = vo.getProductId();
 		int orderId = vo.getOrderId();
 		ProductVO productVO = productService.read(productId);
-		OrdersVO ordersVO = ordersDAO.select(orderId);
 		model.addAttribute("productVO", productVO);
 		model.addAttribute("vo", vo);
 		model.addAttribute("productPrice", vo.getProductPrice());

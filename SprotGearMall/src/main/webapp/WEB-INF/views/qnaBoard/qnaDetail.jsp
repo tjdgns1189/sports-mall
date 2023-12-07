@@ -11,6 +11,9 @@
 <title>${vo.qnaBoardTitle }</title>
 </head>
 <body>
+
+<input type="hidden" id="nowMemberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">
+
 <div class="container-fluid">
  <div class="row">
   <!-- 사이드바 메뉴 -->
@@ -27,7 +30,9 @@
 		<p>${vo.qnaBoardTitle }</p>
 	</div>
 	<div>
-		<p>작성자 : ${vo.memberId }</p>
+		<p>
+		   작성자 : <input type="text" id="writer" value="${vo.memberId}" readonly="readonly">
+		</p>
 		<p>작성일 : ${vo.qnaBoardCreatedDate }</p>
 	</div>
 	<div>
@@ -37,11 +42,11 @@
 	<a href="qnaBoard?page=${page }"><input type="button" value="글 목록"></a>
 												
 									
-		<a href="qnaUpdate?qnaBoardId=${vo.qnaBoardId }&page=${page }"><input type="button" value="글 수정"></a>
+		<a href="qnaUpdate?qnaBoardId=${vo.qnaBoardId }&page=${page }"><input type="button" id="btnUpdate" value="글 수정"></a>
 		<form action="delete" method="POST">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			<input type="hidden" id="qnaBoardId" name="qnaBoardId" value="${vo.qnaBoardId }">
-			<input type="submit" value="글 삭제"> 
+			<input type="submit" id="btnDelete" value="글 삭제"> 
 		</form>
 		
 		
@@ -57,7 +62,7 @@
 	</div>
 	
 	<hr>
-	<div style="text-align: center;">
+	<div style="text-align: left;">
 		<div id="replies"></div>
 	</div>
 	
@@ -73,7 +78,7 @@
 		$(document).ready(function(){
 			getAllReplies();
 			
-			
+			// 댓글 추가
 			$('#btnAdd').click(function(){
 				var qnaBoardId = $('#qnaBoardId').val(); // 게시판 번호 데이터
 				var memberId = $('#memberId').val(); // 작성자 데이터
@@ -107,9 +112,13 @@
 				}); // end ajax()
 			}); // end btnAdd.click()
 
+			
+			
+			
+			//댓글 전부 창에 띄우기
 			function getAllReplies() {
 				var qnaBoardId = $('#qnaBoardId').val();
-				
+				var nowMemberId = '${pageContext.request.userPrincipal.name}';
 				var url = 'replies/all/' + qnaBoardId;
 				$.getJSON(
 					url, 
@@ -140,12 +149,13 @@
 							list += '<div class="reply_item">'
 					            + '<pre>'
 					            + '<input type="hidden" id="qnaReplyId" value="' + this.qnaReplyId + '">'
-					            + '<button class="repliesbtn_' + this.qnaReplyId + '" >' + this.memberId + '</button>'
+					            + '<input type="text" class="writerReply" value="' + this.memberId + '" readonly="readonly">'
 					            + '&nbsp;&nbsp;' // 공백
 					            + '<input type="text" id="qnaReplyContent" value="' + this.qnaReplyContent + '">'
 					            + '&nbsp;&nbsp;' // 공백
 					            + qnaReplyCreatedDate
 					            + '&nbsp;&nbsp;' // 공백
+					            + '<button class="repliesbtn_' + this.qnaReplyId + '" >대댓글</button>'
 					            + '<button class="btn_update">수정</button>'
 					            + '<button class="btn_delete">삭제</button>'
 					            + '</pre>'
@@ -156,12 +166,43 @@
 						}); // end each()
 
 						$('#replies').html(list);
+						
+						
+						// 처음에는 모든 업데이트 버튼을 숨김
+			            $('.btn_update').hide();
+
+			            // 해당 댓글에 대한 업데이트 버튼만 표시
+			            $('.reply_item').each(function () {
+			                var writerReply = $(this).find('.writerReply').val();
+			                if (nowMemberId === writerReply) {
+			                    $(this).find('.btn_update').show();
+			                    console.log('nowMemberId' + nowMemberId);
+			                    console.log('writerReply' + writerReply);
+			                }
+			            });
+			            
+			            
+			         	// 처음에는 모든 삭제 버튼을 숨김
+			            $('.btn_delete').hide();
+
+			            // 해당 댓글에 대한 삭제 버튼만 표시
+			            $('.reply_item').each(function () {
+			                var writerReply = $(this).find('.writerReply').val();
+			                if (nowMemberId === writerReply) {
+			                    $(this).find('.btn_delete').show();
+			                    console.log('nowMemberId' + nowMemberId);
+			                    console.log('writerReply' + writerReply);
+			                }
+			            });
 					}
 				); // end getJSON()
 			} // end getAllReplies()
 			
-
 			
+			
+			
+
+			// 대댓글버튼 누르면 대댓글입력창 띄우기
 			$('#replies').on('click', '.reply_item button[class^="repliesbtn_"]', function () {
 			    var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val();
 			    var replyRepliesContainer = $('#repliesForm_' + qnaReplyId);
@@ -173,23 +214,32 @@
 			    replyRepliesContainer.toggle();
 
 			    var replyForm = '<div id="replyRepliesContainer_' + qnaReplyId + '">'
-			        + '<input type="text" id="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">'
-			        + '<input type="text" id="replyReplyContent">'
-			        + '<button class="btnAddReplyReply">작성</button>'
+			    	+ '&nbsp;&nbsp;'
+	            	+ '&nbsp;&nbsp;'
+	            	+ '&nbsp;&nbsp;'
+			        + '<span style="color: red;">대댓글 입력창</span><input style="border-color: red;" type="text" id="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">'
+			        + '<input style="border-color: red;" type="text" id="replyReplyContent">'
+			        + '<button style="border-color: red;" class="btnAddReplyReply">작성</button>'
 			        + '</div>'
 			        + '</br>'
 
 			    $('#repliesForm_' + qnaReplyId).html(replyForm);
+			        
+			        
+			        
+			        
 			});
 			
 			
 			
+			
+			//대댓글 삽입하기
 			$('#replies').on('click', '.btnAddReplyReply', function () {
 			    var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val();
 			    var memberId = $('#memberId').val();
 			    var replyReplyContent = $('#replyReplyContent').val();
 			    var csrfToken = $("#csrfToken").val();
-			    
+			    var qnaReplyCreatedDate = new Date(this.qnaReplyCreatedDate);
 			    
 			    var obj = {
 			        'qnaReplyId': qnaReplyId,
@@ -210,33 +260,43 @@
 			        	console.log(result);
 			            if (result == 1) {
 			                alert('댓글 입력 성공');
-
-			                // 대댓글을 생성하여 화면에 추가
+			                var qnaReplyCreatedDate = new Date(this.qnaReplyCreatedDate);
+			                // 대댓글을 생성하여 화면에 추가(qnaReplyCreatedDate이 값이 안뜸)
 			                var replyItem = '<div class="reply_item" style="margin-right: 1.3cm;">' +
 			                    '<pre>' +
+			                    '&nbsp;&nbsp;' + 
+					            '&nbsp;&nbsp;' +
+					            '&nbsp;&nbsp;' +
 			                    '<input type="hidden" id="qnaReplyId" value="' + qnaReplyId + '">' +
 			                    '<button class="repliesbtn_' + qnaReplyId + '" >' + memberId + '</button>' +
 			                    '&nbsp;&nbsp;' +
 			                    '<input type="text" id="replyReplyContent" value="' + replyReplyContent + '">' +
 			                    '&nbsp;&nbsp;' +
-			                    '<button class="btn_update">수정</button>' +
+			                    this.qnaReplyCreatedDate +
+			                    '&nbsp;&nbsp;' +
+			                    '<button class="btn_update">수정*</button>' +
 			                    '<button class="btn_delete">삭제</button>' +
 			                    '</pre>' +
 			                    '</div>';
 
 
-			                // 대댓글을 화면에 추가
+			                // 대댓글을 화면에 추가(이거 코드 안먹는듯. 에러때 뜨는용도)
 			                $('#replies_' + qnaReplyId).append(replyItem);
 			                // 알람안떠서 에러로 대체
 			            }else{
 			            	alert('에러');
-			            	
+			            	var qnaReplyCreatedDate = new Date(this.qnaReplyCreatedDate);
 			            	var replyItem = '<div class="reply_item" style="margin-right: 1.3cm;">' +
 		                    '<pre>' +
+		                    '&nbsp;&nbsp;' + 
+				            '&nbsp;&nbsp;' +
+				            '&nbsp;&nbsp;' +
 		                    '<input type="hidden" id="qnaReplyId" value="' + qnaReplyId + '">' +
 		                    '<button class="repliesbtn_' + qnaReplyId + '" >' + memberId + '</button>' +
 		                    '&nbsp;&nbsp;' +
 		                    '<input type="text" id="replyReplyContent" value="' + replyReplyContent + '">' +
+		                    '&nbsp;&nbsp;' +
+		                    qnaReplyCreatedDate +
 		                    '&nbsp;&nbsp;' +
 		                    '<button class="btn_update">수정</button>' +
 		                    '<button class="btn_delete">삭제</button>' +
@@ -251,9 +311,10 @@
 			
 			
 			
-		
+			// 댓글에 있는 대댓글버튼을 클릭하면 대댓글목록이 뜸
 			$('#replies').on('click', '.reply_item button[class^="repliesbtn_"]', function () {
 				var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val();
+				var nowMemberId = '${pageContext.request.userPrincipal.name}';
 				var replyRepliesContainer = $('#replies_' + qnaReplyId);
 				replyRepliesContainer.toggle();
 				
@@ -286,28 +347,11 @@
 
 							list += '<div class="reply_item">'
 					            + '<pre>'
-					            + '<input type="hidden" id="qnaReplyId" value="' + this.qnaReplyId + '">'
+					            + '<input type="hidden" id="replyReplyId" value="' + this.replyReplyId + '">'
 					            + '&nbsp;&nbsp;'
 					            + '&nbsp;&nbsp;'
 					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
-					            + '&nbsp;&nbsp;'
+					            + '<input type="hidden" class="writerReply" value="' + this.memberId + '" readonly="readonly">'
 					            + '<button class="repliesbtn_' + this.qnaReplyId + '" >' + this.memberId + '</button>'
 					            + '&nbsp;&nbsp;' // 공백
 					            + '<input type="text" id="replyReplyContent" value="' + this.replyReplyContent + '">'
@@ -322,6 +366,36 @@
 						}); // end each()
 
 						$('#replies_' + qnaReplyId).html(list);
+						
+						
+						
+						// 처음에는 모든 업데이트 버튼을 숨김
+			            $('.btn_replyUpdate').hide();
+
+			            // 해당 댓글에 대한 업데이트 버튼만 표시
+			            $('.reply_item').each(function () {
+			                var writerReply = $(this).find('.writerReply').val();
+			                if (nowMemberId === writerReply) {
+			                    $(this).find('.btn_replyUpdate').show();
+			                    console.log('nowMemberId' + nowMemberId);
+			                    console.log('writerReply' + writerReply);
+			                }
+			            });
+			            
+			            
+			         	// 처음에는 모든 삭제 버튼을 숨김
+			            $('.btn_replyDelete').hide();
+
+			            // 해당 댓글에 대한 삭제 버튼만 표시
+			            $('.reply_item').each(function () {
+			                var writerReply = $(this).find('.writerReply').val();
+			                if (nowMemberId === writerReply) {
+			                    $(this).find('.btn_replyDelete').show();
+			                    console.log('nowMemberId' + nowMemberId);
+			                    console.log('writerReply' + writerReply);
+			                }
+			            });
+						
 					}
 				); // end getJSON()
 			});
@@ -334,7 +408,7 @@
 			
 			
 			
-			
+			// 댓글 수정
 			$('#replies').on('click', '.reply_item .btn_update', function(){
 				console.log(this);
 				
@@ -364,6 +438,9 @@
 				}); // end ajax()
 			}); // end replies.on()
 			
+			
+			
+			
 			// 삭제 버튼을 클릭하면 선택된 댓글 삭제
 			$('#replies').on('click', '.reply_item .btn_delete', function(){
 				console.log(this);
@@ -391,12 +468,103 @@
 					}
 				}); // end ajax()
 			}); // end replies.on()
+			
+			
+			
+			
+			
+			// 글 수정 버튼을 숨김
+		    $('#btnUpdate').hide();
+
+		    // nowMemberId와 writer의 값이 같을 때만 글 수정 버튼을 표시
+		    var nowMemberId = $('#nowMemberId').val();
+		    var writer = $('#writer').val(); // 텍스트 내용 가져오기
+		    if (nowMemberId === writer) {
+		        $('#btnUpdate').show();
+		    }
+		    
+		 	// 글 삭제 버튼을 숨김
+		    $('#btnDelete').hide();
+
+		    // nowMemberId와 writer의 값이 같을 때만 글 삭제 버튼을 표시
+		    var nowMemberId = $('#nowMemberId').val();
+		    var writer = $('#writer').val(); // 텍스트 내용 가져오기
+		    if (nowMemberId === writer) {
+		        $('#btnDelete').show();
+		    }
+		    
+		 	
+		    
+		    
+		 	// 대댓글 수정 버튼 클릭 시
+		    $('#replies').on('click', '.reply_item .btn_replyUpdate', function () {
+		        // 선택된 댓글의 replyId, replyContent 값을 저장
+		        var replyReplyId = $(this).closest('.reply_item').find('#replyReplyId').val();
+		        var replyReplyContent = $(this).closest('.reply_item').find('#replyReplyContent').val();
+		        var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val(); // 추가: 부모 댓글의 qnaReplyId 얻기
+		        console.log("replyReplyContent : " + replyReplyContent)
+		        var csrfToken = $("#csrfToken").val();
+		        console.log("선택된 대댓글 번호 : " + replyReplyId + ", 대댓글 내용 : " + replyReplyContent);
+
+		        // ajax 요청
+		        $.ajax({
+		            type: 'PUT',
+		            url: 'replyReplies/' + replyReplyId,
+		            headers: {
+		                'Content-Type': 'application/json',
+		                'X-CSRF-TOKEN': csrfToken
+		            },
+		            data: replyReplyContent,
+		            success: function (result) {
+		                console.log(result);
+		                if (result == 1) {
+		                    alert('대댓글 수정 성공!');
+		                    
+		                    
+		                }
+		            }
+		        });
+		    });// end 대댓글 수정
+		    
+		    
+		    
+		 	// 삭제 버튼을 클릭하면 선택된 대댓글 삭제
+			$('#replies').on('click', '.reply_item .btn_replyDelete', function(){
+				console.log(this);
+			
+				var qnaBoardId = $('#qnaBoardId').val();
+				var replyReplyId = $(this).closest('.reply_item').find('#replyReplyId').val();
+				var csrfToken = $("#csrfToken").val();
+				console.log("선택된 대댓글 번호 : " + replyReplyId);
+				
+				// ajax 요청
+				$.ajax({
+					type : 'DELETE', 
+					url : 'replyReplies/' + replyReplyId, 
+					headers : {
+						'Content-Type' : 'application/json',
+						'X-CSRF-TOKEN': csrfToken
+					},
+					data : qnaBoardId,
+					success : function(result) {
+						console.log(result);
+						if(result == 1) {
+							alert('대댓글 삭제 성공!');
+							getAllReplies();
+						}
+					}
+				}); // end ajax()
+			}); // end replies.on()
+
+			
+		 	
+
 
 			
 		}); // end document
 		
 		
-		
+	
 	</script>
 			
 </body>

@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="email" value="email"/>
 	 	<property name="address" value="address"/>
 	 	<property name="userGrade" value="user_grade"/>
+	 	<property name="isOauthLogin" value="is_oauth_login"/>
 	 	
 	 	<property name="product" value="product"/>
 	 	<property name="productId" value="product_id"/> 
@@ -46,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	 	<property name="productPrice" value="product_price"/>
 	 	<property name="productQuantity" value="product_quantity"/>
 	 	<property name="orderCreatedDate" value="order_created_date"/>
+	 	<property name="orderState" value="order_state"/>
 	 	
 	 	<property name="cart" value="cart"/>
 	 	<property name="cartId" value="cart_id"/> 

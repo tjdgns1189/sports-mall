@@ -7,6 +7,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+
+
+.search-bar {
+    margin: 20px; /* 검색 바와 테이블 사이의 간격 */
+    display: inline-block; /* 검색 바를 인라인 블록 요소로 만들어 중앙 정렬 */
+}
+
+.table {
+    margin: 0 auto; /* 테이블을 중앙에 위치 */
+}
+</style>
 </head>
 <body>
 	<div class="container-fluid">
@@ -17,6 +29,16 @@
 
     <!-- 오른쪽 컨텐츠 -->
    <div id="contentDiv" class="col-md-9 container-fluid">
+   <!-- 동기방식으로 -->
+   
+   <div class="table-container">
+   	<div class="search-bar">
+   	<input type="text" id="searchByMemberId" placeholder="아이디 검색">
+   	 <button class="btn btn-outline-primary" onclick="searchMember()">
+        <i class="bi bi-search"></i>
+    </button>
+   </div>
+   
    	<table class="table">
    		<thead>
    			<tr>
@@ -35,7 +57,7 @@
    		</c:forEach>
    	</tbody>
    	</table>
-   
+    </div>
     </div>
   </div>
 </div>
@@ -87,6 +109,16 @@
 	        }
 	    });//end ajax
 	}//end userDelete
+	
+	
+	function searchMember(){
+		var memberId = $('#searchByMemberId').val();
+		 if(memberId) {
+		        window.location.href = '/mall/admin/user-list?memberId=' + encodeURIComponent(memberId);
+		    } else {
+		        window.location.href = '/mall/admin/user-list';
+		    }
+	}
 </script>
 </body>
 </html>

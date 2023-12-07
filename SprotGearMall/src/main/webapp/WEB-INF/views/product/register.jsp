@@ -118,11 +118,7 @@
     <!-- 왼쪽 메뉴 -->
    	  <jsp:include page="../includes/admin-sidebar.jsp" />
    	
-
     <!-- 오른쪽 컨텐츠 -->
-   
- 
-
   <div class="col-md-9 container-fluid">
     <h2 class="mb-4">상품 등록 페이지</h2>
     
