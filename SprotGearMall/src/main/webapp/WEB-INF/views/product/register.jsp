@@ -141,7 +141,7 @@
       </div>
       <div class="form-group mb-3">
         <label for="fileItem" class="form-label">이미지:</label>
-        <input type="file" class="form-control" id="fileItem" name="productImgPath">
+        <input type="file" class="form-control" id="fileItem" name="productImgPath" accept="image/png, image/jpeg, image/webp">
       </div>
       
       <div class="form-group">

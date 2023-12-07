@@ -26,16 +26,18 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		logger.info("인증성공 핸들러 호출(CustomAuthenticationSuccessHandler)");
-
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
-			if (savedRequest != null) {
-				logger.info("기존 접근 uri 보내기");
-				String targetURL = savedRequest.getRedirectUrl();
-				redirectStrategy.sendRedirect(request, response, targetURL);
-				return;
+		String authError = (String) session.getAttribute("authError");
+		logger.info("authError : " + authError);
+		SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+		if (savedRequest != null) {
+			logger.info("기존 접근 uri 보내기");
+			String targetURL = savedRequest.getRedirectUrl();
+			redirectStrategy.sendRedirect(request, response, targetURL);
+			return;
 			}
+		}
 			
 			Cookie[] cookies = request.getCookies();
 			if (cookies != null) {
@@ -57,4 +59,4 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			redirectStrategy.sendRedirect(request, response, "/");
 		}
 	}
-}
+

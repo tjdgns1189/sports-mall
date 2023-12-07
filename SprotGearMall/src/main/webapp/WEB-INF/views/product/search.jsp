@@ -75,16 +75,6 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 </head>
 <body>
 
-	<!-- Header-->
-	<header class="bg-dark py-5">
-		<div class="container px-4 px-lg-5 my-5">
-			<div class="text-center text-white">
-				<h1 class="display-4 fw-bolder">메인페이지</h1>
-				<p class="lead fw-normal text-white-50 mb-0">이미지랑 글자 넣기</p>
-			</div>
-		</div>
-	</header>
-
 	<!-- Section-->
 	<section class="py-5">
 		<h3>&nbsp;신상품</h3>
@@ -123,45 +113,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 			</div>
 		</section>
 	
-	<!-- <script>
-    // Fetch API를 사용하여 서버로부터 JSON 데이터를 가져오는 함수
-    function fetchProductList(searchText) {
-        fetch(`/mall/product/search?searchtext=${searchText}`)
-            .then(response => response.json())
-            .then(data => {
-				console.log(data);            	
-                // 가져온 JSON 데이터를 처리하는 함수 호출
-                var str = '';
-                data.forEach(vo => {
-                	str += `<div class="col mb-5">
-                            	<div class="card h-100" onclick="location.href='detail?productId=${product.productId}'">
-                                <!-- 상품 이미지 -->
-                <%--                 	<img class="card-img-top" src="https://storage.googleapis.com/edu-mall-img/${product.productImgPath}" alt="이미지" />
-                                	<div class="text-center">
-                                    <!-- 상품 이름 -->
-                                    	<span class="fw-bolder">${product.productName}</span><br>
-                                    <!-- 가격들어가는곳 -->
-                                    	${product.productPrice} 원
-                                	</div>
-                            	</div>
-                        	</div>`;
-                });
-
-                $('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center').html(str);
-            })
-            .catch(error => {
-                console.error('Error during fetch:', error);
-            });
-    }
-
-
-</script> --> --%>
-	
-		
 	 <script>
-		
-	 
-		
 		function sort(order) {
 	        var searchTextValue = ($('#searchTextValue').val()); 
 	        console.log('URL:', '/mall/product/search?searchtext=' + searchTextValue);
@@ -239,13 +191,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	                console.log('Error:', error);
 	            }
 	        });
-        	
-	       
 	    } 
-	        
 	</script>
-	
-	
-
 </body>
 </html>

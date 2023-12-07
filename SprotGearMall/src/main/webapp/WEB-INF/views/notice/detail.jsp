@@ -17,6 +17,11 @@
         .btn-custom:hover {
             background-color: #bb2d3b; /* 색상을 약간 어둡게 조정 */
         }
+        .details-img{
+          width: 100%;      /* 이미지를 부모 요소의 너비에 맞춤 */
+    	  height: auto;     /* 높이를 자동으로 조정하여 비율 유지 */
+    	  object-fit: cover; /* 이미지가 비율을 유지하면서 요소를 채우도록 함 */
+        }
     </style>
 <body>
     <div class="container my-4">
@@ -26,7 +31,7 @@
                <fmt:formatDate value="${vo.noticeCreatedDate}" pattern="yyyy-MM-dd" var="date"/>
                 <p class="card-text notice-date">${date }</p>
                 <!-- 공지사항 본문 -->
-                <p class="card-text notice-content">${vo.noticeContent }</p>
+                <p class="card-text notice-content details-img">${vo.noticeContent }</p>
             </div>
             <div class="card-footer bg-transparent border-top-0">
                 

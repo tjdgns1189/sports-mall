@@ -13,11 +13,6 @@ public class MemberVO {
 	private Integer zonecode;
 	private String detailAddress;
 	
-	
-
-
-
-
 	public MemberVO(String memberId, String password, String name, String phone, String email, String userGrade,
 			String isOauthLogin) {
 		super();

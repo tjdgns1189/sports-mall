@@ -119,8 +119,7 @@ public class LoginController {
 
 	@PostMapping("/update")
 	public String updatePOST(@ModelAttribute MemberVO vo) {
-
-		logger.info("updatePOST 호출");
+		logger.info("updatePOST 호출 vo : " + vo.toString());
 		Map<String, Object> userDetail = new HashMap<String, Object>();
 		userDetail.put("memberId", vo.getMemberId());
 		userDetail.put("name", vo.getName());

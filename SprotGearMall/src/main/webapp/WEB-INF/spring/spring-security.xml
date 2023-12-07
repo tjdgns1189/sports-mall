@@ -5,9 +5,11 @@
 						http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
 
 	<!-- 핸들러 빈 -->
+	
 	<b:bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl" />
 	<b:bean id="accessSuccessHandler" class="edu.spring.mall.security.CustomAuthenticationSuccessHandler"/>
 	<b:bean id="logoutSuccessHandler" class="edu.spring.mall.security.CustomLogoutSuccessHandler"/>
+	<b:bean id="authenticationEntryPoint" class="edu.spring.mall.security.CustomAuthenticationEntryPoint"/>
 	<b:bean id="rememberMeTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
     <b:property name="dataSource" ref="ds"/>
 	</b:bean>
@@ -26,7 +28,8 @@
 	<http pattern="/qnaBoard/replyReplies" security="none"/>
 	<http pattern="/upload" security="none"/>
 	<http pattern="/notice/uploadImg**" security="none"/>
-
+	
+	
 	
 	<http auto-config="true" use-expressions="true">
 	 <access-denied-handler ref="accessDeniedHandler"/>
@@ -53,13 +56,14 @@
      <intercept-url pattern="/product/prdQnaPaging" access="permitAll"/>
      <intercept-url pattern="/qnaBoard/chat" access="isAuthenticated()"/>
      <intercept-url pattern="/qnaBoard/**" access="isAuthenticated()"/>
+     <http-basic entry-point-ref="authenticationEntryPoint" />
+     
      
      
 	
 	 <!--  
 	 <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
 	 -->
-
     <http-basic entry-point-ref="ajaxAwareAuthenticationEntryPoint" />
 
 		<form-login login-page="/member/loginForm"
