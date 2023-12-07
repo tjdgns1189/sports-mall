@@ -243,6 +243,11 @@ li {
                         </td>
                         <td>
                             <input type="text" class="form-control-plaintext" name="productName" value="${vo.product.productName}" readonly>
+                            
+                            <input type="hidden" class="form-control-plaintext" 
+                            name="productId" id="productId" value="${vo.product.productId}" readonly>
+                            <input type="hidden" class="form-control-plaintext" 
+                            name="cartId" id="cartId" value="${vo.cart.cartId}" readonly>
                         </td>
                         <td>
                             <input type="text" class="form-control-plaintext text-center" name="productPrice" value="${vo.product.productPrice}" 
@@ -426,24 +431,51 @@ li {
                 alert("체크박스를 체크하세요");
                 return false; // 버튼 클릭 이벤트 중단
             }
+			
+			iamportCart();
 						
 			
+			//장바구니에서 payment들어올때, 결제버튼클릭.
+			//productController에서 데이터 받음.
+			function iamportCart(){
 			const ordersList = [];
 			var csrfToken = $("#csrfToken").val();
 			var bringList = ${jsonList};
 			
+			var IMP = window.IMP;
+		    console.log('이거 실행되나');
+		    var csrfToken = $("#csrfToken").val();
+		    var productId = document.getElementById('productId').value;
+		    var cartId = document.getElementById('cartId').value;
+		    var allTotalPrice = document.getElementById('allTotalPrice').value;
+		    var productPrice = document.getElementById('productPrice_' + cartId).value;
+		    var productQuantity = document.getElementById('productQuantity_' + cartId).value;
+		    var memberId = '${pageContext.request.userPrincipal.name}';
+		    IMP.init("imp61481183");
+		    
+		    IMP.request_pay({
+		        pg : 'kakaopay',
+		        pay_method : 'card',
+		        merchant_uid : 'hi' + new Date().getTime(), // merchant_uid를 적절히 설정
+		        name : '장바구니통합결제',
+		        amount : allTotalPrice,
+		        buyer_name: memberId,
+		        buyer_postcode: '임시주소',
+		        m_redirect_url : 'http://localhost:8080/mall/'
+		    }, function (rsp) {
+			
 			$.each(bringList, function(index, vo) {
 		        const ordersVO = {		           
-		            memberId: "${pageContext.request.userPrincipal.name}",
+		            memberId: rsp.buyer_name,
 		            productId: vo.product.productId,
-		            productPrice: $("#totalPrice_" + vo.cart.cartId).val(),
+		            productPrice: $("#productPrice_" + vo.cart.cartId).val(),
 		            productQuantity: $("#productQuantity_" + vo.cart.cartId).val()
 		        };
 		        console.log('ordersVO 확인', ordersVO);
 		        ordersList.push(ordersVO);
 		    });
 			console.log('ordersList 확인', ordersList);
-			
+			console.log('rsp', rsp);
 			// Ajax를 사용하여 서버로 cartList 전송
 		    $.ajax({
 		        type: "POST",
@@ -463,7 +495,10 @@ li {
 		            }
 		        }
 		    });	//end ajax
+		    });
+			}
 		});//end btn-order click
+		
 		</c:if>
 		
 		
@@ -593,74 +628,6 @@ function iamport(){
         });
     });
 }
-
-
-
-
-//productRecentRestController에서 데이터 받음.
-function iamportCart(){
-    var IMP = window.IMP;
-    var csrfToken = $("#csrfToken").val();
-    var productId = document.getElementById('productId').value;
-    var allTotalPrice = document.getElementById('allTotalPrice').value;
-    var productPrice = document.getElementById('productPrice_' + cartId).value;
-    var productQuantity = document.getElementById('productQuantity_' + cartId).value;
-    var memberId = '${pageContext.request.userPrincipal.name}';
-    IMP.init("imp61481183");
-    console.log('이거 실행되나');
-    IMP.request_pay({
-        pg : 'kakaopay',
-        pay_method : 'card',
-        merchant_uid : 'hi' + new Date().getTime(), // merchant_uid를 적절히 설정
-        name : '장바구니통합결제',
-        amount : totalPrice,
-        buyer_name: memberId,
-        buyer_postcode: '임시주소',
-        m_redirect_url : 'http://172.16.3.11:8080/mall/'
-    }, function (rsp) {
-        // 결제 완료 후의 처리
-        var ordersVO = {
-            memberId: rsp.buyer_name,
-            productId: productId,
-            productPrice: productPrice, 
-            productQuantity: productQuantity
-        };
-        console.log('rsp', rsp);
-        console.log('ordersVO' + ordersVO);
-
-        $.ajax({
-            type: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken
-            },
-            url: 'paymentAPI',
-            data: JSON.stringify(ordersVO),
-            success: function (allTotalPrice) {
-                if (rsp.paid_amount === totalPrice) {
-                	
-                    console.log('allTotalPrice' + allTotalPrice);
-                    console.log('rsp.paid_amount' + rsp.paid_amount);
-                    window.location.href = '../orders/orderlist';
-                    alert("결제 성공");
-                } else {
-                    
-                    console.log('totalPrice' + totalPrice);
-                    console.log('rsp.paid_amount' + rsp.paid_amount);
-                    window.location.href = '../orders/orderlist';
-                    alert("결제 실패");
-                }
-            },
-            error: function () {
-                alert("결제 취소");
-            }
-        });
-    });
-}
-
-
-
-
 
 
 

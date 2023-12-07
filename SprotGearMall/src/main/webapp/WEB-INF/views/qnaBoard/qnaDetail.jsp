@@ -77,7 +77,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			getAllReplies();
-			
+
 			// 댓글 추가
 			$('#btnAdd').click(function(){
 				var qnaBoardId = $('#qnaBoardId').val(); // 게시판 번호 데이터
@@ -147,9 +147,9 @@
 							
 
 							list += '<div class="reply_item">'
-					            + '<pre>'
+					            + '<pre style="font-weight: bold;">'
 					            + '<input type="hidden" id="qnaReplyId" value="' + this.qnaReplyId + '">'
-					            + '<input type="text" class="writerReply" value="' + this.memberId + '" readonly="readonly">'
+					            + '<input style="border: none; font-size: 20px;" type="text" class="writerReply" value="' + this.memberId + '" readonly="readonly">'
 					            + '&nbsp;&nbsp;' // 공백
 					            + '<input type="text" id="qnaReplyContent" value="' + this.qnaReplyContent + '">'
 					            + '&nbsp;&nbsp;' // 공백
@@ -217,7 +217,7 @@
 			    	+ '&nbsp;&nbsp;'
 	            	+ '&nbsp;&nbsp;'
 	            	+ '&nbsp;&nbsp;'
-			        + '<span style="color: red;">대댓글 입력창</span><input style="border-color: red;" type="text" id="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">'
+			        + '<span style="color: red;">대댓글 입력창&nbsp;&nbsp;</span><input style="border-color: red;" type="text" id="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">'
 			        + '<input style="border-color: red;" type="text" id="replyReplyContent">'
 			        + '<button style="border-color: red;" class="btnAddReplyReply">작성</button>'
 			        + '</div>'
@@ -268,14 +268,14 @@
 					            '&nbsp;&nbsp;' +
 					            '&nbsp;&nbsp;' +
 			                    '<input type="hidden" id="qnaReplyId" value="' + qnaReplyId + '">' +
-			                    '<button class="repliesbtn_' + qnaReplyId + '" >' + memberId + '</button>' +
+			                    memberId +
 			                    '&nbsp;&nbsp;' +
 			                    '<input type="text" id="replyReplyContent" value="' + replyReplyContent + '">' +
 			                    '&nbsp;&nbsp;' +
 			                    this.qnaReplyCreatedDate +
 			                    '&nbsp;&nbsp;' +
-			                    '<button class="btn_update">수정*</button>' +
-			                    '<button class="btn_delete">삭제</button>' +
+			                    '<button>수정*</button>' +
+			                    '<button>삭제</button>' +
 			                    '</pre>' +
 			                    '</div>';
 
@@ -292,14 +292,14 @@
 				            '&nbsp;&nbsp;' +
 				            '&nbsp;&nbsp;' +
 		                    '<input type="hidden" id="qnaReplyId" value="' + qnaReplyId + '">' +
-		                    '<button class="repliesbtn_' + qnaReplyId + '" >' + memberId + '</button>' +
+		                    memberId +
 		                    '&nbsp;&nbsp;' +
 		                    '<input type="text" id="replyReplyContent" value="' + replyReplyContent + '">' +
 		                    '&nbsp;&nbsp;' +
 		                    qnaReplyCreatedDate +
 		                    '&nbsp;&nbsp;' +
-		                    '<button class="btn_update">수정</button>' +
-		                    '<button class="btn_delete">삭제</button>' +
+		                    '<button>수정</button>' +
+		                    '<button>삭제</button>' +
 		                    '</pre>' +
 		                    '</div>';
 		                    
@@ -352,7 +352,7 @@
 					            + '&nbsp;&nbsp;'
 					            + '&nbsp;&nbsp;'
 					            + '<input type="hidden" class="writerReply" value="' + this.memberId + '" readonly="readonly">'
-					            + '<button class="repliesbtn_' + this.qnaReplyId + '" >' + this.memberId + '</button>'
+					            + 'ㄴ&nbsp;' + this.memberId
 					            + '&nbsp;&nbsp;' // 공백
 					            + '<input type="text" id="replyReplyContent" value="' + this.replyReplyContent + '">'
 					            + '&nbsp;&nbsp;' // 공백
