@@ -105,7 +105,7 @@ var recentProductsList = recentProductsCookieValue.split(',');
 console.log('recentProductsCookieValue:', recentProductsCookieValue);
 console.log('recentProductsList:', recentProductsList);
 var url = "recents" + recentProductsCookieValue
-// CSRF 토큰 값 가져오기 (이 부분은 페이지에 존재하는지 확인 필요)
+// CSRF 토큰 값 가져오기 
 
 
 // 서버로 데이터를 POST 방식으로 전송

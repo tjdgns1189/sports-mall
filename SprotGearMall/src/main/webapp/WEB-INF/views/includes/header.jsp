@@ -15,7 +15,7 @@
 
 <main>
 <!-- 헤더 첫번재줄 -->
-<div class="bg-white py-2">
+<div class="bg-light py-2">
 	<div class="container">
 		<div class="row align-items-center">
 			<!-- 로고 -->

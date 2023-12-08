@@ -217,9 +217,9 @@
 			    	+ '&nbsp;&nbsp;'
 	            	+ '&nbsp;&nbsp;'
 	            	+ '&nbsp;&nbsp;'
-			        + '<span style="color: red;">대댓글 입력창&nbsp;&nbsp;</span><input style="border-color: red;" type="text" id="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">'
-			        + '<input style="border-color: red;" type="text" id="replyReplyContent">'
-			        + '<button style="border-color: red;" class="btnAddReplyReply">작성</button>'
+			        + '<span style="color: blue;">대댓글 입력창&nbsp;&nbsp;</span><input style="border-color: blue;" type="text" id="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">'
+			        + '<input style="border-color: blue;" type="text" id="replyReplyContent">'
+			        + '<button style="border-color: blue;" class="btnAddReplyReply">작성</button>'
 			        + '</div>'
 			        + '</br>'
 
@@ -268,13 +268,11 @@
 					            '&nbsp;&nbsp;' +
 					            '&nbsp;&nbsp;' +
 			                    '<input type="hidden" id="qnaReplyId" value="' + qnaReplyId + '">' +
-			                    memberId +
+			                    'ㄴ&nbsp;' + memberId +
 			                    '&nbsp;&nbsp;' +
 			                    '<input type="text" id="replyReplyContent" value="' + replyReplyContent + '">' +
 			                    '&nbsp;&nbsp;' +
-			                    this.qnaReplyCreatedDate +
-			                    '&nbsp;&nbsp;' +
-			                    '<button>수정*</button>' +
+			                    '<button>수정</button>' +
 			                    '<button>삭제</button>' +
 			                    '</pre>' +
 			                    '</div>';
@@ -292,11 +290,9 @@
 				            '&nbsp;&nbsp;' +
 				            '&nbsp;&nbsp;' +
 		                    '<input type="hidden" id="qnaReplyId" value="' + qnaReplyId + '">' +
-		                    memberId +
+		                    'ㄴ&nbsp;' + memberId +
 		                    '&nbsp;&nbsp;' +
 		                    '<input type="text" id="replyReplyContent" value="' + replyReplyContent + '">' +
-		                    '&nbsp;&nbsp;' +
-		                    qnaReplyCreatedDate +
 		                    '&nbsp;&nbsp;' +
 		                    '<button>수정</button>' +
 		                    '<button>삭제</button>' +
@@ -377,8 +373,12 @@
 			                var writerReply = $(this).find('.writerReply').val();
 			                if (nowMemberId === writerReply) {
 			                    $(this).find('.btn_replyUpdate').show();
-			                    console.log('nowMemberId' + nowMemberId);
-			                    console.log('writerReply' + writerReply);
+			                    console.log('nowMemberId같' + nowMemberId);
+			                    console.log('writerReply같' + writerReply);
+			                } else {
+			                	$(this).find('.btn_replyUpdate').hide();
+			                	console.log('nowMemberId다름' + nowMemberId);
+			                    console.log('writerReply다름' + writerReply);
 			                }
 			            });
 			            
@@ -393,6 +393,10 @@
 			                    $(this).find('.btn_replyDelete').show();
 			                    console.log('nowMemberId' + nowMemberId);
 			                    console.log('writerReply' + writerReply);
+			                } else {
+			                	$(this).find('.btn_replyDelete').hide();
+			                	console.log('nowMemberId다름' + nowMemberId);
+			                    console.log('writerReply다름' + writerReply);
 			                }
 			            });
 						

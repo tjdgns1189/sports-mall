@@ -491,7 +491,8 @@ li {
 		                alert('주문내역삽입 성공');
 		                window.location.href = '../orders/orderlist';
 		            } else {
-		                alert('주문내역삽입 실패');
+		                alert('주문내역삽입 2');
+		                window.location.href = '../orders/orderlist';
 		            }
 		        }
 		    });	//end ajax
@@ -582,7 +583,7 @@ function iamport(){
     IMP.request_pay({
         pg : 'kakaopay',
         pay_method : 'card',
-        merchant_uid : 'hi' + new Date().getTime(), // merchant_uid를 적절히 설정
+        merchant_uid : 'hi' + new Date().getTime(),
         name : productName,
         amount : totalPrice,
         buyer_name: memberId,
@@ -607,19 +608,19 @@ function iamport(){
             },
             url: 'paymentAPI',
             data: JSON.stringify(ordersVO),
-            success: function (allTotalPrice) {
+            success: function (totalPrice) {
                 if (rsp.paid_amount === totalPrice) {
                 	
-                    console.log('allTotalPrice' + allTotalPrice);
+                    console.log('allTotalPrice' + totalPrice);
                     console.log('rsp.paid_amount' + rsp.paid_amount);
-                    window.location.href = '../orders/orderlist';
+                   window.location.href = '../orders/orderlist';
                     alert("결제 성공");
                 } else {
                     
                     console.log('totalPrice' + totalPrice);
                     console.log('rsp.paid_amount' + rsp.paid_amount);
                     window.location.href = '../orders/orderlist';
-                    alert("결제 실패");
+                    alert("결제 2");
                 }
             },
             error: function () {
