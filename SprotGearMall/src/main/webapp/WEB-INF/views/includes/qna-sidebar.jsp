@@ -19,6 +19,8 @@
 		<br><hr>
     	<p><strong>공지사항</strong></p>
         <a href="${pageContext.request.contextPath}/notice/noticeboard" class="list-group-item list-group-item-action">공지 사항</a>
+        <a href="${pageContext.request.contextPath}/event/eventboard" class="list-group-item list-group-item-action">이벤트</a>
+        
     </div>
 </div>
 

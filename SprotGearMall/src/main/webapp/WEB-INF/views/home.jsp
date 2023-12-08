@@ -85,7 +85,7 @@
             </div>
             <!-- 버튼 섹션 -->
             <div class="col-auto">
-                <a href="/mall/product/search?searchtext=농구공" class="btn btn-primary">전체 보기</a>
+                <a href="/mall/product/search?searchtext=축구공" class="btn btn-primary">전체 보기</a>
             </div>
         </div>
         <hr>
@@ -118,7 +118,7 @@
             </div>
             <!-- 버튼 섹션 -->
             <div class="col-auto">
-                <a href="/mall/product/search?searchtext=농구공" class="btn btn-primary">전체 보기</a>
+                <a href="/mall/product/search?searchtext=야구공" class="btn btn-primary">전체 보기</a>
             </div>
         </div>
         <hr>

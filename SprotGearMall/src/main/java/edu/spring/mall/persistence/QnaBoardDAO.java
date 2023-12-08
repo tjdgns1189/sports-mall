@@ -6,7 +6,7 @@ import edu.spring.mall.domain.QnaBoardVO;
 import edu.spring.mall.pageutil.PageCriteria;
 
 public interface QnaBoardDAO {
-	int insert(QnaBoardVO vo);
+	int insert(QnaBoardVO vo); 
 	List<QnaBoardVO> select();
 	QnaBoardVO select(int qnaBoardId);
 	int update(QnaBoardVO vo);

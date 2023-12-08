@@ -151,6 +151,21 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<property name="notificationDate" value="notification_date"/>
 		<property name="readDate" value="read_date"/>
 		<property name="entityId" value="entity_id"/>
+		
+		<property name="eventBoard" value="event_board"/>
+		<property name="eventBoardId" value="event_board_id"/>
+		<property name="memeberId" value="member_id"/>
+		<property name="eventBoardTitle" value="event_board_title"/>
+		<property name="eventBoardContent" value="event_board_content"/>
+		<property name="eventBoardCreatedDate" value="event_board_created_date"/>
+		<property name="replyCnt" value="reply_cnt"/>
+		
+		<property name="eventReply" value="event_reply"/>
+		<property name="eventReplyId" value="event_reply_id"/>
+		<property name="eventBoardId" value="event_board_id"/>
+		<property name="memberId" value="member_id"/>
+		<property name="eventReplyContent" value="event_reply_content"/>
+		<property name="eventReplyCreatedDate" value="event_reply_created_date"/>
 	
  	 </properties>
 	 
