@@ -77,7 +77,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
 	<!-- Section-->
 	<section class="py-5">
-		<h3>&nbsp;신상품</h3>
+		<h3>&nbsp;${searchText }</h3>
 		<div class="sort-dropdown">
 			  <button class="sort-button">정렬</button>
 			  <div class="sort-options">
