@@ -1,4 +1,4 @@
-package edu.spring.mall.pageutil;
+ package edu.spring.mall.pageutil;
 
 public class PageMaker {
 	@Override

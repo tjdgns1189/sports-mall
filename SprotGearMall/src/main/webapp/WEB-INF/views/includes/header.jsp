@@ -99,7 +99,7 @@
 
 
 <!-- 네비바 두번재줄 -->
-<div class="header-container bg-info ">
+<div class="header-container header-color">
 <ul class="nav-list">
 
 		<li>

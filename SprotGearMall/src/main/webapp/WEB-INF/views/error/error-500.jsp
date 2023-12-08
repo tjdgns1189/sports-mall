@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>404 HTML Template by Colorlib</title>
+	<title>서버에 문제가 발생했습니다</title>
 	
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">

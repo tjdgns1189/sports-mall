@@ -6,7 +6,7 @@
   <html>
   <meta charset="UTF-8">
  <head>
- <title>테스트 결제창</title>
+ <title>결제창</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
   

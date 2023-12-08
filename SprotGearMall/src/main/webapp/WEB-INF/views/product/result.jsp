@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>구매 결과</title>
 <style type="text/css">
 
 table, th, td, input{

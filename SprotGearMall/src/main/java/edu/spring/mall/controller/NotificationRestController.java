@@ -31,7 +31,6 @@ public class NotificationRestController {
     @ResponseBody
 	@GetMapping("/NotificationCheck")
 	public ResponseEntity<?> notificationGET(){
-		logger.info("알림 확인");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String memberId = auth.getName();
 		boolean isAdmin = auth.getAuthorities().stream()
@@ -41,7 +40,6 @@ public class NotificationRestController {
 		if(isAdmin) {
 			notificationList = service.readGroup("ROLE_ADMIN");
 		}else {
-			logger.info("memberId : " + memberId);
 			notificationList = service.read(memberId);
 		}
 	

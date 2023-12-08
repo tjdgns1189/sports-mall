@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,13 +71,8 @@ public class LoginController {
 	}
 
 	@PostMapping("/register")
-	public String registerPOST(@RequestParam("memberId") String memberId, @RequestParam("password") String password,
-			@RequestParam("name") String name, @RequestParam("phone") String phone, @RequestParam("email") String email,
-			@RequestParam("postcode") String postcode, @RequestParam("address") String address,
-			@RequestParam("detailAddress") String detailAddress, @RequestParam("userGrade") String userGrade) {
-
-		String addressStr = postcode + "." + address + "." + detailAddress;
-		MemberVO vo = new MemberVO(memberId, password, name, phone, email, addressStr, userGrade);
+	public String registerPOST(@ModelAttribute MemberVO vo) {
+			logger.info("registerPOST 호출");
 		try {
 			int result = service.create(vo);
 			if (result == 1) {
@@ -109,12 +105,10 @@ public class LoginController {
 		String name = user.getName();
 		String phone = user.getPhone();
 		String email = user.getEmail();
-		if(user.getAddress() !=null) {
-		String address[] = user.getAddress().split("\\.");
-		model.addAttribute("postcode", address[0]);
-		model.addAttribute("address", address[1]);
-		model.addAttribute("detailAddress", address[2]);
-		}
+		model.addAttribute("zonecode", user.getZonecode());
+		model.addAttribute("address", user.getAddress());
+		model.addAttribute("detailAddress", user.getDetailAddress());
+		
 		model.addAttribute("isOauthLogin", user.getIsOauthLogin());
 		model.addAttribute("name", name);
 		model.addAttribute("phone", phone);
@@ -124,22 +118,17 @@ public class LoginController {
 	}
 
 	@PostMapping("/update")
-	public String updatePOST(@RequestParam("memberId") String memberId,
-			@RequestParam("name") String name,
-			@RequestParam("phone") String phone,
-			@RequestParam("email") String email,
-			@RequestParam("postcode") String postcode,
-			@RequestParam("address") String address,
-			@RequestParam("detailAddress") String detailAddress) {
+	public String updatePOST(@ModelAttribute MemberVO vo) {
+		logger.info("updatePOST 호출 vo : " + vo.toString());
+		Map<String, Object> userDetail = new HashMap<String, Object>();
+		userDetail.put("memberId", vo.getMemberId());
+		userDetail.put("name", vo.getName());
+		userDetail.put("phone", vo.getPhone());
+		userDetail.put("email", vo.getEmail());
+		userDetail.put("zonecode", vo.getZonecode());
+		userDetail.put("address", vo.getAddress());
+		userDetail.put("detailAddress", vo.getDetailAddress());
 
-		logger.info("updatePOST 호출");
-		String addressStr = postcode + "." + address + "." + detailAddress;
-		Map<String, String> userDetail = new HashMap<String, String>();
-		userDetail.put("memberId", memberId);
-		userDetail.put("name", name);
-		userDetail.put("phone", phone);
-		userDetail.put("email", email);
-		userDetail.put("address", addressStr);
 
 		int result = 0;
 		try {
@@ -212,7 +201,7 @@ public class LoginController {
 		        if (auth != null) {
 		            new SecurityContextLogoutHandler().logout(request, response, auth);
 		        }
-		        return "redirect:/index"; // 탈퇴 및 로그아웃 성공
+		        return "redirect:/"; // 탈퇴 및 로그아웃 성공
 
 		    } catch (Exception e) {
 		        e.printStackTrace();

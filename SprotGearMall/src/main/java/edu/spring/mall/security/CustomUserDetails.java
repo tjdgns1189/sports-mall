@@ -20,6 +20,8 @@ public class CustomUserDetails implements UserDetails {
 	private String address;
 	private String userGrade;
 	private String isOauthLogin;
+	private int zonecode;
+	private String detailAddress;
 
 	
 	
@@ -29,6 +31,37 @@ public class CustomUserDetails implements UserDetails {
 
 	public void setIsOauthLogin(String isOauthLogin) {
 		this.isOauthLogin = isOauthLogin;
+	}
+
+	public CustomUserDetails(String memberId, String password, String name, String phone, String email, String address,
+			String userGrade, String isOauthLogin, int zonecode, String detailAddress) {
+		super();
+		this.memberId = memberId;
+		this.password = password;
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+		this.address = address;
+		this.userGrade = userGrade;
+		this.isOauthLogin = isOauthLogin;
+		this.zonecode = zonecode;
+		this.detailAddress = detailAddress;
+	}
+
+	public int getZonecode() {
+		return zonecode;
+	}
+
+	public void setZonecode(int zonecode) {
+		this.zonecode = zonecode;
+	}
+
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
 	}
 
 	public String getMemberId() {

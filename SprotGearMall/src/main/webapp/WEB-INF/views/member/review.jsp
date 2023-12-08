@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>리뷰하기</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="<c:url value="/resources/js/review.js" />"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

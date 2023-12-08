@@ -38,7 +38,6 @@ public class QnaReplyServiceImple implements QnaReplyService {
 	@Override
 	public int update(int qnaReplyId, String qnaReplyContent) {
 		logger.info("update() 호출");
-		logger.info("qnaReplyId = " + qnaReplyId + ", qnaReplyContent = " + qnaReplyContent);
 		return qnaReplyDAO.update(qnaReplyId, qnaReplyContent);
 	}
 

@@ -25,13 +25,11 @@ public class NotificationServiceImple implements NotificationService {
 
 	@Override
 	public List<NotificationVO> read(String memberId) {
-		logger.info("read호출 memberId");
 		return dao.select(memberId);
 	}
 
 	@Override
 	public List<NotificationVO> readGroup(String group) {
-		logger.info("관리자 알림 확인");
 		return dao.selectAdmin(group);
 	}
 
@@ -45,6 +43,12 @@ public class NotificationServiceImple implements NotificationService {
 	public int delete(NotificationVO vo) {
 		logger.info("delete");
 		return dao.delete(vo);
+	}
+
+	@Override
+	public int count(NotificationVO vo) {
+		logger.info("count호출");
+		return dao.count(vo);
 	}
 
 }

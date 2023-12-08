@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>관리자 채팅방 목록</title>
+    <title>1:1 채팅 문의 목록</title>
 </head>
 <body>
 
