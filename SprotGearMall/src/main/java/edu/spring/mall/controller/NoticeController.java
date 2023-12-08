@@ -42,7 +42,6 @@ public class NoticeController {
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(service.getTotalCount());
 		pageMaker.setPageData();
-		logger.info("");
 		model.addAttribute("list",list);
 		model.addAttribute("pageMaker", pageMaker);
 	}
@@ -96,7 +95,6 @@ public class NoticeController {
 	public String noticeDelete(int noticeId) {
 		logger.info("noticeRegisterPOST 호출");
 		service.delete(noticeId);
-		
 		return "redirect:/notice/noticeboard";
 	}
 	

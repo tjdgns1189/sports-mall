@@ -55,6 +55,11 @@ public class ChatRoomServiceImple implements ChatRoomService {
 		String content = "사용자가 1:1 채팅문의를 요청했습니다";
 		String targetUrl = "/mall/admin/chat-list";
 		NotificationVO vo = new NotificationVO(groupId, notificationType, content, targetUrl, null, 0);
+		int count = notification.count(vo);
+		logger.info("count 호출 : " + count);
+		if(count == 1) {
+			return room;
+		}
 		notification.create(vo);
 		return room;
 	}

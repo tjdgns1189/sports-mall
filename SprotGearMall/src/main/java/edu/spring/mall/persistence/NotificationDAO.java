@@ -11,5 +11,5 @@ public interface NotificationDAO {
 	List<NotificationVO> selectAdmin(String group);
 	int update(NotificationVO vo);
 	int delete(NotificationVO vo);
-
+	int count(NotificationVO vo);
 }

@@ -45,4 +45,10 @@ public class NotificationServiceImple implements NotificationService {
 		return dao.delete(vo);
 	}
 
+	@Override
+	public int count(NotificationVO vo) {
+		logger.info("count호출");
+		return dao.count(vo);
+	}
+
 }
