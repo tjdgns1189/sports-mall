@@ -138,11 +138,21 @@ li {
                     </tr>
                     <tr>
                         <th scope="row">주소지</th>
-                        <td><sec:authentication property="principal.address" /></td>
+                        <td>
+                        	<select id="addressOption" onchange="toggleAddressInput()">
+                        	    <option value="firstAddress">* &nbsp;(배송지&nbsp; 선택필수)</option>
+            					<option value="existingAddress"><sec:authentication property="principal.address" /></option>
+            					<option value="directInput">(배송지&nbsp; 직접입력)</option>
+        					</select>
+        					<div id="newAddressInput" style="display: none;">
+        					<br />
+            					<input type="text" class="form-control" id="newAddress" placeholder="새로운 주소를 입력하세요">
+        					</div>
+        				</td>
                     </tr>
                     <tr>
                         <th scope="row">배송 요청사항</th>
-                        <td><input type="text" class="form-control" id="addressOpinion"></td>
+                        <td><input type="text" class="form-control" id="addressOpinion" placeholder="(요청사항 적어주세요)"></td>
                     </tr>
                 </tbody>
             </table>
@@ -189,14 +199,14 @@ li {
 
     <div class="row justify-content-center mb-5">
         <div class="col-md-8 text-center">
-            <form onsubmit="return firstJavascript()" action="result" method="POST">
+            <form action="result" method="POST">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <input type="hidden" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly>
                 <input type="hidden" name="productId" id="productId" value="${vo.productId}" readonly>
                 <input type="hidden" name="productQuantity" id="productQuantity1" value="1" readonly>
                 <input type="hidden" name="productName" id="productName" value="${vo.productName}" readonly>
                 <input type="hidden" name="productPrice" id="productPrice1" value="${vo.productPrice}" readonly>
-                <button type="button" class="btn btn-primary btn-lg" id="btn-vo" onclick="iamport()">결제하기</button>
+                <button  type="button" class="btn btn-primary btn-lg" id="btn-vo" onclick="firstJavascript()">결제하기</button>
                 <a href="/mall">
                 	<button type="button" class="btn btn-secondary btn-lg">취소</button>  
                 </a>
@@ -233,6 +243,11 @@ li {
                         </td>
                         <td>
                             <input type="text" class="form-control-plaintext" name="productName" value="${vo.product.productName}" readonly>
+                            
+                            <input type="hidden" class="form-control-plaintext" 
+                            name="productId" id="productId" value="${vo.product.productId}" readonly>
+                            <input type="hidden" class="form-control-plaintext" 
+                            name="cartId" id="cartId" value="${vo.cart.cartId}" readonly>
                         </td>
                         <td>
                             <input type="text" class="form-control-plaintext text-center" name="productPrice" value="${vo.product.productPrice}" 
@@ -279,7 +294,7 @@ li {
                     </tr>
                     <tr>
                         <th scope="row">배송 요청사항</th>
-                        <td><input type="text" class="form-control" id="addressOpinion"></td>
+                        <td><input type="text" class="form-control" id="addressOpinion" value="없음"></td>
                     </tr>
                 </tbody>
             </table>
@@ -416,24 +431,51 @@ li {
                 alert("체크박스를 체크하세요");
                 return false; // 버튼 클릭 이벤트 중단
             }
+			
+			iamportCart();
 						
 			
+			//장바구니에서 payment들어올때, 결제버튼클릭.
+			//productController에서 데이터 받음.
+			function iamportCart(){
 			const ordersList = [];
 			var csrfToken = $("#csrfToken").val();
 			var bringList = ${jsonList};
 			
+			var IMP = window.IMP;
+		    console.log('이거 실행되나');
+		    var csrfToken = $("#csrfToken").val();
+		    var productId = document.getElementById('productId').value;
+		    var cartId = document.getElementById('cartId').value;
+		    var allTotalPrice = document.getElementById('allTotalPrice').value;
+		    var productPrice = document.getElementById('productPrice_' + cartId).value;
+		    var productQuantity = document.getElementById('productQuantity_' + cartId).value;
+		    var memberId = '${pageContext.request.userPrincipal.name}';
+		    IMP.init("imp61481183");
+		    
+		    IMP.request_pay({
+		        pg : 'kakaopay',
+		        pay_method : 'card',
+		        merchant_uid : 'hi' + new Date().getTime(), // merchant_uid를 적절히 설정
+		        name : '장바구니통합결제',
+		        amount : allTotalPrice,
+		        buyer_name: memberId,
+		        buyer_postcode: '임시주소',
+		        m_redirect_url : 'http://localhost:8080/mall/'
+		    }, function (rsp) {
+			
 			$.each(bringList, function(index, vo) {
 		        const ordersVO = {		           
-		            memberId: "${pageContext.request.userPrincipal.name}",
+		            memberId: rsp.buyer_name,
 		            productId: vo.product.productId,
-		            productPrice: $("#totalPrice_" + vo.cart.cartId).val(),
+		            productPrice: $("#productPrice_" + vo.cart.cartId).val(),
 		            productQuantity: $("#productQuantity_" + vo.cart.cartId).val()
 		        };
 		        console.log('ordersVO 확인', ordersVO);
 		        ordersList.push(ordersVO);
 		    });
 			console.log('ordersList 확인', ordersList);
-			
+			console.log('rsp', rsp);
 			// Ajax를 사용하여 서버로 cartList 전송
 		    $.ajax({
 		        type: "POST",
@@ -449,11 +491,15 @@ li {
 		                alert('주문내역삽입 성공');
 		                window.location.href = '../orders/orderlist';
 		            } else {
-		                alert('주문내역삽입 실패');
+		                alert('주문내역삽입 2');
+		                window.location.href = '../orders/orderlist';
 		            }
 		        }
 		    });	//end ajax
+		    });
+			}
 		});//end btn-order click
+		
 		</c:if>
 		
 		
@@ -469,18 +515,34 @@ li {
 	    }
 		
 		
-		//detail에서 왔을때 체크박스확인
-	    function firstJavascript() {
-
+		function firstJavascript() {
 	        // 체크박스 전부 체크되었는지 확인
-			if (!areCheckboxesChecked()) {
-            alert("체크박스를 모두 체크하세요");
-            return false; // 폼 제출 취소
-        }
-	        //조건 통화시 true제출하면 폼제출허용됨
-			return true;
+	        if (!areCheckboxesChecked()) {
+	            alert("체크박스를 모두 체크하세요");
+	            return false; // 폼 제출 취소
+	        }
+	        
+	        
+	     	// 주소지 선택 여부 확인
+	        var addressOption = document.getElementById("addressOption");
+	        if (addressOption.value === "firstAddress") {
+	            alert("배송지를 꼭 선택해주세요!");
+	            return false; // 폼 제출 취소
+	        }
+	        
+	     // 새로운 주소 입력 확인
+	        if (addressOption.value === "directInput") {
+	            var newAddressInput = document.getElementById("newAddress");
+	            if (!newAddressInput.value.trim()) {
+	                alert("배송지직접입력칸에 내용을 적어주세요!");
+	                return false; // 폼 제출 취소
+	            }
+	        }
 
-		}
+	        // 체크박스가 모두 선택되었으면 iamport 함수 호출
+	        iamport();
+	        
+	    }
 
 	
 /*
@@ -505,10 +567,13 @@ li {
 */
 
 
+
+//productRecentRestController에서 데이터 받음.
 function iamport(){
     var IMP = window.IMP;
     var csrfToken = $("#csrfToken").val();
     var productId = document.getElementById('productId').value;
+    var totalPrice = document.getElementById('totalPrice').value;
     var productPrice = document.getElementById('productPrice').value;
     var productName = document.getElementById('productName').value;
     var productQuantity = document.getElementById('productQuantity1').value;
@@ -518,12 +583,12 @@ function iamport(){
     IMP.request_pay({
         pg : 'kakaopay',
         pay_method : 'card',
-        merchant_uid : 'hi' + new Date().getTime(), // merchant_uid를 적절히 설정
+        merchant_uid : 'hi' + new Date().getTime(),
         name : productName,
-        amount : productPrice,
+        amount : totalPrice,
         buyer_name: memberId,
         buyer_postcode: '임시주소',
-        m_redirect_url : 'http://naver.com'
+        m_redirect_url : 'http://localhost:8080/mall/'
     }, function (rsp) {
         // 결제 완료 후의 처리
         var ordersVO = {
@@ -543,23 +608,42 @@ function iamport(){
             },
             url: 'paymentAPI',
             data: JSON.stringify(ordersVO),
-            success: function (productPrice) {
-                if (rsp.paid_amount === productPrice) {
+            success: function (totalPrice) {
+                if (rsp.paid_amount === totalPrice) {
                 	
-                    console.log('productPric' + productPrice);
+                    console.log('allTotalPrice' + totalPrice);
                     console.log('rsp.paid_amount' + rsp.paid_amount);
-                    window.location.href = '../orders/orderlist';
+                   window.location.href = '../orders/orderlist';
                     alert("결제 성공");
                 } else {
-                    alert("결제 실패");
-                    console.log('실패');
+                    
+                    console.log('totalPrice' + totalPrice);
+                    console.log('rsp.paid_amount' + rsp.paid_amount);
+                    window.location.href = '../orders/orderlist';
+                    alert("결제 2");
                 }
             },
             error: function () {
-                alert("서버 오류");
+                alert("결제 취소");
             }
         });
     });
+}
+
+
+
+
+
+//배송지 추가선택창
+function toggleAddressInput() {
+    var addressOption = document.getElementById("addressOption");
+    var newAddressInput = document.getElementById("newAddressInput");
+
+    if (addressOption.value === "directInput") {
+        newAddressInput.style.display = "block";
+    } else {
+        newAddressInput.style.display = "none";
+    }
 }
 
 

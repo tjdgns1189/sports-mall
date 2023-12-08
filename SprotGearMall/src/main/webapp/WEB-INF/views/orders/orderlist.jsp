@@ -139,7 +139,7 @@ review-btn{
             $.ajax({
                 type: "POST",
                 url: "delete", 
-                headers : headers,
+                headers :headers
                 data: JSON.stringify(checkedIds),
                 success: function(result) {
                     console.log(result);

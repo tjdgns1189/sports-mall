@@ -74,13 +74,15 @@ public class ProductRecentRestController {
 		
 		int productId = ordersVO.getProductId();
 		int orderId = ordersVO.getOrderId();
+		int productQuantity = ordersVO.getProductQuantity();
 		int productPrice = ordersVO.getProductPrice();
+		int totalPrice = productQuantity * productPrice;
 		ProductVO productVO = productService.read(productId);
 		OrdersVO orderVO = ordersDAO.select(orderId);
 		model.addAttribute("productVO", productVO);
 		model.addAttribute("vo", ordersVO);
-		model.addAttribute("productPrice", productPrice);
-		return new ResponseEntity<>(productPrice, HttpStatus.OK);
+		model.addAttribute("totalPrice", totalPrice);
+		return new ResponseEntity<>(totalPrice, HttpStatus.OK);
 	
 	}
 }

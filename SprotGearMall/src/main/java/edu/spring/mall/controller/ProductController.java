@@ -324,6 +324,13 @@ public class ProductController {
 	@GetMapping(value="/result", produces = "application/json")
 	public void resultGet(Model model, OrdersVO vo, Principal principal){
 		logger.info("resultPOST() 호출 : vo = " + vo.toString());
+
+		try {
+			int result = orderService.create(vo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		int productId = vo.getProductId();
 		int orderId = vo.getOrderId();
@@ -363,11 +370,4 @@ public class ProductController {
 	  return list; 
 	  
 	  }
-	  
-	  @GetMapping("/test")
-	  public void testGET() {}
-	  
-	  
-	 
-
 } // end ProductController

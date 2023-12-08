@@ -504,6 +504,8 @@ $(document).on('click', '.cancel-answer', function() {
 		            newTbodyContent += '</div>'
 		     		newTbodyContent += '<hr><div id="replyContent-' + list.qna.prdQnaId + '" class="pre-line">';
 		        //답변완료시
+		        //이부분 답변할때 넣을거로 수정하기
+		        //답변했다는건 관리자란 소리라 조건 안넣어도 될것같음
 		     	if(list.qna.prdQnaState == 'Y'){
 		              newTbodyContent += '<div id="reply-' + list.reply.pqrId + '" class="pre-line">';
 		              newTbodyContent += list.reply.pqrContent;

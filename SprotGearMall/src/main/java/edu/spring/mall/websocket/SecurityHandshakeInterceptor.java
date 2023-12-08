@@ -19,7 +19,7 @@ public class SecurityHandshakeInterceptor implements HandshakeInterceptor {
 
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
-			Map<String, Object> attributes) throws Exception {
+		Map<String, Object> attributes) throws Exception {
 		logger.info("핸드쉐이크");
 	     if (request instanceof ServletServerHttpRequest) {
 	            ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
