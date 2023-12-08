@@ -8,9 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +44,14 @@ public class EventReplyRestController {
 	@GetMapping("/replies")
     public ResponseEntity<List<EventReplyVO>> getReplies(int eventBoardId) {
         List<EventReplyVO> replies = service.read(eventBoardId);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        
+        for (EventReplyVO reply : replies) {
+            reply.setUserGrade(isAdmin ? "ROLE_ADMIN" : "ROLE_USER");
+        }
+        
         return new ResponseEntity<List<EventReplyVO>>(replies, HttpStatus.OK);
     }
 	
@@ -51,6 +62,11 @@ public class EventReplyRestController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
-	
+	@PutMapping("/replies")
+	public ResponseEntity<Integer> updateReplies(@RequestBody EventReplyVO vo  ) {
+		logger.info("updateReplies 호출");
+		int result = service.update(vo);
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
 	
 }

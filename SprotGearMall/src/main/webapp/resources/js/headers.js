@@ -36,10 +36,8 @@ $(() => {
 function targetURL() {
     console.log("targetURL() 호출")
     var currentUrl = window.location.href;
-
     document.cookie = "targeturl=" + encodeURIComponent(currentUrl) + "; path=/";
-    window.location.href = "/mall/member/loginForm";
-
+	setSession()
 
 }//end targetURL
 
@@ -115,4 +113,23 @@ function addToFavorites() {
   }
 
   
-  
+  function setSession(){
+  console.log('setSesison 호출')
+    var csrfToken = $('#csrfToken').val();
+    var headers = {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': csrfToken
+    }
+
+    $.ajax({
+        type:'GET',
+        url: '/mall/loginSetSession',
+        headers: headers,
+        success: (response)=>{
+            if(response ==='success'){
+                window.location.href = "/mall/member/loginForm";
+
+            }
+        }
+    })//end ajax
+  }//end setSession

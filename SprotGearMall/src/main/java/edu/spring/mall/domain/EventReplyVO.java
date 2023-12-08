@@ -8,9 +8,15 @@ public class EventReplyVO {
 	private String memberId;
 	private String eventReplyContent;
 	private Date eventReplyCreatedDate;
+	private String userGrade; 
+	public String getUserGrade() {
+		return userGrade;
+	}
+	public void setUserGrade(String userGrade) {
+		this.userGrade = userGrade;
+	}
 	public EventReplyVO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public EventReplyVO(int eventReplyId, int eventBoardId, String memberId, String eventReplyContent,
 			Date eventReplyCreatedDate) {
@@ -57,6 +63,7 @@ public class EventReplyVO {
 	public void setEventReplyCreatedDate(Date eventReplyCreatedDate) {
 		this.eventReplyCreatedDate = eventReplyCreatedDate;
 	}
+
 	
 	
 	

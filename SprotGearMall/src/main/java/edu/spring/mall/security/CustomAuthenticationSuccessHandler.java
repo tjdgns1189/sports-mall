@@ -29,32 +29,35 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
-			if (savedRequest != null) {
-				logger.info("기존 접근 uri 보내기");
-				String targetURL = savedRequest.getRedirectUrl();
-				redirectStrategy.sendRedirect(request, response, targetURL);
-				return;
-			}
-			
-			Cookie[] cookies = request.getCookies();
-			if (cookies != null) {
-				for (Cookie cookie : cookies) {
-					if ("targeturl".equals(cookie.getName())) {
-						logger.info("헤더 로그인으로 접근");
-						String decodedUrl = URLDecoder.decode(cookie.getValue(), "UTF-8");
-						logger.info("targetURL : " + decodedUrl);
-						cookie.setMaxAge(0);
-						cookie.setPath("/");
-						response.addCookie(cookie);
-						redirectStrategy.sendRedirect(request, response, decodedUrl);
-						return;
+			String authError = (String) session.getAttribute("authError");
+			logger.info("authError : " + authError);
+
+			if ("ACCESS_DENIED".equals(authError)) {
+				SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+				if (savedRequest != null) {
+					logger.info("기존 접근 uri 보내기");
+					String targetURL = savedRequest.getRedirectUrl();
+					redirectStrategy.sendRedirect(request, response, targetURL);
+					return;
+				}
+			} else if ("HEADER".equals(authError)) {
+				Cookie[] cookies = request.getCookies();
+				if (cookies != null) {
+					for (Cookie cookie : cookies) {
+						if ("targeturl".equals(cookie.getName())) {
+							logger.info("헤더 로그인으로 접근");
+							String decodedUrl = URLDecoder.decode(cookie.getValue(), "UTF-8");
+							cookie.setMaxAge(0);
+							cookie.setPath("/");
+							response.addCookie(cookie);
+							redirectStrategy.sendRedirect(request, response, decodedUrl);
+							return;
+						}
 					}
 				}
 			}
-
-			
-			redirectStrategy.sendRedirect(request, response, "/index");
 		}
+		redirectStrategy.sendRedirect(request, response, "/");
 	}
+
 }

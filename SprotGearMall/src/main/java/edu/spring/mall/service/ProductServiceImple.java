@@ -162,6 +162,12 @@ public class ProductServiceImple implements ProductService {
 		logger.info("searchReviewCount() 호출");
 		return dao.selectReviewCount(searchText , criteria);
 	}
+
+	@Override
+	public int softDelete(ProductVO vo) {
+		logger.info("softDelete호출");
+		return dao.softDelete(vo);
+	}
 	
 	
 		

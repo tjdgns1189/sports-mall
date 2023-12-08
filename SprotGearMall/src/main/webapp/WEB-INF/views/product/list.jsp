@@ -10,7 +10,7 @@ content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 리스트</title>
 <link href="<c:url value="/resources/css/products.css" />" rel="stylesheet">
 
 <style>

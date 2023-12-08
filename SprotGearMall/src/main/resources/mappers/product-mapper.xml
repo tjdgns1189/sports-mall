@@ -54,9 +54,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	 <update id="update">
 	 	update ${product}
-	 	set ${productName} = #{productName}, ${productPrice} = #{productPrice}, ${productStock} = #{productStock}, 
-	 	${productMaker} = #{productMaker}, ${productImgPath} = #{productImgPath}, ${productCategory} = #{productCategory},
+	 	set ${productName} = #{productName},
+	 	 ${productPrice} = #{productPrice},
+	 	  ${productStock} = #{productStock}, 
+	 	${productMaker} = #{productMaker},
+	 	<if test="productImgPath != null">${productImgPath} = #{productImgPath},</if>
+	 	 ${productCategory} = #{productCategory},
 	 	${productIsDeleted} = #{productIsDeleted}
+	 	where ${productId} = #{productId}
+	 </update>
+	 
+	 <update id="soft_delete">
+	 	update ${product}
+	 	set ${productIsDeleted} = #{productIsDeleted}
 	 	where ${productId} = #{productId}
 	 </update>
 	 
@@ -69,7 +79,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 select ${productId}, ${productName}, ${productPrice}, ${productStock}, ${productMaker}, ${productImgPath}, ${productCategory}, ${productIsDeleted}
 	 from(
 	 	select rownum rn, a.* from(
-	 		select * from ${product} order by ${productName} desc
+	 		select * from ${product}
+	 		where ${productIsDeleted} = 0
+	 		order by ${productName} desc
 	 	)a
 	 ) where rn between #{start} and #{end}
 	 </select>

@@ -69,6 +69,7 @@
     		
     		
     	})
+    	
     function replyInsert() {
         $('#btn-insert').prop('disabled', true);
         var eventBoardId = $('#eventBoardId').val();
@@ -213,7 +214,54 @@
 				
 			})
 			
-		}   
+		} 
+		
+		function editComment(commentNumber) {
+		    var commentInfo = $('#div-' + commentNumber);
+		    
+		    // 현재 댓글 내용 가져오기
+		    var commentContent = commentInfo.find('.comment-content').text().replace('내용: ', '').trim();
+
+		    // 수정 버튼 대신 수정 완료 버튼으로 변경
+		    var actionsDiv = $('#btn-div-' + commentNumber);
+		    actionsDiv.html('<button class="btn btn-success" onclick="completeEdit(' + commentNumber + ')">수정 완료</button>');
+
+		    // 댓글 내용을 입력 필드로 교체
+		    commentInfo.find('.comment-content').html('내용 : <input type="text" class="edit-comment-input" id="edit-comment-input-' + commentNumber + '" value="' + commentContent + '">');
+		}
+		
+		function completeEdit(commentNumber) {
+		    // 수정된 댓글 내용 가져오기
+		    var editedContent = $('#edit-comment-input-' + commentNumber).val();
+		    var csrfToken = $('#csrfToken').val();
+		    var headers = {
+		        'Content-Type': 'application/json',
+		        'X-CSRF-TOKEN': csrfToken
+		    };
+
+		    // 서버로 수정된 댓글 내용을 전송 (AJAX 요청 필요)
+		    $.ajax({
+		        type: 'PUT',
+		        url: 'replies',
+		        data: JSON.stringify({
+		            'eventReplyId': commentNumber, // 수정 대상 댓글의 ID
+		            'eventReplyContent': editedContent
+		        }),
+		        headers: headers,
+		        success: function(response) {
+		            if (response === 1) {
+		                // 성공적으로 서버에서 응답이 왔을 때, UI 업데이트
+		                getreplies();
+		            }
+		        },
+		        error: function(error) {
+		            // 오류 처리
+		            console.error('댓글 수정 중 오류 발생:', error);
+		        }
+		    });
+		}
+		
+		
 
     </script>
     

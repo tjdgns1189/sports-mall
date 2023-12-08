@@ -16,6 +16,7 @@ public interface ProductService {
 	ProductVO read(int productId);
 	Map<String, Object> readProductById(int productId);
 	int update(ProductVO vo);
+	int softDelete(ProductVO vo);
 	int delete(int productId);
 	int getTotalCounts();
 	List<ProductVO> readBySearchText(String serchText,PageCriteria criteria);

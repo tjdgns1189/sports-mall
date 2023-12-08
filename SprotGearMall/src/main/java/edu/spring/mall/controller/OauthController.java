@@ -110,7 +110,7 @@ public class OauthController {
                 	String password = OAuth.generateRandomState();  
                 	String memberGrade = "ROLE_USER";
                 	String isOauthLogin = "Y";
-                	MemberVO vo = new MemberVO(memberId, password, name, phone, null, null, memberGrade, isOauthLogin);
+                	MemberVO vo = new MemberVO(memberId, password, name, phone, null, memberGrade, isOauthLogin);
                 	int result = memberService.create(vo);
                 	
                 	if(result == 1) {
@@ -196,7 +196,7 @@ public class OauthController {
 			String password = OAuth.generateRandomState();
 			String userGrade= "ROLE_USER";
 			String isOauthLogin = "Y";
-			MemberVO vo = new MemberVO(memberId, password, name, null, email, null, userGrade, isOauthLogin);
+			MemberVO vo = new MemberVO(memberId, password, name, null, email, userGrade, isOauthLogin);
 			int result = memberService.create(vo);
 			if(result == 1) {
 				CustomUserDetails user = 

@@ -307,7 +307,7 @@ public class ProductController {
 		
 	}
 
-	@PostMapping(value="/result", produces = "application/json")
+	@PostMapping(value="/result")
 	public void resultPOST(Model model, OrdersVO vo, Principal principal) throws Exception{
 		logger.info("resultPOST() 호출 : vo = " + vo.toString());
 		int result = orderService.create(vo);
@@ -318,6 +318,19 @@ public class ProductController {
 		OrdersVO ordersVO = orderService.read(orderId);
 		model.addAttribute("productVO", productVO);
 		model.addAttribute("vo", vo);
+		model.addAttribute("productPrice", vo.getProductPrice());
+	}
+	
+	@GetMapping(value="/result", produces = "application/json")
+	public void resultGet(Model model, OrdersVO vo, Principal principal){
+		logger.info("resultPOST() 호출 : vo = " + vo.toString());
+		
+		int productId = vo.getProductId();
+		int orderId = vo.getOrderId();
+		ProductVO productVO = productService.read(productId);
+		model.addAttribute("productVO", productVO);
+		model.addAttribute("vo", vo);
+		model.addAttribute("productPrice", vo.getProductPrice());
 	}
 	
 	  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)

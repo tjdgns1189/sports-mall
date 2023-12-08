@@ -8,6 +8,13 @@
 <title>${vo.qnaBoardTitle }</title>
 </head>
 <body>
+<div class="container-fluid">
+ <div class="row">
+  <!-- 사이드바 메뉴 -->
+  <jsp:include page="../includes/qna-sidebar.jsp" />
+   <!-- 메인 콘텐츠 -->
+   <div class="col-md-10">
+   <h1>QNA게시판</h1>
 	<h2>글 수정 페이지</h2>
 	<form action="qnaUpdate" method="POST">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -31,5 +38,8 @@
 			<input type="submit" value="등록">
 		</div>
 	</form>	
+</div>
+</div>
+</div>
 </body>
 </html>

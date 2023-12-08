@@ -42,13 +42,12 @@ public class EventBoardController {
 			criteria.setNumsPerPage(numsPerPage);
 		}
 		
-		List<EventBoardVO> list =eventBoardService.read(criteria);
+		List<EventBoardVO> list = eventBoardService.read(criteria);
 	
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(eventBoardService.getTotalCounts());
 		pageMaker.setPageData();
-		
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pageMaker",pageMaker);

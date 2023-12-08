@@ -158,6 +158,7 @@
     overflow: visible; /* 드롭다운 메뉴가 헤더 밖으로 확장될 수 있도록 설정 */
 }
 
+
 .logo {
 	font-size: 24px;
 	font-weight: bold;
@@ -244,7 +245,9 @@
   background-color: #ddd;
 }
 
-
+.header-color{
+	background-color: #1E3A5F;
+}
 
 .search-bar input {
 	padding-right:	10px;

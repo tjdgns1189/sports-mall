@@ -59,8 +59,8 @@ public class MemberServiceImple implements MemberService {
 	public int update(Map userDetail) throws Exception {
 		int result = 0;
 		String memberId = (String) userDetail.get("memberId");
+		//이건 비밀번호 수정
 		if (userDetail.containsKey("password")) {
-			
 			userDetail.put("password", passwordEncoder.encode((String) userDetail.get("password")));
 			result = dao.updateUserPassword(userDetail);
 			if (result == 1) {

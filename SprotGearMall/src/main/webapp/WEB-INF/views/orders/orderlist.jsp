@@ -52,7 +52,7 @@ review-btn{
 
 <script src="<c:url value="/resources/js/review.js" />"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>주문내역 조회</title>
 </head>
 <body>
 
@@ -127,6 +127,7 @@ review-btn{
 	<script>
     $(document).ready(function() {
         $("#btnDeleteCheck").click(function() {
+        	var csrfToken = $("#csrfToken").val();
             var checkedIds = [];
             var headers = {
 		    		'Content-Type': 'application/json',

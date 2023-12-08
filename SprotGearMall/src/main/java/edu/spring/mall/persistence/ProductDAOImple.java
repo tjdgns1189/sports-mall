@@ -78,7 +78,6 @@ public class ProductDAOImple implements ProductDAO{
 
 	@Override
 	public int getTotalCounts() {
-		logger.info("getTotalCount()");
 		return sqlSession.selectOne(NAMESPACE + ".total_count");
 	}
 
@@ -127,6 +126,11 @@ public class ProductDAOImple implements ProductDAO{
 
 
 	@Override
+	public int softDelete(ProductVO vo) {
+		logger.info("softDelete 호출");
+		return sqlSession.update(NAMESPACE + ".soft_delete", vo);
+	}
+
 	public List<ProductVO> selectSoccerBall() {
 		logger.info("select() 호출");
 		return sqlSession.selectList(NAMESPACE + ".select_SoccerBall");
@@ -146,5 +150,4 @@ public class ProductDAOImple implements ProductDAO{
 		return sqlSession.selectList(NAMESPACE + ".select_BasketBall");
 	}
 	
-
 }

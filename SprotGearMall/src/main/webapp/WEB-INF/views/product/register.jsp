@@ -45,7 +45,8 @@
     padding: 16px;
     font-size: 16px;
     border: none;
-    cursor: pointer;
+    
+    
 }
 .category-dropdown {
     position: relative;
@@ -107,8 +108,12 @@
     right: 0;
     height: 3px; /* Adjust this value based on the desired spacing */
     background-color: #f9f9f9;
-    z-index: -1;
+    z-index: -1;   
 }
+	
+.form-control {
+    margin-top: 20px; /* 적절한 간격 값으로 변경해보세요 */
+  }	
 	
 </style>
 </head>
@@ -141,13 +146,13 @@
       </div>
       <div class="form-group mb-3">
         <label for="fileItem" class="form-label">이미지:</label>
-        <input type="file" class="form-control" id="fileItem" name="productImgPath">
+        <input type="file" class="form-control" id="fileItem" name="productImgPath" accept="image/png, image/jpeg, image/webp">
       </div>
       
       <div class="form-group">
     <label for="productCategory">종류:</label>
     <div class="category-dropdown">
-        <button class="category-dropbtn">선택</button>
+        <span class="category-dropbtn">선택</span>
         <div class="category-dropdown-content">
             <a href="#" onclick="eventPreventDefault()">축구</a>
             <div class="sub-links">
@@ -173,6 +178,7 @@
                 <a href="#" onclick="updateProductCategory('포수보호대')">포수보호대</a>
                 <a href="#" onclick="updateProductCategory('야구모자')">야구모자</a>
                 <a href="#" onclick="updateProductCategory('야구유니폼')">야구유니폼</a>
+                <a href="#" onclick="updateProductCategory('야구공')">야구공</a>
             </div>
         </div>
     </div>

@@ -72,6 +72,12 @@ text-align: center;
     color: white; 
     font-weight: bold;
 }
+
+.details-img img{
+    width: 100%;      /* 이미지를 부모 요소의 너비에 맞춤 */
+    height: auto;     /* 높이를 자동으로 조정하여 비율 유지 */
+    object-fit: cover; /* 이미지가 비율을 유지하면서 요소를 채우도록 함 */
+}
     </style>
 </head>
 <body>
@@ -130,7 +136,7 @@ text-align: center;
 
         <div class="tab-content">
             <!-- 상품 설명 -->
-            <div class="tab-pane container active" id="description">
+            <div class="tab-pane container active details-img" id="description">
                 ${product.productContent }
             </div>
             <!-- 리뷰 -->
