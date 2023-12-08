@@ -78,7 +78,6 @@ public class ProductDAOImple implements ProductDAO{
 
 	@Override
 	public int getTotalCounts() {
-		logger.info("getTotalCount()");
 		return sqlSession.selectOne(NAMESPACE + ".total_count");
 	}
 

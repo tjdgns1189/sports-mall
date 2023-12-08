@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<title>Insert title here</title>
+<title>최근 본 상품</title>
 <style type="text/css">
 table, th, td {
    border-style : solid;

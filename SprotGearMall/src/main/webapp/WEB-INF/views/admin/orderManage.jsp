@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>사용자 주문 관리</title>
 </head>
 <body>
 	<div class="container-fluid">

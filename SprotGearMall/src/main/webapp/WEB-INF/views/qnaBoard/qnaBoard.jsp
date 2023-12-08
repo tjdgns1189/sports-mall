@@ -25,7 +25,7 @@ li {
 }
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>QNA 게시판</title>
 </head>
 <body>
 <div class="container-fluid">

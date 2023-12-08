@@ -41,10 +41,7 @@ public class HomeController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 	    model.addAttribute("authorities", authorities);
-		
-	    logger.info("list() 호출");
-		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
-		
+				
 		PageCriteria criteria = new PageCriteria();
 		criteria.setNumsPerPage(100);
 		if(page != null) {

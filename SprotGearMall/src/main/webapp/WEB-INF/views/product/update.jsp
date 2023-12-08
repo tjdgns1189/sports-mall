@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${vo.productName }</title>
+<title>${vo.productName } 상품 수정</title>
 </head>
 <body>
 	<h2>상품 수정 페이지</h2>

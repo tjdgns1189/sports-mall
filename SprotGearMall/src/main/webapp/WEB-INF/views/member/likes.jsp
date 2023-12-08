@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>찜한 상품</title>
 </head>
 <body>
 <div class="container-fluid">
