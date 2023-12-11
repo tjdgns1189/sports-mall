@@ -290,7 +290,17 @@ li {
                     </tr>
                     <tr>
                         <th scope="row">주소지</th>
-                        <td><sec:authentication property="principal.address" /></td>
+                        <td>
+                        	<select id="addressOption" onchange="toggleAddressInput()">
+                        	    <option value="firstAddress">* &nbsp;(배송지&nbsp; 선택필수)</option>
+            					<option value="existingAddress"><sec:authentication property="principal.address" /></option>
+            					<option value="directInput">(배송지&nbsp; 직접입력)</option>
+        					</select>
+        					<div id="newAddressInput" style="display: none;">
+        					<br />
+            					<input type="text" class="form-control" id="newAddress" placeholder="새로운 주소를 입력하세요">
+        					</div>
+        				</td>
                     </tr>
                     <tr>
                         <th scope="row">배송 요청사항</th>
@@ -430,7 +440,26 @@ li {
 			if (!areCheckboxesChecked()) {
                 alert("체크박스를 체크하세요");
                 return false; // 버튼 클릭 이벤트 중단
+               
             }
+			
+			// 주소지 선택 여부 확인
+	        var addressOption = document.getElementById("addressOption");
+	        if (addressOption.value === "firstAddress") {
+	            alert("배송지를 꼭 선택해주세요!");
+	            return false; // 폼 제출 취소
+	        }
+	        
+	     	// 새로운 주소 입력 확인
+	        if (addressOption.value === "directInput") {
+	            var newAddressInput = document.getElementById("newAddress");
+	            if (!newAddressInput.value.trim()) {
+	                alert("배송지직접입력칸에 내용을 적어주세요!");
+	                return false; // 폼 제출 취소
+	            }
+	        }
+			
+			
 			
 			iamportCart();
 						
@@ -530,7 +559,7 @@ li {
 	            return false; // 폼 제출 취소
 	        }
 	        
-	     // 새로운 주소 입력 확인
+	     	// 새로운 주소 입력 확인
 	        if (addressOption.value === "directInput") {
 	            var newAddressInput = document.getElementById("newAddress");
 	            if (!newAddressInput.value.trim()) {
