@@ -71,7 +71,7 @@ public class ProductDAOImple implements ProductDAO{
 	@Override
 	public int delete(int productId) {
 		logger.info("delete() 호출 : productId = " + productId);
-		return sqlSession.delete(NAMESPACE + ".delete",productId);
+		return sqlSession.update(NAMESPACE + ".delete",productId);
 	}
 
 	
@@ -92,7 +92,7 @@ public class ProductDAOImple implements ProductDAO{
 	public List<ProductVO> select(String searchText, PageCriteria criteria) {
 		logger.info("select() 호출 : " + searchText);
 		Map<String, Object> paramMap = new HashMap<>();
-	    paramMap.put("searchText", searchText);
+	    paramMap.put("searchText", "%" + searchText + "%");
 	    paramMap.put("criteria", criteria);
 	    return sqlSession.selectList(NAMESPACE + ".select_by_search_text", paramMap);
 	}

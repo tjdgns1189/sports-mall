@@ -78,10 +78,13 @@ public class EventBoardController {
 	}
 	
 	@GetMapping("/detail")
-	public void eventBoardDetailGet(Model model, int eventBoardId) {
+	public void eventBoardDetailGet(Model model, Principal principal ,int eventBoardId) {
 		logger.info("eventBoardDetailGet() 호출");
 		EventBoardVO vo = eventBoardService.read(eventBoardId);
+		String memberId = principal.getName();
+		model.addAttribute("currentUserMemberId",memberId);
 		model.addAttribute("vo",vo);
+		
 		
 	}
 	

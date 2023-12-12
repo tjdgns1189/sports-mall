@@ -15,7 +15,6 @@
        <jsp:include page="../includes/qna-sidebar.jsp" />
         <!-- 메인 콘텐츠 -->
         <div class="col-md-10">
-       <a href="register"> <button class="btn btn-primary">등록버튼</button></a>
         <table class="table">
         <thead>
         <tr>

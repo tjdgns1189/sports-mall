@@ -131,6 +131,7 @@
     
     <form action="update" method="POST" enctype="multipart/form-data">
       <div class="form-group">
+        <input type="hidden" class="form-control" id="productId" name="productId" value="${vo.productId }">
         <label for="productName">이름:</label>
         <input type="text" class="form-control" id="productName" name="productName" value="${vo.productName }" required>
       </div>
@@ -188,7 +189,7 @@
 </div>
       <div class="form-group">
         <label for="productContent">상품 설명:</label>
-        <textarea class="form-control summernote" id="productContent" name="productContent" rows="10"></textarea>  
+        <textarea class="form-control summernote" id="productContent" name="productContent"   rows="10">${vo.productContent}</textarea>  
       </div>
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
       <button type="submit" class="btn btn-primary">수정</button>
@@ -213,6 +214,26 @@ $(()=>{
 	    event.preventDefault();
 	    // 기타 작업 수행...
 	  });
+	
+	// 등록 버튼 클릭 시 폼 검증
+    $('form').submit(function (event) {
+        // 필수 입력 필드의 값을 확인
+        var productName = $('#productName').val();
+        var productPrice = $('#productPrice').val();
+        var productStock = $('#productStock').val();
+        var productMaker = $('#productMaker').val();
+        var productImgPath = $('#fileItem').val();
+        var productCategory = $('#productCategory').val();
+        var productContent = $('#productContent').summernote('code');
+
+        // 필수 입력 필드 중 하나라도 비어있으면 경고 표시
+        if (!productName || !productPrice || !productStock || !productMaker || !productCategory || !productContent) {
+            alert("빠진 입력 사항이 없는 지 확인해주세요.");
+            event.preventDefault(); // 기본 동작을 막음
+        }
+    });
+	
+	
 })
 
  function updateProductCategory(category) {
@@ -223,6 +244,9 @@ $(()=>{
 function eventPreventDefault() {
 	event.preventDefault(); // 기본 동작을 막음
 }  
+
+
+
 
 </script>
 

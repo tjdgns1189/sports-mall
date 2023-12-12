@@ -121,10 +121,30 @@ public class ProductServiceImple implements ProductService {
 		return map;
 	}
 
+	@Transactional
 	@Override
-	public int update(ProductVO vo) {
+	public int update(ProductVO vo, MultipartFile file) throws IOException {
 		logger.info("update() 호출 : vo = " + vo.toString());
-		return dao.update(vo);
+		 String randomString = UUID.randomUUID().toString().replace("-", "").substring(0, 32);
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+		    String dateString = dateFormat.format(new Date());
+		    //이미지 없을때 기본 이미지 설정해둔거임
+		    String imagePath = "product/null-img.png";
+		    
+		    if(vo.getProductImgPath() == null || vo.getProductImgPath().isBlank()) {
+		    	vo.setProductImgPath(imagePath);
+		    }else {
+		    	String extension = "";
+		        extension = vo.getProductImgPath().substring(vo.getProductImgPath().lastIndexOf("."));
+		        imagePath = "product/" + randomString + "_" + dateString + extension;
+		        vo.setProductImgPath(imagePath);
+		    }
+		    int result = dao.update(vo);
+		    if(result == 1 && !imagePath.equals("product/null-img.png")) {
+		    	imageService.uploadFile(file, imagePath);
+		    	
+		    }
+			return result;
 	}
 
 	@Override

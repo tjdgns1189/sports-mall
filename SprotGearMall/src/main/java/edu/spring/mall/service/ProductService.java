@@ -15,7 +15,7 @@ public interface ProductService {
 	List<ProductVO> read(PageCriteria criteria);
 	ProductVO read(int productId);
 	Map<String, Object> readProductById(int productId);
-	int update(ProductVO vo);
+	int update(ProductVO vo, MultipartFile file)throws IOException;
 	int softDelete(ProductVO vo);
 	int delete(int productId);
 	int getTotalCounts();

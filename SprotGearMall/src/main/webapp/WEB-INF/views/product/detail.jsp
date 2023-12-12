@@ -272,14 +272,18 @@ text-align: center;
             </div>
         </div>
     </div>
-
-    <a href="update?productId=${product.productId}&page=${page}"><input type="button" value="상품 수정"></a>
-    <form action="delete" method="POST">
-    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-        <input type="hidden" id="productId" name="productId" value="${product.productId}">
-        <input type="hidden" id="memberId" name="memberId" value="${pageContext.request.userPrincipal.name}">
-        <input type="submit" value="상품 삭제">
-    </form>
+	
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+			 <a href="update?productId=${product.productId}&page=${page}"><input type="button" value="상품 수정"></a>
+		     <form action="delete" method="POST">
+		    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+		        <input type="hidden" id="productId" name="productId" value="${product.productId}">
+		        <input type="hidden" id="memberId" name="memberId" value="${pageContext.request.userPrincipal.name}">
+		        <input type="submit" value="상품 삭제">
+		     </form>
+	</sec:authorize>
+	
+   
     
 
     
