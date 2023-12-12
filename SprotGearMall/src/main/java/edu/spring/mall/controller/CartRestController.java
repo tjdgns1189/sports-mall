@@ -29,17 +29,28 @@ public class CartRestController {
 	@Autowired
 	private CartService cartService;
 	
+	//장바구니 중복처리, 장바구니 추가하기
 	@PostMapping(value="/cartlists", produces = "application/json")
 	public ResponseEntity<Integer> createCart(@RequestBody CartVO vo) {
 		logger.info("createCart() 호출 : vo = " + vo.toString());
+		logger.info("vo.getProductId()있나 = " + vo.getProductId());
+		CartVO cart = cartService.readProductId(vo.getProductId(), vo.getMemberId());
 		
-		int result = 0;
-		try {
-			result = cartService.create(vo);
-		} catch (Exception e) {
-			e.printStackTrace();
+		logger.info("cart있나 = " + cart);
+		if(cart != null) {
+			int result = 0;
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		} else{
+			int result = 0;
+			try {
+				result = cartService.create(vo);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
 		}
-        return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	
 	}
 	
 	@DeleteMapping(value="/delete/{id}", produces = "application/json")

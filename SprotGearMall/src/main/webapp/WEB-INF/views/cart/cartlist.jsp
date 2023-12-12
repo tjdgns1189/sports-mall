@@ -102,7 +102,7 @@ function updateAllTotalPrice() {
 }
 
 
-// 버튼 누를시 삭제
+	// 버튼 누를시 삭제
     $(".btn-delete").click(function () {
         var cartId = $(this).data("cart-id");
         var csrfToken = $("#csrfToken").val();

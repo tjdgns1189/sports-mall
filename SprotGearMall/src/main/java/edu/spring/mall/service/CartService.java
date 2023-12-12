@@ -10,4 +10,5 @@ public interface CartService {
 	int update(CartVO vo) throws Exception;
 	int delete(int cartId);
 	List<CartProductJoinVO> read(String memberId) throws Exception;
+	CartVO readProductId(int productId, String memberId);
 }
