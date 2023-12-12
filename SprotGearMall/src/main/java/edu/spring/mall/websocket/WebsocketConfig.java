@@ -8,19 +8,17 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 
 @Configuration
 @EnableWebSocket
-public class WebsocketConfig implements WebSocketConfigurer{
+public class WebsocketConfig implements WebSocketConfigurer {
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(userQueryWebSocketHandler(), "/echo")
-        .setAllowedOrigins("*")
-        .addInterceptors(new SecurityHandshakeInterceptor());
+		registry.addHandler(userQueryWebSocketHandler(), "/echo").setAllowedOrigins("*")
+				.addInterceptors(new SecurityHandshakeInterceptor());
 	}
 
 	@Bean
 	public UserQueryWebsocketHandler userQueryWebSocketHandler() {
-	      return new UserQueryWebsocketHandler();
-	    }
-
+		return new UserQueryWebsocketHandler();
+	}
 
 }

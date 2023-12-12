@@ -15,18 +15,16 @@ import edu.spring.mall.service.ChatRoomService;
 @RestController
 public class ChatRoomRestController {
 	private Logger logger = LoggerFactory.getLogger(ChatRoomRestController.class);
-	
+
 	@Autowired
-    private ChatRoomService service;
-	
+	private ChatRoomService service;
+
 	@GetMapping("/admin/rooms")
-	public ResponseEntity<Collection<ChatRoomVO>> roomListGET(){
+	public ResponseEntity<Collection<ChatRoomVO>> roomListGET() {
 		Collection<ChatRoomVO> rooms = service.getAllChatList();
 		logger.info("채팅 리스트 호출 : " + rooms.size() + "개의 채팅방이 있음");
-        return ResponseEntity.ok(rooms);
+		return ResponseEntity.ok(rooms);
 
 	}
-	
-	
 
 }

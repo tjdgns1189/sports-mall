@@ -60,5 +60,14 @@ public class CartDAOImple implements CartDAO {
 		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", productId);
 	}
 
+	@Override
+	public CartVO selectByProductIdOne(int productId, String memberId) {
+		logger.info("selectByProductIdOne() 호출 : productId " + productId);
+		Map<String, Object> params = new HashMap<>();
+	    params.put("productId", productId);
+	    params.put("memberId", memberId);
+		return sqlSession.selectOne(NAMESPACE + ".select_by_product_id", params);
+	}
+
 
 }

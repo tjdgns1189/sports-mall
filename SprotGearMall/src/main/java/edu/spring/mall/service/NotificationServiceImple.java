@@ -13,7 +13,7 @@ import edu.spring.mall.persistence.NotificationDAO;
 @Service
 public class NotificationServiceImple implements NotificationService {
 	private final Logger logger = LoggerFactory.getLogger(NotificationServiceImple.class);
-	
+
 	@Autowired
 	private NotificationDAO dao;
 

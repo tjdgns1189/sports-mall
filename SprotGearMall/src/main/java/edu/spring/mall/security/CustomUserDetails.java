@@ -23,8 +23,6 @@ public class CustomUserDetails implements UserDetails {
 	private int zonecode;
 	private String detailAddress;
 
-	
-	
 	public String getIsOauthLogin() {
 		return isOauthLogin;
 	}
@@ -123,8 +121,6 @@ public class CustomUserDetails implements UserDetails {
 	public CustomUserDetails() {
 		super();
 	}
-	
-
 
 	@Override
 	public String toString() {

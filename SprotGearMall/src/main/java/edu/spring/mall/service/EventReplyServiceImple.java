@@ -13,13 +13,11 @@ import edu.spring.mall.persistence.EventReplyDAO;
 @Service
 public class EventReplyServiceImple implements EventReplyService {
 
-	private static final Logger logger =
-			LoggerFactory.getLogger(EventReplyServiceImple.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(EventReplyServiceImple.class);
+
 	@Autowired
 	private EventReplyDAO dao;
-	
-	
+
 	@Override
 	public int create(EventReplyVO vo) {
 		logger.info("create() 호출");

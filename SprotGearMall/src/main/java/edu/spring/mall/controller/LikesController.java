@@ -16,18 +16,18 @@ import edu.spring.mall.service.LikesServiceImple;
 @Controller
 public class LikesController {
 	private final Logger logger = LoggerFactory.getLogger(LikesController.class);
-	
+
 	@Autowired
 	LikesServiceImple service;
-	
+
 	@GetMapping("/member/likes")
 	public void likesGET(Principal principal, Model model) {
 		logger.info("likesGET 호출" + principal.getName());
 		String memberId = principal.getName();
-		
+
 		List<ProductVO> list = service.read(memberId);
 		model.addAttribute("list", list);
-		    
+
 	}
 
 }

@@ -63,6 +63,7 @@ review-btn{
             <!-- 메인 콘텐츠 -->
             <div class="col-md-10">
                 <h1>${pageContext.request.userPrincipal.name}의 구입내역출력</h1>
+                <!-- <button id="sortByDateBtn">시간순 정렬</button>  -->
                 <table class="table">
                     <thead>
                         <tr>
@@ -92,7 +93,7 @@ review-btn{
                                 </td>
                                 <td>${vo.order.productQuantity}</td>
                                 <td>${vo.order.productQuantity * vo.order.productPrice}</td>
-                                <td><fmt:formatDate value="${vo.order.orderCreatedDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+                                <td class="orderDate"><fmt:formatDate value="${vo.order.orderCreatedDate}" pattern="yyyy-MM-dd HH:mm" /></td>
                                 <td id="state-${vo.order.orderId }">${vo.order.orderState }</td>
                                 <td>
                                     <c:if test="${!vo.hasReview}">
@@ -138,7 +139,7 @@ review-btn{
             $.ajax({
                 type: "POST",
                 url: "delete", 
-                headers :headers,
+                headers : headers,
                 data: JSON.stringify(checkedIds),
                 success: function(result) {
                     console.log(result);
@@ -184,6 +185,30 @@ review-btn{
     function openReview(url) {
   	  window.open(url, 'reviewPopup', 'width=484,height=764');
   	}
+    
+    
+    // 시간순 정렬
+    $(document).ready(function() {
+        // 페이지 로드시 기본적으로 시간순으로 정렬
+        sortTableByDate();
+
+        // 시간순 정렬 버튼 클릭 이벤트 처리
+        $("#sortByDateBtn").click(function() {
+            sortTableByDate();
+        });
+    });
+
+    function sortTableByDate() {
+        var table = $(".table");
+        var rows = $("tbody tr", table).toArray().sort(compareRowsByDate);
+        $("tbody", table).empty().append(rows);
+    }
+
+    function compareRowsByDate(a, b) {
+        var dateA = new Date($(".orderDate", a).text());
+        var dateB = new Date($(".orderDate", b).text());
+        return dateA < dateB ? 1 : -1;
+    }
 
 </script>
 

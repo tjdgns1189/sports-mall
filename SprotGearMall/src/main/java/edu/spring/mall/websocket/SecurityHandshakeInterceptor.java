@@ -19,18 +19,19 @@ public class SecurityHandshakeInterceptor implements HandshakeInterceptor {
 
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
-		Map<String, Object> attributes) throws Exception {
+			Map<String, Object> attributes) throws Exception {
 		logger.info("핸드쉐이크");
-	     if (request instanceof ServletServerHttpRequest) {
-	            ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
-	            HttpSession httpSession = servletRequest.getServletRequest().getSession();
-	            SecurityContext securityContext = (SecurityContext) httpSession.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
-	            if (securityContext != null && securityContext.getAuthentication() != null) {
-	                attributes.put("SPRING_SECURITY_CONTEXT", securityContext);
-	            }
-	        }
-	        return true;
-	    }
+		if (request instanceof ServletServerHttpRequest) {
+			ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+			HttpSession httpSession = servletRequest.getServletRequest().getSession();
+			SecurityContext securityContext = (SecurityContext) httpSession
+					.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+			if (securityContext != null && securityContext.getAuthentication() != null) {
+				attributes.put("SPRING_SECURITY_CONTEXT", securityContext);
+			}
+		}
+		return true;
+	}
 
 	@Override
 	public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,

@@ -45,158 +45,152 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.spring.mall.security.CustomUserDetails;
 import edu.spring.mall.util.CookieUtil;
+
 @Service
 public class OAuthServiceImple implements OAuthService {
 	private final Logger logger = LoggerFactory.getLogger(OAuthServiceImple.class);
 
-	
 	@Autowired
-    private ClientRegistrationRepository social;
-	
+	private ClientRegistrationRepository social;
+
 	@Autowired
 	private OAuth2AuthorizedClientService authService;
-	
+
 	@Autowired
 	private AuthenticationSuccessHandler successHandler;
-	
+
 	@Override
 	public String createUrl(HttpServletRequest request, String RegistrationId) {
 		logger.info("url 생성 : " + RegistrationId);
-        ClientRegistration registration= social.findByRegistrationId(RegistrationId);
-        if(registration ==null) {
-        	return  "false";
-        }
-        
-        String state = generateRandomState();
-        request.getSession().setAttribute(RegistrationId + "OAuthState", state);  
-        logger.info("세션 등록 키값 확인 :" + RegistrationId + "OAuthState");
+		ClientRegistration registration = social.findByRegistrationId(RegistrationId);
+		if (registration == null) {
+			return "false";
+		}
+
+		String state = generateRandomState();
+		request.getSession().setAttribute(RegistrationId + "OAuthState", state);
+		logger.info("세션 등록 키값 확인 :" + RegistrationId + "OAuthState");
 		return buildUrl(registration, state);
 	}
 
 	@Override
-	public OAuth2AccessToken  getToken(String registrationId, String code, String state) throws JsonMappingException, JsonProcessingException {
+	public OAuth2AccessToken getToken(String registrationId, String code, String state)
+			throws JsonMappingException, JsonProcessingException {
 		logger.info("getToken 호출");
-		 ClientRegistration registration = social.findByRegistrationId(registrationId);
-		    RestTemplate restTemplate = new RestTemplate();
-		    String tokenEndpoint = registration.getProviderDetails().getTokenUri();
-		    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		    params.add("grant_type", "authorization_code");
-		    params.add("client_id", registration.getClientId());
-		    params.add("client_secret", registration.getClientSecret());
-		    params.add("code", code);
-		    params.add("state", state);
-		    
-			if("google".equals(registration.getRegistrationId())) {
-				params.add("redirect_uri", registration.getRedirectUri());
-			}
-			
-		    ResponseEntity<String> response = restTemplate.postForEntity(tokenEndpoint, params, String.class);
-		    String tokenJson = response.getBody();
-		    logger.info("token값 : " + tokenJson);
-		    ObjectMapper objectMapper = new ObjectMapper();
-		    JsonNode jsonNode = objectMapper.readTree(tokenJson);
-		    String accessTokenValue = jsonNode.get("access_token").asText();
-		    long expiresIn = jsonNode.get("expires_in").asLong();
+		ClientRegistration registration = social.findByRegistrationId(registrationId);
+		RestTemplate restTemplate = new RestTemplate();
+		String tokenEndpoint = registration.getProviderDetails().getTokenUri();
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("grant_type", "authorization_code");
+		params.add("client_id", registration.getClientId());
+		params.add("client_secret", registration.getClientSecret());
+		params.add("code", code);
+		params.add("state", state);
 
-		    OAuth2AccessToken accessToken;
-		    
-		    if("google".equals(registrationId)) {
-		        String scopeString = jsonNode.get("scope").asText();
-		        Set<String> scopes = Arrays.stream(scopeString.split(" ")).collect(Collectors.toSet());
-		        accessToken = new OAuth2AccessToken(
-		            OAuth2AccessToken.TokenType.BEARER, accessTokenValue, Instant.now(),
-		            Instant.now().plusSeconds(expiresIn), scopes
-		        );
-		    } else {
-		        accessToken = new OAuth2AccessToken(
-		            OAuth2AccessToken.TokenType.BEARER, accessTokenValue, Instant.now(),
-		            Instant.now().plusSeconds(expiresIn)
-		        );
-		    }
+		if ("google".equals(registration.getRegistrationId())) {
+			params.add("redirect_uri", registration.getRedirectUri());
+		}
 
-		    return accessToken;
-		
+		ResponseEntity<String> response = restTemplate.postForEntity(tokenEndpoint, params, String.class);
+		String tokenJson = response.getBody();
+		logger.info("token값 : " + tokenJson);
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode jsonNode = objectMapper.readTree(tokenJson);
+		String accessTokenValue = jsonNode.get("access_token").asText();
+		long expiresIn = jsonNode.get("expires_in").asLong();
+
+		OAuth2AccessToken accessToken;
+
+		if ("google".equals(registrationId)) {
+			String scopeString = jsonNode.get("scope").asText();
+			Set<String> scopes = Arrays.stream(scopeString.split(" ")).collect(Collectors.toSet());
+			accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER, accessTokenValue, Instant.now(),
+					Instant.now().plusSeconds(expiresIn), scopes);
+		} else {
+			accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER, accessTokenValue, Instant.now(),
+					Instant.now().plusSeconds(expiresIn));
+		}
+
+		return accessToken;
+
 	}
 
 	@Override
 	public JsonNode getUserInfo(String registrationId, OAuth2AccessToken accessToken) {
 		logger.info("getUserInfo 호출");
 		String access = accessToken.getTokenValue();
-		 ClientRegistration registration = social.findByRegistrationId(registrationId);
-		 String userInfoEndpoint = registration.getProviderDetails().getUserInfoEndpoint().getUri();
-         HttpHeaders headers = new HttpHeaders();
-         headers.setContentType(MediaType.APPLICATION_JSON);
-         headers.set("Authorization", "Bearer " + access);
-         HttpEntity<String> entity = new HttpEntity<>(headers);
-         RestTemplate template = new RestTemplate();
-         ResponseEntity<String> response = template.exchange(userInfoEndpoint, HttpMethod.POST, entity, String.class);
-         String userInfo = response.getBody();
-         ObjectMapper mapper = new ObjectMapper();
-         try {
-             return mapper.readTree(userInfo);
-         } catch (JsonProcessingException e) {
-             logger.error("JSON 파싱 에러", e);
-             return null;
-         }
+		ClientRegistration registration = social.findByRegistrationId(registrationId);
+		String userInfoEndpoint = registration.getProviderDetails().getUserInfoEndpoint().getUri();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("Authorization", "Bearer " + access);
+		HttpEntity<String> entity = new HttpEntity<>(headers);
+		RestTemplate template = new RestTemplate();
+		ResponseEntity<String> response = template.exchange(userInfoEndpoint, HttpMethod.POST, entity, String.class);
+		String userInfo = response.getBody();
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readTree(userInfo);
+		} catch (JsonProcessingException e) {
+			logger.error("JSON 파싱 에러", e);
+			return null;
+		}
 	}
 
 	@Override
 	public String generateRandomState() {
-        SecureRandom random = new SecureRandom();
-        return new BigInteger(130, random).toString(32);
+		SecureRandom random = new SecureRandom();
+		return new BigInteger(130, random).toString(32);
 	}
 
 	@Override
 	public void securityLogin(CustomUserDetails user) {
 		logger.info("시큐리티 로그인 수동으로 설정");
 		Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-	    SecurityContextHolder.getContext().setAuthentication(authentication);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 
 	@Override
 	public String buildUrl(ClientRegistration registration, String state) {
 		logger.info("buildUrl 호출");
-		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(registration.getProviderDetails().getAuthorizationUri())
-		        .queryParam("response_type", "code")
-		        .queryParam("client_id", registration.getClientId())
-		        .queryParam("redirect_uri", registration.getRedirectUriTemplate())
-		        .queryParam("state", state);
-		
-		if("google".equals(registration.getRegistrationId())) {
-			 String scopes = registration.getScopes().stream()
-                     .collect(Collectors.joining(" "));
-			 builder.queryParam("scope", scopes);
+		UriComponentsBuilder builder = UriComponentsBuilder
+				.fromUriString(registration.getProviderDetails().getAuthorizationUri())
+				.queryParam("response_type", "code").queryParam("client_id", registration.getClientId())
+				.queryParam("redirect_uri", registration.getRedirectUriTemplate()).queryParam("state", state);
+
+		if ("google".equals(registration.getRegistrationId())) {
+			String scopes = registration.getScopes().stream().collect(Collectors.joining(" "));
+			builder.queryParam("scope", scopes);
 		}
 		logger.info("호출 uri " + builder.toUriString());
-		return  builder.toUriString();
+		return builder.toUriString();
 	}
 
 	@Override
-    public void saveToken(HttpServletRequest request, HttpServletResponse response, 
-    		String registaionId, OAuth2AccessToken accessToken) throws IOException, ServletException {
+	public void saveToken(HttpServletRequest request, HttpServletResponse response, String registaionId,
+			OAuth2AccessToken accessToken) throws IOException, ServletException {
 		logger.info("saveToken 호출");
-		
+
 		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
 		ClientRegistration registration = social.findByRegistrationId(registaionId);
-		OAuth2AuthorizedClient authorizedClient 
-		    = new OAuth2AuthorizedClient(registration, principal.getName(), accessToken);
-		    
-		    authService.saveAuthorizedClient(authorizedClient, principal);
-		    HttpSession session = request.getSession();
-	        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-            
-	        Cookie cookie = new Cookie("registrationId", registaionId);
-            cookie.setPath("/");
-            cookie.setMaxAge(60*60*24);
-            response.addCookie(cookie);
-            try {
-				CookieUtil.createEncryptedCookie(response, "Token", accessToken.getTokenValue(), 60*60*24);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		    successHandler.onAuthenticationSuccess(request, response, principal);  
+		OAuth2AuthorizedClient authorizedClient = new OAuth2AuthorizedClient(registration, principal.getName(),
+				accessToken);
+
+		authService.saveAuthorizedClient(authorizedClient, principal);
+		HttpSession session = request.getSession();
+		session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+				SecurityContextHolder.getContext());
+
+		Cookie cookie = new Cookie("registrationId", registaionId);
+		cookie.setPath("/");
+		cookie.setMaxAge(60 * 60 * 24);
+		response.addCookie(cookie);
+		try {
+			CookieUtil.createEncryptedCookie(response, "Token", accessToken.getTokenValue(), 60 * 60 * 24);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		successHandler.onAuthenticationSuccess(request, response, principal);
 	}
-
-
 
 }

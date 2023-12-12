@@ -15,7 +15,7 @@
   <jsp:include page="../includes/qna-sidebar.jsp" />
    <!-- 메인 콘텐츠 -->
    <div class="col-md-10">
-   <h1>QNA게시판</h1>
+   <h1>QNA자유게시판</h1>
 	<h2>글 수정 페이지</h2>
 	<form id="qnaUpdateForm" action="qnaUpdate" method="POST">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -47,13 +47,22 @@
 
 
 <script>
+//제목, 내용null값일때
 function validateForm() {
     var content = $('#qnaUpdateForm textarea[name="qnaBoardContent"]').val();
     if (!content.trim()) {
         alert('내용을 입력하세요.');
         event.preventDefault(); // 폼 제출 막기
     }
+    
+    //제목 null일때
+    var contentTitle = $('#qnaUpdateForm input[name="qnaBoardTitle"]').val();
+    if (!contentTitle.trim()) {
+        alert('제목을 입력하세요.');
+        event.preventDefault(); // 폼 제출 막기
+    }
 }
+
 </script>
 </body>
 </html>

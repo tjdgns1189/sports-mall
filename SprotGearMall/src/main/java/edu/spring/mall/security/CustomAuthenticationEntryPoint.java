@@ -12,27 +12,25 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    private Logger logger = LoggerFactory.getLogger(CustomAuthenticationEntryPoint.class);
-    private String loginFormUrl; // 로그인 페이지 URL
+	private Logger logger = LoggerFactory.getLogger(CustomAuthenticationEntryPoint.class);
+	private String loginFormUrl; // 로그인 페이지 URL
 
-    public CustomAuthenticationEntryPoint(String loginFormUrl) {
-        this.loginFormUrl = loginFormUrl;
-    }
+	public CustomAuthenticationEntryPoint(String loginFormUrl) {
+		this.loginFormUrl = loginFormUrl;
+	}
 
-    @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response,
-                         AuthenticationException authException) throws IOException, ServletException {
-        logger.info("commence 호출");
+	@Override
+	public void commence(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException authException) throws IOException, ServletException {
+		logger.info("commence 호출");
 
-        if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "접근권한 없음");
-        } else {
-            if (authException != null) {
-                request.getSession().setAttribute("authError", "ACCESS_DENIED");
-            }
-            response.sendRedirect(loginFormUrl);
-        }
-    }
+		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, "접근권한 없음");
+		} else {
+			if (authException != null) {
+				request.getSession().setAttribute("authError", "ACCESS_DENIED");
+			}
+			response.sendRedirect(loginFormUrl);
+		}
+	}
 }
-
-

@@ -20,7 +20,7 @@
   <jsp:include page="../includes/qna-sidebar.jsp" />
    <!-- 메인 콘텐츠 -->
    <div class="col-md-10">
-   <h1>QNA게시판</h1>
+   <h1>QNA자유게시판</h1>
 	<h2>글 보기</h2>
 	<div>
 		<p>글 번호 : ${vo.qnaBoardId }</p>
@@ -49,16 +49,26 @@
 			<input type="submit" id="btnDelete" value="글 삭제"> 
 		</form>
 		
+		<br />
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<form action="delete" method="POST">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+			<input type="hidden" id="qnaBoardId" name="qnaBoardId" value="${vo.qnaBoardId }">
+			<input type="submit" id="btnDelete" value="관리자전용 글 삭제" style="background-color: red; color: white;"> 
+		</form>
+		</sec:authorize>
 		
 		
 		
 	<input type="hidden" id="qnaBoardId" name="qnaBoardId" value="${vo.qnaBoardId }">	
 			
-
 	<div style="text-align: center;">
-		<input type="text" id="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">
+		<input type="text" id="memberId" class="memberIdInput" readonly="readonly">
 		<input type="text" id="qnaReplyContent">
 		<button id="btnAdd">작성</button>
+   	<c:if test="${empty pageContext.request.userPrincipal.name}">
+   	<span>비회원은 글, 댓글 수정삭제가 불가능합니다.</span>
+   	</c:if>
 	</div>
 	
 	<hr>
@@ -105,7 +115,7 @@
 							alert('댓글 입력 성공');
 							getAllReplies();
 						}else{
-							alert('에러');
+							alert('댓글 아이디, 내용 입력해주세요');
 							getAllReplies();
 						}
 					}
@@ -158,6 +168,10 @@
 					            + '<button class="repliesbtn_' + this.qnaReplyId + '" >대댓글</button>'
 					            + '<button class="btn_update">수정</button>'
 					            + '<button class="btn_delete">삭제</button>'
+					            + '&nbsp;&nbsp;'
+					            + '<sec:authorize access="hasRole('ROLE_ADMIN')">'
+					            + '<button class="btn_delete1" style="background-color: red; color: white;">관리자전용 댓삭제</button>'
+					            + '</sec:authorize>'
 					            + '</pre>'
 					            + '<div id="repliesForm_' + this.qnaReplyId + '"></div>' 
 					            + '<div id="replies_' + this.qnaReplyId + '"></div>' 
@@ -212,12 +226,15 @@
 
 			    // 대댓글 목록을 토글(보이기/숨기기)
 			    replyRepliesContainer.toggle();
+			    
+			 	// 회원 여부에 따라 memberId 값 설정
+			    var memberIdValue = '${pageContext.request.userPrincipal.name}' || '대댓글비회원이용불가';
 
 			    var replyForm = '<div id="replyRepliesContainer_' + qnaReplyId + '">'
 			    	+ '&nbsp;&nbsp;'
 	            	+ '&nbsp;&nbsp;'
 	            	+ '&nbsp;&nbsp;'
-			        + '<span style="color: blue;">대댓글 입력창&nbsp;&nbsp;</span><input style="border-color: blue;" type="text" id="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">'
+			        + '<span style="color: blue;">대댓글 입력창&nbsp;&nbsp;</span><input style="border-color: blue;" type="text" id="memberId" value="' + memberIdValue + '" readonly="readonly">'
 			        + '<input style="border-color: blue;" type="text" id="replyReplyContent">'
 			        + '<button style="border-color: blue;" class="btnAddReplyReply">작성</button>'
 			        + '</div>'
@@ -236,7 +253,7 @@
 			//대댓글 삽입하기
 			$('#replies').on('click', '.btnAddReplyReply', function () {
 			    var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val();
-			    var memberId = $('#memberId').val();
+			    var memberId = '${pageContext.request.userPrincipal.name}';
 			    var replyReplyContent = $('#replyReplyContent').val();
 			    var csrfToken = $("#csrfToken").val();
 			    var qnaReplyCreatedDate = new Date(this.qnaReplyCreatedDate);
@@ -260,47 +277,9 @@
 			        	console.log(result);
 			            if (result == 1) {
 			                alert('댓글 입력 성공');
-			                var qnaReplyCreatedDate = new Date(this.qnaReplyCreatedDate);
-			                // 대댓글을 생성하여 화면에 추가(qnaReplyCreatedDate이 값이 안뜸)
-			                var replyItem = '<div class="reply_item" style="margin-right: 1.3cm;">' +
-			                    '<pre>' +
-			                    '&nbsp;&nbsp;' + 
-					            '&nbsp;&nbsp;' +
-					            '&nbsp;&nbsp;' +
-			                    '<input type="hidden" id="qnaReplyId" value="' + qnaReplyId + '">' +
-			                    'ㄴ&nbsp;' + memberId +
-			                    '&nbsp;&nbsp;' +
-			                    '<input type="text" id="replyReplyContent" value="' + replyReplyContent + '">' +
-			                    '&nbsp;&nbsp;' +
-			                    '<button>수정</button>' +
-			                    '<button>삭제</button>' +
-			                    '</pre>' +
-			                    '</div>';
+			                getAllReplies();
 
-
-			                // 대댓글을 화면에 추가(이거 코드 안먹는듯. 에러때 뜨는용도)
-			                $('#replies_' + qnaReplyId).append(replyItem);
-			                // 알람안떠서 에러로 대체
-			            }else{
-			            	alert('에러');
-			            	var qnaReplyCreatedDate = new Date(this.qnaReplyCreatedDate);
-			            	var replyItem = '<div class="reply_item" style="margin-right: 1.3cm;">' +
-		                    '<pre>' +
-		                    '&nbsp;&nbsp;' + 
-				            '&nbsp;&nbsp;' +
-				            '&nbsp;&nbsp;' +
-		                    '<input type="hidden" id="qnaReplyId" value="' + qnaReplyId + '">' +
-		                    'ㄴ&nbsp;' + memberId +
-		                    '&nbsp;&nbsp;' +
-		                    '<input type="text" id="replyReplyContent" value="' + replyReplyContent + '">' +
-		                    '&nbsp;&nbsp;' +
-		                    '<button>수정</button>' +
-		                    '<button>삭제</button>' +
-		                    '</pre>' +
-		                    '</div>';
-		                    
-			            	$('#replies_' + qnaReplyId).append(replyItem);
-			            }
+			           }
 			        }
 			    });
 			});
@@ -356,6 +335,10 @@
 					            + '&nbsp;&nbsp;' // 공백
 					            + '<button class="btn_replyUpdate">수정</button>'
 					            + '<button class="btn_replyDelete">삭제</button>'
+					            + '&nbsp;&nbsp;'
+					            + '<sec:authorize access="hasRole('ROLE_ADMIN')">'
+					            + '<button class="btn_replyDelete1" style="background-color: red; color: white;">관리자전용 대댓삭제</button>'
+					            + '</sec:authorize>'
 					            + '</pre>'
 					            + '</div>';
 					            
@@ -474,6 +457,35 @@
 			}); // end replies.on()
 			
 			
+			// 삭제 버튼을 클릭하면 선택된 댓글 삭제(관리자전용)
+			$('#replies').on('click', '.reply_item .btn_delete1', function(){
+				console.log(this);
+			
+				var qnaBoardId = $('#qnaBoardId').val();
+				var qnaReplyId = $(this).prevAll('#qnaReplyId').val();
+				var csrfToken = $("#csrfToken").val();
+				console.log("선택된 댓글 번호 : " + qnaReplyId);
+				
+				// ajax 요청
+				$.ajax({
+					type : 'DELETE', 
+					url : 'replies/' + qnaReplyId, 
+					headers : {
+						'Content-Type' : 'application/json',
+						'X-CSRF-TOKEN': csrfToken
+					},
+					data : qnaBoardId,
+					success : function(result) {
+						console.log(result);
+						if(result == 1) {
+							alert('댓글 삭제 성공!');
+							getAllReplies();
+						}
+					}
+				}); // end ajax()
+			}); // end replies.on()
+			
+			
 			
 			
 			
@@ -559,15 +571,57 @@
 					}
 				}); // end ajax()
 			}); // end replies.on()
+			
+			
+			// 삭제 버튼을 클릭하면 선택된 대댓글 삭제(관리자전용)
+			$('#replies').on('click', '.reply_item .btn_replyDelete1', function(){
+				console.log(this);
+			
+				var qnaBoardId = $('#qnaBoardId').val();
+				var replyReplyId = $(this).closest('.reply_item').find('#replyReplyId').val();
+				var csrfToken = $("#csrfToken").val();
+				console.log("선택된 대댓글 번호 : " + replyReplyId);
+				
+				// ajax 요청
+				$.ajax({
+					type : 'DELETE', 
+					url : 'replyReplies/' + replyReplyId, 
+					headers : {
+						'Content-Type' : 'application/json',
+						'X-CSRF-TOKEN': csrfToken
+					},
+					data : qnaBoardId,
+					success : function(result) {
+						console.log(result);
+						if(result == 1) {
+							alert('대댓글 삭제 성공!');
+							getAllReplies();
+						}
+					}
+				}); // end ajax()
+			}); // end replies.on()
 
 			
 		 	
+			
+			
 
 
 			
 		}); // end document
 		
-		
+			//비회원을 위해 접속아이디없을때 작성자칸에 입력넣기
+			document.addEventListener("DOMContentLoaded", function () {
+			    var memberIdInput = document.querySelector(".memberIdInput");
+			    var userPrincipalName = "${pageContext.request.userPrincipal.name}";
+
+			    // userPrincipalName이 값이 있으면 고정시키고, 없으면 편집 가능하도록 설정
+			    if (userPrincipalName) {
+			        memberIdInput.value = userPrincipalName;
+			    } else {
+			        memberIdInput.readOnly = false;
+			    }
+			});
 	
 	</script>
 			

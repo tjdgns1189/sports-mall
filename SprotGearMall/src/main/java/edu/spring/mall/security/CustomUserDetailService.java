@@ -9,23 +9,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import edu.spring.mall.persistence.MemberDAO;
 
-
-
 public class CustomUserDetailService implements UserDetailsService {
 	private final Logger logger = LoggerFactory.getLogger(CustomUserDetailService.class);
 	@Autowired
 	private MemberDAO dao;
+
 	@Override
-	public UserDetails loadUserByUsername(String username) 
-			throws UsernameNotFoundException {
-			logger.info("loadUserByUsername 호출 username  : " + username);
-			CustomUserDetails user = dao.login(username);
-			if(user == null) {
-				logger.info("user == null일때 호출됨");
-		    throw new UsernameNotFoundException("아이디를 찾을 수 없음" + username);
-		    }
-			
-		    return user;
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		logger.info("loadUserByUsername 호출 username  : " + username);
+		CustomUserDetails user = dao.login(username);
+		if (user == null) {
+			logger.info("user == null일때 호출됨");
+			throw new UsernameNotFoundException("아이디를 찾을 수 없음" + username);
+		}
+
+		return user;
 	}
 
 }

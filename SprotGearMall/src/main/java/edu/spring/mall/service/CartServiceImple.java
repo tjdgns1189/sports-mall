@@ -57,5 +57,11 @@ public class CartServiceImple implements CartService{
 		return cartDAO.update(vo);
 	}
 
+	@Override
+	public CartVO readProductId(int productId, String memberId) {
+		logger.info("readProductId 호출");
+		return cartDAO.selectByProductIdOne(productId, memberId);
+	}
+
 
 }

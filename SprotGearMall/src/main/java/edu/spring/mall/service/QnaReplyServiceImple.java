@@ -15,8 +15,7 @@ import edu.spring.mall.pageutil.PageCriteria;
 
 @Service
 public class QnaReplyServiceImple implements QnaReplyService {
-	private static final Logger logger = 
-			LoggerFactory.getLogger(QnaReplyServiceImple.class);
+	private static final Logger logger = LoggerFactory.getLogger(QnaReplyServiceImple.class);
 
 	@Autowired
 	private QnaReplyDAO qnaReplyDAO;
@@ -46,8 +45,5 @@ public class QnaReplyServiceImple implements QnaReplyService {
 		logger.info("delete() 호출 : qnaReplyId = " + qnaReplyId);
 		return qnaReplyDAO.delete(qnaReplyId);
 	}
-	
-	
-	
-	
+
 }

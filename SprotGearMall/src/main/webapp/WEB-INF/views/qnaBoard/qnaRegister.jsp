@@ -16,7 +16,7 @@
   <jsp:include page="../includes/qna-sidebar.jsp" />
    <!-- 메인 콘텐츠 -->
    <div class="col-md-10">
-   <h1>QNA게시판</h1>
+   <h1>QNA자유게시판</h1>
 	<h2>글 작성 페이지</h2>
 	<form id="qnaUpdateForm" action="register" method="POST">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -26,11 +26,11 @@
 		</div>
 		<div>
 			<p>작성자 : </p>
-			<input type="text" name="memberId" value="${pageContext.request.userPrincipal.name}" readonly="readonly">
+			<input type="text" name="memberId" id="memberIdInput" readonly="readonly">
 		</div>
 		<div>
 			<p>내용 : </p>
-			<textarea rows="20" cols="120" name="qnaBoardContent" placeholder="내용 입력"></textarea>
+			<textarea rows="20" cols="120" name="qnaBoardContent" placeholder="비회원은 글 입력시 수정삭제가 불가능합니다."></textarea>
 		</div>
 		<div>
 			<input type="submit" value="등록" onclick="validateForm()">
@@ -41,7 +41,6 @@
 </div>
 
 
-
 <script type="text/javascript">
 function validateForm() {
     var content = $('#qnaUpdateForm textarea[name="qnaBoardContent"]').val();
@@ -50,6 +49,21 @@ function validateForm() {
         event.preventDefault(); // 폼 제출 막기
     }
 }
+
+
+//비회원을 위해 접속아이디없을때 작성자칸에 입력넣기
+document.addEventListener("DOMContentLoaded", function () {
+    var memberIdInput = document.getElementById("memberIdInput");
+    var userPrincipalName = "${pageContext.request.userPrincipal.name}";
+
+    // userPrincipalName이 값이 있으면 고정시키고, 없으면 편집 가능하도록 설정
+    if (userPrincipalName) {
+        memberIdInput.value = userPrincipalName;
+    } else {
+        memberIdInput.readOnly = false;
+    }
+});
+
 </script>
 </body>
 </html>
