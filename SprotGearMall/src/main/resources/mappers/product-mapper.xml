@@ -60,7 +60,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	${productMaker} = #{productMaker},
 	 	<if test="productImgPath != null">${productImgPath} = #{productImgPath},</if>
 	 	 ${productCategory} = #{productCategory},
-	 	${productIsDeleted} = #{productIsDeleted}
+	 	${productIsDeleted} = #{productIsDeleted},
+	 	${productContent} = #{productContent}
 	 	where ${productId} = #{productId}
 	 </update>
 	 
@@ -70,10 +71,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	where ${productId} = #{productId}
 	 </update>
 	 
-	 <delete id="delete">
-	 	delete from ${product}
-	 	where ${productId} = #{productId}
-	 </delete>
+	 <update id="delete">
+	    update ${product}
+	    set ${productIsDeleted} = 1
+	    where ${productId} = #{productId}
+	</update>
 	  
 	 <select id="paging" resultType="ProductVO">
 	 select ${productId}, ${productName}, ${productPrice}, ${productStock}, ${productMaker}, ${productImgPath}, ${productCategory}, ${productIsDeleted}

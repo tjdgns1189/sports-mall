@@ -121,7 +121,6 @@ public class ProductController {
 	} // end registerGET()
 
 	@PostMapping("/register")
-
 	public String registerPOST(@RequestParam("productName") String productName,
             @RequestParam("productPrice") int productPrice,
             @RequestParam("productStock") int productStock,
@@ -214,24 +213,46 @@ public class ProductController {
 	public void updateGET(Model model, int productId, Integer page) {
 
 		logger.info("updateGET() 호출 : productName = " + productId);
+		
 		ProductVO vo = productService.read(productId);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		String memberId =auth.getName();
+		
 		model.addAttribute("vo", vo);
 		model.addAttribute("page", page);
+		model.addAttribute("principal", memberId);
 
 	} // end updateGET()
 
 	@PostMapping("/update")
-	public String updatePOST(ProductVO vo, Integer page) {
+	public String updatePOST(
+			@RequestParam("productId") int productId,
+			@RequestParam("productName") String productName,
+            @RequestParam("productPrice") int productPrice,
+            @RequestParam("productStock") int productStock,
+            @RequestParam("productMaker") String productMaker,
+            @RequestParam("productImgPath") MultipartFile file,
+            @RequestParam("productCategory") String productCategory,
+            @RequestParam("productContent") String productContent) throws IOException {
+		
+		logger.info("updatePOST() 호출: vo");
+		String productImgPath = file.getOriginalFilename();
+		
+		ProductVO vo = 
+				new ProductVO(productId,productName, productPrice, productStock,
 
-		logger.info("updatePOST() 호출: vo = " + vo.toString());
-
-		int result = productService.update(vo);
-
-		if (result == 1) {
-			return "redirect:/board/list?page=" + page;
+						productMaker, productImgPath, productCategory,productContent);
+		int result = productService.update(vo, file);
+		
+		if(result == 1) {
+			logger.info("상품 수정 완료");
 		} else {
-			return "redirect:/board/update?productId=" + vo.getProductId();
+			logger.info("상품 수정 실패");
 		}
+		return "redirect:/product/detail?productId=" + vo.getProductId();
+		
 	} // end updatePOST()
 
 	@PostMapping("/delete")

@@ -13,11 +13,13 @@
 	<div class="container my-4">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title eventBoard-title">${vo.eventBoardTitle }</h5>
-               <fmt:formatDate value="${vo.eventBoardCreatedDate}" pattern="yyyy-MM-dd" var="date"/>
-                <p class="card-text eventBoard-date">${date }</p>
+                <h5 class="card-title eventBoard-title">제목 : ${vo.eventBoardTitle }
+                	<fmt:formatDate value="${vo.eventBoardCreatedDate}" pattern="yyyy-MM-dd" var="date"/>
+                <span class="card-text eventBoard-date" style="margin-left: 750px;">날짜 : ${date }</span>
+                </h5>
+               
                 <!-- 공지사항 본문 -->
-                <p class="card-text eventBoard-content">${vo.eventBoardContent }</p>
+                <p class="card-text eventBoard-content">내용 : ${vo.eventBoardContent }</p>
             </div>
             <div class="card-footer bg-transparent border-top-0">
                 
@@ -34,7 +36,7 @@
             </div>
         </div>
 	<div>
-	<a href="eventBoard" style="text-align:center;"><button>목록으로</button></a>
+	<a href="eventboard" style="text-align:center;"><button>목록으로</button></a>
 	</div>
 	
 	 <!-- 댓글 표시 부분 추가 -->
@@ -71,7 +73,7 @@
     	})
     	
     function replyInsert() {
-        $('#btn-insert').prop('disabled', true);
+        
         var eventBoardId = $('#eventBoardId').val();
         var eventReplyContent = $('#commentContent').val();
         var csrfToken = $('#csrfToken').val();
@@ -94,6 +96,7 @@
             	if(result == 1) {
             		console.log('result',result);
                   	getreplies();
+                  	$('#commentContent').val('');
             	}
               	
                 
@@ -102,7 +105,7 @@
         });//end ajax
     }
     
-    	function addComment(comment) {
+    	/* function addComment(comment) {
     	    // 정규표현식을 사용하여 번호, 내용, 날짜 추출
     	    var matches = comment.eventReplyContent.match(/^(\d+)([A-Z]+)(\d+)$/);
     	    
@@ -134,11 +137,12 @@
     	          '</li>';
 
     	    $('.list-group').html(str);
-    	}
+    	} */
 
     
     	function getreplies() {
     	    var eventBoardId = $('#eventBoardId').val();
+    	    var currentUserMemberId = '${currentUserMemberId}';
 
     	    // 페이지 로드 시 댓글 가져오기
     	    $.ajax({
@@ -173,11 +177,16 @@
     	                    '<span class="comment-content">내용: ' + commentContent + '</span> &nbsp;&nbsp; ' +
     	                    '<span class="comment-time">날짜: ' + formatDate(timestamp) + '</span>' +
     	                    '</div>' +
-    	                    '<div class="comment-actions" id="btn-div-' + commentNumber + '">' +
-    	                    '<button class="btn btn-primary" onclick="editComment(' + commentNumber + ')">수정</button>' +
-    	                    '<button class="btn btn-danger" onclick="deleteComment(' + commentNumber + ')">삭제</button>' +
-    	                    '</div>' +
-    	                    '</li>';
+    	                    '<div class="comment-actions" id="btn-div-' + commentNumber + '">';
+    	                    
+    	                 // 현재 사용자와 댓글의 작성자가 같을 경우에만 수정, 삭제 버튼 추가
+    	                 if (currentUserMemberId === memberId) {
+                    str += '<button class="btn btn-primary" onclick="editComment(' + commentNumber + ')">수정</button>' +
+                        '<button class="btn btn-danger" onclick="deleteComment(' + commentNumber + ')">삭제</button>';
+                }
+    	                 
+    	                 str += '</div>' +
+    	                    	'</li>';
     	            }
 
     	            // 댓글을 출력할 요소에 문자열을 설정

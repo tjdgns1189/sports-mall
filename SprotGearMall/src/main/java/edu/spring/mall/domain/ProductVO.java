@@ -35,8 +35,24 @@ public class ProductVO {
       
    }
 
+   
+   
 
-   public ProductVO(String productName, int productPrice, int productStock, String productMaker, String productImgPath,
+   public ProductVO(int productId, String productName, int productPrice, int productStock, String productMaker,
+		String productImgPath, String productCategory, String productContent) {
+	super();
+	this.productId = productId;
+	this.productName = productName;
+	this.productPrice = productPrice;
+	this.productStock = productStock;
+	this.productMaker = productMaker;
+	this.productImgPath = productImgPath;
+	this.productCategory = productCategory;
+	this.productContent = productContent;
+}
+
+
+public ProductVO(String productName, int productPrice, int productStock, String productMaker, String productImgPath,
          String productCategory, int productIsDeleted) {
       super();
       this.productName = productName;
