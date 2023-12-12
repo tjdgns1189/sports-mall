@@ -96,8 +96,7 @@ review-btn{
                                 <td id="state-${vo.order.orderId }">${vo.order.orderState }</td>
                                 <td>
                                     <c:if test="${!vo.hasReview}">
-                                    <button type="button" class="btn btn-primary review-btn" 
-                                    onclick="openReviewWindow('../member/review?orderId=${vo.order.orderId}&productId=${vo.product.productId}');">리뷰하기</button>
+                                    <button type="button" class="btn btn-primary review-btn" onclick="openReview('../member/review?orderId=${vo.order.orderId}&productId=${vo.product.productId}');">리뷰하기</button>
                                     </c:if>
                                 </td>
                                 <td>
@@ -139,7 +138,7 @@ review-btn{
             $.ajax({
                 type: "POST",
                 url: "delete", 
-                headers : headers,
+                headers :headers,
                 data: JSON.stringify(checkedIds),
                 success: function(result) {
                     console.log(result);
@@ -149,9 +148,7 @@ review-btn{
             });//end ajax
         });//end btnDeleteCheck
     });//end document
-    function openReviewWindow(url) {
-    	  window.open(url, 'reviewPopup', 'width=484,height=764');
-    	}
+   
     
     function refund(element){
     	var orderId = $(element).data('order-id');
@@ -183,6 +180,10 @@ review-btn{
 
     	})//end ajax
     }//end refund
+    
+    function openReview(url) {
+  	  window.open(url, 'reviewPopup', 'width=484,height=764');
+  	}
 
 </script>
 

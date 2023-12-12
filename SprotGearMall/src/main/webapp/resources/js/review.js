@@ -25,17 +25,19 @@
       'Content-Type': 'application/json',
       'X-CSRF-TOKEN': csrfToken
     };
-    var regex =/^.{10,}$/
+    var regex =/^.{10,250}$/
       if (!regex.test(reviewText)) {
-        $('#contentLength').text('리뷰는 10글자 이상 입력해 주세요');
+        $('#contentLength').text('리뷰는 10글자 이상 250글자 미만으로 입력해 주세요');
           console.log('리뷰글자수 걸렸음')
         return;
       }
+   
       if (currentRating == 0) {
         console.log('별점 걸렸음')
         $('#currentRating').text('별점을 입력해 주세요');
         return;
       }
+     
       $.ajax({
         type: 'POST',
         url: '/mall/member/review',
@@ -53,14 +55,17 @@
             alert('리뷰 등록에 성공했습니다');
             window.opener.location.href = '/mall/orders/orderlist'; // 부모 창의 URL을 변경
             window.close(); 
-          } else {
-            alert('리뷰 등록에 실패했습니다 다시 등록해주세요');
+          } else if(result == 'duplicate'){
+            alert('잘못된 접근입니다 중복 리뷰입니다');
+            window.opener.location.href = '/mall/orders/orderlist'; // 부모 창의 URL을 변경
+            window.close(); 
+          }else{
+          	alert('리뷰 작성에 실패했습니다 나중에 다시시도해주세요')
           }
         }, // end success
         error: (jqXHR, textStatus, errorThrown) => {
-          if (jqXHR.status == 403) {
             alert("잘못된 접근입니다");
-          }
+          
         } // end error
       }); // end ajax
     }); // end submit.click

@@ -29,6 +29,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	select * from ${review_table}
     	where ${productId} = #{productId}
     </select>
+    
+    <select id="duplicate_review" resultType="Integer">
+    	select count(*) from ${review_table}
+    	where ${orderId} = #{orderId}
+    </select>
 
 
 

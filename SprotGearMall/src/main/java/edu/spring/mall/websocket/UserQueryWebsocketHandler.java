@@ -66,6 +66,7 @@ public class UserQueryWebsocketHandler extends TextWebSocketHandler {
 	    String username = (String) session.getAttributes().get("username");
 	    String senderType = session.getAttributes().containsKey("ROLE_ADMIN") ? "admin" : "user";
 	    ChatRoom room = service.getChatRoom(session);
+	    
 
 	    if (room == null) {
 	        logger.error("채팅방을 찾을 수 없음");

@@ -38,8 +38,6 @@ li {
         <!-- 메인 콘텐츠 -->
         <div class="col-md-10">
 	<h1>QNA게시판</h1>
-	
-	
 	<a align="left" href="qnaRegister"><input type="button" value="글 작성"></a>
 	<hr>
 	<table id="hi" class="table table-striped table-hover" width="110">

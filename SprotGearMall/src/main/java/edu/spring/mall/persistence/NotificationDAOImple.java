@@ -48,4 +48,10 @@ public class NotificationDAOImple implements NotificationDAO {
 		return sqlSession.delete(NAMESPACE + ".delete", vo);
 	}
 
+	@Override
+	public int count(NotificationVO vo) {
+		logger.info("count 호출");
+		return sqlSession.selectOne(NAMESPACE+ ".chat_count", vo);
+	}
+
 }

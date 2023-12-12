@@ -56,7 +56,11 @@ public class ReviewDAOImple implements ReviewDAO{
 		return sqlSession.selectList(NAMESPACE + ".select_product_review", productId);
 	}
 
-
+	@Override
+	public int duplicateCount(ReviewVO vo) {
+		logger.info("리뷰 중복 확인");
+		return sqlSession.selectOne(NAMESPACE + ".duplicate_review", vo);
+	}
 
 
 }

@@ -81,6 +81,12 @@ public class ReviewServiceImple implements ReviewService {
 		ReviewVO review = dao.select(reviewId);
 		return review;
 	}
+
+	@Override
+	public int count(ReviewVO vo) {
+		logger.info("count 호출");
+		return dao.duplicateCount(vo);
+	}
 	
 	
 

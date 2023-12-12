@@ -340,8 +340,28 @@ $(()=>{
 	    console.log("pageNum",pageNum);
 	    loadPageContent(productId, pageNum);
 	});
+	
+	 $('.accordion-content').each(function() {
+	        var content = $(this).html();
+	        var brIndex = content.indexOf('<br');
+	        if (brIndex !== -1) {
+	            $(this).html(content.substring(0, brIndex));
+	        }
+	    });
+	 
+	
 
 })//end document.ready
+
+function hideContentAfterBr() {
+    $('.accordion-content').each(function() {
+        var content = $(this).html();
+        var brIndex = content.indexOf('<br');
+        if (brIndex !== -1) {
+            $(this).html(content.substring(0, brIndex));
+        }
+    });
+}
   
     function openPrdQnaPopup() {
     	var productId = $('#productId').val();
@@ -377,6 +397,8 @@ $(document).on('click', '.accordion-toggle', function(event) {
         accordionRow.addClass('hidden-row');
     }
 })//end accodion.on
+
+
 
 //답변 취소
 $(document).on('click', '.cancel-answer', function() {
@@ -508,6 +530,8 @@ $(document).on('click', '.cancel-answer', function() {
 		            newTbodyContent += '</div>'
 		     		newTbodyContent += '<hr><div id="replyContent-' + list.qna.prdQnaId + '" class="pre-line">';
 		        //답변완료시
+		        //이부분 답변할때 넣을거로 수정하기
+		        //답변했다는건 관리자란 소리라 조건 안넣어도 될것같음
 		     	if(list.qna.prdQnaState == 'Y'){
 		              newTbodyContent += '<div id="reply-' + list.reply.pqrId + '" class="pre-line">';
 		              newTbodyContent += list.reply.pqrContent;
@@ -526,6 +550,7 @@ $(document).on('click', '.cancel-answer', function() {
 		        newTbodyContent += '</td></tr>';
 		    });
 		    $('#prdQnaBody').html(newTbodyContent);
+		    hideContentAfterBr();
 	      }//end updateTableBody
 	      
 	function formatDate(timestamp) {
@@ -662,7 +687,7 @@ $(document).on('click', '.cancel-answer', function() {
 	   submitUpdate(pqrId);
 	});//end submit.on
 	
-
+	//답변 ajax
 	function submitAnswer(qnaId, authorId){	    
 		var pqrContent = $('#answerText-' + qnaId).val();
 	    var csrfToken = $('#csrfToken').val();

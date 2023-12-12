@@ -60,7 +60,7 @@ li {
             <th>삭제버튼</th>
         </tr>    
 	</thead>
-
+	
     <tbody align="center" id="productTableBody">
 	<c:forEach var="vo" items="${productList}">
     	<tr class="align-middle">
@@ -105,7 +105,7 @@ var recentProductsList = recentProductsCookieValue.split(',');
 console.log('recentProductsCookieValue:', recentProductsCookieValue);
 console.log('recentProductsList:', recentProductsList);
 var url = "recents" + recentProductsCookieValue
-// CSRF 토큰 값 가져오기 (이 부분은 페이지에 존재하는지 확인 필요)
+// CSRF 토큰 값 가져오기 
 
 
 // 서버로 데이터를 POST 방식으로 전송
@@ -173,6 +173,24 @@ function deleteRecentProducts() {
     // Reload the page or perform any other necessary actions
     location.reload();
 }
+
+
+
+
+//"삭제" 버튼에 대한 클릭 이벤트 리스너 추가
+$('#productTableBody').on('click', '.btn-outline-danger', function() {
+    // 클릭된 행의 인덱스 가져오기
+    var rowIndex = $(this).closest('tr').index();
+
+    // recentProductsList에서 해당 항목 제거
+    recentProductsList.splice(rowIndex, 1);
+
+    // 수정된 recentProductsList로 쿠키 업데이트
+    document.cookie = "recentProducts=" + recentProductsList.join(',') + "; path=/";
+
+    // HTML 테이블에서 해당 행 제거
+    $(this).closest('tr').remove();
+});
 
 
 </script>
