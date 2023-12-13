@@ -106,9 +106,6 @@ public class ChatRoomServiceImple implements ChatRoomService {
 		chatMapping.remove(session);
 	}
 
-	public boolean isUserAlreadyInChatRoom(String username) {
-		logger.info("isUserAlreadyInChatRoom");
-		return chatMapping.containsKey(username);
-	}
+	
 
 }

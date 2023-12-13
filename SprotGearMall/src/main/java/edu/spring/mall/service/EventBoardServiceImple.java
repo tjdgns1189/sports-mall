@@ -13,10 +13,10 @@ import edu.spring.mall.persistence.EventBoardDAO;
 
 
 @Service
-public class EventBaordServiceImple implements EventBoardService {
+public class EventBoardServiceImple implements EventBoardService {
 
 	private static final Logger logger = 
-			LoggerFactory.getLogger(EventBaordServiceImple.class);
+			LoggerFactory.getLogger(EventBoardServiceImple.class);
 	
 	@Autowired
 	private EventBoardDAO dao;
