@@ -126,20 +126,22 @@ public class ProductServiceImple implements ProductService {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
 		String dateString = dateFormat.format(new Date());
 		// 이미지 없을때 기본 이미지 설정해둔거임
-		String imagePath = "product/null-img.png";
 
-		if (vo.getProductImgPath() == null || vo.getProductImgPath().isBlank()) {
-			vo.setProductImgPath(imagePath);
-		} else {
+		 String imagePath = null;
+		if (!file.isEmpty()) {
+			logger.info("productImg is Not Null");
 			String extension = "";
+			logger.info("extension 전");
 			extension = vo.getProductImgPath().substring(vo.getProductImgPath().lastIndexOf("."));
+			logger.info("extension 후 imagePath전");
+
 			imagePath = "product/" + randomString + "_" + dateString + extension;
 			vo.setProductImgPath(imagePath);
 		}
 		int result = dao.update(vo);
-		if (result == 1 && !imagePath.equals("product/null-img.png")) {
+		if (result == 1 && !file.isEmpty()) {
+			logger.info("이미지 업로드 수행");
 			imageService.uploadFile(file, imagePath);
-
 		}
 		return result;
 	}

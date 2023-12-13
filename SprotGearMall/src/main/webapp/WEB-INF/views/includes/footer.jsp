@@ -19,7 +19,7 @@
     <p class="col-md-4 mb-0 text-muted">&copy; 2023 Sport Mall Project</p>
     <ul class="nav col-md-4 justify-content-end">
       <li class="nav-item"><a href="${pageContext.request.contextPath}/" class="nav-link px-2 text-muted">Home</a></li>
-      <li class="nav-item"><a href="${pageContext.request.contextPath}/qnaBoard/qnaBOard" class="nav-link px-2 text-muted">FAQs</a></li>
+      <li class="nav-item"><a href="${pageContext.request.contextPath}/qnaBoard/qnaBoard" class="nav-link px-2 text-muted">FAQs</a></li>
       <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
     </ul>
   </footer>
