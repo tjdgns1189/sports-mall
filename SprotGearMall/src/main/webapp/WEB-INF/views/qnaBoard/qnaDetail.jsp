@@ -65,7 +65,7 @@
 	<div style="text-align: center;">
 		<input type="text" id="memberId" class="memberIdInput" readonly="readonly">
 		<input type="text" id="qnaReplyContent">
-		<button id="btnAdd">작성</button>
+		<button id="btnAdd" onclick="validateForm()">작성</button>
    	<c:if test="${empty pageContext.request.userPrincipal.name}">
    	<span>비회원은 글, 댓글 수정삭제가 불가능합니다.</span>
    	</c:if>
@@ -93,6 +93,10 @@
 				var qnaBoardId = $('#qnaBoardId').val(); // 게시판 번호 데이터
 				var memberId = $('#memberId').val(); // 작성자 데이터
 				var qnaReplyContent = $('#qnaReplyContent').val(); // 댓글 내용
+				if (memberId.length > 10 || qnaReplyContent.length > 20) {
+			        alert('제한 글자수를 초과했습니다.');
+			        return;
+			    }
 				var csrfToken = $("#csrfToken").val();
 				var obj = {
 						'qnaBoardId' : qnaBoardId, 
@@ -255,6 +259,10 @@
 			    var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val();
 			    var memberId = '${pageContext.request.userPrincipal.name}';
 			    var replyReplyContent = $('#replyReplyContent').val();
+			    if (memberId.length > 10 || replyReplyContent.length > 20) {
+			        alert('제한 글자수를 초과했습니다.');
+			        return;
+			    }
 			    var csrfToken = $("#csrfToken").val();
 			    var qnaReplyCreatedDate = new Date(this.qnaReplyCreatedDate);
 			    
@@ -403,6 +411,17 @@
 				// prevAll() : 선택된 노드 이전에 있는 모든 형제 노드를 접근
 				var qnaReplyId = $(this).prevAll('#qnaReplyId').val();
 				var qnaReplyContent = $(this).prevAll('#qnaReplyContent').val();
+				//null값방지
+				if(!qnaReplyContent.trim()){
+					alert('내용입력해주세요');
+					return; // 함수 실행 중단
+				}
+				//글자수초과방지
+				if (qnaReplyContent.length > 20) {
+			        alert('제한 글자수를 초과했습니다.');
+			        return;
+			    }
+				
 				var csrfToken = $("#csrfToken").val();
 				console.log("선택된 댓글 번호 : " + qnaReplyId + ", 댓글 내용 : " + qnaReplyContent);
 				
@@ -419,6 +438,9 @@
 						console.log(result);
 						if(result == 1) {
 							alert('댓글 수정 성공!');
+							getAllReplies();
+						}else{
+							alert('공백입력불가능');
 							getAllReplies();
 						}
 					}
@@ -517,6 +539,16 @@
 		        // 선택된 댓글의 replyId, replyContent 값을 저장
 		        var replyReplyId = $(this).closest('.reply_item').find('#replyReplyId').val();
 		        var replyReplyContent = $(this).closest('.reply_item').find('#replyReplyContent').val();
+		        //null값방지
+		        if(!replyReplyContent.trim()){
+					alert('내용입력해주세요');
+					return; // 함수 실행 중단
+				}
+		      	//글자수초과방지
+				if (replyReplyContent.length > 20) {
+			        alert('제한 글자수를 초과했습니다.');
+			        return;
+			    }
 		        var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val(); // 추가: 부모 댓글의 qnaReplyId 얻기
 		        console.log("replyReplyContent : " + replyReplyContent)
 		        var csrfToken = $("#csrfToken").val();
@@ -622,6 +654,8 @@
 			        memberIdInput.readOnly = false;
 			    }
 			});
+		
+
 	
 	</script>
 			

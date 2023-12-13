@@ -33,7 +33,6 @@ import edu.spring.mall.service.MemberService;
 
 public class LoginController {
 	private final Logger logger = LoggerFactory.getLogger(LoginController.class);
-	
 
 	@Autowired
 	private MemberService service;
@@ -45,24 +44,21 @@ public class LoginController {
 	private UserDetailsService userService;
 
 	@GetMapping("/loginForm")
-	public void loginGet(Model model, 
-	                     @RequestParam(name = "error", required = false) String error,
-	                     @RequestParam(name = "state", required = false) String state,
-	                     @CookieValue(name = "targeturl", required = false) String targeturl) {
-	    logger.info("loginGet 호출");
-	    if (error != null) {
-	        model.addAttribute("error", "error");
-	    }
-	    if(state != null) {
-	    	model.addAttribute("state", state);
-	    }
-	    
-	    if(targeturl!=null) {
-	    	model.addAttribute("targeturl", targeturl);
-	    }
-	    
-	
-	 
+	public void loginGet(Model model, @RequestParam(name = "error", required = false) String error,
+			@RequestParam(name = "state", required = false) String state,
+			@CookieValue(name = "targeturl", required = false) String targeturl) {
+		logger.info("loginGet 호출");
+		if (error != null) {
+			model.addAttribute("error", "error");
+		}
+		if (state != null) {
+			model.addAttribute("state", state);
+		}
+
+		if (targeturl != null) {
+			model.addAttribute("targeturl", targeturl);
+		}
+
 	}
 
 	@GetMapping("/register")
@@ -72,7 +68,7 @@ public class LoginController {
 
 	@PostMapping("/register")
 	public String registerPOST(@ModelAttribute MemberVO vo) {
-			logger.info("registerPOST 호출");
+		logger.info("registerPOST 호출");
 		try {
 			int result = service.create(vo);
 			if (result == 1) {
@@ -86,12 +82,11 @@ public class LoginController {
 		return "redirect:/member/register";
 	}
 
-
 	@GetMapping("/mypage")
 	public void mypageGET(Model model) {
 		logger.info("마이페이지 호출");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
+
 		CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 		model.addAttribute("user", user);
 
@@ -108,12 +103,11 @@ public class LoginController {
 		model.addAttribute("zonecode", user.getZonecode());
 		model.addAttribute("address", user.getAddress());
 		model.addAttribute("detailAddress", user.getDetailAddress());
-		
+
 		model.addAttribute("isOauthLogin", user.getIsOauthLogin());
 		model.addAttribute("name", name);
 		model.addAttribute("phone", phone);
 		model.addAttribute("email", email);
-		
 
 	}
 
@@ -129,7 +123,6 @@ public class LoginController {
 		userDetail.put("address", vo.getAddress());
 		userDetail.put("detailAddress", vo.getDetailAddress());
 
-
 		int result = 0;
 		try {
 			result = service.update(userDetail);
@@ -137,7 +130,7 @@ public class LoginController {
 				logger.info("update 성공");
 
 				return "redirect:/member/mypage";
-			} 
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -145,19 +138,17 @@ public class LoginController {
 			return "redirect:/member/update?error";
 
 		}
-			logger.info("업데이트 실패");
+		logger.info("업데이트 실패");
 
-			return "redirect:/member/update?error";
+		return "redirect:/member/update?error";
 
 	}
-	
+
 	@PostMapping("/updatePassword")
-	public String updatePasswordPOST(
-			@RequestParam("memberId") String memberId,
+	public String updatePasswordPOST(@RequestParam("memberId") String memberId,
 			@RequestParam("newPassword") String newPassword) {
 		logger.info("updatePasswordPOST 호출");
-		
-		
+
 		Map<String, String> user = new HashMap<String, String>();
 		user.put("memberId", memberId);
 		user.put("password", newPassword);
@@ -175,41 +166,35 @@ public class LoginController {
 	}
 
 	@PostMapping("delete")
-	public String deletePOST(@RequestParam("memberId") String memberId,
-			@RequestParam("password") String password,
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Model model) {
-			logger.info("deletePOST호출");
-			//비밀번호 검증을 위한 변수
-		  	UserDetails user = userService.loadUserByUsername(memberId);
-		    String encodedPassword = user.getPassword();
-		    // 비밀번호 검증
-		    if (!passwordEncoder.matches(password, encodedPassword)) {
-		        logger.info("비밀번호 틀림");
+	public String deletePOST(@RequestParam("memberId") String memberId, @RequestParam("password") String password,
+			HttpServletRequest request, HttpServletResponse response, Model model) {
+		logger.info("deletePOST호출");
+		// 비밀번호 검증을 위한 변수
+		UserDetails user = userService.loadUserByUsername(memberId);
+		String encodedPassword = user.getPassword();
+		// 비밀번호 검증
+		if (!passwordEncoder.matches(password, encodedPassword)) {
+			logger.info("비밀번호 틀림");
 
-		        return "redirect:/member/delete?error=password";
-		    }
-		    
-		    try {
-		        if (service.delete(memberId) != 1) {
-		            return "redirect:/member/delete?error"; // 탈퇴 처리 실패
-		        }
-		     // 로그아웃 처리
-
-		        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		        if (auth != null) {
-		            new SecurityContextLogoutHandler().logout(request, response, auth);
-		        }
-		        return "redirect:/"; // 탈퇴 및 로그아웃 성공
-
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		        return "redirect:/member/delete?error"; 
-		    }
+			return "redirect:/member/delete?error=password";
 		}
-	
-	
-	
-	
+
+		try {
+			if (service.delete(memberId) != 1) {
+				return "redirect:/member/delete?error"; // 탈퇴 처리 실패
+			}
+			// 로그아웃 처리
+
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			if (auth != null) {
+				new SecurityContextLogoutHandler().logout(request, response, auth);
+			}
+			return "redirect:/"; // 탈퇴 및 로그아웃 성공
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:/member/delete?error";
+		}
+	}
+
 }

@@ -37,7 +37,12 @@ li {
        <jsp:include page="../includes/qna-sidebar.jsp" />
         <!-- 메인 콘텐츠 -->
         <div class="col-md-10">
+    <div>
 	<h1>QNA자유게시판</h1>
+	<c:if test="${empty pageContext.request.userPrincipal.name}">
+   	<span>비회원이용가능(비회원은 글, 댓글입력만 가능합니다.)</span>
+   	</c:if>
+   	</div>
 	<a align="left" href="qnaRegister"><input type="button" value="글 작성"></a>
 	<hr>
 	<table id="hi" class="table table-striped table-hover" width="110">

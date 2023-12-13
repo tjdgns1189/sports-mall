@@ -13,4 +13,5 @@ public interface ReviewService {
 	int update(ReviewVO vo)throws Exception;
 	int delete(int reviewId) throws Exception;
 	ReviewVO read(int reviewId) throws Exception;
+	int count(ReviewVO vo);
 }

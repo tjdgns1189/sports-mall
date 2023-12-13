@@ -15,22 +15,21 @@ import edu.spring.mall.service.MemberService;
 @RestController
 public class AdminRestController {
 	private final Logger logger = LoggerFactory.getLogger(AdminRestController.class);
-	
+
 	@Autowired
 	private MemberService service;
-	
-	
+
 	@DeleteMapping("/admin/deleteUser")
-	public ResponseEntity<String> userDelete(@RequestBody MemberVO vo) throws Exception{
+	public ResponseEntity<String> userDelete(@RequestBody MemberVO vo) throws Exception {
 		logger.info("userDelete 호출");
 		int result = 0;
-		String response="false";
+		String response = "false";
 		logger.info("memberId : " + vo.getMemberId());
 		result = service.delete(vo.getMemberId());
-		if(result == 1) {
+		if (result == 1) {
 			logger.info("아이디 삭제 성공");
-			response="success";
-			return new ResponseEntity<String>(response, HttpStatus.OK);	
+			response = "success";
+			return new ResponseEntity<String>(response, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}

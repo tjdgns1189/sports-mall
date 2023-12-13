@@ -31,67 +31,58 @@ import edu.spring.mall.service.MemberService;
 public class RestLoginController {
 	private static final Logger logger = LoggerFactory.getLogger(RestLoginController.class);
 
-
-	
 	@Autowired
 	private UserDetailsService service;
-	
+
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-
-
 	@PostMapping("member/checkid")
-    public ResponseEntity<Integer> checkId(@RequestBody Map<String, String> request) {
+	public ResponseEntity<Integer> checkId(@RequestBody Map<String, String> request) {
 		logger.info("아이디 중복확인");
 		Integer result = memberService.checkDuplication(request.get("memberId"));
 		logger.info("아이디 존재여부 : " + result);
 
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-		
+
 	}
 
-	
 	@PostMapping("member/passwordCheck")
-	public ResponseEntity<Integer> passwordCheck(@RequestBody Map<String,String> request){
+	public ResponseEntity<Integer> passwordCheck(@RequestBody Map<String, String> request) {
 		Integer result = 0;
 		String memberId = request.get("memberId");
 		String password = request.get("password");
 		UserDetails user = service.loadUserByUsername(memberId);
-	    String encodedPassword = user.getPassword();
-	    
+		String encodedPassword = user.getPassword();
 
-	    if (passwordEncoder.matches(password, encodedPassword)) {
-	    	result = 1;
-	    	return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	    }else {
-	    	return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	    }
-		
-		
+		if (passwordEncoder.matches(password, encodedPassword)) {
+			result = 1;
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		}
+
 	}
-	
+
 	@DeleteMapping("/member/userDelete")
-	public ResponseEntity<String> userDelete(@RequestBody MemberVO vo,
-			HttpServletRequest req, HttpServletResponse res) throws Exception{
+	public ResponseEntity<String> userDelete(@RequestBody MemberVO vo, HttpServletRequest req, HttpServletResponse res)
+			throws Exception {
 		logger.info("userDelete 호출");
-		String response= "";
+		String response = "";
 		int result = memberService.delete(vo.getMemberId());
-		if(result == 1) {
+		if (result == 1) {
 			logger.info("회원 탈퇴 성공");
 			response = "success";
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			 if (auth != null) {
-			        new SecurityContextLogoutHandler().logout(req, res, auth);
-			    }
-			return new ResponseEntity<String>(response,HttpStatus.OK);
+			if (auth != null) {
+				new SecurityContextLogoutHandler().logout(req, res, auth);
+			}
+			return new ResponseEntity<String>(response, HttpStatus.OK);
 		}
-		return new ResponseEntity<String>(response,HttpStatus.OK);
+		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
-	
-	
 
 }

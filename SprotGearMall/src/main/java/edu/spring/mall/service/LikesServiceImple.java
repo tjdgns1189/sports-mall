@@ -12,14 +12,13 @@ import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.persistence.LikesDAO;
 import edu.spring.mall.persistence.ProductDAO;
 
-
 @Service
 public class LikesServiceImple implements LikesService {
 	private final Logger logger = LoggerFactory.getLogger(LikesServiceImple.class);
-	
+
 	@Autowired
 	ProductDAO productDAO;
-	
+
 	@Autowired
 	LikesDAO likesDAO;
 
@@ -27,13 +26,13 @@ public class LikesServiceImple implements LikesService {
 	public List<ProductVO> read(String memberId) {
 		logger.info("read 호출");
 
-        List<Integer> likeNumber = likesDAO.selectUserLiked(memberId);
-        List<ProductVO> likedProducts = new ArrayList<ProductVO>();
-        
-        for(Integer x : likeNumber) {
-        	ProductVO vo = productDAO.selectById(x);
-        	likedProducts.add(vo);
-        }
+		List<Integer> likeNumber = likesDAO.selectUserLiked(memberId);
+		List<ProductVO> likedProducts = new ArrayList<ProductVO>();
+
+		for (Integer x : likeNumber) {
+			ProductVO vo = productDAO.selectById(x);
+			likedProducts.add(vo);
+		}
 
 		return likedProducts;
 	}
@@ -53,7 +52,7 @@ public class LikesServiceImple implements LikesService {
 	@Override
 	public int delete(LikesVO vo) throws Exception {
 		logger.info("delete 호출");
-		
+
 		return likesDAO.delete(vo);
 	}
 

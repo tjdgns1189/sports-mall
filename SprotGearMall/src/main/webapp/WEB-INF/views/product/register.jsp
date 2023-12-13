@@ -127,7 +127,7 @@
   <div class="col-md-9 container-fluid">
     <h2 class="mb-4">상품 등록 페이지</h2>
     
-    <form action="${pageContext.request.contextPath}/product/register" method="POST" enctype="multipart/form-data">
+    <form action="${pageContext.request.contextPath}/product/register" id="registerForm" method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label for="productName">이름:</label>
         <input type="text" class="form-control" id="productName" name="productName">
@@ -182,6 +182,7 @@
             </div>
         </div>
     </div>
+
     <input type="text" class="form-control" id="productCategory" name="productCategory" readonly>
 </div>
       <div class="form-group">
@@ -205,6 +206,7 @@ $(()=>{
    	 	maxHeight: null,
 	})
 	
+
 	 // 등록 버튼 클릭 시 폼 검증
     $('form').submit(function (event) {
         // 필수 입력 필드의 값을 확인
@@ -233,8 +235,8 @@ $(()=>{
     
 function eventPreventDefault() {
 	event.preventDefault(); // 기본 동작을 막음
-}  
 
+}  
 
 </script>
 </html>

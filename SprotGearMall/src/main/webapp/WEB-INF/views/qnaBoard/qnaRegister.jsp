@@ -48,7 +48,33 @@ function validateForm() {
         alert('내용을 입력하세요.');
         event.preventDefault(); // 폼 제출 막기
     }
+    
+    var memberId = $('#qnaUpdateForm input[name="memberId"]').val();
+    if (!memberId.trim()) {
+        alert('작성자칸을 입력하세요.');
+        event.preventDefault(); // 폼 제출 막기
+    }
+    
+ 	// 제목 글자 수 체크
+    var title = $('#qnaUpdateForm input[name="qnaBoardTitle"]').val();
+    if (!title.trim()) {
+        alert('제목을 입력하세요.');
+        event.preventDefault(); // 폼 제출 막기
+    }
+    
+    // 제목 공백처리
+    if (title.length > 30) {
+        alert('제목이 30자를 초과했습니다.');
+        event.preventDefault(); // 폼 제출 막기
+    }
+
+    // 내용 글자 수 체크
+    if (content.length > 500) {
+        alert('내용이 500자를 초과했습니다.');
+        event.preventDefault(); // 폼 제출 막기
+    }
 }
+
 
 //비회원을 위해 접속아이디없을때 작성자칸에 입력넣기
 document.addEventListener("DOMContentLoaded", function () {

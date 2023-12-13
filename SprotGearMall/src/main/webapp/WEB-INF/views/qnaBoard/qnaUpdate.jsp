@@ -61,6 +61,20 @@ function validateForm() {
         alert('제목을 입력하세요.');
         event.preventDefault(); // 폼 제출 막기
     }
+    
+    
+ 	// 제목 글자 수 체크
+    var title = $('#qnaUpdateForm input[name="qnaBoardTitle"]').val();
+    if (title.length > 30) {
+        alert('제목이 30자를 초과했습니다.');
+        event.preventDefault(); // 폼 제출 막기
+    }
+
+    // 내용 글자 수 체크
+    if (content.length > 500) {
+        alert('내용이 500자를 초과했습니다.');
+        event.preventDefault(); // 폼 제출 막기
+    }
 }
 
 </script>

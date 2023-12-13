@@ -11,6 +11,7 @@ public interface ReviewDAO {
 	List<ReviewVO> selectProductReview(int productId);
 	int update(ReviewVO vo);
 	int delete(int reviewId);
+	int duplicateCount(ReviewVO vo);
 
 
 }

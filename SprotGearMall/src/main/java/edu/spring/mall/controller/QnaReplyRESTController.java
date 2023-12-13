@@ -22,51 +22,68 @@ import edu.spring.mall.controller.QnaReplyRESTController;
 import edu.spring.mall.service.QnaReplyService;
 
 @RestController
-@RequestMapping(value="/qnaBoard/replies")
+@RequestMapping(value = "/qnaBoard/replies")
 public class QnaReplyRESTController {
-	private static final Logger logger = 
-			LoggerFactory.getLogger(QnaReplyRESTController.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(QnaReplyRESTController.class);
+
 	@Autowired
 	private QnaReplyService qnaReplyService;
-	
+
 	@PostMapping(produces = "application/json")
 	public ResponseEntity<Integer> createReply(@RequestBody QnaReplyVO vo) {
 		logger.info("createReply() 호출 : vo = " + vo.toString());
-
-		int result = 0;
-		try {
-			result = qnaReplyService.create(vo);
-		} catch (Exception e) {
-			e.printStackTrace();
+		logger.info("vo.getMemberId() = " + vo.getMemberId());
+		logger.info("vo.getQnaReplyContent() = " + vo.getQnaReplyContent());
+		// 입력값 null일때
+		if(vo.getMemberId() == null || vo.getQnaReplyContent() == null ||
+				vo.getMemberId().trim().isEmpty() || vo.getQnaReplyContent().trim().isEmpty()) {
+			logger.info("댓글 null값");
+			int result = 0;
+			
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		} else {
+			
+			int result = 0;
+			try {
+				result = qnaReplyService.create(vo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
 		}
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/all/{qnaBoardId}")
-	public ResponseEntity<List<QnaReplyVO>> readReplies(
-			@PathVariable("qnaBoardId") int qnaBoardId) {
+	public ResponseEntity<List<QnaReplyVO>> readReplies(@PathVariable("qnaBoardId") int qnaBoardId) {
 		logger.info("readReplies() 호출 : qnaBoardId = " + qnaBoardId);
-		
+
 		List<QnaReplyVO> list = qnaReplyService.read(qnaBoardId);
 		return new ResponseEntity<List<QnaReplyVO>>(list, HttpStatus.OK);
 
 	}
-	
-	@PutMapping(value="/{qnaReplyId}", produces = "application/json")
-	public ResponseEntity<Integer> updateReply(
-			@PathVariable("qnaReplyId") int qnaReplyId,
-			@RequestBody String qnaReplyContent
-			){
+
+	@PutMapping(value = "/{qnaReplyId}", produces = "application/json")
+	public ResponseEntity<Integer> updateReply(@PathVariable("qnaReplyId") int qnaReplyId,
+			@RequestBody String qnaReplyContent) {
+		// 수정내용이 null일때
+		if(qnaReplyContent == null || qnaReplyContent.trim().isEmpty()) {
+			
+			int result = 0;
+			return new ResponseEntity<Integer>(result, HttpStatus.OK);
+			
+		}else {
+			
 		int result = qnaReplyService.update(qnaReplyId, qnaReplyContent);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}
-	
-	@DeleteMapping(value="/{qnaReplyId}", produces = "application/json")
-	public ResponseEntity<Integer> deleteReply(
-			@PathVariable("qnaReplyId") int qnaReplyId){
-		logger.info("qnaReplyId = " + qnaReplyId);
 		
+		}
+		
+	}
+
+	@DeleteMapping(value = "/{qnaReplyId}", produces = "application/json")
+	public ResponseEntity<Integer> deleteReply(@PathVariable("qnaReplyId") int qnaReplyId) {
+		logger.info("qnaReplyId = " + qnaReplyId);
+
 		int result = 0;
 		try {
 			result = qnaReplyService.delete(qnaReplyId);

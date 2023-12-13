@@ -40,7 +40,7 @@ public class ReplyReplyRESTController {
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/all/{qnaReplyId}")
 	public ResponseEntity<List<ReplyReplyVO>> readReplies(
 			@PathVariable("qnaReplyId") int qnaReplyId) {

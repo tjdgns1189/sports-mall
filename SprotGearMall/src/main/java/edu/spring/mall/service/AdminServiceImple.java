@@ -11,12 +11,12 @@ import edu.spring.mall.domain.MemberVO;
 import edu.spring.mall.domain.OrdersProductJoinVO;
 
 @Service
-public class AdminServiceImple implements AdminService{
+public class AdminServiceImple implements AdminService {
 	private Logger logger = LoggerFactory.getLogger(AdminServiceImple.class);
-	
+
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private OrderService orderService;
 
