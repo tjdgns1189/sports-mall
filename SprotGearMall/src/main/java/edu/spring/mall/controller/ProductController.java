@@ -217,16 +217,21 @@ public class ProductController {
 	@PostMapping("/update")
 	public String updatePOST(@RequestParam("productId") int productId, @RequestParam("productName") String productName,
 			@RequestParam("productPrice") int productPrice, @RequestParam("productStock") int productStock,
-			@RequestParam("productMaker") String productMaker, @RequestParam("productImgPath") MultipartFile file,
+			@RequestParam("productMaker") String productMaker, 
+			@RequestParam(value = "productImgPath", required = false) MultipartFile file,
 			@RequestParam("productCategory") String productCategory,
 			@RequestParam("productContent") String productContent) throws IOException {
 
-		logger.info("updatePOST() 호출: vo");
-		String productImgPath = file.getOriginalFilename();
+		logger.info("updatePOST() 호출" );
+		ProductVO vo = new ProductVO();
+		String productImgPath = file.isEmpty() ? null : file.getOriginalFilename();
+		if(!file.isEmpty()) {
+			vo = new ProductVO(productId, productName, productPrice, productStock, productMaker, productImgPath, productCategory, productId, productContent, null);
+		}else {
+			vo = new ProductVO(productId, productName, productPrice, productStock, productMaker, productCategory, productContent);
 
-		ProductVO vo = new ProductVO(productId, productName, productPrice, productStock,
-
-				productMaker, productImgPath, productCategory, productContent);
+		}
+		 
 		int result = productService.update(vo, file);
 
 		if (result == 1) {

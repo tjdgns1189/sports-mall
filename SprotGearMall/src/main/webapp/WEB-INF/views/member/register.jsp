@@ -105,7 +105,13 @@
 		$('#confirmPassword').on('blur', function(){
 			var pass1 = $('#mainPassword').val();
 			var pass2 = $(this).val();
+			var regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,20}$/;
 
+			if(!regex.test(pass2)) {
+		        $('#pwConfirm').text('비밀번호는 8~20자의 영문자와 숫자 조합이여야 합니다.');
+				passwordCheck = false;
+		        return;
+		    }
 			if(pass1 === pass2){
 				passwordCheck = true;
 				$('#pwConfirm').text('');

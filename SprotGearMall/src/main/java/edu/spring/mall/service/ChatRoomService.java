@@ -14,6 +14,5 @@ public interface ChatRoomService {
 	ChatRoom getChatRoom(String roomId);
 	ChatRoom getChatRoom(WebSocketSession session);
 	void  removeChatRoom(String roomId , WebSocketSession session);
-	boolean isUserAlreadyInChatRoom(String username);
 
 }

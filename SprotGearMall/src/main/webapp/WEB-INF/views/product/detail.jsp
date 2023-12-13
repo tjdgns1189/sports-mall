@@ -81,7 +81,7 @@ text-align: center;
     </style>
 </head>
 <body>
-
+<input type="hidden" id="productId" value=${product.productId }>
 	
     <div class="container">
         <!-- 이미지와 물건 정보 -->

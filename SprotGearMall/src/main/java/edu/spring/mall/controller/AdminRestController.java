@@ -1,5 +1,7 @@
 package edu.spring.mall.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ public class AdminRestController {
 	private MemberService service;
 
 	@DeleteMapping("/admin/deleteUser")
-	public ResponseEntity<String> userDelete(@RequestBody MemberVO vo) throws Exception {
+	public ResponseEntity<String> userDelete(@RequestBody MemberVO vo, HttpServletRequest req) throws Exception {
 		logger.info("userDelete 호출");
 		int result = 0;
 		String response = "false";

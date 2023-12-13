@@ -20,7 +20,8 @@
       var csrfToken = $("#csrfToken").val();
       var productId = parseInt($('#productId').val(), 10);
       var orderId = parseInt($('#orderId').val(), 10);
-      console.log(orderId)
+      console.log(orderId);
+      console.log('currentRating',currentRating);
       var headers = {
       'Content-Type': 'application/json',
       'X-CSRF-TOKEN': csrfToken

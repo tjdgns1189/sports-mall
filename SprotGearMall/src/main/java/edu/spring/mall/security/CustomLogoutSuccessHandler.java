@@ -96,6 +96,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 			return;
 
 		} // end google
+		
 		redirectStrategy.sendRedirect(request, response, "/");
 
 	}// end onLogoutSuccess

@@ -94,7 +94,7 @@ height:40%;
  			<span class="far fa-star" data-rating="3"></span>
   			<span class="far fa-star" data-rating="4"></span>
   			<span class="far fa-star" data-rating="5"></span>
-  		<div id="currentRating" class="current-rating mt-2"></div>
+  		
 	</div>
 	 <!-- 리뷰 글 작성 -->
   	<div class="form-label-group">

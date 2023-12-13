@@ -135,6 +135,7 @@
 				      <i class="fa fa-caret-down"></i>
 				    </button>
 				    <div class="p-dropdown-content">
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=야구공">야구방망이</a>
 				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=야구방망이">야구방망이</a>
 				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=글러브">글러브</a>
 				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=베이스">베이스</a>
