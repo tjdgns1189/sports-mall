@@ -55,7 +55,7 @@ function validateForm() {
 document.addEventListener("DOMContentLoaded", function () {
     var memberIdInput = document.getElementById("memberIdInput");
     var userPrincipalName = "${pageContext.request.userPrincipal.name}";
-
+	
     // userPrincipalName이 값이 있으면 고정시키고, 없으면 편집 가능하도록 설정
     if (userPrincipalName) {
         memberIdInput.value = userPrincipalName;
