@@ -133,19 +133,19 @@
       <div class="form-group">
         <input type="hidden" class="form-control" id="productId" name="productId" value="${vo.productId }">
         <label for="productName">이름:</label>
-        <input type="text" class="form-control" id="productName" name="productName" value="${vo.productName }" required>
+        <input type="text" class="form-control" id="productName" name="productName" value="${vo.productName }">
       </div>
       <div class="form-group">
         <label for="productPrice">가격:</label>
-        <input type="text" class="form-control" id="productPrice" name="productPrice" value="${vo.productPrice }"  required>
+        <input type="text" class="form-control" id="productPrice" name="productPrice" value="${vo.productPrice }">
       </div>
       <div class="form-group">
         <label for="productStock">재고:</label>
-        <input type="text" class="form-control" id="productStock" name="productStock"  value="${vo.productStock }" required>
+        <input type="text" class="form-control" id="productStock" name="productStock"  value="${vo.productStock }">
       </div>
       <div class="form-group">
         <label for="productMaker">제조사:</label>
-        <input type="text" class="form-control" id="productMaker" name="productMaker" value="${vo.productMaker }"  required>
+        <input type="text" class="form-control" id="productMaker" name="productMaker" value="${vo.productMaker }">
       </div>
       <div class="form-group mb-3">
         <label for="fileItem" class="form-label">이미지:</label>
@@ -185,7 +185,7 @@
             </div>
         </div>
     </div>
-    <input type="text" class="form-control" id="productCategory" name="productCategory" required readonly>
+    <input type="text" class="form-control" id="productCategory" name="productCategory" value="${vo.productCategory }" readonly>
 </div>
       <div class="form-group">
         <label for="productContent">상품 설명:</label>

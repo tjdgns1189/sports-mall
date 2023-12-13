@@ -133,6 +133,7 @@ public class ProductController {
 
 			String productImgPath = file.getOriginalFilename();
 			
+			
 			ProductVO vo = 
 					new ProductVO(productName, productPrice, productStock,
 
