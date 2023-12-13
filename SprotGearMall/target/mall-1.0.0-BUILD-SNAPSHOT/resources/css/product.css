@@ -1,0 +1,18 @@
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #eee;
+	justify-content: center;
+}
+
+/* 슬라이더 높이 조정 */
+.carousel-item {
+  height: 60%; /* 원하는 높이 설정 */
+  width: 40%;
+}
+
+/* 이미지가 잘리지 않도록 object-fit 조정 */
+.carousel-item img {
+  height: 100%; /* 컨테이너 높이에 맞춤 */
+  object-fit: cover; /* 이미지 비율을 유지하면서 컨테이너에 맞춤 */
+  background-color: #000; /* 검은색 배경이 필요하다면 추가 */
+}

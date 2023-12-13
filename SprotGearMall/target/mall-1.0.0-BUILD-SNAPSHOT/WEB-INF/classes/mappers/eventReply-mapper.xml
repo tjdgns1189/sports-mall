@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.EventReplyMapper">
+
+	 
+	 <insert id="insert">
+		insert into ${eventReply}
+		(${eventBoardId}, ${memberId}, ${eventReplyContent})
+		values (#{eventBoardId}, #{memberId}, #{eventReplyContent})	
+	</insert>
+
+	<select id="select_all_by_event_board_id" resultType="EventReplyVO">
+		select * from ${eventReply}
+		where ${eventBoardId} = #{eventBoardId}
+		order by ${eventReplyId}
+	</select>
+
+	<update id="update">
+		update ${eventReply}
+		set ${eventReplyContent} = #{eventReplyContent}
+		where ${eventReplyId} = #{eventReplyId}
+	</update>
+
+	<delete id="delete">
+		delete from ${eventReply}
+		where ${eventReplyId} = #{eventReplyId}
+	</delete>
+	 
+</mapper>

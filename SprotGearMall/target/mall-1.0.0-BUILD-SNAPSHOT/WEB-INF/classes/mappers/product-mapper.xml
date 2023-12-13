@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.ProductMapper">
+
+	 
+	 <insert id="insert">
+	 	insert into ${product}
+	 	(${productName}, ${productPrice}, ${productStock}, ${productMaker}, ${productImgPath}, ${productCategory},${productContent})
+	 	values (#{productName}, #{productPrice}, #{productStock}, #{productMaker}, #{productImgPath}, #{productCategory}, #{productContent})
+	 </insert>
+	 
+	 <select id="select_all" resultType="ProductVO">
+	    SELECT * FROM ${product}
+	    WHERE ${productIsDeleted} != 1
+	    ORDER BY ${productId} DESC
+	</select>
+	
+	<select id="select_SoccerBall" resultType="ProductVO">
+    SELECT * FROM ${product}
+    WHERE ${productIsDeleted} != 1 AND ${productCategory} = '축구공'
+    ORDER BY ${productId} DESC
+</select>
+	
+	<select id="select_BaseBall" resultType="ProductVO">
+	    SELECT * FROM ${product}
+	    WHERE ${productIsDeleted} != 1 AND ${productCategory} = '야구방망이'
+	    ORDER BY ${productId} DESC
+	</select>
+	
+	<select id="select_BasketBall" resultType="ProductVO">
+	    SELECT * FROM ${product}
+	    WHERE ${productIsDeleted} != 1 AND ${productCategory} = '농구공'
+	    ORDER BY ${productId} DESC
+	</select>
+	
+	 <!-- <select id="select_by_category" resultType="ProductVO">
+	    SELECT * FROM ${product}
+	    WHERE ${productIsDeleted} != 1
+	    and ${productCategory} = #{productCategory}
+	    ORDER BY ${productId} DESC
+	</select> -->
+	 
+	 <select id="select_by_product_name" resultType="ProductVO">
+	 	select * from ${product} where ${productName} = #{productName}
+	 </select>
+	 
+	 
+	 <select id="select_by_product_id" resultType="ProductVO">
+	 	select * from ${product} 
+	 	where ${productId} = #{productId}
+	 </select>
+
+	 <update id="update">
+	 	update ${product}
+	 	set ${productName} = #{productName},
+	 	 ${productPrice} = #{productPrice},
+	 	  ${productStock} = #{productStock}, 
+	 	${productMaker} = #{productMaker},
+	 	<if test="productImgPath != null">${productImgPath} = #{productImgPath},</if>
+	 	 ${productCategory} = #{productCategory},
+	 	${productIsDeleted} = #{productIsDeleted},
+	 	${productContent} = #{productContent}
+	 	where ${productId} = #{productId}
+	 </update>
+	 
+	 <update id="soft_delete">
+	 	update ${product}
+	 	set ${productIsDeleted} = #{productIsDeleted}
+	 	where ${productId} = #{productId}
+	 </update>
+	 
+	 <update id="delete">
+	    update ${product}
+	    set ${productIsDeleted} = 1
+	    where ${productId} = #{productId}
+	</update>
+	  
+	 <select id="paging" resultType="ProductVO">
+	 select ${productId}, ${productName}, ${productPrice}, ${productStock}, ${productMaker}, ${productImgPath}, ${productCategory}, ${productIsDeleted}
+	 from(
+	 	select rownum rn, a.* from(
+	 		select * from ${product}
+	 		where ${productIsDeleted} = 0
+	 		order by ${productName} desc
+	 	)a
+	 ) where rn between #{start} and #{end}
+	 </select>
+	 
+	 <select id="total_count" resultType="Integer">
+	 	select count(*) total_cnt from ${product}
+	 </select>
+	 
+	 <select id="select_by_productName" resultType="ProductVO">
+	 	select * from ${product}
+	 	where ${productName} like #{productName}
+	 </select>
+	 
+	<select id="select_by_search_text" resultType="ProductVO">
+	 	 SELECT *
+FROM ${product}
+WHERE (${productName} LIKE #{searchText}
+       OR ${productCategory} LIKE #{searchText})
+  AND  ${productIsDeleted} != 1
+ORDER BY ${productId} DESC
+	 </select>
+	 
+	 <select id="select_likes_count" resultType="ProductVO">
+	 	SELECT p.*, COALESCE(l.${likesCount}, 0) AS ${likesCount}
+			FROM ${product} p
+			LEFT JOIN (
+			    SELECT ${productId}, COUNT(*) AS ${likesCount}
+			    FROM ${likes}
+			    GROUP BY ${productId}
+			) l ON p.${productId} = l.${productId}
+			WHERE
+		    ${productName} LIKE #{searchText}
+		    OR ${productCategory} LIKE #{searchText}
+		    AND ${productIsDeleted} != 1
+			ORDER BY ${likesCount} DESC
+	 </select>
+	   
+	  <select id="select_rating" resultType="ProductVO">
+	 	SELECT p.${productId}, p.${productName}, p.${productPrice}, p.${productImgPath}, AVG(r.${reviewRating}) AS ${avgRating}
+			FROM ${product} p
+			LEFT JOIN ${review} r ON p.${productId} = r.${productId}
+			WHERE (p.${productName} LIKE #{searchText} 
+				   OR p.${productCategory} LIKE #{searchText})
+			       AND p.${productIsDeleted} != 1
+			GROUP BY p.${productId}, p.${productName}, p.${productPrice}, p.${productImgPath}
+			ORDER BY ${avgRating} DESC NULLS LAST
+	 </select>  
+	   
+	 <select id="select_review_count" resultType="ProductVO">
+	 	SELECT p.*, COALESCE(l.${reviewCount}, 0) AS ${reviewCount}
+			FROM ${product} p
+			LEFT JOIN (
+			    SELECT ${productId}, COUNT(*) AS ${reviewCount}
+			    FROM ${review}
+			    GROUP BY ${productId}
+			) l ON p.${productId} = l.${productId}
+			    WHERE ${productName} like #{searchText}
+			    OR ${productCategory} like #{searchText}
+			    AND ${productIsDeleted} !=1
+			ORDER BY ${reviewCount} DESC
+	 </select>
+	 
+	 
+	 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

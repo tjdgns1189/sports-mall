@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.EventBoardMapper">
+
+	 
+	 <insert id="insert">
+	 	insert into ${eventBoard}
+	 	(${memberId}, ${eventBoardTitle}, ${eventBoardContent})
+	 	values (#{memberId}, #{eventBoardTitle}, #{eventBoardContent}) 
+	 </insert>
+	
+	<select id="paging" resultType="EventBoardVO">
+	 	select ${eventBoardId}, ${memberId}, ${eventBoardTitle}, ${eventBoardContent}, ${eventBoardCreatedDate}
+	 	from(
+	 		select rownum rn, a.* from(
+	 			select * from ${eventBoard} order by ${eventBoardId} desc	
+	 		)a
+	 	) where rn between #{start} and #{end}
+	 </select>
+	 
+	 <select id="total_count" resultType="Integer">
+	 	select count(*) total_cnt from ${eventBoard}
+	 </select>
+	 
+	 <select id="select_by_event_board_id" resultType="EventBoardVO">
+	 	select * from ${eventBoard}
+	 	where ${eventBoardId} like #{eventBoardId}
+	 </select>
+	 
+	 <update id="update">
+	 	update ${eventBoard}
+	 	set ${eventBoardTitle} = #{eventBoardTitle}, ${eventBoardContent} = #{eventBoardContent}
+	 	where ${eventBoardId} = #{eventBoardId}
+	 </update>
+	 
+	 <delete id="delete">
+	 	delete from ${eventBoard}
+	 	where ${eventBoardId} = #{eventBoardId}
+	 </delete>
+	 
+</mapper>
