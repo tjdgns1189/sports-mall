@@ -20,11 +20,9 @@
             <div class="signup-form">
 		<form action="register" method="POST">
 		    <input type="hidden" name="${_csrf.parameterName}" id ="csrfToken" value="${_csrf.token}">
-			<input type="text" name="memberId" id="memberId" required="required"
-				placeholder="아이디"><br>
+			<input type="text" name="memberId" id="memberId" required="required" placeholder="아이디"><br>
 			<div id="checkedId"></div>
-			<input type="password" name="password" id="mainPassword"
-				required="required" placeholder="비밀번호"><br> 
+			<input type="password" name="password" id="mainPassword" required="required" placeholder="비밀번호"><br> 
 			<input type="password" id="confirmPassword" required="required"placeholder="비밀번호 확인"><br>
 			<div id="pwConfirm"></div>
 			<input type="text" name="name" required="required" placeholder="이름"><br>
@@ -33,15 +31,15 @@
 			<input type="email" name=email required="required" placeholder="이메일"><br>
 			
 			<div>
-				<input type="button" onclick="searchPost()" value="우편번호 찾기" class="post_btn">
-				<input type="text" id="postcode"name="postcode" required="required" placeholder="우편번호"> 
-				<input type="text" id="Address" name="address" class="d_form std"placeholder="주소"> 
-				<input type="text" id="detailAddress"name="detailAddress" class="d_form std" placeholder="상세주소">
-				<input type="hidden" name="userGrade" value="ROLE_USER">
-
+    			<input type="button" onclick="searchPost()" value="우편번호 찾기" class="post_btn">
+    			<input type="text" id="zonecode" name="zonecode" required="required" placeholder="우편번호" readonly> 
+    			<input type="text" id="Address" name="address" class="d_form std" placeholder="주소" readonly> 
+    			<input type="text" id="detailAddress" name="detailAddress" required="required" class="d_form std" placeholder="상세주소" readonly>
+    			<input type="hidden" name="userGrade" value="ROLE_USER">
+    			<div id="addressConfirm">
+    			</div>
 			</div>
-			<input type="submit" class="btn btn-lg btn-primary btn-block"
-				value="회원 가입">
+			<input type="submit" id="btn-submit" class="btn btn-lg btn-primary btn-block" value="회원 가입">
 			
 		</form>
 	</div>
@@ -53,16 +51,15 @@
 		var idChecked = false;
 		var passwordCheck = false;
 		var phoneCheck = false;
+		var addressCheck = false;
 		var csrfToken = $("#csrfToken").val();
 	    var headers = {
 	        'Content-Type': 'application/json'
 	    };
 	    headers['X-CSRF-TOKEN'] = csrfToken;
+	    
 		$('#memberId').on('blur', function(){
-			
-			console.log("아이디체크");
 			var memberId = $(this).val();
-			
 			var regex = /^[a-z\d]{5,20}$/;  // 5~20자 영문소문자, 숫자 조합
 			if(!regex.test(memberId)) {
 			    $('#checkedId').text('아이디는 5~20자의 영문소문자와 숫자 조합만 가능합니다.');
@@ -84,39 +81,52 @@
 					    $('#checkedId').css("color", "black");
 						$('#memberId').css("border", "1px solid #e0e0e0");
 						idChecked = true;
-						checkAllConditions();
 					}else{
 						$('#checkedId').text('중복 아이디 입니다');
 					    $('#checkedId').css("color", "red");
 					    $('#memberId').css("border", "1px solid red");
 						idChecked = false;
-						checkAllConditions();
 					}
+					checkAllConditions();
+
 				}//end success
 				
 			});//end ajax
+			
+			$('#zonecode, #Address').on('change', function() {
+			    if ($('#zonecode').val() !== '' && $('#Address').val() !== '') {
+			        $('#detailAddress').prop('disabled', false);
+			    } else {
+			        $('#detailAddress').prop('disabled', true);
+			    }
+			});
 		})//end memberId.on
 		
 		$('#confirmPassword').on('blur', function(){
-			var pass1 = $('#mainPassword').val();
-			var pass2 = $(this).val();
+		    var pass1 = $('#mainPassword').val();
+		    var pass2 = $(this).val();
+		    var regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,20}$/;
 
-			if(pass1 === pass2){
-				passwordCheck = true;
-				$('#pwConfirm').text('');
-				checkAllConditions();
-			}else{
-				passwordCheck = false;
-				$('#pwConfirm').text('비밀번호가 일치하지 않습니다');
-				
-			}
+		    if(!regex.test(pass2)) {
+		        $('#pwConfirm').text('비밀번호는 8~20자의 영문자와 숫자 조합이여야 합니다.');
+		        passwordCheck = false;
+		        return;
+		    }
+		    if(pass1 === pass2){
+		        passwordCheck = true;
+		        $('#pwConfirm').text(''); // 경고 메시지 제거
+		    }else{
+		        passwordCheck = false;
+		        $('#pwConfirm').text('비밀번호가 일치하지 않습니다');
+		    }
+		    checkAllConditions();
 		});//end confirmPassword.on
 		
 		$('#mainPassword').on('input', function(){
 			var pass1 = $(this).val();
 			var regex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,20}$/;
 		    if(!regex.test(pass1)) {
-		        $('#pwConfirm').text('비밀번호는 5~20자의 영문자와 숫자 조합이여야 합니다.');
+		        $('#pwConfirm').text('비밀번호는 8~20자의 영문자와 숫자 조합이여야 합니다.');
 				passwordCheck = false;
 		        return;
 		    }
@@ -130,7 +140,7 @@
 		});//end mainPassword.on
 		
 		$('#phone').on('blur', function(){
-			var phone = $('this').val();
+			var phone = $(this).val();
 			var regex = /^010(-?\d{4})(-?\d{4})$/;
 			if(!regex.test(phone)){
 				$('#phoneConfirm').text('연락처를 정확히 입력해주세요');
@@ -138,32 +148,46 @@
 			}else{
 				$('#phoneConfirm').text('');
 				phoneCheck = true;
-				checkAllConditions();
 			}
+			checkAllConditions();
+
 		});//end phone.on
+		
+		$('#detailAddress').on('input', function(){
+			var detailAddress = $('#detailAddress').val(); 
+			if(detailAddress.trim() == ''){
+				addressCheck = false;
+			}else{
+				addressCheck = true;
+
+			}
+			checkAllConditions();
+		})//end detailAddress.on
 
 	
 	function checkAllConditions() {
-	    if (idChecked && passwordCheck && phoneCheck) {
-	        $('#submitButton').prop('disabled', false); // 버튼 활성화
+	    if (idChecked && passwordCheck && phoneCheck && addressCheck) {
+	        $('#btn-submit').prop('disabled', false); // 버튼 활성화
 	    } else {
-	        $('#submitButton').prop('disabled', true); // 버튼 비활성화
+	        $('#btn-submit').prop('disabled', true); // 버튼 비활성화
 	    }
 	}//end checkAllConditions
+	
+	checkAllConditions();
 		
 	})//end document.ready
 	function searchPost() {
 	    new daum.Postcode({
 	        oncomplete: (data) => {
 	            console.log(data);
-	            $('#postcode').val(data.zonecode);
+	            $('#zonecode').val(data.zonecode);
 	            $('#Address').val(data.roadAddress);
 	        },//end oncomplete
 	        onclose: (state) => {
 	            console.log(state);
 	            if (state === 'COMPLETE_CLOSE') {
-	                $('#postcode').attr('readonly', true);
-	                $('#Address').attr('readonly', true);
+	                $('#detailAddress').attr('readonly', false);
+	            
 	            }
 	        }//end onclose
 	    }).open();//end Postcode

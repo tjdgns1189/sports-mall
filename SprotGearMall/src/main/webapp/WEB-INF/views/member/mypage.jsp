@@ -55,7 +55,9 @@
             </tr>
             <tr>
                 <th scope="row">주소</th>
-                <td><sec:authentication property="principal.address" /></td>
+                <td><sec:authentication property="principal.address" /><br>
+                <sec:authentication property="principal.detailAddress" /></td>
+                
             </tr>
             <tr>
                 <th scope="row">연락처</th>

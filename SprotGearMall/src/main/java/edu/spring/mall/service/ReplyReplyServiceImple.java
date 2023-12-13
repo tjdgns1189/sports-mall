@@ -12,9 +12,8 @@ import edu.spring.mall.persistence.ReplyReplyDAO;
 
 @Service
 public class ReplyReplyServiceImple implements ReplyReplyService {
-	private static final Logger logger = 
-			LoggerFactory.getLogger(QnaReplyServiceImple.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(QnaReplyServiceImple.class);
+
 	@Autowired
 	private ReplyReplyDAO replyReplyDAO;
 

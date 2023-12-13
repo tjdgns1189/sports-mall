@@ -14,7 +14,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<title>Insert title here</title>
+<title>장바구니</title>
 </head>
 <body>
 <h2 align="center">장바구니</h2>
@@ -102,7 +102,7 @@ function updateAllTotalPrice() {
 }
 
 
-// 버튼 누를시 삭제
+	// 버튼 누를시 삭제
     $(".btn-delete").click(function () {
         var cartId = $(this).data("cart-id");
         var csrfToken = $("#csrfToken").val();

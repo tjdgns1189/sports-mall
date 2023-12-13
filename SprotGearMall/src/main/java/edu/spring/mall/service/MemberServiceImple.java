@@ -3,6 +3,8 @@ package edu.spring.mall.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ public class MemberServiceImple implements MemberService {
 
 	@Autowired
 	private UserDetailsService service;
-	
+
 	@Transactional
 	@Override
 	public int create(MemberVO vo) throws Exception {
@@ -59,8 +61,8 @@ public class MemberServiceImple implements MemberService {
 	public int update(Map userDetail) throws Exception {
 		int result = 0;
 		String memberId = (String) userDetail.get("memberId");
+		// 이건 비밀번호 수정
 		if (userDetail.containsKey("password")) {
-			
 			userDetail.put("password", passwordEncoder.encode((String) userDetail.get("password")));
 			result = dao.updateUserPassword(userDetail);
 			if (result == 1) {
@@ -81,14 +83,13 @@ public class MemberServiceImple implements MemberService {
 			}
 
 		}
-		return result; 
+		return result;
 	}
 
 	@Override
 	public int delete(String MemberId) throws Exception {
 		logger.info("delete호출");
 		int result = dao.delete(MemberId);
-		
 		return result;
 	}
 

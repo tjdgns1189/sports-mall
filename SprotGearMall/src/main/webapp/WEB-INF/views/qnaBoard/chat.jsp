@@ -90,6 +90,8 @@
             $('#endChatBtn').click(() => {
                 if (ws) {
                     ws.close(); // 웹소켓 연결 종료
+                    var $systemMessageDiv = $("<div>").addClass("system-message").text("채팅이 종료되었습니다");
+                	$("#log").append($systemMessageDiv);
                 }
             });
 
@@ -127,7 +129,10 @@
             };
             ws.onerror = function(event) {
                 console.error("웹소켓 에러 발생", event);
+                var $systemMessageDiv = $("<div>").addClass("system-message").text("에러가 발생하여 채팅이 종료되었습니다");
+            	$("#log").append($systemMessageDiv);
             };
+
         }
 
         // 메시지 전송 함수

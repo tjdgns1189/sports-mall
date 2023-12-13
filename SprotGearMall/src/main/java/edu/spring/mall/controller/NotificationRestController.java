@@ -23,41 +23,36 @@ import edu.spring.mall.service.NotificationService;
 @RequestMapping
 public class NotificationRestController {
 	private final Logger logger = LoggerFactory.getLogger(NotificationRestController.class);
-	
-	
+
 	@Autowired
 	private NotificationService service;
-	
-    @ResponseBody
+
+	@ResponseBody
 	@GetMapping("/NotificationCheck")
-	public ResponseEntity<?> notificationGET(){
-		logger.info("알림 확인");
+	public ResponseEntity<?> notificationGET() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String memberId = auth.getName();
-		boolean isAdmin = auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-		
+		boolean isAdmin = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
 		List<NotificationVO> notificationList;
-		if(isAdmin) {
+		if (isAdmin) {
 			notificationList = service.readGroup("ROLE_ADMIN");
-		}else {
-			logger.info("memberId : " + memberId);
+		} else {
 			notificationList = service.read(memberId);
 		}
-	
+
 		return ResponseEntity.ok(notificationList);
-		
+
 	}
-    
-    
-    @PutMapping("/notificationUpdate")
-    public ResponseEntity<?> notificationUpdate(@RequestBody NotificationVO vo){
-    	logger.info("알림 읽음 vo : " + vo.toString());
-    	int result = service.update(vo);
-    	if(result == 1) {
-    		return ResponseEntity.ok(null);
-    	}
-    	return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+
+	@PutMapping("/notificationUpdate")
+	public ResponseEntity<?> notificationUpdate(@RequestBody NotificationVO vo) {
+		logger.info("알림 읽음 vo : " + vo.toString());
+		int result = service.update(vo);
+		if (result == 1) {
+			return ResponseEntity.ok(null);
+		}
+		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 }

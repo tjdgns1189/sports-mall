@@ -15,7 +15,7 @@
 
 <main>
 <!-- 헤더 첫번재줄 -->
-<div class="bg-white py-2">
+<div class="bg-light py-2">
 	<div class="container">
 		<div class="row align-items-center">
 			<!-- 로고 -->
@@ -99,7 +99,7 @@
 
 
 <!-- 네비바 두번재줄 -->
-<div class="header-container bg-info ">
+<div class="header-container header-color">
 <ul class="nav-list">
 
 		<li>
@@ -135,6 +135,7 @@
 				      <i class="fa fa-caret-down"></i>
 				    </button>
 				    <div class="p-dropdown-content">
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=야구공">야구공</a>
 				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=야구방망이">야구방망이</a>
 				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=글러브">글러브</a>
 				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=베이스">베이스</a>

@@ -37,14 +37,13 @@ public class HomeController {
 	private ProductDAO dao;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model,Integer page, Integer numsPerPage) {
+	public String home(Locale locale, Model model,Integer page, Integer numsPerPage){
+		
+		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 	    model.addAttribute("authorities", authorities);
-		
-	    logger.info("list() 호출");
-		logger.info("page = " + page + ", numsPerPage = " + numsPerPage);
-		
+				
 		PageCriteria criteria = new PageCriteria();
 		criteria.setNumsPerPage(100);
 		if(page != null) {
@@ -53,8 +52,20 @@ public class HomeController {
 		if(numsPerPage != null) {
 			criteria.setNumsPerPage(numsPerPage);
 		}
-		List<ProductVO> list = productService.read(criteria);
-		model.addAttribute("list",list);
+	//	List<ProductVO> list = productService.read(criteria);
+	//	model.addAttribute("list",list);
+		
+		List<ProductVO> soccerBallList = productService.readSoccerBall();
+		model.addAttribute("soccerBallList", soccerBallList);
+		
+	
+		List<ProductVO> baseBallList = productService.readBaseBall();
+		model.addAttribute("baseBallList", baseBallList);
+
+		List<ProductVO> basketBallList = productService.readBasketBall();
+		model.addAttribute("basketBallList", basketBallList);
+		
+		
 		PageMaker pageMaker = new PageMaker();
 		PageCriteria pageCriteria = new PageCriteria();
 		

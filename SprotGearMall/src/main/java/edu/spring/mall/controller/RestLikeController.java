@@ -22,7 +22,6 @@ import edu.spring.mall.service.LikesService;
 public class RestLikeController {
 	private final Logger logger = LoggerFactory.getLogger(RestLikeController.class);
 
-
 	@Autowired
 	private LikesService service;
 
@@ -30,16 +29,16 @@ public class RestLikeController {
 	public ResponseEntity<String> insertLike(@RequestBody LikesVO vo, Authentication authentication) throws Exception {
 		logger.info("좋아요 insert");
 		String result = "";
-		if(vo.getMemberId().isBlank()||vo.getMemberId()==null) {
+		if (vo.getMemberId().isBlank() || vo.getMemberId() == null) {
 			return new ResponseEntity<String>(result, HttpStatus.FORBIDDEN);
 		}
 		int count = service.count(vo);
-		if(count == 1) {
+		if (count == 1) {
 			logger.info("중복 체크");
-			result ="duplicate";
+			result = "duplicate";
 			return new ResponseEntity<String>(result, HttpStatus.OK);
 		}
-		
+
 		int success = service.create(vo);
 		if (success == 1) {
 			result = "success";
@@ -59,9 +58,9 @@ public class RestLikeController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 
 	}
-	
+
 	@GetMapping("/product/test/asdf")
-	public ResponseEntity<Void> test(){
+	public ResponseEntity<Void> test() {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 

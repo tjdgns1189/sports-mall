@@ -15,7 +15,7 @@ public interface ProductService {
 	List<ProductVO> read(PageCriteria criteria);
 	ProductVO read(int productId);
 	Map<String, Object> readProductById(int productId);
-	int update(ProductVO vo);
+	int update(ProductVO vo, MultipartFile file)throws IOException;
 	int softDelete(ProductVO vo);
 	int delete(int productId);
 	int getTotalCounts();
@@ -23,5 +23,9 @@ public interface ProductService {
 	List<ProductVO> searchLikesCount(String serchText,PageCriteria criteria);
 	List<ProductVO> searchRating(String serchText,PageCriteria criteria);
 	List<ProductVO> searchReviewCount(String serchText,PageCriteria criteria);
+	
+	List<ProductVO> readSoccerBall();
+	List<ProductVO> readBaseBall();
+	List<ProductVO> readBasketBall();
 	
 }

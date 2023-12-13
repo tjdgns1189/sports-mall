@@ -28,13 +28,11 @@ public class NotificationDAOImple implements NotificationDAO {
 
 	@Override
 	public List<NotificationVO> select(String memberId) {
-		logger.info("select 멤버확인");
 		return sqlSession.selectList(NAMESPACE + ".select_member", memberId);
 	}
 
 	@Override
 	public List<NotificationVO> selectAdmin(String group) {
-		logger.info("select 그룹");
 		return sqlSession.selectList(NAMESPACE + ".select_group", group);
 	}
 
@@ -48,6 +46,12 @@ public class NotificationDAOImple implements NotificationDAO {
 	public int delete(NotificationVO vo) {
 		logger.info("delete");
 		return sqlSession.delete(NAMESPACE + ".delete", vo);
+	}
+
+	@Override
+	public int count(NotificationVO vo) {
+		logger.info("count 호출");
+		return sqlSession.selectOne(NAMESPACE+ ".chat_count", vo);
 	}
 
 }

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@ include file="/WEB-INF/views/includes/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -27,21 +26,23 @@ li {
 }
 </style>
 <meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<title>Insert title here</title>
+
+<title>자유게시판</title>
+
 </head>
 <body>
-
 <div class="container-fluid">
     <div class="row">
         <!-- 사이드바 메뉴 -->
        <jsp:include page="../includes/qna-sidebar.jsp" />
         <!-- 메인 콘텐츠 -->
         <div class="col-md-10">
-	
-	<input type="hidden" id="memberId" name="memberId" value="${memberId }">
-
-
+    <div>
+	<h1>QNA자유게시판</h1>
+	<c:if test="${empty pageContext.request.userPrincipal.name}">
+   	<span>비회원이용가능(비회원은 글, 댓글입력만 가능합니다.)</span>
+   	</c:if>
+   	</div>
 	<a align="left" href="qnaRegister"><input type="button" value="글 작성"></a>
 	<hr>
 	<table id="hi" class="table table-striped table-hover" width="110">
@@ -57,7 +58,7 @@ li {
 		<tbody>
 			<c:forEach var="vo" items="${list }">
 				<tr>
-					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}&memberId=${memberId }">${vo.qnaBoardId }</a></td>
+					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}">${vo.qnaBoardId }</a></td>
 					<td>${vo.memberId }</td>
 					<td><a href="qnaDetail?qnaBoardId=${vo.qnaBoardId }&page=${pageMaker.criteria.page}">${vo.qnaBoardTitle }</a></td>
 					<fmt:formatDate value="${vo.qnaBoardCreatedDate }"
@@ -86,6 +87,5 @@ li {
 </div>
 
 
-<a href="chat"><button>채팅 문의</button></a>
 </body>
 </html>

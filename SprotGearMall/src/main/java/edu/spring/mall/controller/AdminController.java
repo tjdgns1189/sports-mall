@@ -22,33 +22,30 @@ import edu.spring.mall.service.OrderService;
 import edu.spring.mall.service.ProductService;
 
 @Controller
-@RequestMapping(value="/admin")
+@RequestMapping(value = "/admin")
 public class AdminController {
 	private final Logger logger = LoggerFactory.getLogger(AdminController.class);
-	
-	
+
 	@Autowired
 	ProductService productService;
-	
+
 	@Autowired
 	private AdminService service;
-	
+
 	@Autowired
 	private OrderService orderService;
-	
+
 	@GetMapping("/adminPage")
 	public void adminPageGET() {
 		logger.info("adminPageGET 호출");
 
 	}
-	
 
-	
 	@GetMapping("/memberList")
 	public void memberListGET() {
 
 	}
-	
+
 	@GetMapping("/productList")
 	public void productListGET(Model model, Integer page, Integer numsPerPage) {
 		logger.info("productList 호출");
@@ -74,34 +71,33 @@ public class AdminController {
 
 		logger.info("memberList 호출");
 	}
-	
-	
+
 	@GetMapping("/chat-list")
 	public void chatListGET() {
 		logger.info("chatListGET 호출");
 	}
-	
+
 	@GetMapping("/user-list")
-	public void userListGET(@RequestParam(required=false) String memberId, Model model){
+	public void userListGET(@RequestParam(required = false) String memberId, Model model) {
 		logger.info("user-listGET 호출");
 		List<MemberVO> list = new ArrayList<MemberVO>();
-		if(memberId == null) {
+		if (memberId == null) {
 			list = service.read();
-		}else {
+		} else {
 			list = service.readSearch(memberId);
 		}
 		model.addAttribute("list", list);
 
 	}
-	
+
 	@GetMapping("/orderManage")
 	public void orderManageGET(Model model) throws Exception {
 		logger.info("ordermanage 호출");
 		String orderState = "환불요청";
 		List<OrdersVO> list = orderService.readRefund(orderState);
-		
-		for(OrdersVO vo : list) {
-			logger.info("order확인 : "  + vo.getOrderId());
+
+		for (OrdersVO vo : list) {
+			logger.info("order확인 : " + vo.getOrderId());
 		}
 		model.addAttribute("list", list);
 	}

@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>리뷰하기</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="<c:url value="/resources/js/review.js" />"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -93,7 +94,7 @@ height:40%;
  			<span class="far fa-star" data-rating="3"></span>
   			<span class="far fa-star" data-rating="4"></span>
   			<span class="far fa-star" data-rating="5"></span>
-  		<div id="currentRating" class="current-rating mt-2"></div>
+  		
 	</div>
 	 <!-- 리뷰 글 작성 -->
   	<div class="form-label-group">
