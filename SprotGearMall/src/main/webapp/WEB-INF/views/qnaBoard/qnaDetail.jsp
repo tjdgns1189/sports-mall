@@ -93,6 +93,10 @@
 				var qnaBoardId = $('#qnaBoardId').val(); // 게시판 번호 데이터
 				var memberId = $('#memberId').val(); // 작성자 데이터
 				var qnaReplyContent = $('#qnaReplyContent').val(); // 댓글 내용
+				if(!memberId.trim() || memberId.startsWith(' ')){
+					alert('아이디칸빈칸금지');
+					return; // 함수 실행 중단
+				}
 				if (memberId.length > 10 || qnaReplyContent.length > 20) {
 			        alert('제한 글자수를 초과했습니다.');
 			        return;
@@ -259,6 +263,11 @@
 			    var qnaReplyId = $(this).closest('.reply_item').find('#qnaReplyId').val();
 			    var memberId = '${pageContext.request.userPrincipal.name}';
 			    var replyReplyContent = $('#replyReplyContent').val();
+			    //내용없을때 방지
+			    if(!replyReplyContent.trim()){
+					alert('내용입력해주세요');
+					return; // 함수 실행 중단
+				}
 			    if (memberId.length > 10 || replyReplyContent.length > 20) {
 			        alert('제한 글자수를 초과했습니다.');
 			        return;

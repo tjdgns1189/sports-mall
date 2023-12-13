@@ -50,7 +50,7 @@ function validateForm() {
     }
     
     var memberId = $('#qnaUpdateForm input[name="memberId"]').val();
-    if (!memberId.trim()) {
+    if (!memberId.trim() || memberId.startsWith(' ')) {
         alert('작성자칸을 입력하세요.');
         event.preventDefault(); // 폼 제출 막기
     }
