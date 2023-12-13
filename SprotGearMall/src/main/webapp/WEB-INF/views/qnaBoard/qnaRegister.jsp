@@ -73,6 +73,12 @@ function validateForm() {
         alert('내용이 500자를 초과했습니다.');
         event.preventDefault(); // 폼 제출 막기
     }
+    
+ // 내용 글자 수 체크
+    if (memberId.length > 10) {
+        alert('아이디가 10자를 초과했습니다.');
+        event.preventDefault(); // 폼 제출 막기
+    }
 }
 
 
