@@ -63,8 +63,8 @@ function validateForm() {
     }
     
     // 제목 공백처리
-    if (title.length > 30) {
-        alert('제목이 30자를 초과했습니다.');
+    if (title.length > 20) {
+        alert('제목이 20자를 초과했습니다.');
         event.preventDefault(); // 폼 제출 막기
     }
 
