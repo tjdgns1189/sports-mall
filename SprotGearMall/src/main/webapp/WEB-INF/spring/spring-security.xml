@@ -59,6 +59,11 @@
      <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
      <intercept-url pattern="/product/delete" access="hasRole('ROLE_ADMIN')"/>
      <intercept-url pattern="/product/update" access="hasRole('ROLE_ADMIN')"/>
+     <intercept-url pattern="/event/repliesInsert" access="isAuthenticated()"/>
+     <intercept-url pattern="/event/update" access="hasRole('ROLE_ADMIN')"/>
+     <intercept-url pattern="/event/register" access="hasRole('ROLE_ADMIN')"/>
+     
+  
      
 	 <!--  
 	 <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>

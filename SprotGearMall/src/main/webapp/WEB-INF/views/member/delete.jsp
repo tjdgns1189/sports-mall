@@ -31,7 +31,7 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                 <button type="submit" class="btn btn-primary btn-block">회원탈퇴</button>
             </form>
-            <a href="/mall" class="btn btn-secondary btn-block">취소</a>
+            <a href="/mall/member/mypage" class="btn btn-secondary btn-block">취소</a>
         </div>
     </div>
 </div>

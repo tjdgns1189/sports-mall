@@ -1,12 +1,13 @@
 package edu.spring.mall.service;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,11 +28,13 @@ public class ImageServiceImple implements ImageService {
 
 	public ImageServiceImple() throws IOException {
 		// 서비스 계정 키 파일 경로
-		String jsonPath = "C:\\jsonKey\\pure-heuristic-404308-b6290aeba841.json";
+		Resource resource = new ClassPathResource("pure-heuristic-404308-b6290aeba841.json");
+	    InputStream resourceInputStream = resource.getInputStream();
 
+		String jsonPath = "C:\\jsonKey\\pure-heuristic-404308-b6290aeba841.json";
 		// 스토리지 클라이언트 초기화
-		storage = StorageOptions.newBuilder()
-				.setCredentials(GoogleCredentials.fromStream(new FileInputStream(jsonPath))).build().getService();
+		 storage = StorageOptions.newBuilder()
+		            .setCredentials(GoogleCredentials.fromStream(resourceInputStream)).build().getService();
 	}
 
 	@Override

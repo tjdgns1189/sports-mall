@@ -30,6 +30,7 @@
                 <h5 class="card-title notice-title">${vo.noticeTitle }</h5>
                <fmt:formatDate value="${vo.noticeCreatedDate}" pattern="yyyy-MM-dd" var="date"/>
                 <p class="card-text notice-date">${date }</p>
+                <hr>
                 <!-- 공지사항 본문 -->
                 <p class="card-text notice-content details-img">${vo.noticeContent }</p>
             </div>
@@ -47,9 +48,9 @@
                 </sec:authorize>
             </div>
         </div>
-	<div>
-	<a href="noticeboard" style="text-align:center;"><button>목록으로</button></a>
-	</div>
+		<div style="display: flex; justify-content: center; margin-top: 10px;">
+    		<a href="noticeboard"><button class="btn btn-outline-success">목록으로</button></a>
+		</div>
     </div>
 </body>
 </html>

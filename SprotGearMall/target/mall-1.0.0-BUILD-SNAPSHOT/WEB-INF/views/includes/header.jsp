@@ -111,7 +111,7 @@
 				    </button>
 				    <div class="p-dropdown-content">
 				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=축구공">축구공</a>
-				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=미니축구골대">미니축구골대</a>
+				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=축구골대">축구골대</a>
 				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=골키퍼장갑">골키퍼장갑</a>
 				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=축구양말">축구양말</a>
 				    	<a href="${pageContext.request.contextPath}/product/search?searchtext=축구유니폼">축구유니폼</a>	      		      		      

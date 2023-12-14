@@ -17,7 +17,7 @@
 
     <!-- 오른쪽 컨텐츠 -->
    <div id="contentDiv" class="col-md-9 container-fluid">
-    <h2>채팅방 목록</h2>
+    <h2>채팅문의 목록</h2>
         <ul class="list-group">
             <!-- 채팅방 목록 출력되는곳 -->
             

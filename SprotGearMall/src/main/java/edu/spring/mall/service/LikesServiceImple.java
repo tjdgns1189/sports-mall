@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import edu.spring.mall.domain.LikesVO;
@@ -52,7 +54,8 @@ public class LikesServiceImple implements LikesService {
 	@Override
 	public int delete(LikesVO vo) throws Exception {
 		logger.info("delete 호출");
-
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		vo.setMemberId(auth.getName());
 		return likesDAO.delete(vo);
 	}
 

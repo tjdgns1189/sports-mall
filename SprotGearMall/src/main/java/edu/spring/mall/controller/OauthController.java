@@ -72,6 +72,7 @@ public class OauthController {
 		String storedState = (String) request.getSession().getAttribute("naverOAuthState");
 		if (storedState == null || !storedState.equals(state)) {
 			// state 값 불일치 - 요청 위조 가능성
+			logger.info("state 확인 : " + storedState);
 			throw new IllegalStateException("state값 불일치");
 		} else {
 			// 여기에 인증토큰 들어있음
