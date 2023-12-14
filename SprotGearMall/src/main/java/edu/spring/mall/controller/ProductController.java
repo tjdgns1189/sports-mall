@@ -200,7 +200,7 @@ public class ProductController {
 	} // end detail()
 
 	@GetMapping("/update")
-	public void updateGET(Model model, int productId, Integer page) {
+	public void updateGET(Model model, int productId) {
 
 		logger.info("updateGET() 호출 : productName = " + productId);
 
@@ -211,7 +211,7 @@ public class ProductController {
 		String memberId = auth.getName();
 
 		model.addAttribute("vo", vo);
-		model.addAttribute("page", page);
+		
 		model.addAttribute("principal", memberId);
 
 	} // end updateGET()
@@ -220,9 +220,11 @@ public class ProductController {
 	public String updatePOST(@RequestParam("productId") int productId, @RequestParam("productName") String productName,
 			@RequestParam("productPrice") int productPrice, @RequestParam("productStock") int productStock,
 			@RequestParam("productMaker") String productMaker,
+
 			@RequestParam(value = "productImgPath", required = false) MultipartFile file,
 			@RequestParam("productCategory") String productCategory,
 			@RequestParam("productContent") String productContent) throws IOException {
+
 
 		logger.info("updatePOST() 호출");
 		ProductVO vo = new ProductVO();
@@ -233,6 +235,7 @@ public class ProductController {
 		} else {
 			vo = new ProductVO(productId, productName, productPrice, productStock, productMaker, productCategory,
 					productContent);
+
 
 		}
 

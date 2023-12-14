@@ -20,7 +20,7 @@
   <form action="register" method="POST" class="row justify-content-center">
     <div class="col-md-8 mb-3">
       <label for="title" class="form-label">제목 :</label>
-      <input type="text" class="form-control" name="noticeTitle" id="title">
+      <input type="text" class="form-control" name="noticeTitle" id="title" required>
     </div>
     <input type="hidden" name="${_csrf.parameterName}" id ="csrfToken" value="${_csrf.token}">
     <div class="col-md-8 mb-3">
@@ -90,7 +90,15 @@ $(document).ready(function() {
       }
     }
   });
-});
+  
+  $('form').submit(function (event) {
+      var boardContent = $('#noticeContent').summernote('code').trim();
+      if (!boardContent) {
+          alert("본문을 입력해 주세요");
+          event.preventDefault(); 
+      }
+  });	  
+});//end document.ready
 </script>
 </body>
 </html>
