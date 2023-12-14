@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,10 +35,6 @@ import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
-import edu.spring.mall.persistence.CartDAO;
-import edu.spring.mall.persistence.LikesDAO;
-import edu.spring.mall.persistence.OrdersDAO;
-import edu.spring.mall.persistence.ProductDAO;
 import edu.spring.mall.service.CartService;
 import edu.spring.mall.service.LikesService;
 import edu.spring.mall.service.OrderService;
@@ -145,6 +142,11 @@ public class ProductController {
 		boolean isLiked = false;
 		logger.info("detail() 호출  = " + productId);
 		Map<String, Object> map = productService.readProductById(productId);
+		ProductVO productChecked = (ProductVO) map.get("product");
+		if (productChecked == null) {
+			logger.info("404에러 띄워야 하는 상황");
+	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "상품 없는데 접근");
+	    }
 		List<ReviewVO> review = (List<ReviewVO>) map.get("review");
 		ProductVO product = (ProductVO) map.get("product");
 		model.addAttribute("review", review);

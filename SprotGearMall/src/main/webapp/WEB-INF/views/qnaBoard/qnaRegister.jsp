@@ -75,11 +75,12 @@ function validateForm() {
     }
     
  // 내용 글자 수 체크
-    if (memberId.length > 10) {
+    if (memberId.length > 50) {
         alert('아이디가 10자를 초과했습니다.');
         event.preventDefault(); // 폼 제출 막기
     }
 }
+
 
 
 //비회원을 위해 접속아이디없을때 작성자칸에 입력넣기

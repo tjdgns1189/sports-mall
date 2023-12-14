@@ -50,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 <select id="select_by_product_id" resultType="ProductVO">
 	 	select * from ${product} 
 	 	where ${productId} = #{productId}
+	 	and ${productIsDeleted} = 0
 	 </select>
 
 	 <update id="update">
