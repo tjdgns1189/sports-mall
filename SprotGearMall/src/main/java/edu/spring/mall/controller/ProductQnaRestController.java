@@ -31,91 +31,86 @@ import edu.spring.mall.service.ProductQnaService;
 @RequestMapping
 public class ProductQnaRestController {
 	private final Logger logger = LoggerFactory.getLogger(ProductQnaRestController.class);
-	
+
 	@Autowired
 	private ProductQnaService service;
-	
-	
-	@GetMapping(value="/product/prdQnaPaging")
-	public ResponseEntity<Map<String, Object>> prdQnaGet(int productId, int page){
-        PageCriteria criteria = new PageCriteria();
-        criteria.setPage(page);
-        List<ProductQnaJoinReplyVO> qnaList = service.read(productId, criteria);
-        logger.info("qnaList.qna : " + qnaList.get(0).getQna().toString());
-        PageMaker pageMaker = new PageMaker();
-        pageMaker.setCriteria(criteria);
-        pageMaker.setTotalCount(service.getTotalCounts(productId));
-        pageMaker.setPageData();
-        boolean isAdmin = false;
-        
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        for (GrantedAuthority authority : auth.getAuthorities()) {
-		    if ("ROLE_ADMIN".equals(authority.getAuthority())) {
-		        isAdmin = true;
-		        break;
-		    }
+
+	@GetMapping(value = "/product/prdQnaPaging")
+	public ResponseEntity<Map<String, Object>> prdQnaGet(int productId, int page) {
+		PageCriteria criteria = new PageCriteria();
+		criteria.setPage(page);
+		List<ProductQnaJoinReplyVO> qnaList = service.read(productId, criteria);
+		logger.info("qnaList.qna : " + qnaList.get(0).getQna().toString());
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(service.getTotalCounts(productId));
+		pageMaker.setPageData();
+		boolean isAdmin = false;
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		for (GrantedAuthority authority : auth.getAuthorities()) {
+			if ("ROLE_ADMIN".equals(authority.getAuthority())) {
+				isAdmin = true;
+				break;
+			}
 		}
-        String memberId = auth.getName();
-    
-        Map<String, Object> response = new HashMap<>();
-        response.put("qnaList", qnaList);
-        response.put("pageMaker", pageMaker);
-        response.put("isAdmin", isAdmin);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+		String memberId = auth.getName();
+
+		Map<String, Object> response = new HashMap<>();
+		response.put("qnaList", qnaList);
+		response.put("pageMaker", pageMaker);
+		response.put("isAdmin", isAdmin);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
-	
-	
+
 	@PostMapping(value = "/product/prdQna", produces = "application/json")
-	public ResponseEntity<String> prdQnaPOST(@ModelAttribute ProductQnaVO vo) throws Exception{
+	public ResponseEntity<String> prdQnaPOST(@ModelAttribute ProductQnaVO vo) throws Exception {
 		logger.info("prdQnaPost호출");
 		String result = "";
-	    String success = "{\"result\":\"success\"}";
+		String success = "{\"result\":\"success\"}";
 
-		if(vo == null) {
+		if (vo == null) {
 			logger.info("vo가 null임");
-		    return new ResponseEntity<String>(result,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(result, HttpStatus.BAD_REQUEST);
 		}
 
-			int dbinsert = service.create(vo);
-			if(dbinsert == 1) {
-				result = success;
-			}
+		int dbinsert = service.create(vo);
+		if (dbinsert == 1) {
+			result = success;
+		}
 
-	    return new ResponseEntity<String>(result,HttpStatus.OK);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 
 	}
-	
+
 	@PutMapping(value = "/product/prdQnaUpdate", produces = "application/json")
-	public ResponseEntity<String> prdQnaPut(@ModelAttribute ProductQnaVO vo){
+	public ResponseEntity<String> prdQnaPut(@ModelAttribute ProductQnaVO vo) {
 		logger.info("prdQnaPost호출");
 		String result = "";
-	    String success = "{\"result\":\"success\"}";
+		String success = "{\"result\":\"success\"}";
 
-		if(vo == null) {
+		if (vo == null) {
 			logger.info("vo가 null임");
-		    return new ResponseEntity<String>(result,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(result, HttpStatus.BAD_REQUEST);
 		}
-			int dbinsert = service.update(vo);
-			if(dbinsert == 1) {
-				result = success;
-			}
-	    return new ResponseEntity<String>(result,HttpStatus.OK);
+		int dbinsert = service.update(vo);
+		if (dbinsert == 1) {
+			result = success;
+		}
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 
 	}
-	
 
-	
 	@DeleteMapping("/product/deleteQna")
 	public ResponseEntity<Void> deleteQna(@RequestBody ProductQnaVO vo) {
 		logger.info("myqndaDeletePOST() 호출 : " + vo.getPrdQnaId());
 		int prdQnaId = vo.getPrdQnaId();
 		int result = 0;
 		result = service.delete(prdQnaId);
-		if(result == 1) {
+		if (result == 1) {
 			logger.info("삭제성공");
 			return new ResponseEntity<Void>(HttpStatus.OK);
-		}else {
+		} else {
 			logger.info("삭제 실패");
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}

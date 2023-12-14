@@ -42,8 +42,6 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
 	@Autowired
 	private ClientRegistrationRepository social;
-	
-
 
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -51,7 +49,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 		logger.info("onLogoutSuccess 호출");
 		Cookie[] cookies = request.getCookies();
 		String registrationId = "";
-		if(cookies ==null) {
+		if (cookies == null) {
 			logger.info("쿠키없음");
 		}
 		for (Cookie cookie : cookies) {
@@ -62,17 +60,17 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 				cookie.setPath("/");
 				response.addCookie(cookie);
 			}
-			
+
 		}
-		
+
 		String accessToken;
-		if(registrationId.equals("naver")) {
+		if (registrationId.equals("naver")) {
 			try {
 				accessToken = CookieUtil.getDecryptedCookieValue(request, "Token");
 				logger.info("Token" + accessToken);
 				JsonNode resultNode = deleteNaverToken(accessToken, registrationId);
 				String result = resultNode.path("result").asText();
-				if(result.equals("success")) {
+				if (result.equals("success")) {
 					logger.info("oauth 인증토큰 제거 성공");
 					authService.removeAuthorizedClient(registrationId, authentication.getName());
 					CookieUtil.deleteCookie(request, response, "Token");
@@ -82,9 +80,9 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 			}
 			redirectStrategy.sendRedirect(request, response, "/");
 			return;
-		}//end naver
-		
-		if(registrationId.equals("google")) {
+		} // end naver
+
+		if (registrationId.equals("google")) {
 			try {
 				logger.info("구글 토큰 삭제");
 				accessToken = CookieUtil.getDecryptedCookieValue(request, "Token");
@@ -97,29 +95,24 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 			redirectStrategy.sendRedirect(request, response, "/");
 			return;
 
-		}//end google
+		} // end google
+		
 		redirectStrategy.sendRedirect(request, response, "/");
 
+	}// end onLogoutSuccess
 
-	}//end onLogoutSuccess
-
-	private JsonNode deleteNaverToken(String accessToken, String registrationId) 
+	private JsonNode deleteNaverToken(String accessToken, String registrationId)
 			throws JsonMappingException, JsonProcessingException {
-			logger.info("네이버 토큰 삭제 요청");
+		logger.info("네이버 토큰 삭제 요청");
 		ClientRegistration registration = social.findByRegistrationId(registrationId);
 		String clientId = registration.getClientId();
 		String clientSecret = registration.getClientSecret();
-		
+
 		String baseurl = registration.getProviderDetails().getTokenUri();
-		String makedurl = UriComponentsBuilder.fromHttpUrl(baseurl)
-				.queryParam("grant_type", "delete")
-				.queryParam("client_id", clientId)
-				.queryParam("client_secret", clientSecret)
-				.queryParam("access_token", accessToken)
-				.queryParam("service_provider", "NAVER")
-				.toUriString();
-		logger.info("makedurl : " + makedurl );
-		
+		String makedurl = UriComponentsBuilder.fromHttpUrl(baseurl).queryParam("grant_type", "delete")
+				.queryParam("client_id", clientId).queryParam("client_secret", clientSecret)
+				.queryParam("access_token", accessToken).queryParam("service_provider", "NAVER").toUriString();
+		logger.info("makedurl : " + makedurl);
 
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "delete");
@@ -138,12 +131,12 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
 		// 결과 확인
 		String responseBody = response.getBody();
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readTree(responseBody);
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.readTree(responseBody);
 
 	}
-	
-	private JsonNode deleteGoogleToken(String accessToken, String registrationId) 
+
+	private JsonNode deleteGoogleToken(String accessToken, String registrationId)
 			throws JsonMappingException, JsonProcessingException {
 		logger.info("구글 토큰 삭제 요청");
 		logger.info("accessToken : " + accessToken);
@@ -155,11 +148,11 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-		
-		String responseBody =response.getBody();
+
+		String responseBody = response.getBody();
 		logger.info("response : " + response);
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readTree(responseBody);
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.readTree(responseBody);
 	}
 
 }

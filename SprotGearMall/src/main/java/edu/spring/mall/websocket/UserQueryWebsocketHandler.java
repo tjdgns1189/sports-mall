@@ -26,78 +26,74 @@ public class UserQueryWebsocketHandler extends TextWebSocketHandler {
 	@Autowired
 	private ChatRoomService service;
 
-	
-	//웹소켓 연결시 
+	// 웹소켓 연결시
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("소켓 연결");
-        SecurityContext securityContext = (SecurityContext) session.getAttributes().get("SPRING_SECURITY_CONTEXT");
-        if (securityContext != null) {
-            Authentication auth = securityContext.getAuthentication();
-            boolean isAdmin = auth.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+		SecurityContext securityContext = (SecurityContext) session.getAttributes().get("SPRING_SECURITY_CONTEXT");
+		if (securityContext != null) {
+			Authentication auth = securityContext.getAuthentication();
+			boolean isAdmin = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 			String username = auth.getName();
 
-			if(isAdmin) {
+			if (isAdmin) {
 				String roomId = extractRoomIdFromSession(session);
-            	logger.info("관리자 접속 : " + username + " || 채팅방 번호 : " + roomId);
+				logger.info("관리자 접속 : " + username + " || 채팅방 번호 : " + roomId);
 				session.getAttributes().put("username", username);
 				ChatRoom chatRoom = service.getChatRoom(roomId);
-				if(chatRoom.getAdminSession() ==null) {
-				service.joinRoom(roomId, session);
-				sendMessageToRoom(roomId, username + "님이 입장했습니다");
+				if (chatRoom.getAdminSession() == null) {
+					service.joinRoom(roomId, session);
+					sendMessageToRoom(roomId, username + "님이 입장했습니다");
 				}
-			}else{
+			} else {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 				String dateTime = dateFormat.format(new Date());
 				String roomId = dateTime + "-" + UUID.randomUUID().toString().replace("-", "").substring(0, 8);
 				session.getAttributes().put("username", username);
 				service.create(roomId, session);
 				logger.info("채팅번호 : " + roomId + " || id : " + username + " 접속");
-				}
-            }//end if
+			}
+		} // end if
 
-        }//end afterConnectionEstablished()
+	}// end afterConnectionEstablished()
 
-	
-	//메세지 전송시
+	// 메세지 전송시
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-	    String username = (String) session.getAttributes().get("username");
-	    String senderType = session.getAttributes().containsKey("ROLE_ADMIN") ? "admin" : "user";
-	    ChatRoom room = service.getChatRoom(session);
+		String username = (String) session.getAttributes().get("username");
+		String senderType = session.getAttributes().containsKey("ROLE_ADMIN") ? "admin" : "user";
+		ChatRoom room = service.getChatRoom(session);
 
-	    if (room == null) {
-	        logger.error("채팅방을 찾을 수 없음");
-	        return;
-	    }
+		if (room == null) {
+			logger.error("채팅방을 찾을 수 없음");
+			return;
+		}
 
-	    JSONObject jsonMessage = new JSONObject();
-	    jsonMessage.put("username", username);
-	    jsonMessage.put("senderType", senderType);
-	    jsonMessage.put("message", message.getPayload());
-	    jsonMessage.put("timestamp", new Date().getTime());
+		JSONObject jsonMessage = new JSONObject();
+		jsonMessage.put("username", username);
+		jsonMessage.put("senderType", senderType);
+		jsonMessage.put("message", message.getPayload());
+		jsonMessage.put("timestamp", new Date().getTime());
 
-	    TextMessage formattedMessage = new TextMessage(jsonMessage.toString());
+		TextMessage formattedMessage = new TextMessage(jsonMessage.toString());
 
-	    // 채팅방의 모든 참가자에게 메시지 전송
-	    for (WebSocketSession x : room.getJoinUser()) {
-	        if (x.isOpen()) {
-	            x.sendMessage(formattedMessage);
-	        }
-	    }
+		// 채팅방의 모든 참가자에게 메시지 전송
+		for (WebSocketSession x : room.getJoinUser()) {
+			if (x.isOpen()) {
+				x.sendMessage(formattedMessage);
+			}
+		}
 
+	}// end handleTextMessage()
 
-	}//end handleTextMessage()
-	
-	//웹소켓 종료
+	// 웹소켓 종료
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		String username = (String) session.getAttributes().get("username");
-	    ChatRoom room = service.getChatRoom(session);
+		ChatRoom room = service.getChatRoom(session);
 		logger.info("id : " + username + "의 연결 종료");
 		sendMessageToRoom(room.getRoomId(), username + "님이 채팅을 종료했습니다");
-        service.removeChatRoom(room.getRoomId(), session);
+		service.removeChatRoom(room.getRoomId(), session);
 
 	}
 
@@ -117,32 +113,31 @@ public class UserQueryWebsocketHandler extends TextWebSocketHandler {
 		}
 		return null;
 	}
-	
+
 	public void sendMessageToRoom(String roomId, String messageText) {
-	    ChatRoom room = service.getChatRoom(roomId); // roomId를 사용하여 채팅방 객체를 얻음
+		ChatRoom room = service.getChatRoom(roomId); // roomId를 사용하여 채팅방 객체를 얻음
 
-	    if (room == null) {
-	        logger.error("채팅방을 찾을 수 없음: " + roomId);
-	        return;
-	    }
+		if (room == null) {
+			logger.error("채팅방을 찾을 수 없음: " + roomId);
+			return;
+		}
 
-	    JSONObject jsonMessage = new JSONObject();
-	    jsonMessage.put("senderType", "state"); 
-	    jsonMessage.put("message", messageText); 
+		JSONObject jsonMessage = new JSONObject();
+		jsonMessage.put("senderType", "state");
+		jsonMessage.put("message", messageText);
 
-	    TextMessage formattedMessage = new TextMessage(jsonMessage.toString());
+		TextMessage formattedMessage = new TextMessage(jsonMessage.toString());
 
-	    // 채팅방의 모든 참가자에게 메시지 전송
-	    for (WebSocketSession participant : room.getJoinUser()) {
-	        if (participant.isOpen()) {
-	            try {
-	                participant.sendMessage(formattedMessage);
-	            } catch (IOException e) {
-	                logger.error("메시지 전송 중 오류 발생", e);
-	            }
-	        }
-	    }
+		// 채팅방의 모든 참가자에게 메시지 전송
+		for (WebSocketSession participant : room.getJoinUser()) {
+			if (participant.isOpen()) {
+				try {
+					participant.sendMessage(formattedMessage);
+				} catch (IOException e) {
+					logger.error("메시지 전송 중 오류 발생", e);
+				}
+			}
+		}
 	}
-	
 
 }

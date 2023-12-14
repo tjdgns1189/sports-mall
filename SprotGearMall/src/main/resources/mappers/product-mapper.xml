@@ -25,8 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="select_BaseBall" resultType="ProductVO">
 	    SELECT * FROM ${product}
-	    WHERE ${productIsDeleted} != 1 AND ${productCategory} = '야구방망이'
-	    ORDER BY ${productId} DESC
+	    WHERE ${productIsDeleted} != 1 AND ${productCategory} = '야구공'
+	    ORDER BY ${productId} ASC
 	</select>
 	
 	<select id="select_BasketBall" resultType="ProductVO">

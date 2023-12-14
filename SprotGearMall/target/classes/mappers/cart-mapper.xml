@@ -15,14 +15,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	select * from ${cart} where ${memberId} = #{memberId}
 	 </select>
 	 
-	 <select id="select_by_order_Id" resultType="CartVO">
+	 <select id="select_by_order_id" resultType="CartVO">
 	 	select * from ${cart} 
 	 	where ${cartId} = #{cartId}
 	 </select>
 	 
-	 <select id="select_by_product_Id" resultType="CartVO">
+	 <select id="select_by_product_id" resultType="CartVO">
 	 	select * from ${cart} 
-	 	where ${productId} = #{productId}
+	 	where ${memberId} = #{memberId} and ${productId} = #{productId}
 	 </select>
 	 
 	 <delete id="delete">

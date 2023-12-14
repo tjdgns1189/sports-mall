@@ -23,99 +23,93 @@ import edu.spring.mall.service.EventBoardService;
 @Controller
 @RequestMapping(value = "event")
 public class EventBoardController {
-	private static final Logger logger =
-			LoggerFactory.getLogger(EventBoardController.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(EventBoardController.class);
+
 	@Autowired
 	private EventBoardService eventBoardService;
-	
+
 	@GetMapping("/eventboard")
-	public void eventBoardGet(Model model, Integer page ,Integer numsPerPage) {
+	public void eventBoardGet(Model model, Integer page, Integer numsPerPage) {
 		logger.info("eventBoardGet() 호출");
 		PageCriteria criteria = new PageCriteria();
-		
-		if(page != null) {
+
+		if (page != null) {
 			criteria.setPage(page);
 		}
-		
-		if(numsPerPage != null) {
+
+		if (numsPerPage != null) {
 			criteria.setNumsPerPage(numsPerPage);
 		}
-		
+
 		List<EventBoardVO> list = eventBoardService.read(criteria);
-	
+
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
 		pageMaker.setTotalCount(eventBoardService.getTotalCounts());
 		pageMaker.setPageData();
-		
-		model.addAttribute("list",list);
-		model.addAttribute("pageMaker",pageMaker);
+
+		model.addAttribute("list", list);
+		model.addAttribute("pageMaker", pageMaker);
 	}
-	
+
 	@GetMapping("/register")
 	public void registerGet(Model model) {
 		logger.info("register()호출");
-		
-		
+
 	}
-	
+
 	@PostMapping("/register")
-	public String eventBoardRegisterPOST(Model model,RedirectAttributes reAttr,
-			@RequestParam String eventBoardTitle,
-			@RequestParam String eventBoardContent , Principal principal) {
+	public String eventBoardRegisterPOST(Model model, RedirectAttributes reAttr, @RequestParam String eventBoardTitle,
+			@RequestParam String eventBoardContent, Principal principal) {
 		logger.info("eventBoardRegisterPOST() 호출");
 		String memberId = principal.getName();
-		
+
 		EventBoardVO vo = new EventBoardVO(0, memberId, eventBoardTitle, eventBoardContent, null, 0);
 		int result = eventBoardService.create(vo);
-		if(result == 1) {
+		if (result == 1) {
 			logger.info("상품등록 성공");
-			reAttr.addFlashAttribute("insert_result" , "success");
+			reAttr.addFlashAttribute("insert_result", "success");
 		}
 		return "redirect:/event/eventboard";
-		
+
 	}
-	
+
 	@GetMapping("/detail")
-	public void eventBoardDetailGet(Model model, Principal principal ,int eventBoardId) {
+	public void eventBoardDetailGet(Model model, Principal principal, int eventBoardId) {
 		logger.info("eventBoardDetailGet() 호출");
 		EventBoardVO vo = eventBoardService.read(eventBoardId);
 		String memberId = principal.getName();
-		model.addAttribute("currentUserMemberId",memberId);
-		model.addAttribute("vo",vo);
-		
-		
+		model.addAttribute("currentUserMemberId", memberId);
+		model.addAttribute("vo", vo);
+
 	}
-	
+
 	@GetMapping("/update")
 	public String eventBoardUpdate(Model model, int eventBoardId) {
 		logger.info("eventBoardUpdate() 호출");
 		EventBoardVO vo = eventBoardService.read(eventBoardId);
-		model.addAttribute("vo",vo);
+		model.addAttribute("vo", vo);
 		return "event/register";
 	}
-	
+
 	@PostMapping("/update")
-	public String eventBoardUpdate(@RequestParam String eventBoardTitle,
-			@RequestParam String eventBoardContent,
+	public String eventBoardUpdate(@RequestParam String eventBoardTitle, @RequestParam String eventBoardContent,
 			@RequestParam int eventBoardId) {
-			logger.info("eventBoardUpate() 호출");
-			
-			EventBoardVO vo = new EventBoardVO(eventBoardId, null, eventBoardTitle, eventBoardContent, null);
-			
-			eventBoardService.update(vo);
-			
-		return "redirect:/event/detail?eventBoardId=" + eventBoardId; 
+		logger.info("eventBoardUpate() 호출");
+
+		EventBoardVO vo = new EventBoardVO(eventBoardId, null, eventBoardTitle, eventBoardContent, null);
+
+		eventBoardService.update(vo);
+
+		return "redirect:/event/detail?eventBoardId=" + eventBoardId;
 	}
-	
+
 	@PostMapping("/delete")
 	public String evnetBoardDelete(@RequestParam int eventBoardId) {
 		logger.info("eventBoardDelete() 호출");
 		eventBoardService.delete(eventBoardId);
-		
+
 		return "redirect:/event/eventboard";
 	}
-	
-	
+
 }

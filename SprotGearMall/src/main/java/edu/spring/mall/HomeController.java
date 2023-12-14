@@ -37,7 +37,9 @@ public class HomeController {
 	private ProductDAO dao;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model,Integer page, Integer numsPerPage) {
+	public String home(Locale locale, Model model,Integer page, Integer numsPerPage){
+		
+		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 	    model.addAttribute("authorities", authorities);
@@ -56,13 +58,7 @@ public class HomeController {
 		List<ProductVO> soccerBallList = productService.readSoccerBall();
 		model.addAttribute("soccerBallList", soccerBallList);
 		
-		if(soccerBallList.size() == 0) {
-			logger.info("soccerBallList안에 아무것도 안들었음");
-		}
-		for(ProductVO x : soccerBallList) {
-			logger.info("축구공 : " + x.getProductName());
-		}
-
+	
 		List<ProductVO> baseBallList = productService.readBaseBall();
 		model.addAttribute("baseBallList", baseBallList);
 

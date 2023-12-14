@@ -23,13 +23,11 @@ import edu.spring.mall.service.OrderService;
 @Controller
 @RequestMapping(value = "/orders")
 public class OrdersController {
-	private static final Logger logger =
-			LoggerFactory.getLogger(LoginController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@Autowired
 	private OrderService service;
 
-	
 	@PostMapping("/orderlist")
 	public String ordersPOST(Model model, OrdersVO vo, Principal principal) throws Exception {
 		logger.info("paymentPOST() 호출 : vo = " + vo.toString());
@@ -39,42 +37,40 @@ public class OrdersController {
 		List<OrdersVO> list = service.readOrder(memberId);
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("list", list);
-	
-		
+
 		return "redirect:/orders/orderlist";
 	}
-	
+
 	@GetMapping("/orderlist")
 	public void orderlistGET(Model model, Principal principal) throws Exception {
 		String memberId = principal.getName();
-		logger.info("orderlistGET 호출 : memberId = " + memberId);	
-		List<OrdersProductJoinVO> list = service.read(memberId);		
+		logger.info("orderlistGET 호출 : memberId = " + memberId);
+		List<OrdersProductJoinVO> list = service.read(memberId);
 		model.addAttribute("list", list);
 		model.addAttribute("memberId", memberId);
 	}
-	
-	@PostMapping(value="/delete", produces = "application/json")
+
+	@PostMapping(value = "/delete", produces = "application/json")
 	public ResponseEntity<Integer> ordersDeletePOST(@RequestBody List<Integer> checkedIds) {
 		logger.info("orderDeletePOST() 호출 : " + checkedIds.toString());
 		int totalDeleted = 0; // 삭제된 항목 수를 추적하는 변수
-	    try {
-	        for (Integer id : checkedIds) {
-	            int result = service.delete(id);
-	            totalDeleted += result;
-	        }
+		try {
+			for (Integer id : checkedIds) {
+				int result = service.delete(id);
+				totalDeleted += result;
+			}
 
-	        if (totalDeleted > 0) {
-	        	// 적어도 하나의 항목이 성공적으로 삭제됐을 경우
-	            return new ResponseEntity<>(totalDeleted, HttpStatus.OK);
-	        } else {
-	        	// 삭제된 항목이 없는 경우
+			if (totalDeleted > 0) {
+				// 적어도 하나의 항목이 성공적으로 삭제됐을 경우
+				return new ResponseEntity<>(totalDeleted, HttpStatus.OK);
+			} else {
+				// 삭제된 항목이 없는 경우
 
-	            return new ResponseEntity<>(0, HttpStatus.NOT_FOUND);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
-	    }
+				return new ResponseEntity<>(0, HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(0, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }
-

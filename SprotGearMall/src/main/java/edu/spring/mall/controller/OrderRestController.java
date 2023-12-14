@@ -15,22 +15,21 @@ import edu.spring.mall.service.OrderService;
 @RestController
 public class OrderRestController {
 	private Logger logger = LoggerFactory.getLogger(OrderRestController.class);
-	
+
 	@Autowired
 	private OrderService service;
-	
+
 	@PutMapping("/refund")
-	public ResponseEntity<String> refundPut(@RequestBody OrdersVO vo) throws Exception{
+	public ResponseEntity<String> refundPut(@RequestBody OrdersVO vo) throws Exception {
 		logger.info("refundPut 호출");
 		String response = "";
 		int result = service.update(vo);
-		if(result == 1) {
+		if (result == 1) {
 			response = "success";
-			return new ResponseEntity<String>(response,HttpStatus.OK);
+			return new ResponseEntity<String>(response, HttpStatus.OK);
 		}
-	return new ResponseEntity<String>(response,HttpStatus.OK);
+		return new ResponseEntity<String>(response, HttpStatus.OK);
 
-		
 	}
 
 }

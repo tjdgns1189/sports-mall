@@ -179,9 +179,7 @@
     <input type="hidden" id="insertAlert" value="${insert_result }">
 
     <script type="text/javascript">
-    	$(()=>{
-    		console.log('a');
-    	})
+    	
 
         var result = $('#insertAlert').val();
         if(result == 'success') {

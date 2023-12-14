@@ -13,12 +13,11 @@ import edu.spring.mall.pageutil.PageCriteria;
 
 @Service
 public class QnaBoardServiceImple implements QnaBoardService {
-	private static final Logger logger =
-			LoggerFactory.getLogger(QnaBoardServiceImple.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(QnaBoardServiceImple.class);
+
 	@Autowired
 	private QnaBoardDAO dao;
-	
+
 	@Override
 	public int create(QnaBoardVO vo) {
 		logger.info("create() 호출 : vo = " + vo.toString());

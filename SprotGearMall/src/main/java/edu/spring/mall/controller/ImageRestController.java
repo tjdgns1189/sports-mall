@@ -25,12 +25,10 @@ import edu.spring.mall.service.ImageService;
 @RequestMapping
 public class ImageRestController {
 	private final Logger logger = LoggerFactory.getLogger(ImageRestController.class);
-	
-	
-	
+
 	@Autowired
 	private ImageService service;
-	
+
 //	@PostMapping("upload")
 //	  public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
 //        try {
@@ -41,29 +39,27 @@ public class ImageRestController {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Upload failed: " + e.getMessage());
 //        }
 //    }
-	
-	@PostMapping(value="/notice/uploadImg", produces = "application/json")
+
+	@PostMapping(value = "/notice/uploadImg", produces = "application/json")
 	public ResponseEntity<Map<String, Object>> uploadFile(@RequestParam("upload") MultipartFile file) {
-	    logger.info("uploadFile");
-	    try {
-	        String randomString = UUID.randomUUID().toString().replace("-", "").substring(0, 32);
-	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
-	        String dateString = dateFormat.format(new Date());
+		logger.info("uploadFile");
+		try {
+			String randomString = UUID.randomUUID().toString().replace("-", "").substring(0, 32);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
+			String dateString = dateFormat.format(new Date());
 
-	        String fileName = "notice/" + randomString + dateString + ".jpg"; 
-	        String fileUrl = service.noticeImg(file, fileName); 
-	        Map<String, Object> response  = new HashMap<String, Object>();
-	        response.put("url", fileUrl);
+			String fileName = "notice/" + randomString + dateString + ".jpg";
+			String fileUrl = service.noticeImg(file, fileName);
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("url", fileUrl);
 
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			Map<String, Object> response = new HashMap<String, Object>();
+			response.put("error", "업로드 실패");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 
-	        return ResponseEntity.ok(response);
-	    } catch (Exception e) {
-	        Map<String, Object> response  = new HashMap<String, Object>();
-	        response.put("error", "업로드 실패");
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-
-
-	    }
+		}
 
 	}
 

@@ -10,5 +10,6 @@ public interface NotificationService {
 	List<NotificationVO> readGroup(String group);
 	int update(NotificationVO vo);
 	int delete(NotificationVO vo);
+	int count(NotificationVO vo);
 
 }

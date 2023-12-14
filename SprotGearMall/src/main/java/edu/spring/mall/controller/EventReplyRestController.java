@@ -22,14 +22,13 @@ import edu.spring.mall.domain.EventReplyVO;
 import edu.spring.mall.service.EventReplyService;
 
 @RestController
-@RequestMapping(value="event")
+@RequestMapping(value = "event")
 public class EventReplyRestController {
-	private static final Logger logger =
-			LoggerFactory.getLogger(EventReplyRestController.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(EventReplyRestController.class);
+
 	@Autowired
 	private EventReplyService service;
-	
+
 	@PostMapping("/replies")
 	public ResponseEntity<Integer> repliesPost(@RequestBody EventReplyVO vo, Principal principal) {
 		logger.info("repliesPost() 호출");
@@ -38,35 +37,34 @@ public class EventReplyRestController {
 		vo.setMemberId(memberId);
 		logger.info("vo : " + vo.toString());
 		int result = service.create(vo);
-		return new ResponseEntity<Integer>(result,HttpStatus.OK);  
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/replies")
-    public ResponseEntity<List<EventReplyVO>> getReplies(int eventBoardId) {
-        List<EventReplyVO> replies = service.read(eventBoardId);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAdmin = auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-        
-        for (EventReplyVO reply : replies) {
-            reply.setUserGrade(isAdmin ? "ROLE_ADMIN" : "ROLE_USER");
-        }
-        
-        return new ResponseEntity<List<EventReplyVO>>(replies, HttpStatus.OK);
-    }
-	
+	public ResponseEntity<List<EventReplyVO>> getReplies(int eventBoardId) {
+		List<EventReplyVO> replies = service.read(eventBoardId);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		boolean isAdmin = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+		for (EventReplyVO reply : replies) {
+			reply.setUserGrade(isAdmin ? "ROLE_ADMIN" : "ROLE_USER");
+		}
+
+		return new ResponseEntity<List<EventReplyVO>>(replies, HttpStatus.OK);
+	}
+
 	@DeleteMapping("/replies")
 	public ResponseEntity<Integer> deleteReplies(@RequestBody EventReplyVO vo) {
 		logger.info("deleteReplies 호출");
 		int result = service.delete(vo.getEventReplyId());
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/replies")
-	public ResponseEntity<Integer> updateReplies(@RequestBody EventReplyVO vo  ) {
+	public ResponseEntity<Integer> updateReplies(@RequestBody EventReplyVO vo) {
 		logger.info("updateReplies 호출");
 		int result = service.update(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
-	
+
 }

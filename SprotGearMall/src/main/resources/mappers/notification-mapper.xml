@@ -27,6 +27,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and ${groupId} = #{groupId}
 	</select>
 	
+	<select id="chat_count" resultType="Integer">
+		select count(*) from ${notification_table}
+		where ${readDate} Is NULL
+		and ${notificationType} = #{notificationType}
+	</select>
+	
 	<update id="updateDate">
 		update ${notification_table}
 		set ${readDate} = #{readDate}

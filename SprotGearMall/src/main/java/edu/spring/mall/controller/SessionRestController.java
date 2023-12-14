@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class SessionRestController {
 	private final Logger logger = LoggerFactory.getLogger(SessionRestController.class);
 
-	
 	@GetMapping("/loginSetSession")
-	public ResponseEntity<String> loginSessionGet(HttpServletRequest request){
+	public ResponseEntity<String> loginSessionGet(HttpServletRequest request) {
 		logger.info("loginSessionGet");
 		request.getSession().setAttribute("authError", "HEADER");
 		String response = "success";

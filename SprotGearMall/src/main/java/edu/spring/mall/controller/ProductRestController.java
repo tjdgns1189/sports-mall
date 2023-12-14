@@ -15,22 +15,21 @@ import edu.spring.mall.service.ProductService;
 @RestController
 public class ProductRestController {
 	private Logger logger = LoggerFactory.getLogger(ProductRestController.class);
-	
+
 	@Autowired
 	private ProductService service;
-	
-	
+
 	@PutMapping("/admin/softDelete")
-	public ResponseEntity<String> softDelete(@RequestBody ProductVO vo){
-		logger.info("softDelete 호출 productId :  "+ vo.getProductId() + " isDeleted : " + vo.getProductIsDeleted() );
+	public ResponseEntity<String> softDelete(@RequestBody ProductVO vo) {
+		logger.info("softDelete 호출 productId :  " + vo.getProductId() + " isDeleted : " + vo.getProductIsDeleted());
 		int result = service.softDelete(vo);
-		String success="";
-		if(result == 1) {
+		String success = "";
+		if (result == 1) {
 			logger.info("삭제(softDelete) 성공");
-			success="success";
-			return new ResponseEntity<String>(success,HttpStatus.OK);
-			
+			success = "success";
+			return new ResponseEntity<String>(success, HttpStatus.OK);
+
 		}
-		return new ResponseEntity<String>(success,HttpStatus.OK);
+		return new ResponseEntity<String>(success, HttpStatus.OK);
 	}
 }

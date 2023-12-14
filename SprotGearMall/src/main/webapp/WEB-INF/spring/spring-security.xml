@@ -30,7 +30,6 @@
 	<http pattern="/notice/uploadImg**" security="none"/>
 	
 	
-	
 	<http auto-config="true" use-expressions="true" entry-point-ref="authenticationEntryPoint">
 	 <access-denied-handler ref="accessDeniedHandler"/>
 	 <intercept-url pattern="/gsi/**" access="permitAll"/>
@@ -55,11 +54,12 @@
      <intercept-url pattern="/product/prdQna" access="isAuthenticated()"/>
      <intercept-url pattern="/product/prdQnaPaging" access="permitAll"/>
      <intercept-url pattern="/qnaBoard/chat" access="isAuthenticated()"/>
-     <intercept-url pattern="/qnaBoard/**" access="isAuthenticated()"/>
+     <intercept-url pattern="/notice/register" access="hasRole('ROLE_ADMIN')"/>
+     <intercept-url pattern="/notice/update" access="hasRole('ROLE_ADMIN')"/>
+     <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
+     <intercept-url pattern="/product/delete" access="hasRole('ROLE_ADMIN')"/>
+     <intercept-url pattern="/product/update" access="hasRole('ROLE_ADMIN')"/>
      
-     
-     
-	
 	 <!--  
 	 <intercept-url pattern="/product/register" access="hasRole('ROLE_ADMIN')"/>
 	 -->

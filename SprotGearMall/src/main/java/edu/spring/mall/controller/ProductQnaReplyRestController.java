@@ -24,49 +24,48 @@ import edu.spring.mall.service.ProductQnaService;
 @RequestMapping("/product")
 public class ProductQnaReplyRestController {
 	private final Logger logger = LoggerFactory.getLogger(ProductQnaReplyRestController.class);
-	
+
 	@Autowired
 	private ProductQnaReplyService replyService;
-	
+
 	@Autowired
 	private ProductQnaService qnaService;
-	
-	
+
 	@PostMapping("/qnaAnswer/{authorId}")
-	public ResponseEntity<Void> qnaAnswerPOST(@RequestBody ProductQnaReplyVO vo, @PathVariable String authorId) throws Exception{
+	public ResponseEntity<Void> qnaAnswerPOST(@RequestBody ProductQnaReplyVO vo, @PathVariable String authorId)
+			throws Exception {
 		logger.info("qnaAnswerPOST 호출 authorId : " + authorId);
-		 ProductQnaVO qna = qnaService.readDetail(vo.getPrdQnaId());
-		 if(qna.getPrdQnaState().equals("Y")) {
+		ProductQnaVO qna = qnaService.readDetail(vo.getPrdQnaId());
+		if (qna.getPrdQnaState().equals("Y")) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		 }
-		
+		}
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		vo.setMemberId(auth.getName());
-		int result = replyService.create(vo,authorId);
-		if(result == 1) {
+		int result = replyService.create(vo, authorId);
+		if (result == 1) {
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		
+
 	}
-	
-	
+
 	@PutMapping("/updateAnswer")
-	public ResponseEntity<Void> qnsAnswerUpdate(@RequestBody ProductQnaReplyVO vo){
+	public ResponseEntity<Void> qnsAnswerUpdate(@RequestBody ProductQnaReplyVO vo) {
 		logger.info("qnaAnswerUpdate 호출");
 		int result = replyService.update(vo);
-		if(result ==1) {
+		if (result == 1) {
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
 		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		
+
 	}
-	
+
 	@DeleteMapping("/deleteReply")
-	public ResponseEntity<Void> qnaAnswerDelete(@RequestBody ProductQnaReplyVO vo){
+	public ResponseEntity<Void> qnaAnswerDelete(@RequestBody ProductQnaReplyVO vo) {
 		logger.info("Answer delete호출");
 		int result = replyService.delete(vo);
-		if(result == 0) {
+		if (result == 0) {
 			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<Void>(HttpStatus.OK);
