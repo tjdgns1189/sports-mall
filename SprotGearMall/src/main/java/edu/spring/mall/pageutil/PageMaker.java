@@ -10,9 +10,7 @@ public class PageMaker {
 
 	private PageCriteria criteria;
 	private int totalCount; //전체 게시글 갯수
-	private int numsOfPageLinks;  // 페이지 번호 링크의 개수
-								  // 이 값이 3이면   이전 / 1 / 2 / 3 / 다음
-								  //               이전 / 4 / 5 / 6 / 다음
+	private int numsOfPageLinks;  // 페이지 번호 링크의 개수	
 	private int startPageNo; //시작 페이지 링크 번호. 위 예시에서는 1과 4
 	private int endPageNo; //끝 페이지 링크 번호. 위 예시에서는 3과 6
 	private boolean hasPrev;  //화면에 보이는 시작 페이지 번호보다 작은숫자의 페이지 확인
@@ -61,7 +59,6 @@ public class PageMaker {
 	// startPageNo, endPageNo, hasPrev, hasNext 
 	public void setPageData() { 
 		// 이 메소드는 페이지에 관한 데이터를 세팅함
-		
 		// ceil() 함수는 올림함수.
 		int totalLinkNo = (int) Math.ceil((double) totalCount / criteria.getNumsPerPage());
 		// numsOfPageLinks는 한 번에 표시되는 페이지 링크의 개수이고, totalLinkNo는 전체 페이지 링크의 총 개수.

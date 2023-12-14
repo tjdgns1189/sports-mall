@@ -85,19 +85,19 @@ public class ProductServiceImple implements ProductService {
 
 	@Override
 	public List<ProductVO> readSoccerBall() {
-		logger.info("read(criteria) 호출");
+		logger.info("read 호출");
 		return dao.selectSoccerBall();
 	}
 
 	@Override
 	public List<ProductVO> readBaseBall() {
-		logger.info("read(criteria) 호출");
+		logger.info("read 호출");
 		return dao.selectBaseBall();
 	}
 
 	@Override
 	public List<ProductVO> readBasketBall() {
-		logger.info("read(criteria) 호출");
+		logger.info("read 호출");
 		return dao.selectBasketBall();
 	}
 
