@@ -62,7 +62,7 @@ public class OauthConfig {
         // 카카오 OAuth2 설정
         return ClientRegistration.withRegistrationId("kakao")
                 .clientId("kakao-client-id")
-                .clientSecret("kakao-client-secret") // 일부 설정에서는 필요 없을 수 있음
+                .clientSecret("kakao-client-secret") 
                 .scope("profile", "account_email")
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .redirectUri("{baseUrl}/login/oauth2/code/kakao")

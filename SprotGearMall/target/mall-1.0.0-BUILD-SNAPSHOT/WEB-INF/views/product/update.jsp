@@ -222,7 +222,6 @@ $(()=>{
         var productPrice = $('#productPrice').val();
         var productStock = $('#productStock').val();
         var productMaker = $('#productMaker').val();
-        var productImgPath = $('#fileItem').val();
         var productCategory = $('#productCategory').val();
         var productContent = $('#productContent').summernote('code');
 

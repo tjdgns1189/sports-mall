@@ -118,7 +118,6 @@ li {
                 </tbody>
             </table>
         </div>
-
     </div>
     
     
@@ -270,9 +269,6 @@ li {
             </table>
         </div>
     </div>
-    
-    
-    
     
         <div class="row justify-content-center my-5">
         <div class="col-md-8">

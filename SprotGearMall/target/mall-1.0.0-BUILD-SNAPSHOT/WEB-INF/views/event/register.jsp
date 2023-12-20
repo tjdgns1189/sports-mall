@@ -67,6 +67,21 @@
  		    maxHeight: null
  		    })
  		    })
+ 		    
+ 	// 등록 버튼 클릭 시 폼 검증
+    $('form').submit(function (event) {
+        // 필수 입력 필드의 값을 확인
+        var title = $('#title').val();
+        var eventBoardContent = $('#eventBoardContent').summernote('code').trim();
+        
+
+        // 필수 입력 필드 중 하나라도 비어있으면 경고 표시
+        if (!title || !eventBoardContent) {
+            alert("빠진 입력 사항이 없는 지 확인해주세요.");
+            event.preventDefault(); // 기본 동작을 막음
+        }
+    });	    
+ 		    
  	</script>
  	
 </body>

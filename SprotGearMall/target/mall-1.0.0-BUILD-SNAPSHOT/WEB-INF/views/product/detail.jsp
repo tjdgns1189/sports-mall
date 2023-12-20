@@ -675,12 +675,7 @@ $(document).on('click', '.cancel-answer', function() {
 	  }
 	  
 
-	//문의 답변
-	$(document).on('click', '.submit-answer', function() {
-	    var qnaId = $(this).data('qna-id');
-	    submitAnswer(qnaId);
-	});//end submit.on
-	
+
 	//답변 수정
 	$(document).on('click', '.update-answer', function() {
 	    var pqrId = $(this).data('pqr-id');

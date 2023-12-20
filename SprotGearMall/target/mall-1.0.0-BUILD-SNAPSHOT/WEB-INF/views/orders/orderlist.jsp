@@ -19,6 +19,8 @@ table, th, td {
 	width : 70%;
 }
 
+
+
 td input[type="checkbox"]{
 	transform: scale(1.5);
 }

@@ -68,12 +68,9 @@
     <script type="text/javascript">
     	$(()=>{
     		getreplies();
-    		
-    		
-    	})
+    	})//end document.ready
     	
     function replyInsert() {
-        
         var eventBoardId = $('#eventBoardId').val();
         var eventReplyContent = $('#commentContent').val();
         var csrfToken = $('#csrfToken').val();
@@ -84,62 +81,30 @@
 
         $.ajax({
             type: 'POST',
-            url: 'replies',
+            url: 'repliesInsert',
             headers: headers,
             data: JSON.stringify({
                 'eventBoardId': eventBoardId,
                 'eventReplyContent': eventReplyContent
             }),
-
             success: function(result) {
-            	
             	if(result == 1) {
             		console.log('result',result);
                   	getreplies();
                   	$('#commentContent').val('');
-            	}
-              	
-                
+            		}
+               },
+            error: function(xhr, status, error) {
+                if (xhr.status == 403) {
+                    alert("로그인이 필요합니다.");
+                } else {
+                    console.error("오류 발생: ", error);
+                    alert("댓글 작성실패 나중에 다시 시도해주세요")
                 }
-            
+            }
         });//end ajax
     }
-    
-    	/* function addComment(comment) {
-    	    // 정규표현식을 사용하여 번호, 내용, 날짜 추출
-    	    var matches = comment.eventReplyContent.match(/^(\d+)([A-Z]+)(\d+)$/);
-    	    
-    	    // 추출한 정보를 변수에 저장
-    	    var commentNumber = matches ? matches[1] : '';
-    	    var commentContent = matches ? matches[2] : '';
-    	    var timestamp = matches ? parseInt(matches[3]) : null;
 
-    	    // 날짜 포맷팅 함수
-    	    function formatDate(timestamp) {
-    	        return timestamp ? new Date(timestamp).toLocaleString('ko-KR', {
-    	            year: 'numeric',
-    	            month: '2-digit',
-    	            day: '2-digit'
-    	        }) : '';
-    	    }
-
-    	    // HTML 문자열 생성
-    	    var str = '<li class="list-group-item">' +
-    	              '<div class="comment-info">' +
-    	                  '<span class="comment-id">번호 : ' + commentNumber + '</span>' +
-    	                  '<span class="comment-content">내용 : ' + commentContent + '</span>' +
-    	                  '<span class="comment-time">날짜 : ' + formatDate(timestamp) + '</span>' +
-    	              '</div>' +
-    	              '<div class="comment-actions">' +
-    	                  '<button onclick="editComment(' + comment.eventReplyId + ')">수정</button>' +
-    	                  '<button onclick="deleteComment(' + comment.eventReplyId + ')">삭제</button>' +
-    	              '</div>' +
-    	          '</li>';
-
-    	    $('.list-group').html(str);
-    	} */
-
-    
     	function getreplies() {
     	    var eventBoardId = $('#eventBoardId').val();
     	    var currentUserMemberId = '${currentUserMemberId}';
@@ -269,9 +234,6 @@
 		        }
 		    });
 		}
-		
-		
-
     </script>
     
 </body>	

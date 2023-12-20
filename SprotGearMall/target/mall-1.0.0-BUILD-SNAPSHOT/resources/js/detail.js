@@ -41,7 +41,6 @@ $(() => {
 
 function isLike() {
     var productId = $('#productId').val();
-    var memberId = $('#memberId').val();
     var csrfToken = $("#csrfToken").val();
     var headers = {
         'Content-Type': 'application/json',
@@ -55,7 +54,6 @@ function isLike() {
             url: 'likes',
             headers: headers,
             data: JSON.stringify({
-                "memberId": memberId,
                 "productId": productId,
             }),
             success: (result)=> {
@@ -80,7 +78,6 @@ function isLike() {
             url: 'likes',
             headers: headers,
             data: JSON.stringify({
-                "memberId": memberId,
                 "productId": productId,
             }),
             success: (result) => {
