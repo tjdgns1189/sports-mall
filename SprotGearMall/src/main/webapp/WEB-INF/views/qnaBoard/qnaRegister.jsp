@@ -63,8 +63,8 @@ function validateForm() {
     }
     
     // 제목 공백처리
-    if (title.length > 30) {
-        alert('제목이 30자를 초과했습니다.');
+    if (title.length > 20) {
+        alert('제목이 20자를 초과했습니다.');
         event.preventDefault(); // 폼 제출 막기
     }
 
@@ -73,7 +73,14 @@ function validateForm() {
         alert('내용이 500자를 초과했습니다.');
         event.preventDefault(); // 폼 제출 막기
     }
+    
+ // 내용 글자 수 체크
+    if (memberId.length > 50) {
+        alert('아이디가 10자를 초과했습니다.');
+        event.preventDefault(); // 폼 제출 막기
+    }
 }
+
 
 
 //비회원을 위해 접속아이디없을때 작성자칸에 입력넣기

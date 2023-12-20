@@ -29,14 +29,17 @@ public class EventReplyRestController {
 	@Autowired
 	private EventReplyService service;
 
-	@PostMapping("/replies")
+	@PostMapping("/repliesInsert")
 	public ResponseEntity<Integer> repliesPost(@RequestBody EventReplyVO vo, Principal principal) {
 		logger.info("repliesPost() 호출");
-
+		int result = 0;
+		if(principal == null || principal.getName() == null) {
+			return new ResponseEntity<Integer>(result, HttpStatus.FORBIDDEN);
+		}
 		String memberId = principal.getName();
 		vo.setMemberId(memberId);
 		logger.info("vo : " + vo.toString());
-		int result = service.create(vo);
+		result = service.create(vo);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 

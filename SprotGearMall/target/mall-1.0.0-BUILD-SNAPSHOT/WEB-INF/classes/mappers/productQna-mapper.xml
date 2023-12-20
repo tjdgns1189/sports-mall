@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.ProductQnaMapper">
+
+	<insert id="insert">
+	insert into ${prdQna_table}
+		(${prdQnaContent}, ${prdQnaCategory}, ${prdQnaSecret}, ${memberId}, ${productId})
+		values(#{prdQnaContent}, #{prdQnaCategory},#{prdQnaSecret},#{memberId},#{productId})
+	</insert>
+	
+	
+	<insert id="insert_seq" parameterType="edu.spring.mall.domain.ProductQnaVO">
+    <selectKey keyProperty="prdQnaId" resultType="int" order="BEFORE">
+        SELECT product_qna_seq.NEXTVAL FROM DUAL
+    </selectKey>
+    INSERT INTO product_qna (prd_qna_id, prd_qna_content, prd_qna_category, prd_qna_secret, member_id, product_id) 
+    VALUES (#{prdQnaId}, #{prdQnaContent}, #{prdQnaCategory}, #{prdQnaSecret}, #{memberId}, #{productId})
+</insert>
+
+	<select id="selectDetail" resultType="ProductQnaVO">
+		select * from ${prdQna_table}
+		where ${productId} = #{productid}
+		order by ${prdQnaCreatedDate} desc
+	</select>
+	
+	<select id="select_by_memberId" resultType="ProductQnaVO">
+		select * from ${prdQna_table}
+		where ${memberId} = #{memberId}
+		order by ${prdQnaCreatedDate} desc
+	</select>
+	
+	<select id="select_by_qnaId" resultType="ProductQnaVO">
+		select * from ${prdQna_table}
+		where ${prdQnaId} = #{prdQnaId}
+	</select>
+	
+	<select id="select" resultType="ProductQnaVO">
+		select * from ${prdQna_table}
+		order by ${prdQnaCreatedDate} desc
+	</select>
+	
+	<select id="count" resultType="Integer">
+		select count(*) from ${prdQna_table}
+		where ${prdQnaId} = #{prdQnaId}
+	</select>
+	
+	<update id="update">
+    update ${prdQna_table}
+    	set ${prdQnaCategory} = #{prdQnaCategory},
+        ${prdQnaContent} = #{prdQnaContent},
+        ${prdQnaSecret} = #{prdQnaSecret}
+    	where ${prdQnaId} = #{prdQnaId}
+	</update>
+	
+	<delete id="delete">
+	delete ${prdQna_table}
+	where ${prdQnaId} = #{prdQndId}
+	</delete>
+
+	 
+	 	<select id="paging" resultMap="qnaReplyJoin">
+	 		 SELECT * FROM (
+    			SELECT pq_inner.*, rownum rn
+    			FROM (
+        			SELECT pq.PRD_QNA_ID, pq.PRD_QNA_CONTENT, pq.PRD_QNA_CATEGORY,
+               			pq.PRD_QNA_SECRET, pq.MEMBER_ID AS pq_member_id,
+               			pq.PRODUCT_ID AS pq_product_id, pq.PRD_QNA_CREATED_DATE,
+               			pq.PRD_QNA_STATE, pqr.PQR_ID, pqr.PQR_CONTENT,
+               			pqr.MEMBER_ID AS pqr_member_id, pqr.PRODUCT_ID AS pqr_product_id,
+              			 pqr.PQR_CREATED_DATE
+        			FROM product_qna pq
+        			LEFT JOIN PRODUCT_QNA_REPLY pqr ON pq.PRD_QNA_ID = pqr.PRD_QNA_ID
+        			WHERE pq.${productId} = #{productId}
+        			ORDER BY pq.${prdQnaCreatedDate} DESC
+    			) pq_inner
+			) 
+			where rn between #{criteria.start}  and #{criteria.end}
+	 	</select>
+	 
+	 
+	  <select id="total_count" resultType="Integer">
+	 	select count(*) total_cnt from ${prdQna_table}
+	 	where ${productId} = #{productId}
+	 </select>
+	 
+	 	<resultMap id="ProductQnaMap" type="edu.spring.mall.domain.ProductQnaVO">
+    		<id column="prd_qna_id" property="prdQnaId" />
+    		<result column="prd_qna_content" property="prdQnaContent" />
+   		 	<result column="prd_qna_category" property="prdQnaCategory" />
+    		<result column="prd_qna_secret" property="prdQnaSecret" />
+    		<result column="pq_member_id" property="memberId" />
+    		<result column="pq_product_id" property="productId" />
+   			<result column="prd_qna_created_date" property="prdQnaCreatedDate" />
+   			<result column="prd_qna_state" property="prdQnaState" />
+		</resultMap>
+		
+		<resultMap id="ProductQnaReplyMap" type="edu.spring.mall.domain.ProductQnaReplyVO">
+    		<id column="pqr_id" property="pqrId" />
+    		<result column="pqr_content" property="pqrContent" />
+    		<result column="prd_qna_id" property="prdQnaId" />
+    		<result column="pqr_member_id" property="memberId" />
+    		<result column="pqr_product_id" property="productId" />
+    		<result column="pqr_created_date" property="pqrCreatedDate" />
+		</resultMap>
+		
+		<resultMap id="qnaReplyJoin" type="edu.spring.mall.domain.ProductQnaJoinReplyVO">
+    		<association property="qna" resultMap="ProductQnaMap"/>
+    		<association property="reply" resultMap="ProductQnaReplyMap"/>
+		</resultMap>
+
+
+
+</mapper>

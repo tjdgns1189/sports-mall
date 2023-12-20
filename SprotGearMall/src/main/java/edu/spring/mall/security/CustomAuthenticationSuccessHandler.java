@@ -31,7 +31,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		if (session != null) {
 			String authError = (String) session.getAttribute("authError");
 			logger.info("authError : " + authError);
-
+	        session.removeAttribute("authError");
 			if ("ACCESS_DENIED".equals(authError)) {
 				SavedRequest savedRequest = (SavedRequest) session.getAttribute("SPRING_SECURITY_SAVED_REQUEST");
 				if (savedRequest != null) {

@@ -27,7 +27,9 @@ public class RestLikeController {
 
 	@PostMapping("product/likes")
 	public ResponseEntity<String> insertLike(@RequestBody LikesVO vo, Authentication authentication) throws Exception {
-		logger.info("좋아요 insert");
+		logger.info("좋아요 insert : " + vo.toString());
+		String memberId = authentication.getName();
+		vo.setMemberId(memberId);
 		String result = "";
 		if (vo.getMemberId().isBlank() || vo.getMemberId() == null) {
 			return new ResponseEntity<String>(result, HttpStatus.FORBIDDEN);

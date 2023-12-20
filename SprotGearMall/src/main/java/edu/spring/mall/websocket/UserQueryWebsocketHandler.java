@@ -35,7 +35,6 @@ public class UserQueryWebsocketHandler extends TextWebSocketHandler {
 			Authentication auth = securityContext.getAuthentication();
 			boolean isAdmin = auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 			String username = auth.getName();
-
 			if (isAdmin) {
 				String roomId = extractRoomIdFromSession(session);
 				logger.info("관리자 접속 : " + username + " || 채팅방 번호 : " + roomId);
@@ -54,21 +53,17 @@ public class UserQueryWebsocketHandler extends TextWebSocketHandler {
 				logger.info("채팅번호 : " + roomId + " || id : " + username + " 접속");
 			}
 		} // end if
-
 	}// end afterConnectionEstablished()
-
 	// 메세지 전송시
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String username = (String) session.getAttributes().get("username");
 		String senderType = session.getAttributes().containsKey("ROLE_ADMIN") ? "admin" : "user";
 		ChatRoom room = service.getChatRoom(session);
-
 		if (room == null) {
 			logger.error("채팅방을 찾을 수 없음");
 			return;
 		}
-
 		JSONObject jsonMessage = new JSONObject();
 		jsonMessage.put("username", username);
 		jsonMessage.put("senderType", senderType);
@@ -76,14 +71,12 @@ public class UserQueryWebsocketHandler extends TextWebSocketHandler {
 		jsonMessage.put("timestamp", new Date().getTime());
 
 		TextMessage formattedMessage = new TextMessage(jsonMessage.toString());
-
 		// 채팅방의 모든 참가자에게 메시지 전송
 		for (WebSocketSession x : room.getJoinUser()) {
 			if (x.isOpen()) {
 				x.sendMessage(formattedMessage);
 			}
 		}
-
 	}// end handleTextMessage()
 
 	// 웹소켓 종료

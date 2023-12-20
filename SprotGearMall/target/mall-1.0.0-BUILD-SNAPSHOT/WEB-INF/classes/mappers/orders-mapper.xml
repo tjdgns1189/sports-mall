@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.spring.mall.OrdersMapper">
+
+	 
+	 <insert id="insert">
+	 	insert into ${orders}
+	 	(${memberId}, ${productId}, ${productPrice}, ${productQuantity})
+	 	values (#{memberId}, #{productId}, #{productPrice}, #{productQuantity}) 
+	 </insert>
+	 
+	 <select id="select_by_member_id" resultType="OrdersVO">
+	 	select * from ${orders} where ${memberId} = #{memberId}
+	 </select>
+	 	
+	 <select id="select_by_order_Id" resultType="OrdersVO">
+	 	select * from ${orders} 
+	 	where ${orderId} = #{orderId}
+	 </select>
+	 
+	 <select id="select_by_refund" resultType="OrdersVO">
+	 	select * from ${orders}
+	 	where ${orderState} = #{orderState}
+	 </select>
+	 
+	 <update id="refund_request">
+	 	update ${orders}
+	 	set ${orderState} = #{orderState}
+	 	where ${orderId} = #{orderId}
+	 </update>
+	 
+	 
+	 
+	 <delete id="delete">
+	 	delete from ${orders}
+	 	where ${memberId} = #{memberId} and ${productId} = #{productId}
+	 </delete>
+	  
+	 <delete id="delete_by_order_id">
+	 	delete from ${orders}
+	 	where ${orderId} = #{orderId} 
+	 </delete>
+	 
+</mapper>

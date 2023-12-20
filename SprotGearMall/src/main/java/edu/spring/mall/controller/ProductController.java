@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,10 +35,6 @@ import edu.spring.mall.domain.ProductVO;
 import edu.spring.mall.domain.ReviewVO;
 import edu.spring.mall.pageutil.PageCriteria;
 import edu.spring.mall.pageutil.PageMaker;
-import edu.spring.mall.persistence.CartDAO;
-import edu.spring.mall.persistence.LikesDAO;
-import edu.spring.mall.persistence.OrdersDAO;
-import edu.spring.mall.persistence.ProductDAO;
 import edu.spring.mall.service.CartService;
 import edu.spring.mall.service.LikesService;
 import edu.spring.mall.service.OrderService;
@@ -145,6 +142,11 @@ public class ProductController {
 		boolean isLiked = false;
 		logger.info("detail() 호출  = " + productId);
 		Map<String, Object> map = productService.readProductById(productId);
+		ProductVO productChecked = (ProductVO) map.get("product");
+		if (productChecked == null) {
+			logger.info("404에러 띄워야 하는 상황");
+	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "상품 없는데 접근");
+	    }
 		List<ReviewVO> review = (List<ReviewVO>) map.get("review");
 		ProductVO product = (ProductVO) map.get("product");
 		model.addAttribute("review", review);
@@ -198,7 +200,7 @@ public class ProductController {
 	} // end detail()
 
 	@GetMapping("/update")
-	public void updateGET(Model model, int productId, Integer page) {
+	public void updateGET(Model model, int productId) {
 
 		logger.info("updateGET() 호출 : productName = " + productId);
 
@@ -209,7 +211,7 @@ public class ProductController {
 		String memberId = auth.getName();
 
 		model.addAttribute("vo", vo);
-		model.addAttribute("page", page);
+		
 		model.addAttribute("principal", memberId);
 
 	} // end updateGET()
@@ -217,21 +219,26 @@ public class ProductController {
 	@PostMapping("/update")
 	public String updatePOST(@RequestParam("productId") int productId, @RequestParam("productName") String productName,
 			@RequestParam("productPrice") int productPrice, @RequestParam("productStock") int productStock,
-			@RequestParam("productMaker") String productMaker, 
+			@RequestParam("productMaker") String productMaker,
+
 			@RequestParam(value = "productImgPath", required = false) MultipartFile file,
 			@RequestParam("productCategory") String productCategory,
 			@RequestParam("productContent") String productContent) throws IOException {
 
-		logger.info("updatePOST() 호출" );
+
+		logger.info("updatePOST() 호출");
 		ProductVO vo = new ProductVO();
 		String productImgPath = file.isEmpty() ? null : file.getOriginalFilename();
-		if(!file.isEmpty()) {
-			vo = new ProductVO(productId, productName, productPrice, productStock, productMaker, productImgPath, productCategory, productId, productContent, null);
-		}else {
-			vo = new ProductVO(productId, productName, productPrice, productStock, productMaker, productCategory, productContent);
+		if (!file.isEmpty()) {
+			vo = new ProductVO(productId, productName, productPrice, productStock, productMaker, productImgPath,
+					productCategory, productId, productContent, null);
+		} else {
+			vo = new ProductVO(productId, productName, productPrice, productStock, productMaker, productCategory,
+					productContent);
+
 
 		}
-		 
+
 		int result = productService.update(vo, file);
 
 		if (result == 1) {

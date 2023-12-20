@@ -214,12 +214,11 @@ $(()=>{
         var productPrice = $('#productPrice').val();
         var productStock = $('#productStock').val();
         var productMaker = $('#productMaker').val();
-        var productImgPath = $('#fileItem').val();
         var productCategory = $('#productCategory').val();
         var productContent = $('#productContent').summernote('code');
 
         // 필수 입력 필드 중 하나라도 비어있으면 경고 표시
-        if (!productName || !productPrice || !productStock || !productMaker || !productImgPath || !productCategory || !productContent) {
+        if (!productName || !productPrice || !productStock || !productMaker || !productCategory || !productContent) {
             alert("빠진 입력 사항이 없는 지 확인해주세요.");
             event.preventDefault(); // 기본 동작을 막음
         }
