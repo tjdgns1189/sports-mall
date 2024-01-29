@@ -2,7 +2,7 @@
 이 프로젝트는 스포츠용품 쇼핑몰 웹사이트로, 다양한 쇼핑몰 사이트에서 얻은 경험을 기반으로 스프링 프레임워크를 사용하여 구축되었습니다.
 
 ## 개발 기간
-2023년 00월 00일 - 2023년 12월 15일
+2023년 11월 15일 - 2023년 12월 15일
 
 ## 팀 구성
 - **김빛찬**: Maven 프로젝트 설정, 로그인 기능, 마이페이지, UI 디자인, 상품 기능, 관리자 및 사용자 알림 시스템, 공지사항 게시판, 1:1 채팅 문의 기능, 에러 페이지 구현
@@ -42,4 +42,6 @@
 ### PRODUCT
 - 보유컬럼 PRODUT_ID, PRODUCT_NAME, PRODUCT_STOCK, PRODUCT_MAKER, PRODUCT_IMG_PATH, PRODUCT_CATEGORY, PRODUCT_IS_DELETED,
   PRODUCT_CONTENT, PRODUCT_CREATED_DATE 로 구성
-- 설명2
+
+### ORDERS
+- 보유컬럼 ORDER_ID, MEMBER_ID, PRODUCT_ID, PRODUCT_PRICE, PRODUCT_QUANTITY, ORDER_CREATED_DATE_ ORDER_STATEorderId 로 구성
